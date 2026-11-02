@@ -1,0 +1,152 @@
+
+/* ==========================================
+   GESTIONE IMMAGINI - FUORIRETE
+========================================== */
+
+.gestione-immagine {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 15px 0;
+}
+
+.gestione-immagine-anteprima {
+    width: 115px;
+    height: 115px;
+    flex: 0 0 115px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    background: #fff5f0;
+    border: 1px solid #eadbd3;
+    border-radius: 15px;
+}
+
+.gestione-immagine-anteprima img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gestione-immagine-anteprima [hidden] {
+    display: none !important;
+}
+
+.gestione-immagine-segnaposto {
+    padding: 12px;
+    text-align: center;
+    color: #a18d83;
+    font-size: 12px;
+}
+
+.gestione-immagine-comandi {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 11px;
+    flex: 1;
+    min-width: 0;
+}
+
+.gestione-immagine-descrizione {
+    color: #927c71;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.gestione-immagine-azioni {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+}
+
+.gestione-immagine-pulsante,
+.gestione-immagine-rimuovi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 37px;
+    padding: 9px 15px;
+
+    border: 1px solid #eadbd3;
+    border-radius: 11px;
+
+    background: #ffffff;
+    color: #fa5943;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.gestione-immagine-pulsante:hover {
+    border-color: #fa5943;
+    background: #fff0e9;
+}
+
+.gestione-immagine-rimuovi {
+    color: #a45a50;
+}
+
+.gestione-immagine-rimuovi:hover {
+    border-color: #c76558;
+    background: #fff1ee;
+}
+
+.gestione-immagine-pulsante:focus-visible,
+.gestione-immagine-rimuovi:focus-visible {
+    outline: 2px solid #fa5943;
+    outline-offset: 3px;
+}
+
+/* Il file e la checkbox restano nel form,
+   ma non sono visibili. */
+
+.gestione-immagine-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    opacity: 0;
+    clip-path: inset(50%);
+}
+
+@media (max-width: 520px) {
+    .gestione-immagine {
+        align-items: flex-start;
+        gap: 13px;
+    }
+
+    .gestione-immagine-anteprima {
+        width: 95px;
+        height: 95px;
+        flex-basis: 95px;
+    }
+}
+
+.gestione-immagine [hidden] {
+    display: none !important;
+}
+
+.gestione-immagine-creazione .gestione-immagine-input input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    overflow: hidden;
+}

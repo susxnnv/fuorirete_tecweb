@@ -1,0 +1,252 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+
+{% block area_content %}
+
+<div class="matchchat-pagina">
+    
+    <!-- TORNA AL PROFILO -->
+
+    <a href="{% url 'profilo' %}" class="gestione-torna-profilo">
+        ← Torna al Profilo
+    </a>
+
+
+    <!-- ================================== -->
+    <!-- INTESTAZIONE                      -->
+    <!-- ================================== -->
+
+    <header class="matchchat-intestazione">
+
+        <h1>Match e Chat</h1>
+
+        <p>
+            Ritrova i tuoi Match e continua
+            le conversazioni iniziate.
+        </p>
+
+    </header>
+
+
+    <!-- ================================== -->
+    <!-- I TUOI MATCH                      -->
+    <!-- ================================== -->
+
+    <section class="matchchat-sezione">
+
+        <div class="matchchat-sezione-titolo">
+
+            <h2>I tuoi Match</h2>
+
+            <span>{{ tutti_match|length }}</span>
+
+        </div>
+
+        {% if tutti_match %}
+
+            <!-- LISTA ORIZZONTALE -->
+
+            <div
+                class="matchchat-match-lista"
+                aria-label="Elenco dei tuoi Match"
+            >
+
+                {% for match in tutti_match %}
+
+    
+                    <!-- CONTENITORE DEL MATCH -->
+
+                    <div class="matchchat-match-card">
+
+                        <!-- PROFILO CLICCABILE -->
+
+                        <a
+                            href="{% url 'dettaglio_persona' match.persona.pk %}?origine=match_chat"
+                            class="matchchat-match-profilo"
+                            aria-label="Visualizza il profilo di {{ match.persona.nome }}"
+                        >
+
+
+                        <!-- FOTO -->
+
+                        {% if match.persona.foto %}
+
+                            <img
+                                src="{{ match.persona.foto.url }}"
+                                alt="Foto di {{ match.persona.nome }}"
+                                class="matchchat-match-foto"
+                            >
+
+                        {% else %}
+
+                            <span class="matchchat-match-foto-vuota">
+                                {{ match.persona.nome|first|upper }}
+                            </span>
+
+                        {% endif %}
+
+
+                        <!-- NOME -->
+
+                        <strong class="matchchat-match-nome">
+                            {{ match.persona.nome }}
+                        </strong>
+
+
+                        <!-- INTERESSI -->
+
+                        <span class="matchchat-match-interessi">
+
+                            {% for interesse in match.persona.interessi.all %}
+
+                                {% if forloop.counter <= 2 %}
+                                    {{ interesse.nome }}
+                                    {% if forloop.counter == 1 %} · {% endif %}
+                                {% endif %}
+
+                            {% empty %}
+
+                                Nessun interesse
+
+                            {% endfor %}
+
+                        </span>
+
+                        </a>
+
+                        <!-- APERTURA DIRETTA DELLA CHAT -->
+
+                        <a
+                            href="{% url 'chat_privata' match.persona.pk %}"
+                            class="matchchat-match-apri-chat"
+                            aria-label="Apri la chat con {{ match.persona.nome }}"
+                        >
+                            Apri chat →
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="matchchat-stato-vuoto">
+                Non hai Match in attesa di una conversazione.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ================================== -->
+    <!-- LE TUE CHAT                       -->
+    <!-- ================================== -->
+
+    <section class="matchchat-sezione">
+
+        <div class="matchchat-sezione-titolo">
+
+            <h2>Le tue chat</h2>
+
+            <span>{{ chat_iniziate|length }}</span>
+
+        </div>
+
+
+        {% for chat in chat_iniziate %}
+
+            <!-- UNA CONVERSAZIONE PER RIGA -->
+
+            <div class="matchchat-riga">
+
+                <a
+                    href="{% url 'chat_privata' chat.persona.pk %}"
+                    class="matchchat-riga-principale"
+                    aria-label="Apri la chat con {{ chat.persona.nome }}"
+                >
+
+                    <!-- FOTO -->
+
+                    {% if chat.persona.foto %}
+
+                        <img
+                            src="{{ chat.persona.foto.url }}"
+                            alt=""
+                            class="matchchat-foto"
+                        >
+
+                    {% else %}
+
+                        <span class="matchchat-foto-vuota">
+                            {{ chat.persona.nome|first|upper }}
+                        </span>
+
+                    {% endif %}
+
+
+                    <!-- DATI DELLA CONVERSAZIONE -->
+
+                    <span class="matchchat-informazioni">
+
+                        <span class="matchchat-riga-superiore">
+
+                            <strong>
+                                {{ chat.persona.nome }}
+                            </strong>
+
+                            <time
+                                datetime="{{ chat.ultimo_messaggio.data_ora|date:'c' }}"
+                            >
+                                {{ chat.ultimo_messaggio.data_ora|date:"d/m/Y H:i" }}
+                            </time>
+
+                        </span>
+
+
+                        <!-- ANTEPRIMA ULTIMO MESSAGGIO -->
+
+                        <span class="matchchat-anteprima">
+
+                            {% if chat.inviato_da_me %}
+                                Tu:
+                            {% endif %}
+
+                            {{ chat.ultimo_messaggio.testo|truncatechars:65 }}
+
+                        </span>
+
+                    </span>
+
+                </a>
+
+
+                <!-- APERTURA DEL PROFILO -->
+
+                <a
+                    href="{% url 'dettaglio_persona' chat.persona.pk %}?origine=match_chat"
+                    class="matchchat-apri-profilo"
+                    aria-label="Visualizza il profilo di {{ chat.persona.nome }}"
+                    title="Visualizza profilo"
+                >
+                    ↗
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="matchchat-stato-vuoto">
+                Non hai ancora iniziato nessuna conversazione.
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+</div>
+
+{% endblock %}

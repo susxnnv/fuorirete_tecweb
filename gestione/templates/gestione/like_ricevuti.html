@@ -1,0 +1,375 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+
+{% block area_content %}
+
+<div class="like-ricevuti-pagina">
+
+    
+    <!-- ===================================== -->
+    <!-- POPUP MATCH                           -->
+    <!-- ===================================== -->
+
+    {% if match_recente %}
+
+    <div
+        id="popup-match"
+        class="match-overlay"
+    >
+
+        <section
+            class="match-popup"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="match-titolo"
+            aria-describedby="match-descrizione"
+            tabindex="-1"
+        >
+
+            <!-- CHIUSURA -->
+
+            <button
+                type="button"
+                id="chiudi-match"
+                class="match-chiudi"
+                aria-label="Chiudi popup Match"
+            >
+                ×
+            </button>
+
+            <!-- ICONA -->
+
+            <div class="match-icona">
+                ♡
+            </div>
+
+            <!-- TITOLO -->
+
+            <h2 id="match-titolo">
+                È un Match!
+            </h2>
+
+            <p
+                id="match-descrizione"
+                class="match-descrizione"
+            >
+                Tu e
+                <strong>{{ match_recente.nome }}</strong>
+                vi siete messi Like a vicenda!
+            </p>
+
+            <!-- MESSAGGIO -->
+
+            <div class="match-messaggio">
+
+                <span class="match-messaggio-icona">
+                    ♡
+                </span>
+
+                <p>
+                    Avete mostrato interesse reciproco.
+                    Adesso potete iniziare a conoscervi!
+                </p>
+
+            </div>
+
+            <!-- AZIONI -->
+
+            <div class="match-azioni">
+
+                <a
+                    href="{% url 'chat_privata' match_recente.profilo_id %}?origine=like_ricevuti"
+                    class="match-apri-chat"
+                >
+                    Apri la chat →
+                </a>
+
+                <a
+                    href="{% url 'dettaglio_persona' match_recente.profilo_id %}?origine=like_ricevuti"
+                    class="match-continua"
+                >
+                    Visualizza profilo →
+                </a>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const overlay = document.getElementById('popup-match');
+        const popup = overlay.querySelector('.match-popup');
+
+        const pulsanteChiudi = document.getElementById('chiudi-match');
+        const pulsanteChat = popup.querySelector('.match-apri-chat');
+        const pulsanteProfilo = popup.querySelector('.match-continua');
+
+        document.body.classList.add('match-aperto');
+
+        pulsanteChiudi.focus();
+
+        function chiudiMatch() {
+
+            overlay.hidden = true;
+            document.body.classList.remove('match-aperto');
+        }
+
+        pulsanteChiudi.addEventListener('click', chiudiMatch);
+
+        overlay.addEventListener('click', function (event) {
+
+            if (event.target === overlay) {
+                chiudiMatch();
+            }
+
+        });
+
+        document.addEventListener('keydown', function (event) {
+
+            if (overlay.hidden) return;
+
+            if (event.key === 'Escape') {
+
+                event.preventDefault();
+                chiudiMatch();
+                return;
+            }
+
+            if (event.key === 'Tab') {
+
+                const elementi = [
+                    pulsanteChiudi,
+                    pulsanteChat,
+                    pulsanteProfilo
+                ];
+
+                const primo = elementi[0];
+                const ultimo = elementi[elementi.length - 1];
+
+                if (
+                    event.shiftKey &&
+                    document.activeElement === primo
+                ) {
+                    event.preventDefault();
+                    ultimo.focus();
+
+                } else if (
+                    !event.shiftKey &&
+                    document.activeElement === ultimo
+                ) {
+                    event.preventDefault();
+                    primo.focus();
+                }
+            }
+
+        });
+
+    });
+    </script>
+
+    {% endif %}
+
+    <!-- TORNA AL PROFILO -->
+
+    {% if request.GET.origine == 'notifiche' %}
+
+        <a
+            href="{% url 'notifiche' %}"
+            class="gestione-torna-profilo"
+        >
+            ← Torna alle Notifiche
+        </a>
+
+    {% else %}
+
+        <a
+            href="{% url 'profilo' %}"
+            class="gestione-torna-profilo"
+        >
+            ← Torna al Profilo
+        </a>
+
+    {% endif %}
+
+
+    <!-- INTESTAZIONE -->
+
+    <header class="like-ricevuti-intestazione">
+
+        <h1>Like ricevuti</h1>
+
+        <p>
+            Scopri chi vorrebbe conoscerti e scegli
+            se ricambiare il Like.
+        </p>
+
+    </header>
+
+
+    <!-- ELENCO -->
+
+    <section class="like-ricevuti-contenitore">
+
+        <div class="like-ricevuti-titolo">
+
+            <h2>In attesa di una risposta</h2>
+
+            <span>{{ like_ricevuti|length }}</span>
+
+        </div>
+
+        {% for like in like_ricevuti %}
+
+            <article class="like-ricevuti-scheda">
+
+                <!-- PROFILO CLICCABILE -->
+
+                <a
+                    href="{% url 'dettaglio_persona' like.mittente.pk %}?origine=like_ricevuti{% if request.GET.origine == 'notifiche' %}&amp;ritorno=notifiche{% endif %}"                    class="like-ricevuti-profilo"
+                    aria-label="Visualizza il profilo di {{ like.mittente.nome }}"
+                >
+
+                    {% if like.mittente.foto %}
+
+                        <img
+                            src="{{ like.mittente.foto.url }}"
+                            alt=""
+                            class="like-ricevuti-foto"
+                        >
+
+                    {% else %}
+
+                        <span class="like-ricevuti-foto-vuota">
+                            {{ like.mittente.nome|first|upper }}
+                        </span>
+
+                    {% endif %}
+
+                    <span class="like-ricevuti-informazioni">
+
+                        <strong>
+                            {{ like.mittente.nome }},
+                            {{ like.mittente.eta }}
+                        </strong>
+
+                        <span class="like-ricevuti-citta">
+                            📍 {{ like.mittente.citta }}
+                        </span>
+
+                        <span class="like-ricevuti-interessi">
+
+                            {% for interesse in like.mittente.interessi.all %}
+
+                                {% if forloop.counter <= 2 %}
+                                    {{ interesse.nome }}{% if forloop.counter == 1 and not forloop.last %} · {% endif %}
+                                {% endif %}
+
+                            {% empty %}
+
+                                Nessun interesse indicato
+
+                            {% endfor %}
+
+                        </span>
+
+                    </span>
+
+                    <span
+                        class="like-ricevuti-freccia"
+                        aria-hidden="true"
+                    >
+                        →
+                    </span>
+
+                </a>
+
+
+                <!-- AZIONI -->
+
+                <div class="like-ricevuti-azioni">
+
+                    <!-- DISLIKE -->
+
+                    <form
+                        method="post"
+                        action="{% url 'rispondi_like_ricevuto' like.mittente.pk %}"
+                    >
+                        {% csrf_token %}
+
+                        {% if request.GET.origine == 'notifiche' %}
+                            <input type="hidden" name="origine" value="notifiche">
+                        {% endif %}
+
+                        <input
+                            type="hidden"
+                            name="azione"
+                            value="dislike"
+                        >
+
+                        <button
+                            type="submit"
+                            class="like-ricevuti-rifiuta"
+                        >
+                            × Rifiuta
+                        </button>
+
+                    </form>
+
+
+                    <!-- LIKE -->
+
+                    <form
+                        method="post"
+                        action="{% url 'rispondi_like_ricevuto' like.mittente.pk %}"
+                    >
+                        {% csrf_token %}
+
+                        {% if request.GET.origine == 'notifiche' %}
+                            <input type="hidden" name="origine" value="notifiche">
+                        {% endif %}
+
+                        <input
+                            type="hidden"
+                            name="azione"
+                            value="like"
+                        >
+
+                        <button
+                            type="submit"
+                            class="like-ricevuti-ricambia"
+                        >
+                            ♡ Ricambia
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="like-ricevuti-vuoto">
+
+                <span class="like-ricevuti-vuoto-icona">
+                    ♡
+                </span>
+
+                <h3>Nessun Like in attesa</h3>
+
+                <p>
+                    Non hai nuovi Like a cui rispondere.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+</div>
+
+{% endblock %}

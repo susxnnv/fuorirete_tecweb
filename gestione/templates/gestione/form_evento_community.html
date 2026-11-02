@@ -1,0 +1,136 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}
+    {% if modalita_modifica %}
+        Modifica evento
+    {% else %}
+        Crea evento
+    {% endif %}
+    | FuoriRete
+{% endblock %}
+
+{% block area_content %}
+
+<link rel="stylesheet" href="{% static 'css/eventi_community.css' %}">
+
+<main class="eventi-pagina eventi-form-pagina">
+
+    <!-- INDIETRO -->
+
+    <a
+        href="{% url 'gestione_eventi_community' community.pk %}?origine={{ request.GET.origine }}"
+        class="eventi-indietro"
+    >
+        ← Torna a Gestisci eventi
+    </a>
+
+    <header class="eventi-intestazione">
+
+        <div>
+
+            <span class="eventi-etichetta">
+                GESTIONE COMMUNITY
+            </span>
+
+            {% if modalita_modifica %}
+                <h1>Modifica evento</h1>
+            {% else %}
+                <h1>Crea un evento</h1>
+            {% endif %}
+
+            <p>
+                Community:
+                <strong>{{ community.titolo }}</strong>
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <section class="eventi-form-card">
+
+        <form method="post" novalidate autocomplete="off">
+
+            {% csrf_token %}
+
+            <!-- PAGINA DI PROVENIENZA -->
+
+            <input
+                type="hidden"
+                name="origine"
+                value="{{ request.GET.origine }}"
+            >
+
+            {% if form.non_field_errors %}
+
+                <div class="eventi-errore">
+                    {{ form.non_field_errors }}
+                </div>
+
+            {% endif %}
+
+            {% for campo in form %}
+
+                <div class="eventi-form-campo">
+
+                    <label for="{{ campo.id_for_label }}">
+                        {{ campo.label }}
+                        {% if campo.field.required %}
+                            <span class="eventi-obbligatorio">*</span>
+                        {% endif %}
+                    </label>
+
+                    {{ campo }}
+
+                    {% if campo.name == 'fine' %}
+                        <small>
+                            Facoltativa. Se inserita,
+                            deve essere successiva all'inizio.
+                        </small>
+                    {% elif campo.name == 'costo' %}
+                        <small>
+                            Inserisci 0 per un evento gratuito.
+                        </small>
+                    {% endif %}
+
+                    {% if campo.errors %}
+                        <div class="eventi-errore">
+                            {{ campo.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+            <div class="eventi-form-azioni">
+
+                <a
+                    href="{% url 'gestione_eventi_community' community.pk %}?origine={{ request.GET.origine }}"
+                    class="eventi-azione-secondaria"
+                >
+                    Annulla
+                </a>
+
+                <button type="submit" class="eventi-pulsante">
+
+                    {% if modalita_modifica %}
+                        Salva modifiche →
+                    {% else %}
+                        Crea evento →
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+{% endblock %}

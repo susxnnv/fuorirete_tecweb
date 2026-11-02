@@ -1,0 +1,92 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/autenticazione.css' %}?v=2">
+
+<main class="auth-page">
+
+    <h1>ACCEDI</h1>
+
+    <p class="auth-intro">
+        Accedi al tuo account FuoriRete.
+    </p>
+
+    <section class="auth-card">
+
+        <form method="post" autocomplete="off">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="auth-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="auth-field">
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {% if field.field.widget.input_type == 'password' %}
+
+                        <div class="password-contenitore">
+                            {{ field }}
+
+                            <button
+                                type="button"
+                                class="password-occhio"
+                                aria-label="Mostra password"
+                                aria-pressed="false"
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                    {% else %}
+
+                        {{ field }}
+
+                    {% endif %}
+
+
+                    {% if field.errors %}
+                        <div class="auth-errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="auth-button">
+                Accedi
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+            Non hai un account?
+            <a href="{% url 'registrazione' %}">
+                Registrati
+            </a>
+        </div>
+
+        <a href="{% url 'home_pubblica' %}" class="auth-back">
+            Torna alla Home
+        </a>
+
+    </section>
+
+</main>
+
+<script src="{% static 'js/password_occhio.js' %}" defer></script>
+
+{% endblock %}

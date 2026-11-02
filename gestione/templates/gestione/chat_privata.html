@@ -1,0 +1,301 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load tz %}
+
+{% block area_content %}
+
+<div class="chat-pagina">
+
+    <div class="chat-navigazione">
+
+        {% if request.GET.origine == 'notifiche' %}
+
+            <a href="{% url 'notifiche' %}">
+                ← Torna alle Notifiche
+            </a>
+
+        {% elif request.GET.origine == 'persone' %}
+
+            <a href="{% url 'persone' %}">
+                ← Torna a Persone
+            </a>
+
+        {% elif request.GET.origine == 'like_ricevuti' %}
+
+                <a href="{% url 'like_ricevuti' %}">
+                    ← Torna a Like ricevuti
+                </a>
+
+        {% else %}
+
+            <a href="{% url 'match_chat' %}">
+                ← Torna a Match e Chat
+            </a>
+
+        {% endif %}
+
+    </div>
+
+    <section class="chat-contenitore">
+
+        <!-- ===================================
+             INTESTAZIONE
+        =================================== -->
+
+        <header class="chat-intestazione">
+
+            <a
+                href="{% url 'dettaglio_persona' altra_persona.pk %}?origine=chat{% if request.GET.origine == 'persone' %}&amp;ritorno=persone{% elif request.GET.origine == 'notifiche' %}&amp;ritorno=notifiche{% elif request.GET.origine == 'like_ricevuti' %}&amp;ritorno=like_ricevuti{% endif %}"                class="chat-profilo-link"
+                aria-label="Visualizza il profilo di {{ altra_persona.nome }}"
+            >
+
+                {% if altra_persona.foto %}
+
+                    <img
+                        src="{{ altra_persona.foto.url }}"
+                        alt="Foto di {{ altra_persona.nome }}"
+                        class="chat-foto"
+                    >
+
+                {% else %}
+
+                    <span class="chat-foto-placeholder">
+                        {{ altra_persona.nome|first|upper }}
+                    </span>
+
+                {% endif %}
+
+                <span class="chat-profilo-dati">
+
+                    <strong>{{ altra_persona.nome }}</strong>
+
+                    <small>
+                        Visualizza profilo
+                    </small>
+
+                </span>
+
+            </a>
+
+            <a
+                href="{% url 'dettaglio_persona' altra_persona.pk %}?origine=chat{% if request.GET.origine == 'persone' %}&amp;ritorno=persone{% elif request.GET.origine == 'notifiche' %}&amp;ritorno=notifiche{% elif request.GET.origine == 'like_ricevuti' %}&amp;ritorno=like_ricevuti{% endif %}"
+                class="chat-profilo-freccia"
+                aria-label="Apri dettaglio persona"
+            >
+                →
+            </a>
+
+        </header>
+
+
+        <!-- ===================================
+             CRONOLOGIA MESSAGGI
+        =================================== -->
+
+        <div
+            class="chat-messaggi"
+            id="chat-messaggi"
+            aria-label="Cronologia della conversazione"
+        >
+
+            {% timezone "Europe/Rome" %}
+
+            {% for messaggio in messaggi %}
+
+                <!-- DATA ALL'INIZIO DI OGNI GIORNO -->
+
+                {% ifchanged messaggio.data_ora|date:"Y-m-d" %}
+
+                    <div class="chat-separatore-data">
+
+                        <span>
+                            {{ messaggio.data_ora|date:"j F Y" }}
+                        </span>
+
+                    </div>
+
+                {% endifchanged %}
+
+
+                <!-- MESSAGGIO INVIATO O RICEVUTO -->
+
+                <div
+                    class="chat-riga-messaggio
+                    {% if messaggio.mittente_id == mio_profilo.pk %}
+                        chat-riga-mia
+                    {% else %}
+                        chat-riga-altra
+                    {% endif %}"
+                >
+
+                    <div class="chat-bolla">
+
+                        <p class="chat-testo">
+                            {{ messaggio.testo|linebreaksbr }}
+                        </p>
+
+                        <time
+                            class="chat-orario"
+                            datetime="{{ messaggio.data_ora|date:'c' }}"
+                        >
+                            {{ messaggio.data_ora|date:"H:i" }}
+                        </time>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="chat-vuota">
+
+                    <div class="chat-vuota-icona">♡</div>
+
+                    <h2>
+                        Inizia la conversazione!
+                    </h2>
+
+                    <p>
+                        Tu e {{ altra_persona.nome }} avete
+                        un Match. Scrivi il primo messaggio!
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+            {% endtimezone %}
+
+        </div>
+
+
+        <!-- ===================================
+             CAMPO INVIO MESSAGGI
+        =================================== -->
+
+        <div class="chat-compositore">
+
+            {% if errore_messaggio %}
+
+                <p class="chat-errore" role="alert">
+                    {{ errore_messaggio }}
+                </p>
+
+            {% endif %}
+
+            <form
+                method="post"
+                action="{% url 'chat_privata' altra_persona.pk %}"
+                class="chat-form"
+                id="chat-form"
+            >
+
+                {% csrf_token %}
+
+                {% if request.GET.origine == 'notifiche' %}
+                    <input type="hidden" name="origine" value="notifiche">
+                {% elif request.GET.origine == 'persone' %}
+                    <input type="hidden" name="origine" value="persone">
+                {% elif request.GET.origine == 'like_ricevuti' %}
+                    <input type="hidden" name="origine" value="like_ricevuti">
+                {% endif %}
+
+                <label for="chat-input" class="chat-label">
+                    Scrivi un messaggio
+                </label>
+
+                <textarea
+                    id="chat-input"
+                    name="testo"
+                    class="chat-input"
+                    placeholder="Scrivi un messaggio..."
+                    maxlength="2000"
+                    rows="1"
+                    required
+                >{{ testo_inserito|default:'' }}</textarea>
+
+                <button
+                    type="submit"
+                    class="chat-invia"
+                    aria-label="Invia messaggio"
+                    title="Invia messaggio"
+                >
+                    ➤
+                </button>
+
+            </form>
+
+            <span class="chat-limite">
+                Massimo 2000 caratteri
+            </span>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- =======================================
+     JAVASCRIPT CHAT
+======================================= -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const contenitore = document.getElementById('chat-messaggi');
+    const input = document.getElementById('chat-input');
+    const form = document.getElementById('chat-form');
+
+    // All'apertura mostriamo gli ultimi messaggi.
+    if (contenitore) {
+        contenitore.scrollTop = contenitore.scrollHeight;
+    }
+
+    if (!input || !form) {
+        return;
+    }
+
+    // Altezza del campo adattabile al testo.
+    function aggiornaAltezza() {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    }
+
+    input.addEventListener('input', aggiornaAltezza);
+    aggiornaAltezza();
+
+    // Invio con Enter.
+    // Shift+Enter permette di andare a capo.
+    input.addEventListener('keydown', function (event) {
+
+        if (
+            event.key === 'Enter' &&
+            !event.shiftKey &&
+            !event.isComposing
+        ) {
+
+            event.preventDefault();
+
+            if (input.value.trim()) {
+                form.requestSubmit();
+            }
+
+        }
+
+    });
+
+    // Evitiamo l'invio di messaggi vuoti.
+    form.addEventListener('submit', function (event) {
+
+        if (!input.value.trim()) {
+            event.preventDefault();
+            input.focus();
+        }
+
+    });
+
+});
+</script>
+
+{% endblock %}

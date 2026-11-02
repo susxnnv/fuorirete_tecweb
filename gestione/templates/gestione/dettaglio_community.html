@@ -1,0 +1,215 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ community.titolo }} | FuoriRete{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}">
+
+<main class="dettaglio-community-pagina">
+
+    <!-- COLLEGAMENTO INDIETRO -->
+
+    <div class="dettaglio-community-navigazione">
+        <a href="{{ url_ritorno }}">
+            ← {{ testo_ritorno }}
+        </a>
+    </div>
+
+
+    <!-- BANNER COMMUNITY -->
+
+    <section class="dettaglio-community-banner">
+
+        <div class="dettaglio-community-copertina">
+
+            {% if community.immagine %}
+                <img
+                    src="{{ community.immagine.url }}"
+                    alt="Immagine della community {{ community.titolo }}"
+                >
+            {% else %}
+                <span aria-hidden="true">♧</span>
+            {% endif %}
+
+        </div>
+
+        <div class="dettaglio-community-identita">
+
+            <div class="dettaglio-community-titolo">
+
+                <div>
+                    <span class="dettaglio-community-etichetta">
+                        COMMUNITY · FUORIRETE
+                    </span>
+
+                    <h1>{{ community.titolo }}</h1>
+
+                    <p class="dettaglio-community-citta">
+                        <span aria-hidden="true">⌖</span>
+                        {{ community.citta }}
+                    </p>
+                </div>
+
+                <div class="dettaglio-community-valutazione">
+
+                    {% if numero_valutazioni %}
+
+                        <strong>
+                            ★ {{ media_valutazioni|floatformat:1 }}
+                        </strong>
+
+                        <small>
+                            {{ numero_valutazioni }} valutazioni
+                        </small>
+
+                    {% else %}
+
+                        <span class="dettaglio-community-senza-voti">
+                            Nessuna valutazione
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <p class="dettaglio-community-descrizione">
+                {{ community.descrizione|linebreaksbr }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- INTERESSI -->
+
+    <section class="dettaglio-community-riquadro">
+
+        <h2>Interessi della community</h2>
+
+        <div class="dettaglio-community-interessi">
+
+            {% for interesse in community.interessi.all %}
+
+                <span class="dettaglio-community-tag">
+
+                    {% if interesse.padre %}
+                        {{ interesse.padre.nome|lower|capfirst }} ·
+                    {% endif %}
+
+                    {% if interesse.padre_id %}
+                        {{ interesse.nome }}
+                    {% else %}
+                        {{ interesse.nome|lower|capfirst }}
+                    {% endif %}
+
+                </span>
+
+            {% empty %}
+
+                <p class="dettaglio-community-testo-vuoto">
+                    Non sono ancora stati associati interessi.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- INFORMAZIONI -->
+
+    <section class="dettaglio-community-riquadro">
+
+        <h2>Informazioni sulla community</h2>
+
+        <div class="dettaglio-community-info">
+
+            <div class="dettaglio-community-info-riga">
+                <span>Organizzatore</span>
+                <strong>{{ community.organizzatore.nome }}</strong>
+            </div>
+
+            <div class="dettaglio-community-info-riga">
+
+                <span>Partecipanti</span>
+
+                <strong>
+                    {{ numero_membri }}
+                    {% if numero_membri == 1 %}
+                        membro
+                    {% else %}
+                        membri
+                    {% endif %}
+                </strong>
+
+            </div>
+
+            <div class="dettaglio-community-info-riga">
+                <span>Creata il</span>
+                <strong>
+                    {{ community.data_creazione|date:"d/m/Y" }}
+                </strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACCESSO ALLA COMMUNITY -->
+
+    <section class="dettaglio-community-riquadro dettaglio-community-azioni">
+
+        {% if request.user.is_authenticated %}
+
+            <h2>Completa il tuo profilo</h2>
+
+            <p>
+                Per partecipare alle community devi
+                prima completare il tuo profilo.
+            </p>
+
+            {% if request.user.profilo %}
+
+                <a href="{% url 'selezione_interessi' %}"
+                   class="dettaglio-community-pulsante">
+                    Completa gli interessi →
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'creazione_profilo' %}"
+                   class="dettaglio-community-pulsante">
+                    Crea il tuo profilo →
+                </a>
+
+            {% endif %}
+
+        {% else %}
+
+            <h2>Vuoi entrare in questa community?</h2>
+
+            <p>
+                Accedi o registrati a FuoriRete
+                per partecipare alle attività.
+            </p>
+
+            <a href="{% url 'login' %}"
+               class="dettaglio-community-pulsante">
+                Accedi →
+            </a>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+{% endblock %}

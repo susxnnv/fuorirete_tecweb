@@ -1,0 +1,251 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}
+    Crea una community | FuoriRete
+{% endblock %}
+
+{% block area_content %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/creazione_community.css' %}"
+>
+
+<link rel="stylesheet" href="{% static 'css/gestione_immagini.css' %}">
+
+<main class="creazione-community-pagina">
+
+    {% if request.GET.origine == 'community_gestite' %}
+
+        <a
+            href="{% url 'community_gestite' %}"
+            class="creazione-community-indietro"
+        >
+            ← Torna alle Community gestite
+        </a>
+
+    {% else %}
+
+        <a
+            href="{% url 'community' %}"
+            class="creazione-community-indietro"
+        >
+            ← Torna alle community
+        </a>
+
+    {% endif %}
+
+    <header class="creazione-community-intestazione">
+
+        <span class="creazione-community-fase">
+            PASSAGGIO 1 DI 2
+        </span>
+
+        <h1>Crea la tua community</h1>
+
+        <p>
+            Dai vita a uno spazio in cui incontrare
+            persone con le tue stesse passioni.
+        </p>
+
+    </header>
+
+    <section class="creazione-community-card">
+
+        <form method="post" enctype="multipart/form-data" autocomplete="off">
+
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="origine"
+                value="{{ request.GET.origine }}"
+            >
+
+            {% if form.non_field_errors %}
+                <div class="creazione-community-errori">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <!-- TITOLO -->
+
+            <div class="creazione-community-campo">
+
+                <label for="{{ form.titolo.id_for_label }}">
+                    Nome della community
+                </label>
+
+                {{ form.titolo }}
+
+                {% if form.titolo.errors %}
+                    <div class="creazione-community-errori">
+                        {{ form.titolo.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <!-- DESCRIZIONE -->
+
+            <div class="creazione-community-campo">
+
+                <label for="{{ form.descrizione.id_for_label }}">
+                    Descrizione
+                </label>
+
+                {{ form.descrizione }}
+
+                <span class="creazione-community-aiuto">
+                    Racconta che cosa farete insieme
+                    e a chi è dedicata la community.
+                </span>
+
+                {% if form.descrizione.errors %}
+                    <div class="creazione-community-errori">
+                        {{ form.descrizione.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <!-- IMMAGINE -->
+            <!-- IMMAGINE -->
+
+            <div class="creazione-community-campo">
+
+                <label for="id_immagine">
+                    Immagine della community
+                </label>
+
+                <div class="gestione-immagine gestione-immagine-creazione">
+
+                    <div class="gestione-immagine-anteprima">
+
+                        <img
+                            id="anteprima-community"
+                            alt="Anteprima immagine della community"
+                            hidden
+                        >
+
+                        <span
+                            id="segnaposto-community"
+                            class="gestione-immagine-segnaposto"
+                        >
+                            Nessuna immagine selezionata
+                        </span>
+
+                    </div>
+
+                    <div class="gestione-immagine-comandi">
+
+                        <span class="gestione-immagine-descrizione">
+                            Facoltativa. Puoi scegliere un'immagine rappresentativa del gruppo.
+                        </span>
+
+                        <div class="gestione-immagine-azioni">
+
+                            <label
+                                for="id_immagine"
+                                class="gestione-immagine-pulsante"
+                            >
+                                Scegli immagine
+                            </label>
+
+                            <button
+                                type="button"
+                                id="rimuovi-community"
+                                class="gestione-immagine-rimuovi"
+                                hidden
+                            >
+                                Rimuovi
+                            </button>
+
+                        </div>
+
+                        <input
+                            type="file"
+                            name="immagine"
+                            id="id_immagine"
+                            accept="image/*"
+                            class="gestione-immagine-input"
+                            data-anteprima="anteprima-community"
+                            data-segnaposto="segnaposto-community"
+                            data-rimuovi="rimuovi-community"
+                        >
+
+                    </div>
+
+                </div>
+
+                {% if form.immagine.errors %}
+                    <div class="creazione-community-errori">
+                        {{ form.immagine.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+                <span class="creazione-community-aiuto">
+                    Facoltativa. Puoi scegliere un'immagine
+                    rappresentativa del gruppo.
+                </span>
+
+                {% if form.immagine.errors %}
+                    <div class="creazione-community-errori">
+                        {{ form.immagine.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+            <!-- CITTÀ -->
+
+            <div class="creazione-community-campo">
+
+                <label for="{{ form.citta.id_for_label }}">
+                    Città
+                </label>
+
+                {{ form.citta }}
+
+                <span class="creazione-community-aiuto">
+                    Inserisci una città italiana valida.
+                </span>
+
+                {% if form.citta.errors %}
+                    <div class="creazione-community-errori">
+                        {{ form.citta.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <!-- AZIONI -->
+
+            <div class="creazione-community-azioni">
+
+                <a href="{% url 'community' %}"
+                   class="creazione-community-annulla">
+                    Annulla
+                </a>
+
+                <button type="submit"
+                        class="creazione-community-conferma">
+                    Continua: scegli interessi →
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+<script src="{% static 'js/gestione_immagini.js' %}?v=5" defer></script>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+
+{% block area_content %}
+
+<section class="home-benvenuto">
+
+    <p class="home-etichetta">
+        Bentornata su FuoriRete
+    </p>
+
+    <h1>
+        Ciao {{ request.user.profilo.nome }} 👋
+    </h1>
+
+    <p>
+        Scopri nuove persone compatibili con te e trova community
+        con cui condividere interessi ed esperienze.
+    </p>
+
+</section>
+
+<section class="home-scelte">
+
+    <a href="{% url 'persone' %}" class="home-riquadro">
+
+        <span class="home-icona">♙</span>
+
+        <div>
+            <h2>Persone</h2>
+            <p>Scopri profili compatibili con i tuoi interessi.</p>
+        </div>
+
+    </a>
+
+    <a href="{% url 'community' %}" class="home-riquadro">
+
+        <span class="home-icona">♧</span>
+
+        <div>
+            <h2>Community</h2>
+            <p>Trova gruppi, attività ed eventi vicino a te.</p>
+        </div>
+
+    </a>
+
+</section>
+
+{% endblock %}

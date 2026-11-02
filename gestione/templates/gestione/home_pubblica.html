@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/home_pubblica.css' %}">
+
+<main class="home-pubblica">
+
+    <!-- PRESENTAZIONE DELLA PIATTAFORMA -->
+
+    <section class="presentazione">
+
+        <h1>FuoriRete</h1>
+
+        <div class="presentazione-testo">
+            Trova persone con i tuoi stessi interessi
+            e scopri nuove community.
+        </div>
+
+        <div class="presentazione-azioni">
+       
+            <a href="{% url 'login' %}" class="pulsante-principale">
+                Accedi
+            </a>
+
+            <p>
+                Non hai ancora un account?
+                <a href="{% url 'registrazione' %}">Registrati</a>
+            </p>
+
+        
+        </div>
+
+    </section>
+
+    <!-- COMMUNITY PUBBLICHE -->
+
+    <section class="community-pubbliche">
+
+        <div class="community-pubbliche-intestazione">
+
+            <div>
+                <h2>Scopri le community</h2>
+
+                <p class="community-sottotitolo">
+                    Esplora i gruppi più apprezzati
+                    della community FuoriRete.
+                </p>
+            </div>
+
+            {% if community %}
+                <span class="community-pubbliche-scorri">
+                    Scorri per esplorare →
+                </span>
+            {% endif %}
+
+        </div>
+
+        <div class="community-contenitore">
+
+            {% if community %}
+
+                {% for gruppo in community %}
+
+                    <article class="community-card"
+                            data-url="{% url 'dettaglio_community' gruppo.pk %}?origine=home_pubblica"
+                            tabindex="0"
+                            role="link"
+                            aria-label="Apri la community {{ gruppo.titolo }}">                   
+
+                        <div class="community-card-immagine">
+
+                            {% if gruppo.immagine %}
+                                <img
+                                    src="{{ gruppo.immagine.url }}"
+                                    alt="Immagine della community {{ gruppo.titolo }}"
+                                >
+                            {% else %}
+                                <span aria-hidden="true">♧</span>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="community-card-contenuto">
+
+                            <h3>{{ gruppo.titolo }}</h3>
+
+                            <p class="community-citta">
+                                {{ gruppo.citta }}
+                            </p>
+
+                            <p class="community-card-descrizione">
+                                {{ gruppo.descrizione|truncatewords:18 }}
+                            </p>
+
+                            <div class="community-card-valutazione">
+
+                                {% if gruppo.numero_valutazioni %}
+
+                                    <strong>
+                                        ★ {{ gruppo.media_valutazioni|floatformat:1 }}
+                                    </strong>
+
+                                    <small>
+                                        {{ gruppo.numero_valutazioni }}
+                                        valutazioni
+                                    </small>
+
+                                {% else %}
+
+                                    <small>
+                                        Nessuna valutazione
+                                    </small>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="community-vuote">
+
+                    <div class="community-icona">
+                        ♧
+                    </div>
+
+                    <h3>Nessuna community disponibile</h3>
+
+                    <p>
+                        Al momento non sono presenti
+                        community su FuoriRete.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script>
+    document.querySelectorAll(
+        '.community-pubbliche .community-card[data-url]'
+    ).forEach(function (card) {
+
+        function apriCommunity() {
+            window.location.href = card.dataset.url;
+        }
+
+        card.addEventListener('click', apriCommunity);
+
+        card.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                apriCommunity();
+            }
+        });
+
+    });
+</script>
+
+
+{% endblock %}

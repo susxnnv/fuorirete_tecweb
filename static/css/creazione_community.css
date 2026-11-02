@@ -1,0 +1,197 @@
+
+/* ==========================================
+   FUORIRETE - CREAZIONE COMMUNITY
+========================================== */
+
+.creazione-community-pagina {
+    max-width: 760px;
+    width: 100%;
+    margin: 25px auto 65px;
+    color: #302823;
+}
+
+.creazione-community-indietro {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: #fa5943;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.creazione-community-indietro:hover {
+    text-decoration: underline;
+}
+
+/* INTESTAZIONE */
+
+.creazione-community-intestazione {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.creazione-community-fase {
+    display: inline-block;
+    padding: 7px 13px;
+    border-radius: 30px;
+    background: #fff0e9;
+    color: #fa5943;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.creazione-community-intestazione h1 {
+    margin: 16px 0 10px;
+    font-size: 29px;
+}
+
+.creazione-community-intestazione p {
+    margin: 0 auto;
+    max-width: 460px;
+    color: #8c7a70;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* CARD */
+
+.creazione-community-card {
+    padding: 30px;
+    border: 1px solid #eae2dc;
+    border-radius: 19px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(40, 30, 20, .035);
+}
+
+/* CAMPI */
+
+.creazione-community-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 23px;
+}
+
+.creazione-community-campo label {
+    color: #44342c;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.creazione-community-campo input[type="text"],
+.creazione-community-campo textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #e6dcd5;
+    border-radius: 11px;
+    background: #fffdfa;
+    color: #302823;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+.creazione-community-campo textarea {
+    resize: vertical;
+    min-height: 125px;
+    line-height: 1.6;
+}
+
+.creazione-community-campo input[type="text"]:focus,
+.creazione-community-campo textarea:focus {
+    border-color: #fa5943;
+    box-shadow: 0 0 0 3px rgba(250, 89, 67, .09);
+}
+
+.creazione-community-campo input[type="file"] {
+    max-width: 100%;
+    color: #806c62;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.creazione-community-aiuto {
+    color: #a08b7f;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.creazione-community-errori {
+    margin-top: 5px;
+    padding: 10px 12px;
+    border: 1px solid #f2bdb5;
+    border-radius: 9px;
+    background: #fff1ee;
+    color: #b9392e;
+    font-size: 12px;
+}
+
+.creazione-community-errori ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+/* AZIONI */
+
+.creazione-community-azioni {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.creazione-community-annulla {
+    padding: 12px 18px;
+    color: #806c62;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.creazione-community-conferma {
+    padding: 13px 20px;
+    border: none;
+    border-radius: 11px;
+    background: #fa5943;
+    color: white;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.creazione-community-conferma:hover {
+    background: #e84b36;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+    .creazione-community-pagina {
+        margin-top: 15px;
+    }
+
+    .creazione-community-intestazione h1 {
+        font-size: 23px;
+    }
+
+    .creazione-community-card {
+        padding: 20px;
+    }
+
+    .creazione-community-azioni {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .creazione-community-annulla {
+        text-align: center;
+    }
+
+    .creazione-community-conferma {
+        width: 100%;
+    }
+}

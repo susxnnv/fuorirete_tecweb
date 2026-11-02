@@ -1,0 +1,493 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+
+{% block area_content %}
+
+<div class="profilo-pagina">
+
+    <!-- BANNER PROFILO -->
+
+    <section class="profilo-banner">
+
+        <div class="profilo-identita">
+
+            {% if request.user.profilo.foto %}
+                <img
+                    src="{{ request.user.profilo.foto.url }}"
+                    alt="Foto del profilo"
+                    class="profilo-foto"
+                >
+            {% endif %}
+
+            <div class="profilo-dati">
+
+                <h1>
+                    {{ request.user.profilo.nome }},
+                    {{ request.user.profilo.eta }}
+                </h1>
+
+                <p class="profilo-meta">
+
+                    📍 {{ request.user.profilo.citta }}
+
+                    {% if request.user.profilo.occupazione %}
+                        · {{ request.user.profilo.get_occupazione_display }}
+                    {% endif %}
+
+                    · {{ request.user.profilo.lingue|join:", " }}
+
+                </p>
+
+                {% if request.user.profilo.descrizione %}
+                    <p class="profilo-descrizione">
+                        {{ request.user.profilo.descrizione }}
+                    </p>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <a href="{% url 'anteprima_profilo' %}"
+            class="profilo-anteprima-link">
+            ◉ Anteprima profilo
+        </a>
+
+    </section>
+
+
+    <!-- INTERESSI -->
+
+    <section class="profilo-interessi-panel">
+
+        <h2>I tuoi interessi</h2>
+
+        <div class="profilo-tags">
+
+            {% for interesse in request.user.profilo.interessi.all %}
+
+                <span class="profilo-tag">
+
+                    {% if interesse.padre %}
+                        {{ interesse.padre.nome|lower|capfirst }} ·
+                    {% endif %}
+
+                    {% if interesse.padre_id %}
+                        {{ interesse.nome }}
+                    {% else %}
+                        {{ interesse.nome|lower|capfirst }}
+                    {% endif %}
+
+                </span>
+
+            {% empty %}
+
+                <p>Nessun interesse selezionato.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- STATISTICHE -->
+
+    <section class="profilo-statistiche">
+
+        <div class="profilo-stat">
+
+            <span class="profilo-stat-icona">♡</span>
+
+            <strong> {{ numero_match }} </strong>
+
+            <small>Match</small>
+
+        </div>
+
+        <div class="profilo-stat">
+
+            <span class="profilo-stat-icona">♧</span>
+
+            <strong>
+                {{ request.user.profilo.community_partecipate.count }}
+            </strong>
+
+            <small>Community</small>
+
+        </div>
+
+    </section>
+
+
+    <!-- DUE COLONNE -->
+
+    <div class="profilo-layout">
+
+        <!-- COLONNA SINISTRA -->
+
+        <div class="profilo-colonna-main">
+
+            <section class="profilo-sezione-community">
+
+                <div class="profilo-titolo-riga">
+
+                    <h2>Le mie community</h2>
+
+                    <a href="{% url 'community' %}">
+                        Esplora altre →
+                    </a>
+
+                </div>
+
+                <div class="profilo-community-scroll">
+
+                    {% for gruppo in request.user.profilo.community_partecipate.all %}
+
+                        <a
+                            href="{% url 'dettaglio_community' gruppo.pk %}?origine=profilo"
+                            class="profilo-community-card profilo-community-link"
+                            aria-label="Visualizza la community {{ gruppo.titolo }}"
+                        >
+
+                            <h3>{{ gruppo.titolo }}</h3>
+
+                            <p>{{ gruppo.citta }}</p>
+
+                        </a>
+
+
+                    {% empty %}
+
+                        <div class="profilo-community-vuota">
+
+                            <p>
+                                Non fai ancora parte di nessuna community.
+                            </p>
+
+                            <a href="{% url 'community' %}">
+                                Scopri le community →
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+
+            <!-- CONNESSIONI -->
+
+            <section class="profilo-sezione-connessioni">
+
+                <h2>Connessioni</h2>
+
+                <div class="profilo-connessioni">
+
+                    <div class="profilo-connessione">
+
+                        <a
+                            href="{% url 'match_chat' %}"
+                            class="profilo-iconcina profilo-iconcina-link"
+                            aria-label="Vai a Match e Chat"
+                        >
+                            ♡
+                        </a>
+
+                        <div class="profilo-connessione-testo">
+
+                            <h3>Match e chat</h3>
+
+                            <p>
+                                Guarda i tuoi match e continua
+                                le conversazioni iniziate.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="profilo-connessione">
+
+                        <a
+                            href="{% url 'like_ricevuti' %}"
+                            class="profilo-iconcina profilo-iconcina-link"
+                            aria-label="Vai a Like ricevuti"
+                        >
+                            ♡
+                        </a>
+
+                        <div class="profilo-connessione-testo">
+
+                            <h3>Like ricevuti</h3>
+
+                            <p>
+                                Scopri le persone che ti hanno messo Like.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- COLONNA DESTRA -->
+
+        <aside class="profilo-colonna-side">
+
+            <section class="profilo-menu">
+
+                <h2>Profilo</h2>
+
+                <a href="{% url 'modifica_profilo' %}"
+                    class="profilo-voce">
+
+                    <span>✎ &nbsp; Modifica profilo</span>
+
+                    <span>→</span>
+
+                </a>
+
+                <a
+                    class="profilo-voce"
+                    href="{% url 'community_gestite' %}"
+                >
+                    <span>♧ &nbsp; Community gestite</span>
+                    <span>→</span>
+                </a>
+
+
+                <a href="{% url 'notifiche' %}"
+                   class="profilo-voce">
+
+                    <span>♧ &nbsp; Notifiche</span>
+
+                    <span>→</span>
+
+                </a>
+
+                <a href="{% url 'cambia_password' %}"
+                   class="profilo-voce">
+
+                    <span>♙ &nbsp; Cambia password</span>
+
+                    <span>→</span>
+
+                </a>
+
+                <a href="{% url 'elimina_account' %}"
+                    class="profilo-voce">
+
+                    <span>× &nbsp; Elimina account</span>
+
+                    <span>→</span>
+
+                </a>
+
+                
+                <div class="profilo-logout">
+
+                    <button
+                        type="button"
+                        id="apri-conferma-logout"
+                        aria-haspopup="dialog"
+                        aria-controls="conferma-logout"
+                    >
+                        ↪ Logout
+                    </button>
+
+                </div>
+
+
+            </section>
+
+            <!-- COMPLETAMENTO PROFILO -->
+
+            <section class="profilo-completamento">
+
+                <h2>Completa il profilo</h2>
+
+                <p>
+                    Più informazioni aggiungi,
+                    più il tuo profilo sarà completo.
+                </p>
+
+                <div
+                    class="profilo-barra"
+                    role="progressbar"
+                    aria-label="Completamento del profilo"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="{{ percentuale_completamento }}"
+                >
+                    <span
+                        style="width: {{ percentuale_completamento }}%;"
+                    ></span>
+                </div>
+
+                <small>
+                    {{ percentuale_completamento }}% completato
+                </small>
+
+            </section>
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<!-- FINESTRA DI CONFERMA LOGOUT -->
+
+<div
+    id="conferma-logout"
+    class="logout-overlay"
+    hidden
+>
+
+    <div
+        class="logout-popup"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="logout-titolo"
+        aria-describedby="logout-descrizione"
+        tabindex="-1"
+    >
+
+        <span class="logout-popup-icona">
+            ↪
+        </span>
+
+        <h2 id="logout-titolo">
+            Vuoi uscire da FuoriRete?
+        </h2>
+
+        <p id="logout-descrizione">
+            Sei sicura di voler effettuare il logout?
+            Potrai accedere nuovamente quando vuoi.
+        </p>
+
+        <div class="logout-popup-azioni">
+
+            <button
+                type="button"
+                id="annulla-logout"
+                class="logout-popup-annulla"
+            >
+                Annulla
+            </button>
+
+            <form
+                method="post"
+                action="{% url 'logout' %}"
+                class="logout-popup-form"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="logout-popup-conferma"
+                >
+                    Sì, esci
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const pulsanteApri = document.getElementById(
+        'apri-conferma-logout'
+    );
+
+    const overlay = document.getElementById(
+        'conferma-logout'
+    );
+
+    const popup = overlay.querySelector('.logout-popup');
+
+    const pulsanteAnnulla = document.getElementById(
+        'annulla-logout'
+    );
+
+    let elementoPrecedente = null;
+
+    function apriPopup() {
+        elementoPrecedente = document.activeElement;
+        overlay.hidden = false;
+        document.body.classList.add('logout-aperto');
+        pulsanteAnnulla.focus();
+    }
+
+    function chiudiPopup() {
+        overlay.hidden = true;
+        document.body.classList.remove('logout-aperto');
+
+        if (elementoPrecedente) {
+            elementoPrecedente.focus();
+        }
+    }
+
+    pulsanteApri.addEventListener('click', apriPopup);
+
+    pulsanteAnnulla.addEventListener('click', chiudiPopup);
+
+    overlay.addEventListener('click', function (event) {
+        if (event.target === overlay) {
+            chiudiPopup();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (overlay.hidden) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            chiudiPopup();
+        }
+
+        if (event.key === 'Tab') {
+            const elementi = Array.from(
+                popup.querySelectorAll(
+                    'button:not([disabled]), a[href], input:not([disabled])'
+                )
+            );
+
+            const primo = elementi[0];
+            const ultimo = elementi[elementi.length - 1];
+
+            if (event.shiftKey && document.activeElement === primo) {
+                event.preventDefault();
+                ultimo.focus();
+            } else if (
+                !event.shiftKey &&
+                document.activeElement === ultimo
+            ) {
+                event.preventDefault();
+                primo.focus();
+            }
+        }
+    });
+
+});
+</script>
+
+
+{% endblock %}

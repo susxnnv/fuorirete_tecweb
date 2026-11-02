@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/area_autenticata.css' %}?v=2">
+<header class="navbar">
+
+    <!-- LOGO -->
+
+    <a href="{% url 'home' %}" class="navbar-logo">
+
+        <span class="navbar-logo-simbolo">F</span>
+
+        <span>FuoriRete</span>
+
+    </a>
+
+
+    <!-- COLLEGAMENTI -->
+
+    <nav class="navbar-links" aria-label="Navigazione principale">
+
+        <a href="{% url 'home' %}"
+           class="{% if request.resolver_match.url_name == 'home' %}attivo{% endif %}">
+            Home
+        </a>
+
+        <a href="{% url 'persone' %}"
+           class="{% if request.resolver_match.url_name == 'persone' %}attivo{% endif %}">
+            Persone
+        </a>
+
+        <a href="{% url 'community' %}"
+           class="{% if request.resolver_match.url_name == 'community' %}attivo{% endif %}">
+            Community
+        </a>
+
+    </nav>
+
+
+    <!-- ICONA PROFILO A DESTRA -->
+
+    <a
+        href="{% url 'profilo' %}"
+        class="navbar-profilo {% if request.resolver_match.url_name == 'profilo' %}attivo{% endif %}"
+        aria-label="Il mio profilo"
+    >
+        ♙
+    </a>
+
+</header>
+
+
+<!-- CAMPANELLA FLOTTANTE -->
+<!-- Compare soltanto con notifiche non lette -->
+
+{% if navbar_notifiche_non_lette > 0 %}
+
+    <a
+        href="{% url 'notifiche' %}"
+        class="notifiche-flottante"
+        aria-label="{{ navbar_notifiche_non_lette }} notifiche non lette"
+        title="Hai nuove notifiche"
+    >
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="27"
+            height="27"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+        >
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M10 21h4"></path>
+        </svg>
+
+        <span class="notifiche-flottante-contatore">
+            {% if navbar_notifiche_non_lette > 99 %}
+                99+
+            {% else %}
+                {{ navbar_notifiche_non_lette }}
+            {% endif %}
+        </span>
+
+    </a>
+
+{% endif %}
+
+
+<main class="area-contenuto">
+
+    {% block area_content %}
+    {% endblock %}
+
+</main>
+
+{% endblock %}

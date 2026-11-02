@@ -1,0 +1,255 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+
+{% block area_content %}
+
+<div class="anteprima-pagina">
+
+    <!-- INTESTAZIONE -->
+
+    <section class="anteprima-intestazione">
+
+        <div>
+            <h1>Anteprima del tuo profilo</h1>
+
+            <p>
+                Ecco come gli altri utenti vedranno
+                le tue informazioni personali.
+            </p>
+        </div>
+
+        <a href="{% url 'profilo' %}"
+           class="anteprima-indietro">
+            ← Torna al profilo
+        </a>
+
+    </section>
+
+
+    <!-- BANNER DEL PROFILO -->
+
+    <section class="anteprima-banner">
+
+        <div class="anteprima-identita">
+
+            <img
+                src="{{ request.user.profilo.foto.url }}"
+                alt="Foto di {{ request.user.profilo.nome }}"
+                class="anteprima-foto"
+            >
+
+            <div class="anteprima-dati">
+
+                <h2>
+                    {{ request.user.profilo.nome }},
+                    {{ request.user.profilo.eta }}
+                </h2>
+
+                <p class="anteprima-meta">
+
+                    <span>
+                        📍 {{ request.user.profilo.citta }}
+                    </span>
+
+                    {% if request.user.profilo.occupazione %}
+                        <span>
+                            · {{ request.user.profilo.get_occupazione_display }}
+                        </span>
+                    {% endif %}
+
+                </p>
+
+                <div class="anteprima-cerca">
+
+                    <span class="anteprima-cerca-label">
+                        Cerca:
+                    </span>
+
+                    {% for scelta in request.user.profilo.cosa_cerca %}
+
+                        <span class="anteprima-tag">
+
+                            {% if scelta == 'AMICIZIE' %}
+                                Amicizie
+                            {% elif scelta == 'COMPAGNO_STUDIO' %}
+                                Compagno di studio
+                            {% elif scelta == 'COINQUILINO' %}
+                                Coinquilino
+                            {% else %}
+                                {{ scelta }}
+                            {% endif %}
+
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTENUTO A DUE COLONNE -->
+
+    <div class="anteprima-layout">
+
+        <!-- COLONNA PRINCIPALE -->
+
+        <div class="anteprima-colonna-principale">
+
+            <!-- DESCRIZIONE -->
+
+            <section class="anteprima-riquadro">
+
+                <h2>Su di me</h2>
+
+                {% if request.user.profilo.descrizione %}
+
+                    <p class="anteprima-descrizione">
+                        {{ request.user.profilo.descrizione }}
+                    </p>
+
+                {% else %}
+
+                    <p class="anteprima-testo-vuoto">
+                        Nessuna descrizione inserita.
+                    </p>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- INTERESSI -->
+
+            <section class="anteprima-riquadro">
+
+                <h2>Interessi</h2>
+
+                <div class="anteprima-interessi">
+
+                    {% for interesse in request.user.profilo.interessi.all %}
+
+                        <span class="anteprima-tag">
+
+                            {% if interesse.padre %}
+                                {{ interesse.padre.nome|lower|capfirst }} ·
+                            {% endif %}
+
+                            {% if interesse.padre_id %}
+                                {{ interesse.nome }}
+                            {% else %}
+                                {{ interesse.nome|lower|capfirst }}
+                            {% endif %}
+
+                        </span>
+
+                    {% empty %}
+
+                        <p class="anteprima-testo-vuoto">
+                            Nessun interesse selezionato.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- COLONNA LATERALE -->
+
+        <aside class="anteprima-colonna-laterale">
+
+            <!-- INFORMAZIONI PERSONALI -->
+
+            <section class="anteprima-riquadro">
+
+                <h2>Informazioni</h2>
+
+                <div class="anteprima-info">
+
+                    <div class="anteprima-info-riga">
+
+                        <span class="anteprima-info-icona">📍</span>
+
+                        <span>
+                            {{ request.user.profilo.citta }}
+                        </span>
+
+                    </div>
+
+                    <div class="anteprima-info-riga">
+
+                        <span class="anteprima-info-icona">◇</span>
+
+                        <span>
+                            {{ request.user.profilo.get_genere_display }}
+                        </span>
+
+                    </div>
+
+                    {% if request.user.profilo.occupazione %}
+
+                        <div class="anteprima-info-riga">
+
+                            <span class="anteprima-info-icona">♙</span>
+
+                            <span>
+                                {{ request.user.profilo.get_occupazione_display }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+                    <div class="anteprima-info-riga">
+
+                        <span class="anteprima-info-icona">◎</span>
+
+                        <span>
+                            {{ request.user.profilo.lingue|join:", " }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROFILO PERSONALE -->
+
+            <section class="anteprima-riquadro anteprima-nota">
+
+                <h2>Il tuo profilo pubblico</h2>
+
+                <p>
+                    Questa pagina mostra le informazioni
+                    del tuo profilo personale così come
+                    verranno presentate agli altri utenti.
+                </p>
+
+                <p>
+                    Puoi tornare alla sezione Profilo
+                    per gestire le tue informazioni.
+                </p>
+
+                <a href="{% url 'profilo' %}">
+                    Torna al profilo →
+                </a>
+
+            </section>
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}

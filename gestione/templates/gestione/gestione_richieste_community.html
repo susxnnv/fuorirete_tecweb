@@ -1,0 +1,214 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}
+    Gestione richieste | FuoriRete
+{% endblock %}
+
+{% block area_content %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/gestione_richieste_community.css' %}"
+>
+
+<main class="richieste-community-pagina">
+
+    <!-- INDIETRO -->
+
+    <a
+        href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}"
+        class="richieste-community-indietro"
+    >
+        ← Torna indietro
+    </a>
+
+
+    <!-- INTESTAZIONE -->
+
+    <header class="richieste-community-intestazione">
+
+        <span class="richieste-community-etichetta">
+            GESTIONE COMMUNITY
+        </span>
+
+        <h1>Richieste di partecipazione</h1>
+
+        <p>
+            Community:
+            <strong>{{ community.titolo }}</strong>
+        </p>
+
+        <span class="richieste-community-contatore">
+            {{ numero_richieste }}
+            {% if numero_richieste == 1 %}
+                richiesta in attesa
+            {% else %}
+                richieste in attesa
+            {% endif %}
+        </span>
+
+    </header>
+
+
+    <!-- MESSAGGI -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="richieste-community-messaggio">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    <!-- ELENCO RICHIESTE -->
+
+    <section class="richieste-community-elenco">
+
+        {% for richiesta in richieste %}
+
+            <article class="richieste-community-card">
+
+                <!-- DATI RICHIEDENTE -->
+
+                <div class="richieste-community-dati">
+
+                    <div class="richieste-community-avatar">
+
+                        {% if richiesta.utente.foto %}
+
+                            <img
+                                src="{{ richiesta.utente.foto.url }}"
+                                alt=""
+                            >
+
+                        {% else %}
+
+                            <span aria-hidden="true">♧</span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="richieste-community-persona">
+
+                        <h2>
+                            <a href="{% url 'dettaglio_persona' richiesta.utente.pk %}">
+                                {{ richiesta.utente.nome }}
+                            </a>
+                        </h2>
+
+                        <p>
+                            {{ richiesta.utente.citta }}
+                        </p>
+
+                        <small>
+                            Richiesta inviata il
+                            {{ richiesta.data_richiesta|date:"d/m/Y" }}
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AZIONI ORGANIZZATORE -->
+
+                <div class="richieste-community-azioni">
+
+                    <!-- RIFIUTA -->
+
+                    <form
+                        method="post"
+                        action="{% url 'gestisci_richiesta_community' community.pk richiesta.pk %}"
+                    >
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="origine"
+                            value="{{ request.GET.origine }}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="azione"
+                            value="rifiuta"
+                        >
+
+                        <button
+                            type="submit"
+                            class="richieste-community-rifiuta"
+                        >
+                            Rifiuta
+                        </button>
+
+                    </form>
+
+
+                    <!-- ACCETTA -->
+
+                    <form
+                        method="post"
+                        action="{% url 'gestisci_richiesta_community' community.pk richiesta.pk %}"
+                    >
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="origine"
+                            value="{{ request.GET.origine }}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="azione"
+                            value="accetta"
+                        >
+
+                        <button
+                            type="submit"
+                            class="richieste-community-accetta"
+                        >
+                            Accetta
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="richieste-community-vuoto">
+
+                <span aria-hidden="true">♧</span>
+
+                <h2>Nessuna richiesta in attesa</h2>
+
+                <p>
+                    Al momento non ci sono richieste
+                    di partecipazione da gestire
+                    per questa community.
+                </p>
+
+                <a href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}">
+                    Torna alle Community gestite →
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+</main>
+
+{% endblock %}

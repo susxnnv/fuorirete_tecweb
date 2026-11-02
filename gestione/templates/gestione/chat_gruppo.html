@@ -1,0 +1,251 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}
+    Chat {{ community.titolo }} | FuoriRete
+{% endblock %}
+
+{% block area_content %}
+
+<link rel="stylesheet" href="{% static 'css/chat_gruppo.css' %}">
+
+<main class="chat-gruppo-pagina">
+
+    <!-- INDIETRO -->
+    {% if origine_community == 'notifiche' %}
+
+        <a
+            href="{% url 'notifiche' %}"
+            class="chat-gruppo-indietro"
+        >
+            ← Torna alle Notifiche
+        </a>
+
+    {% else %}
+
+        <a
+            href="{% url 'dettaglio_community' community.pk %}?origine={{ origine_community }}{% if anteprima_membro %}&amp;anteprima=1{% if request.GET.da == 'dettaglio' %}&amp;da=dettaglio{% endif %}{% endif %}"
+            class="chat-gruppo-indietro"
+        >
+            ← Torna alla community
+        </a>
+
+    {% endif %}
+
+    <!-- CONTENITORE CHAT -->
+
+    <section class="chat-gruppo-contenitore">
+
+        <!-- INTESTAZIONE -->
+
+        <header class="chat-gruppo-intestazione">
+
+            <div class="chat-gruppo-icona" aria-hidden="true">
+                ♧
+            </div>
+
+            <div class="chat-gruppo-informazioni">
+
+                <span class="chat-gruppo-etichetta">
+                    CHAT DELLA COMMUNITY
+                </span>
+
+                <h1>{{ community.titolo }}</h1>
+
+                <p>
+                    {{ numero_membri }}
+                    {% if numero_membri == 1 %}
+                        membro
+                    {% else %}
+                        membri
+                    {% endif %}
+                    · {{ community.citta }}
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- MESSAGGI -->
+
+        <div
+            class="chat-gruppo-messaggi"
+            id="chat-gruppo-messaggi"
+            aria-label="Messaggi della community"
+        >
+
+            {% for messaggio in messaggi %}
+
+                {% if messaggio.autore_id == mio_profilo.pk %}
+
+                    <!-- MESSAGGIO INVIATO -->
+
+                    <article class="chat-gruppo-messaggio chat-gruppo-mio">
+
+                        <div class="chat-gruppo-bolla">
+
+                            <span class="chat-gruppo-autore">
+                                Tu
+                            </span>
+
+                            <p>{{ messaggio.testo|linebreaksbr }}</p>
+
+                            <time datetime="{{ messaggio.data_ora|date:'c' }}">
+                                {{ messaggio.data_ora|date:"d/m/Y H:i" }}
+                            </time>
+
+                        </div>
+
+                    </article>
+
+                {% else %}
+
+                    <!-- MESSAGGIO RICEVUTO -->
+
+                    <article class="chat-gruppo-messaggio chat-gruppo-altro">
+
+                        <div class="chat-gruppo-avatar">
+
+                            {% if messaggio.autore.foto %}
+
+                                <img
+                                    src="{{ messaggio.autore.foto.url }}"
+                                    alt=""
+                                >
+
+                            {% else %}
+
+                                <span aria-hidden="true">♧</span>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="chat-gruppo-bolla">
+
+                            <span class="chat-gruppo-autore">
+                                {{ messaggio.autore.nome }}
+                            </span>
+
+                            <p>{{ messaggio.testo|linebreaksbr }}</p>
+
+                            <time datetime="{{ messaggio.data_ora|date:'c' }}">
+                                {{ messaggio.data_ora|date:"d/m/Y H:i" }}
+                            </time>
+
+                        </div>
+
+                    </article>
+
+                {% endif %}
+
+            {% empty %}
+
+                <div class="chat-gruppo-vuota">
+
+                    <span aria-hidden="true">♧</span>
+
+                    <h2>La conversazione inizia qui!</h2>
+
+                    <p>
+                        Non ci sono ancora messaggi.
+
+                        {% if anteprima_membro %}
+                            I membri possono utilizzare
+                            questa chat per conoscersi.
+                        {% else %}
+                            Scrivi qualcosa per iniziare
+                            a conoscere gli altri membri.
+                        {% endif %}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- FORM INVIO / MODALITÀ ANTEPRIMA -->
+
+        <div class="chat-gruppo-compositore">
+
+            {% if anteprima_membro %}
+
+                <!-- ANTEPRIMA: SOLA LETTURA -->
+
+                <p class="chat-gruppo-nota">
+                    Stai visualizzando la chat in modalità anteprima.
+                    Puoi leggere i messaggi, ma non inviarne.
+                </p>
+
+            {% else %}
+
+                <!-- CHAT NORMALE -->
+
+                {% if errore_messaggio %}
+
+                    <p class="chat-gruppo-errore" role="alert">
+                        {{ errore_messaggio }}
+                    </p>
+
+                {% endif %}
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="origine"
+                        value="{{ origine_community }}"
+                    >
+
+                    <label
+                        for="chat-gruppo-testo"
+                        class="chat-gruppo-label"
+                    >
+                        Scrivi un messaggio
+                    </label>
+
+                    <div class="chat-gruppo-input-riga">
+
+                        <textarea
+                            id="chat-gruppo-testo"
+                            name="testo"
+                            maxlength="2000"
+                            rows="2"
+                            placeholder="Scrivi alla community..."
+                            required
+                        >{{ testo_inserito }}</textarea>
+
+                        <button
+                            type="submit"
+                            class="chat-gruppo-invia"
+                        >
+                            Invia →
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <p class="chat-gruppo-nota">
+                    La chat non è in tempo reale.
+                    Aggiorna la pagina per visualizzare
+                    i nuovi messaggi.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="{% static 'js/chat_gruppo.js' %}" defer></script>
+
+{% endblock %}

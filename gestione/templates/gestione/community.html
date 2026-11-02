@@ -1,0 +1,460 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block area_content %}
+
+<link rel="stylesheet" href="{% static 'css/community.css' %}">
+<link rel="stylesheet" href="{% static 'css/filtro_interessi.css' %}?v=2">
+
+<div class="scoperta-community-pagina">
+
+    <!-- INTESTAZIONE -->
+
+    <header class="scoperta-community-intestazione">
+
+        <div>
+            <span class="scoperta-community-etichetta">
+                FUORIRETE · COMMUNITY
+            </span>
+
+            <h1>Scopri le community</h1>
+
+            <p>
+                Trova gruppi che condividono le tue passioni
+                e scopri nuove occasioni per stare insieme.
+            </p>
+        </div>
+
+        <!-- PULSANTE CREAZIONE COMMUNITY -->
+
+        <a
+            href="{% url 'creazione_community' %}"
+            class="scoperta-community-crea"
+        >
+            + Crea community
+        </a>
+
+    </header>
+
+
+    <!-- RICERCA E FILTRI -->
+
+    <section class="scoperta-community-ricerca">
+
+        <form method="get"
+              action="{% url 'community' %}"
+              class="scoperta-community-form-ricerca">
+
+            <!-- Mantiene i filtri dopo una ricerca -->
+            {% if filtro_citta %}
+                <input type="hidden"
+                       name="citta"
+                       value="{{ filtro_citta }}">
+            {% endif %}
+
+            {% for id in filtro_interessi %}
+                <input type="hidden"
+                       name="interessi"
+                       value="{{ id }}">
+            {% endfor %}
+
+            {% if filtro_partecipazione != 'tutte' %}
+                <input type="hidden"
+                       name="partecipazione"
+                       value="{{ filtro_partecipazione }}">
+            {% endif %}
+
+            <input
+                type="search"
+                name="ricerca"
+                value="{{ ricerca }}"
+                maxlength="100"
+                placeholder="Cerca una community per nome..."
+                aria-label="Cerca una community per titolo"
+            >
+
+            <button type="submit"
+                    class="scoperta-community-cerca">
+                Cerca
+            </button>
+
+        </form>
+
+        <button
+            type="button"
+            id="apri-filtri-community"
+            class="scoperta-community-apri-filtri"
+        >
+            ⚙ Filtri
+            {% if filtri_attivi %}
+                <span class="scoperta-community-puntino"></span>
+            {% endif %}
+        </button>
+
+    </section>
+
+
+    <!-- RISULTATI -->
+
+    <section class="scoperta-community-risultati">
+
+        <div class="scoperta-community-risultati-testa">
+
+            <div>
+                <h2>Community per te</h2>
+
+                <p>
+                    {{ numero_risultati }}
+                    {% if numero_risultati == 1 %}
+                        community trovata
+                    {% else %}
+                        community trovate
+                    {% endif %}
+                </p>
+            </div>
+
+            {% if filtri_attivi or ricerca %}
+
+                <a href="{% url 'community' %}"
+                   class="scoperta-community-azzera-link">
+                    Azzera ricerca e filtri
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="scoperta-community-elenco">
+
+            {% for gruppo in community %}
+
+                <a href="{% url 'dettaglio_community' gruppo.pk %}?origine=community"
+                    class="scoperta-community-card">
+
+                    <!-- IMMAGINE -->
+
+                    <div class="scoperta-community-foto">
+
+                        {% if gruppo.immagine %}
+                            <img
+                                src="{{ gruppo.immagine.url }}"
+                                alt="Immagine della community {{ gruppo.titolo }}"
+                            >
+                        {% else %}
+                            <span aria-hidden="true">♧</span>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- DATI COMMUNITY -->
+
+                    <div class="scoperta-community-card-contenuto">
+
+                        <div class="scoperta-community-card-superiore">
+
+                            <div>
+                                <h3>{{ gruppo.titolo }}</h3>
+
+                                <span class="scoperta-community-citta">
+                                    ♧ {{ gruppo.citta }}
+                                </span>
+                            </div>
+
+                            <div class="scoperta-community-valutazione">
+
+                                {% if gruppo.numero_valutazioni %}
+
+                                    <strong>
+                                        ★ {{ gruppo.media_valutazioni|floatformat:1 }}
+                                    </strong>
+
+                                    <small>
+                                        {{ gruppo.numero_valutazioni }}
+                                        valutazioni
+                                    </small>
+
+                                {% else %}
+
+                                    <small>
+                                        Nessuna valutazione
+                                    </small>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="scoperta-community-descrizione">
+                            {{ gruppo.descrizione|truncatewords:35 }}
+                        </p>
+
+
+                        <!-- INTERESSI -->
+
+                        <div class="scoperta-community-interessi">
+
+                            {% for interesse in gruppo.interessi.all %}
+
+                                <span class="scoperta-community-tag">
+
+                                    {% if interesse.padre %}
+                                        {{ interesse.padre.nome|lower|capfirst }} ·
+                                    {% endif %}
+
+                                    {% if interesse.padre_id %}
+                                        {{ interesse.nome }}
+                                    {% else %}
+                                        {{ interesse.nome|lower|capfirst }}
+                                    {% endif %}
+
+                                </span>
+
+                            {% empty %}
+
+                                <span class="scoperta-community-tag-vuoto">
+                                    Nessun interesse specificato
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- ORGANIZZATORE E STATO -->
+
+                        <div class="scoperta-community-card-inferiore">
+
+                            <span class="scoperta-community-organizzatore">
+                                Organizzata da
+                                {{ gruppo.organizzatore.nome }}
+                            </span>
+
+                            {% if gruppo.organizzata_da_me %}
+
+                                <span class="scoperta-community-stato">
+                                    Organizzatore
+                                </span>
+
+                            {% elif gruppo.gia_membro %}
+
+                                <span class="scoperta-community-stato">
+                                    Già membro
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            {% empty %}
+
+                <div class="scoperta-community-vuoto">
+
+                    <span class="scoperta-community-vuoto-icona">
+                        ♧
+                    </span>
+
+                    <h3>Nessuna community trovata</h3>
+
+                    <p>
+                        Non ci sono community che corrispondono
+                        alla ricerca e ai filtri selezionati.
+                    </p>
+
+                    {% if filtri_attivi or ricerca %}
+                        <a href="{% url 'community' %}">
+                            Mostra tutte le community →
+                        </a>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- POPUP FILTRI -->
+
+<div
+    id="filtri-community-overlay"
+    class="scoperta-community-overlay"
+    hidden
+>
+
+    <section
+        class="scoperta-community-popup"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titolo-filtri-community"
+    >
+
+        <div class="scoperta-community-popup-testa">
+
+            <div>
+                <h2 id="titolo-filtri-community">
+                    Filtra le community
+                </h2>
+
+                <p>
+                    Scegli cosa vuoi trovare.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                id="chiudi-filtri-community"
+                class="scoperta-community-popup-chiudi"
+                aria-label="Chiudi filtri"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            method="get"
+            action="{% url 'community' %}"
+            class="scoperta-community-popup-form"
+        >
+
+            <!-- Manteniamo la ricerca per titolo -->
+            {% if ricerca %}
+                <input type="hidden"
+                       name="ricerca"
+                       value="{{ ricerca }}">
+            {% endif %}
+
+
+            <!-- FILTRO CITTÀ -->
+
+            <div class="scoperta-community-filtro-sezione">
+
+                <h3>Città</h3>
+
+                <input
+                    type="text"
+                    name="citta"
+                    value="{{ filtro_citta }}"
+                    maxlength="100"
+                    placeholder="Es. Modena"
+                    class="scoperta-community-input"
+                >
+
+                <p>
+                    Mostra le community della città indicata.
+                </p>
+
+            </div>
+
+
+            <!-- FILTRO INTERESSI -->
+
+            <div class="scoperta-community-filtro-sezione">
+
+                <h3>Interessi</h3>
+
+                <p>
+                    Seleziona uno o più interessi.
+                    Basta una corrispondenza.
+                </p>
+
+                {% include 'gestione/filtro_interessi.html' %}
+
+            </div>
+
+
+            <!-- FILTRO PARTECIPAZIONE -->
+
+            <div class="scoperta-community-filtro-sezione">
+
+                <h3>Partecipazione</h3>
+
+                <label class="scoperta-community-opzione">
+
+                    <input
+                        type="radio"
+                        name="partecipazione"
+                        value="tutte"
+                        {% if filtro_partecipazione == 'tutte' %}checked{% endif %}
+                    >
+
+                    <span>Tutte le community</span>
+
+                </label>
+
+                <label class="scoperta-community-opzione">
+
+                    <input
+                        type="radio"
+                        name="partecipazione"
+                        value="partecipate"
+                        {% if filtro_partecipazione == 'partecipate' %}checked{% endif %}
+                    >
+
+                    <span>Community a cui partecipo</span>
+
+                </label>
+
+                <label class="scoperta-community-opzione">
+
+                    <input
+                        type="radio"
+                        name="partecipazione"
+                        value="non_partecipate"
+                        {% if filtro_partecipazione == 'non_partecipate' %}checked{% endif %}
+                    >
+
+                    <span>Community a cui non partecipo</span>
+
+                </label>
+
+            </div>
+
+
+            <div class="scoperta-community-popup-azioni">
+
+                <button
+                    type="reset"
+                    id="azzera-filtri-community"
+                    class="scoperta-community-azzera"
+                >
+                    Azzera
+                </button>
+
+                <button
+                    type="submit"
+                    class="scoperta-community-applica"
+                >
+                    Applica filtri
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</div>
+
+<script
+    src="{% static 'js/community.js' %}"
+    defer
+></script>
+
+<script src="{% static 'js/filtro_interessi.js' %}" defer></script>
+
+{% endblock %}

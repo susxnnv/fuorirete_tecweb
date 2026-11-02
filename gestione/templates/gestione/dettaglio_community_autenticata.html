@@ -1,0 +1,794 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}{{ community.titolo }} | FuoriRete{% endblock %}
+
+{% block area_content %}
+
+<link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}?v=2">
+
+<div class="dettaglio-community-pagina">
+
+    <!-- COLLEGAMENTO INDIETRO -->
+
+    <div class="dettaglio-community-navigazione">
+
+        {% if anteprima_esterna and request.GET.da == 'dettaglio' %}
+
+            <a
+                href="{% url 'dettaglio_community' community.pk %}?origine={{ origine_community }}"
+            >
+                ← Torna alla community
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_ritorno }}">
+                ← {{ testo_ritorno }}
+            </a>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- BANNER COMMUNITY                           -->
+    <!-- ========================================== -->
+
+    <section class="dettaglio-community-banner">
+
+        <div class="dettaglio-community-copertina">
+
+            {% if community.immagine %}
+
+                <img
+                    src="{{ community.immagine.url }}"
+                    alt="Immagine della community {{ community.titolo }}"
+                >
+
+            {% else %}
+
+                <span aria-hidden="true">♧</span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="dettaglio-community-identita">
+
+            <div class="dettaglio-community-titolo">
+
+                <div>
+
+                    <span class="dettaglio-community-etichetta">
+                        COMMUNITY · FUORIRETE
+                    </span>
+
+                    <h1>{{ community.titolo }}</h1>
+
+                    <p class="dettaglio-community-citta">
+                        <span aria-hidden="true">⌖</span>
+                        {{ community.citta }}
+                    </p>
+
+                </div>
+
+                <div class="dettaglio-community-valutazione">
+
+                    {% if numero_valutazioni %}
+
+                        <strong>
+                            ★ {{ media_valutazioni|floatformat:1 }}
+                        </strong>
+
+                        <small>
+                            {{ numero_valutazioni }} valutazioni
+                        </small>
+
+                    {% else %}
+
+                        <span class="dettaglio-community-senza-voti">
+                            Nessuna valutazione
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <p class="dettaglio-community-descrizione">
+                {{ community.descrizione|linebreaksbr }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- INTERESSI                                  -->
+    <!-- ========================================== -->
+
+    <section class="dettaglio-community-riquadro">
+
+        <h2>Interessi della community</h2>
+
+        <div class="dettaglio-community-interessi">
+
+            {% for interesse in community.interessi.all %}
+
+                <span class="dettaglio-community-tag">
+
+                    {% if interesse.padre %}
+                        {{ interesse.padre.nome|lower|capfirst }} ·
+                    {% endif %}
+
+                    {% if interesse.padre_id %}
+                        {{ interesse.nome }}
+                    {% else %}
+                        {{ interesse.nome|lower|capfirst }}
+                    {% endif %}
+
+                </span>
+
+            {% empty %}
+
+                <p class="dettaglio-community-testo-vuoto">
+                    Non sono ancora stati associati interessi.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- INFORMAZIONI                               -->
+    <!-- ========================================== -->
+
+    <section class="dettaglio-community-riquadro">
+
+        <h2>Informazioni sulla community</h2>
+
+        <div class="dettaglio-community-info">
+
+            <div class="dettaglio-community-info-riga">
+
+                <span>Organizzatore</span>
+
+                <strong>
+                    {{ community.organizzatore.nome }}
+                </strong>
+
+            </div>
+
+            <div class="dettaglio-community-info-riga">
+
+                <span>Partecipanti</span>
+
+                <strong>
+                    {{ numero_membri }}
+                    {% if numero_membri == 1 %}
+                        membro
+                    {% else %}
+                        membri
+                    {% endif %}
+                </strong>
+
+            </div>
+
+            <div class="dettaglio-community-info-riga">
+
+                <span>Creata il</span>
+
+                <strong>
+                    {{ community.data_creazione|date:"d/m/Y" }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- STATO E AZIONI DELL'UTENTE                 -->
+    <!-- ========================================== -->
+
+    <section class="dettaglio-community-riquadro dettaglio-community-azioni">
+
+        <!-- MESSAGGI DI CONFERMA -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <p class="dettaglio-community-feedback">
+                    {{ message }}
+                </p>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <!-- ANTEPRIMA DAL PUNTO DI VISTA DI UN MEMBRO -->
+
+        {% if anteprima_esterna %}
+
+            <span class="dettaglio-community-stato">
+                Anteprima · Vista membro
+            </span>
+
+            <h2>Fai parte di questa community</h2>
+
+            <p>
+                Questa è l'anteprima della community
+                come viene mostrata ai suoi membri.
+                Le azioni sono disabilitate.
+            </p>
+
+            <a
+                href="{% url 'chat_gruppo' community.pk %}?anteprima=1&amp;origine={{ origine_community }}{% if request.GET.da == 'dettaglio' %}&amp;da=dettaglio{% endif %}"                
+                class="dettaglio-community-pulsante"
+            >
+                Apri chat di gruppo →
+            </a>
+
+            <a
+                href="{% url 'eventi_community' community.pk %}?anteprima=1&amp;origine={{ origine_community }}{% if request.GET.da == 'dettaglio' %}&amp;da=dettaglio{% endif %}"
+                class="dettaglio-community-pulsante"
+            >
+                Visualizza eventi →
+            </a>
+
+
+        <!-- ORGANIZZATORE -->
+
+        {% elif organizzatore %}
+
+            <span class="dettaglio-community-stato">
+                Sei l'organizzatore
+            </span>
+
+            <h2>La tua community</h2>
+
+            <p>
+                Puoi consultare la chat e gestire
+                le attività della tua community.
+            </p>
+
+            <!-- CHAT DI GRUPPO -->
+
+            <a
+                href="{% url 'chat_gruppo' community.pk %}?origine={{ origine_community }}"
+                class="dettaglio-community-pulsante"
+            >
+                Apri chat di gruppo →
+            </a>
+
+            <!-- PANNELLO GESTIONE -->
+
+            <div class="dettaglio-community-gestione">
+
+                <h3>Gestisci la tua community</h3>
+
+                <div class="dettaglio-community-gestione-azioni">
+
+                    <a
+                        href="{% url 'dettaglio_community' community.pk %}?anteprima=1&amp;origine={{ origine_community }}&amp;da=dettaglio"
+                        class="dettaglio-community-gestione-bottone"
+                    >
+                        Anteprima
+                    </a>
+
+                    <a
+                        href="{% url 'modifica_community' community.pk %}?origine={{ origine_community }}"
+                        class="dettaglio-community-gestione-bottone"
+                    >
+                        Modifica
+                    </a>
+
+                    <a
+                        href="{% url 'gestione_richieste_community' community.pk %}?origine={{ origine_community }}"
+                        class="dettaglio-community-gestione-bottone"
+                    >
+                        Gestisci richieste
+                    </a>
+
+                    <a
+                        href="{% url 'gestione_eventi_community' community.pk %}?origine={{ origine_community }}"
+                        class="dettaglio-community-gestione-bottone"
+                    >
+                        Gestisci eventi
+                    </a>
+
+                    <button
+                        type="button"
+                        id="apri-eliminazione-community"
+                        class="dettaglio-community-gestione-bottone"
+                    >
+                        Elimina
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        <!-- MEMBRO -->
+
+        {% elif membro %}
+
+            <span class="dettaglio-community-stato">
+                Sei già membro
+            </span>
+
+            <h2>Fai parte di questa community</h2>
+
+            <p>
+                Puoi lasciare la community in qualsiasi momento.
+                Per rientrare dovrai inviare una nuova richiesta.
+            </p>
+
+            <!-- CHAT DI GRUPPO -->
+
+            <a
+                href="{% url 'chat_gruppo' community.pk %}?origine={{ origine_community }}"
+                class="dettaglio-community-pulsante"
+            >
+                Apri chat di gruppo →
+            </a>
+
+            <!-- EVENTI -->
+
+            <a
+                href="{% url 'eventi_community' community.pk %}?origine={{ origine_community }}"
+                class="dettaglio-community-pulsante"
+            >
+                Visualizza eventi →
+            </a>
+
+            <!-- USCITA COMMUNITY -->
+
+            <button
+                type="button"
+                id="apri-uscita-community"
+                class="dettaglio-community-pulsante-secondario"
+            >
+                Esci dalla community
+            </button>
+
+
+        <!-- RICHIESTA IN ATTESA -->
+
+        {% elif stato_richiesta == 'PENDING' %}
+
+            <span class="dettaglio-community-stato">
+                Richiesta in attesa
+            </span>
+
+            <h2>Hai già inviato una richiesta</h2>
+
+            <p>
+                L'organizzatore deve ancora
+                accettare o rifiutare la tua richiesta.
+            </p>
+
+            <form
+                method="post"
+                action="{% url 'annulla_richiesta_community' community.pk %}"
+            >
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="origine"
+                    value="{{ origine_community }}"
+                >
+
+                <button
+                    type="submit"
+                    class="dettaglio-community-pulsante-secondario"
+                >
+                    Annulla richiesta
+                </button>
+
+            </form>
+
+
+        <!-- NON MEMBRO -->
+
+        {% else %}
+
+            <h2>Partecipa alla community</h2>
+
+            <p>
+                Invia una richiesta di partecipazione
+                all'organizzatore della community.
+            </p>
+
+            <form
+                method="post"
+                action="{% url 'invia_richiesta_community' community.pk %}"
+            >
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="origine"
+                    value="{{ origine_community }}"
+                >
+
+                <button
+                    type="submit"
+                    class="dettaglio-community-pulsante"
+                >
+                    Richiedi di partecipare →
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- VALUTAZIONE COMMUNITY                      -->
+    <!-- ========================================== -->
+
+    {% if anteprima_esterna %}
+
+        <!-- ANTEPRIMA: VALUTAZIONE DISABILITATA -->
+
+        <section class="dettaglio-community-riquadro dettaglio-community-valuta">
+
+            <span class="dettaglio-community-valuta-etichetta">
+                VALUTA LA COMMUNITY
+            </span>
+
+            <h2>Come valuteresti questa community?</h2>
+
+            <p>
+                I membri possono valutare la community
+                da 1 a 5 stelle.
+                La valutazione è disabilitata in anteprima.
+            </p>
+
+            <div class="dettaglio-community-valuta-form">
+
+                <fieldset class="dettaglio-community-stelle" disabled>
+
+                    <legend>
+                        Seleziona il tuo voto
+                    </legend>
+
+                    <div class="dettaglio-community-stelle-opzioni">
+
+                        {% for valore in "12345" %}
+
+                            <input
+                                type="radio"
+                                name="anteprima_voto"
+                                id="anteprima-voto-{{ valore }}"
+                                value="{{ valore }}"
+                                disabled
+                            >
+
+                            <label
+                                for="anteprima-voto-{{ valore }}"
+                            >
+                                ★
+                            </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </fieldset>
+
+                <button
+                    type="button"
+                    class="dettaglio-community-pulsante"
+                    disabled
+                >
+                    Pubblica valutazione →
+                </button>
+
+            </div>
+
+        </section>
+
+
+    {% elif membro and not organizzatore %}
+
+        <!-- VALUTAZIONE REALE DEL MEMBRO -->
+
+        <section class="dettaglio-community-riquadro dettaglio-community-valuta">
+
+            {% if mia_valutazione %}
+
+                <span class="dettaglio-community-valuta-etichetta">
+                    LA TUA VALUTAZIONE
+                </span>
+
+                <h2>Modifica la tua valutazione</h2>
+
+                <p>
+                    Hai già valutato questa community.
+                    Puoi aggiornare il tuo voto quando vuoi,
+                    finché ne fai parte.
+                </p>
+
+            {% else %}
+
+                <span class="dettaglio-community-valuta-etichetta">
+                    VALUTA LA COMMUNITY
+                </span>
+
+                <h2>Come valuteresti questa community?</h2>
+
+                <p>
+                    La tua opinione contribuisce alla
+                    valutazione complessiva della community.
+                    Assegna un voto da 1 a 5 stelle.
+                </p>
+
+            {% endif %}
+
+
+            <form
+                method="post"
+                action="{% url 'valuta_community' community.pk %}"
+                class="dettaglio-community-valuta-form"
+            >
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="origine"
+                    value="{{ origine_community }}"
+                >
+
+                <fieldset class="dettaglio-community-stelle">
+
+                    <legend>
+                        Seleziona il tuo voto
+                    </legend>
+
+                    <div class="dettaglio-community-stelle-opzioni">
+
+                        <input
+                            type="radio"
+                            name="voto"
+                            id="voto-community-1"
+                            value="1"
+                            {% if mia_valutazione.voto == 1 %}checked{% endif %}
+                            required
+                        >
+                        <label for="voto-community-1" title="1 stella">
+                            ★
+                        </label>
+
+                        <input
+                            type="radio"
+                            name="voto"
+                            id="voto-community-2"
+                            value="2"
+                            {% if mia_valutazione.voto == 2 %}checked{% endif %}
+                        >
+                        <label for="voto-community-2" title="2 stelle">
+                            ★
+                        </label>
+
+                        <input
+                            type="radio"
+                            name="voto"
+                            id="voto-community-3"
+                            value="3"
+                            {% if mia_valutazione.voto == 3 %}checked{% endif %}
+                        >
+                        <label for="voto-community-3" title="3 stelle">
+                            ★
+                        </label>
+
+                        <input
+                            type="radio"
+                            name="voto"
+                            id="voto-community-4"
+                            value="4"
+                            {% if mia_valutazione.voto == 4 %}checked{% endif %}
+                        >
+                        <label for="voto-community-4" title="4 stelle">
+                            ★
+                        </label>
+
+                        <input
+                            type="radio"
+                            name="voto"
+                            id="voto-community-5"
+                            value="5"
+                            {% if mia_valutazione.voto == 5 %}checked{% endif %}
+                        >
+                        <label for="voto-community-5" title="5 stelle">
+                            ★
+                        </label>
+
+                    </div>
+
+                </fieldset>
+
+                <button
+                    type="submit"
+                    class="dettaglio-community-pulsante"
+                >
+                    {% if mia_valutazione %}
+                        Aggiorna valutazione →
+                    {% else %}
+                        Pubblica valutazione →
+                    {% endif %}
+                </button>
+
+            </form>
+
+        </section>
+
+    {% endif %}
+
+
+    <!-- ========================================== -->
+    <!-- POPUP CONFERMA ELIMINAZIONE COMMUNITY      -->
+    <!-- ========================================== -->
+
+    {% if organizzatore and not anteprima_esterna %}
+
+        <div
+            id="eliminazione-community-overlay"
+            class="dettaglio-community-overlay"
+            hidden
+        >
+
+            <section
+                class="dettaglio-community-popup"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="titolo-eliminazione-community"
+            >
+
+                <h2 id="titolo-eliminazione-community">
+                    Eliminare questa community?
+                </h2>
+
+                <p>
+                    Stai per eliminare definitivamente
+                    <strong>{{ community.titolo }}</strong>.
+                    Questa operazione comporta la cancellazione
+                    della community e dei dati collegati.
+                </p>
+
+                <div class="dettaglio-community-popup-azioni">
+
+                    <button
+                        type="button"
+                        id="annulla-eliminazione-community"
+                        class="dettaglio-community-pulsante-secondario"
+                    >
+                        Annulla
+                    </button>
+
+                    <form
+                        method="post"
+                        action="{% url 'elimina_community' community.pk %}"
+                    >
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="origine"
+                            value="{{ origine_community }}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="dettaglio-community-pulsante"
+                        >
+                            Elimina definitivamente
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ========================================== -->
+    <!-- POPUP CONFERMA USCITA                      -->
+    <!-- ========================================== -->
+
+    {% if membro and not organizzatore and not anteprima_esterna %}
+
+        <div
+            id="uscita-community-overlay"
+            class="dettaglio-community-overlay"
+            hidden
+        >
+
+            <section
+                class="dettaglio-community-popup"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="titolo-uscita-community"
+            >
+
+                <h2 id="titolo-uscita-community">
+                    Vuoi uscire dalla community?
+                </h2>
+
+                <p>
+                    Non sarai più membro di
+                    <strong>{{ community.titolo }}</strong>.
+                    Per tornare a partecipare dovrai
+                    inviare una nuova richiesta.
+                </p>
+
+                <div class="dettaglio-community-popup-azioni">
+
+                    <button
+                        type="button"
+                        id="annulla-uscita-community"
+                        class="dettaglio-community-pulsante-secondario"
+                    >
+                        Annulla
+                    </button>
+
+                    <form
+                        method="post"
+                        action="{% url 'esci_community' community.pk %}"
+                    >
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="origine"
+                            value="{{ origine_community }}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="dettaglio-community-pulsante"
+                        >
+                            Conferma uscita
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+<script src="{% static 'js/dettaglio_community.js' %}?v=3" defer></script>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+
+{% block area_content %}
+
+<div class="elimina-account-pagina">
+
+    <!-- INTESTAZIONE -->
+
+    <section class="elimina-account-intestazione">
+
+        <div>
+            <h1>Elimina account</h1>
+
+            <p>
+                Gestisci l'eliminazione definitiva
+                del tuo account FuoriRete.
+            </p>
+        </div>
+
+        <a href="{% url 'profilo' %}"
+           class="elimina-account-indietro">
+            ← Torna al profilo
+        </a>
+
+    </section>
+
+
+    <!-- CONFERMA ELIMINAZIONE -->
+
+    <section class="elimina-account-riquadro">
+
+        <div class="elimina-account-titolo">
+
+            <span class="elimina-account-icona">
+                !
+            </span>
+
+            <div>
+                <h2>Sei sicura di voler eliminare il tuo account?</h2>
+
+                <p>
+                    Questa operazione è definitiva
+                    e non può essere annullata.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- AVVISO -->
+
+        <div class="elimina-account-avviso">
+
+            <h3>Cosa succederà?</h3>
+
+            <p>
+                Eliminando il tuo account perderai
+                l'accesso a FuoriRete e non potrai
+                più recuperarlo.
+            </p>
+
+            <p>
+                Il tuo profilo e i dati associati
+                verranno eliminati secondo le regole
+                previste dal sistema.
+            </p>
+
+        </div>
+
+
+        <!-- ACCOUNT INTERESSATO -->
+
+        <div class="elimina-account-identita">
+
+            <span class="elimina-account-label">
+                Account da eliminare
+            </span>
+
+            <strong>
+                {{ request.user.username }}
+            </strong>
+
+        </div>
+
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="elimina-account-messaggio"
+                     role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+        <!-- AZIONI -->
+
+        <form method="post"
+              class="elimina-account-form">
+
+            {% csrf_token %}
+
+            <div class="elimina-account-azioni">
+
+                <a href="{% url 'profilo' %}"
+                   class="elimina-account-annulla">
+                    Annulla
+                </a>
+
+                <button type="submit"
+                        class="elimina-account-conferma">
+                    Elimina definitivamente il mio account
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</div>
+
+{% endblock %}

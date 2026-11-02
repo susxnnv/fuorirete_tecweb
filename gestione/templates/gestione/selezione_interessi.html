@@ -1,0 +1,298 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if modalita_modifica %}
+        Modifica interessi | FuoriRete
+    {% else %}
+        Scegli i tuoi interessi | FuoriRete
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/selezione_interessi.css' %}?v=4">
+
+<main class="interessi-pagina">
+
+    <!-- INTESTAZIONE -->
+
+    <header class="interessi-intestazione">
+
+        {% if modalita_modifica %}
+
+            <span class="interessi-fase">
+                MODIFICA PROFILO
+            </span>
+
+            <h1>Modifica i tuoi interessi</h1>
+
+        {% else %}
+
+            <span class="interessi-fase">
+                PASSAGGIO 2 DI 2
+            </span>
+
+            <h1>Scegli i tuoi interessi</h1>
+
+        {% endif %}
+
+        <p>
+            Raccontaci cosa ti piace! Apri una categoria per
+            scoprire gli interessi specifici oppure scegli
+            direttamente la categoria generale.
+        </p>
+
+        <p class="interessi-istruzioni">
+            Seleziona da 1 a 6 interessi.
+        </p>
+
+    </header>
+
+
+    <!-- FORM SELEZIONE INTERESSI -->
+
+    <form method="post" id="form-interessi" novalidate>
+
+        {% csrf_token %}
+
+        <!-- ERRORI DEL FORM -->
+
+        {% if form.interessi.errors %}
+
+            <div class="interessi-errori" role="alert">
+                {{ form.interessi.errors }}
+            </div>
+
+        {% endif %}
+
+        {% if form.non_field_errors %}
+
+            <div class="interessi-errori" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+
+        {% endif %}
+
+
+        <!-- BUBBLE CLOUD -->
+
+        <div class="cloud-layout">
+
+            <!-- AREA DELLE BOLLE -->
+
+            <div class="cloud-area">
+
+                <div class="cloud-griglia">
+
+                    {% for categoria in categorie %}
+
+                        <section
+                            class="cloud-cluster"
+                            data-categoria="{{ categoria.pk }}"
+                        >
+
+                            <!-- CERCHIO MACROCATEGORIA -->
+
+                            <button
+                                type="button"
+                                class="cloud-macro"
+                                aria-expanded="false"
+                                aria-controls="satelliti-{{ categoria.pk }}"
+                            >
+
+                                <span
+                                    class="cloud-macro-simbolo"
+                                    aria-hidden="true"
+                                >
+                                    ✦
+                                </span>
+
+                                <span class="cloud-macro-nome">
+                                    {{ categoria.nome|lower|capfirst }}
+                                </span>
+
+                                <span
+                                    class="cloud-macro-check"
+                                    aria-hidden="true"
+                                >
+                                    ✓
+                                </span>
+
+                            </button>
+
+
+                            <!-- SELEZIONE MACROCATEGORIA GENERALE -->
+
+                            <input
+                                type="checkbox"
+                                name="interessi"
+                                value="{{ categoria.pk }}"
+                                class="cloud-input cloud-input-macro"
+                                data-tipo="macro"
+                                data-categoria="{{ categoria.pk }}"
+                                {% if categoria.pk|stringformat:"s" in form.interessi.value %}checked{% endif %}
+                                hidden
+                            >
+
+
+                            <!-- SOTTOCATEGORIE / SATELLITI -->
+
+                            <div
+                                class="cloud-satelliti"
+                                id="satelliti-{{ categoria.pk }}"
+                                aria-hidden="true"
+                            >
+
+                                {% for sottointeresse in categoria.sottointeressi.all %}
+
+                                    <label class="cloud-satellite">
+
+                                        <input
+                                            type="checkbox"
+                                            name="interessi"
+                                            value="{{ sottointeresse.pk }}"
+                                            class="cloud-input cloud-input-sotto"
+                                            data-tipo="sotto"
+                                            data-categoria="{{ categoria.pk }}"
+                                            {% if sottointeresse.pk|stringformat:"s" in form.interessi.value %}checked{% endif %}
+                                        >
+
+                                        <span class="cloud-satellite-contenuto">
+
+                                            <span class="cloud-satellite-nome">
+                                                {{ sottointeresse.nome }}
+                                            </span>
+
+                                            <span
+                                                class="cloud-satellite-check"
+                                                aria-hidden="true"
+                                            >
+                                                ✓
+                                            </span>
+
+                                        </span>
+
+                                    </label>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </section>
+
+                    {% empty %}
+
+                        <p class="interessi-errori">
+                            Non ci sono categorie disponibili.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- RIEPILOGO INTERESSI SELEZIONATI -->
+
+            <aside class="interessi-riepilogo">
+
+                <div class="interessi-riepilogo-testa">
+
+                    <div>
+
+                        <h2>I tuoi interessi</h2>
+
+                        <p>
+                            Puoi modificare la selezione quando vuoi.
+                        </p>
+
+                    </div>
+
+                    <span id="interessi-contatore">
+                        0 / 6
+                    </span>
+
+                </div>
+
+
+                <!-- ELENCO INTERESSI SCELTI -->
+
+                <div
+                    id="interessi-scelti"
+                    class="interessi-scelti"
+                    aria-live="polite"
+                >
+
+                    <span class="interessi-vuoto">
+                        Non hai ancora selezionato interessi.
+                    </span>
+
+                </div>
+
+
+                <!-- NOTA DEL RIEPILOGO -->
+
+                <div class="cloud-riepilogo-nota">
+
+                    <span aria-hidden="true">
+                        ✦
+                    </span>
+
+                    <p>
+                        Scegli le passioni che ti rappresentano
+                        per trovare persone con cui condividerle.
+                    </p>
+
+                </div>
+
+
+                <!-- MESSAGGI DI VALIDAZIONE JAVASCRIPT -->
+
+                <p
+                    id="interessi-messaggio"
+                    class="interessi-messaggio"
+                    role="alert"
+                    aria-live="polite"
+                ></p>
+
+
+                <!-- PULSANTE CONFERMA -->
+
+                <button
+                    type="submit"
+                    id="interessi-conferma"
+                    class="interessi-conferma"
+                >
+
+                    {% if modalita_modifica %}
+
+                        Salva modifiche →
+
+                    {% else %}
+
+                        Conferma interessi →
+
+                    {% endif %}
+
+                </button>
+
+            </aside>
+
+        </div>
+
+    </form>
+
+</main>
+
+
+<!-- JAVASCRIPT INTERESSI -->
+
+<script
+    src="{% static 'js/selezione_interessi.js' %}?v=4"
+    defer
+></script>
+
+{% endblock %}

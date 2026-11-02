@@ -1,0 +1,254 @@
+
+/* ==========================================
+   GESTIONE RICHIESTE COMMUNITY - FUORIRETE
+========================================== */
+
+.richieste-community-pagina {
+    width: 100%;
+    max-width: 860px;
+    margin: 25px auto 65px;
+    color: #302823;
+}
+
+.richieste-community-indietro {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: #fa5943;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.richieste-community-indietro:hover {
+    text-decoration: underline;
+}
+
+/* INTESTAZIONE */
+
+.richieste-community-intestazione {
+    margin-bottom: 25px;
+}
+
+.richieste-community-etichetta {
+    display: block;
+    margin-bottom: 9px;
+    color: #fa5943;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.richieste-community-intestazione h1 {
+    margin: 0 0 10px;
+    font-size: 27px;
+}
+
+.richieste-community-intestazione p {
+    margin: 0 0 13px;
+    color: #90796e;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.richieste-community-intestazione p strong {
+    color: #44342c;
+}
+
+.richieste-community-contatore {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: #fff0e9;
+    color: #c4503d;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.richieste-community-messaggio {
+    margin-bottom: 16px;
+    padding: 12px 15px;
+    border: 1px solid #f0d5c7;
+    border-radius: 11px;
+    background: #fff5ef;
+    color: #855d4e;
+    font-size: 12px;
+}
+
+/* ELENCO */
+
+.richieste-community-elenco {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.richieste-community-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 22px;
+    border: 1px solid #eae2dc;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(40, 30, 20, .035);
+}
+
+/* RICHIEDENTE */
+
+.richieste-community-dati {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.richieste-community-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 65px;
+    height: 65px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: #fff0e9;
+    color: #fa5943;
+    font-size: 27px;
+}
+
+.richieste-community-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.richieste-community-persona {
+    min-width: 0;
+}
+
+.richieste-community-persona h2 {
+    margin: 0 0 6px;
+    font-size: 16px;
+}
+
+.richieste-community-persona h2 a {
+    color: #302823;
+    text-decoration: none;
+}
+
+.richieste-community-persona h2 a:hover {
+    color: #fa5943;
+}
+
+.richieste-community-persona p {
+    margin: 0 0 7px;
+    color: #90796e;
+    font-size: 12px;
+}
+
+.richieste-community-persona small {
+    color: #a18b80;
+    font-size: 11px;
+}
+
+/* PULSANTI */
+
+.richieste-community-azioni {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.richieste-community-azioni form {
+    margin: 0;
+}
+
+.richieste-community-accetta,
+.richieste-community-rifiuta {
+    min-height: 39px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.richieste-community-accetta {
+    border: 1px solid #fa5943;
+    background: #fa5943;
+    color: #ffffff;
+}
+
+.richieste-community-accetta:hover {
+    background: #e84b36;
+}
+
+.richieste-community-rifiuta {
+    border: 1px solid #e6d9d0;
+    background: #ffffff;
+    color: #806c62;
+}
+
+.richieste-community-rifiuta:hover {
+    border-color: #fa5943;
+    color: #fa5943;
+}
+
+/* STATO VUOTO */
+
+.richieste-community-vuoto {
+    padding: 43px 24px;
+    border: 1px solid #eae2dc;
+    border-radius: 18px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.richieste-community-vuoto > span {
+    color: #fa5943;
+    font-size: 35px;
+}
+
+.richieste-community-vuoto h2 {
+    margin: 12px 0 9px;
+    font-size: 18px;
+}
+
+.richieste-community-vuoto p {
+    max-width: 400px;
+    margin: 0 auto 17px;
+    color: #90796e;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.richieste-community-vuoto a {
+    color: #fa5943;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .richieste-community-intestazione h1 {
+        font-size: 23px;
+    }
+
+    .richieste-community-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 18px;
+    }
+
+    .richieste-community-azioni {
+        justify-content: flex-start;
+    }
+}

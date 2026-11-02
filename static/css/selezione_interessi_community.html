@@ -1,0 +1,251 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}
+    Interessi della community | FuoriRete
+{% endblock %}
+
+{% block area_content %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/selezione_interessi.css' %}"
+>
+
+<main class="interessi-pagina">
+
+    <!-- INTESTAZIONE -->
+
+    <header class="interessi-intestazione">
+
+        <span class="interessi-fase">
+            PASSAGGIO 2 DI 2
+        </span>
+
+        <h1>Scegli gli interessi della community</h1>
+
+        <p>
+            Quali passioni uniranno i membri di
+            <strong>{{ community.titolo }}</strong>?
+            Apri una categoria per scoprire gli
+            interessi specifici oppure scegli
+            direttamente la categoria generale.
+        </p>
+
+        <p class="interessi-istruzioni">
+            Seleziona da 1 a 6 interessi.
+        </p>
+
+    </header>
+
+
+    <!-- FORM SELEZIONE INTERESSI -->
+
+    <form method="post" id="form-interessi" novalidate>
+
+        {% csrf_token %}
+
+        <!-- ERRORI DEL FORM -->
+
+        {% if form.interessi.errors %}
+
+            <div class="interessi-errori" role="alert">
+                {{ form.interessi.errors }}
+            </div>
+
+        {% endif %}
+
+        {% if form.non_field_errors %}
+
+            <div class="interessi-errori" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+
+        {% endif %}
+
+
+        <!-- MACROCATEGORIE -->
+
+        <div class="interessi-griglia">
+
+            {% for categoria in categorie %}
+
+                <section
+                    class="interessi-cluster"
+                    data-categoria="{{ categoria.pk }}"
+                >
+
+                    <div class="interessi-orbita">
+
+                        <div class="interessi-centro">
+
+                            <!-- CERCHIO MACROCATEGORIA -->
+
+                            <button
+                                type="button"
+                                class="interessi-macro"
+                                aria-expanded="false"
+                                aria-controls="satelliti-{{ categoria.pk }}"
+                            >
+
+                                <span class="interessi-macro-simbolo">
+                                    ✦
+                                </span>
+
+                                <span class="interessi-macro-nome">
+                                    {{ categoria.nome }}
+                                </span>
+
+                                <span class="interessi-macro-indicazione">
+                                    Tocca per aprire
+                                </span>
+
+                            </button>
+
+
+                            <!-- INTERESSE GENERALE -->
+
+                            <label class="interessi-generale">
+
+                                <input
+                                    type="checkbox"
+                                    name="interessi"
+                                    value="{{ categoria.pk }}"
+                                    class="interessi-input"
+                                    data-tipo="macro"
+                                    data-categoria="{{ categoria.pk }}"
+                                    {% if categoria.pk|stringformat:"s" in form.interessi.value %}checked{% endif %}
+                                >
+
+                                <span class="interessi-generale-testo">
+
+                                    <span class="interessi-spunta">
+                                        ✓
+                                    </span>
+
+                                    In generale
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- SOTTOCATEGORIE / SATELLITI -->
+
+                        <div
+                            class="interessi-satelliti"
+                            id="satelliti-{{ categoria.pk }}"
+                        >
+
+                            {% for sottointeresse in categoria.sottointeressi.all %}
+
+                                <label class="interessi-satellite">
+
+                                    <input
+                                        type="checkbox"
+                                        name="interessi"
+                                        value="{{ sottointeresse.pk }}"
+                                        class="interessi-input"
+                                        data-tipo="sotto"
+                                        data-categoria="{{ categoria.pk }}"
+                                        {% if sottointeresse.pk|stringformat:"s" in form.interessi.value %}checked{% endif %}
+                                    >
+
+                                    <span class="interessi-satellite-testo">
+                                        {{ sottointeresse.nome }}
+                                    </span>
+
+                                </label>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            {% empty %}
+
+                <p class="interessi-errori">
+                    Non ci sono categorie disponibili.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- RIEPILOGO INTERESSI -->
+
+        <section class="interessi-riepilogo">
+
+            <div class="interessi-riepilogo-testa">
+
+                <div>
+
+                    <h2>Interessi della community</h2>
+
+                    <p>
+                        Scegli le passioni che meglio
+                        rappresentano il gruppo.
+                    </p>
+
+                </div>
+
+                <span id="interessi-contatore">
+                    0 / 6
+                </span>
+
+            </div>
+
+
+            <!-- INTERESSI SCELTI -->
+
+            <div
+                id="interessi-scelti"
+                class="interessi-scelti"
+            >
+
+                <span class="interessi-vuoto">
+                    Non hai ancora selezionato interessi.
+                </span>
+
+            </div>
+
+
+            <!-- MESSAGGI JAVASCRIPT -->
+
+            <p
+                id="interessi-messaggio"
+                class="interessi-messaggio"
+                role="alert"
+                aria-live="polite"
+            ></p>
+
+
+            <!-- CONFERMA -->
+
+            <button
+                type="submit"
+                id="interessi-conferma"
+                class="interessi-conferma"
+            >
+                Completa la community →
+            </button>
+
+        </section>
+
+    </form>
+
+</main>
+
+<script
+    src="{% static 'js/selezione_interessi.js' %}"
+    defer
+></script>
+
+{% endblock %}

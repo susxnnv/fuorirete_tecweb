@@ -1,0 +1,153 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/autenticazione.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestione_immagini.css' %}">
+
+<main class="auth-page">
+
+    <h1>CREA IL TUO PROFILO</h1>
+
+    <p class="auth-intro">
+        Completa il tuo profilo personale per iniziare
+        a scoprire persone e community su FuoriRete.
+    </p>
+
+    <section class="auth-card">
+
+        <!-- FORM DI CREAZIONE PROFILO -->
+
+        <form method="post"
+              enctype="multipart/form-data"
+              novalidate
+              autocomplete="off">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="auth-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+
+                <div class="auth-field">
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {% if field.name == 'foto' %}
+
+                        <!-- FOTO DEL PROFILO -->
+
+                        <div class="gestione-immagine gestione-immagine-creazione">
+
+                            <div class="gestione-immagine-anteprima">
+
+                                <img
+                                    id="anteprima-foto"
+                                    alt="Anteprima foto del profilo"
+                                    hidden
+                                >
+
+                                <span
+                                    id="segnaposto-foto"
+                                    class="gestione-immagine-segnaposto"
+                                >
+                                    Nessuna foto selezionata
+                                </span>
+
+                            </div>
+
+                            <div class="gestione-immagine-comandi">
+
+                                <span class="gestione-immagine-descrizione">
+                                    Scegli una foto da mostrare
+                                    sul tuo profilo.
+                                </span>
+
+                                <div class="gestione-immagine-azioni">
+
+                                <button
+                                    type="button"
+                                    class="gestione-immagine-pulsante"
+                                    onclick="this.closest('.gestione-immagine').querySelector('input[type=file]').click()"
+                                >
+                                    Scegli foto
+                                </button>
+
+
+                                    <button
+                                        type="button"
+                                        id="rimuovi-foto"
+                                        class="gestione-immagine-rimuovi"
+                                        hidden
+                                    >
+                                        Rimuovi
+                                    </button>
+
+                                </div>
+
+                                <div class="gestione-immagine-input">
+
+                                    {{ field }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% else %}
+
+                        {{ field }}
+
+                    {% endif %}
+
+                    {% if field.help_text %}
+                        <div class="auth-help">
+                            {{ field.help_text }}
+                        </div>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <div class="auth-errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+            <button type="submit" class="auth-button">
+                Completa il profilo
+            </button>
+
+        </form>
+
+        <!-- LOGOUT -->
+
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="auth-button auth-button-secondary"
+            >
+                Esci
+            </button>
+        </form>
+
+    </section>
+
+</main>
+
+<script src="{% static 'js/gestione_immagini.js' %}?v=5" defer></script>
+
+{% endblock %}

@@ -1,0 +1,535 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+
+{% block area_content %}
+
+<div class="anteprima-pagina">
+
+    <!-- INTESTAZIONE -->
+
+    <section class="anteprima-intestazione">
+
+        <div>
+            <h1>Profilo di {{ persona.nome }}</h1>
+
+            <p>
+                Scopri qualcosa in più su questa persona.
+            </p>
+        </div>
+
+        {% if origine_notifiche %}
+
+            <a
+                href="{% url 'notifiche' %}"
+                class="anteprima-indietro"
+            >
+                ← Torna alle Notifiche
+            </a>
+
+        {% elif request.GET.origine == 'persone' %}
+
+            <a
+                href="{% url 'persone' %}"
+                class="anteprima-indietro"
+            >
+                ← Torna a Persone
+            </a>
+
+        {% elif request.GET.origine == 'like_ricevuti' and match_esistente %}
+
+            <a
+                href="{% url 'like_ricevuti' %}"
+                class="anteprima-indietro"
+            >
+                ← Torna a Like ricevuti
+            </a>
+
+        {% elif origine_chat %}
+
+            <a
+                href="{% url 'chat_privata' persona.pk %}{% if request.GET.ritorno == 'persone' %}?origine=persone{% elif request.GET.ritorno == 'notifiche' %}?origine=notifiche{% elif request.GET.ritorno == 'like_ricevuti' %}?origine=like_ricevuti{% endif %}"
+                class="anteprima-indietro"
+            >
+                ← Torna alla Chat
+            </a>
+
+        {% elif origine_match_chat %}
+
+            <a
+                href="{% url 'match_chat' %}"
+                class="anteprima-indietro"
+            >
+                ← Torna a Match e Chat
+            </a>
+
+        {% elif origine_like_ricevuti %}
+
+            <a
+                href="{% url 'like_ricevuti' %}{% if request.GET.ritorno == 'notifiche' %}?origine=notifiche{% endif %}"
+                class="anteprima-indietro"
+            >
+                ← Torna a Like ricevuti
+            </a>
+
+        {% else %}
+
+            <a
+                href="{% url 'persone' %}{% if request.GET %}?{{ request.GET.urlencode }}&amp;candidato={{ persona.pk }}{% else %}?candidato={{ persona.pk }}{% endif %}"
+                class="anteprima-indietro"
+            >
+                ← Torna a Persone
+            </a>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- BANNER PERSONALE -->
+
+    <section class="anteprima-banner">
+
+        <div class="anteprima-identita">
+
+            {% if persona.foto %}
+
+                <img
+                    src="{{ persona.foto.url }}"
+                    alt="Foto di {{ persona.nome }}"
+                    class="anteprima-foto"
+                >
+
+            {% endif %}
+
+            <div class="anteprima-dati">
+
+                <h2>
+                    {{ persona.nome }},
+                    {{ persona.eta }}
+                </h2>
+
+                <p class="anteprima-meta">
+
+                    📍 {{ persona.citta }}
+
+                    {% if persona.occupazione %}
+                        · {{ persona.get_occupazione_display }}
+                    {% endif %}
+
+                </p>
+
+
+                <!-- COSA CERCA -->
+
+                <div class="anteprima-cerca">
+
+                    <span class="anteprima-cerca-label">
+                        Cerca:
+                    </span>
+
+                    {% for scelta in persona.cosa_cerca %}
+
+                        <span class="anteprima-tag">
+
+                            {% if scelta == 'AMICIZIE' %}
+                                Amicizie
+                            {% elif scelta == 'COMPAGNO_STUDIO' %}
+                                Compagni di studio
+                            {% elif scelta == 'COINQUILINO' %}
+                                Coinquilini
+                            {% else %}
+                                {{ scelta }}
+                            {% endif %}
+
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTENUTO IN DUE COLONNE -->
+
+    <div class="anteprima-layout">
+
+        <!-- COLONNA PRINCIPALE -->
+
+        <div class="anteprima-colonna-principale">
+
+            <!-- SU DI ME -->
+
+            <section class="anteprima-riquadro">
+
+                <h2>Su di me</h2>
+
+                {% if persona.descrizione %}
+
+                    <p class="anteprima-descrizione">
+                        {{ persona.descrizione }}
+                    </p>
+
+                {% else %}
+
+                    <p class="anteprima-testo-vuoto">
+                        Nessuna descrizione inserita.
+                    </p>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- INTERESSI -->
+
+            <section class="anteprima-riquadro">
+
+                <h2>Interessi</h2>
+
+                <div class="anteprima-interessi">
+
+                    {% for interesse in persona.interessi.all %}
+
+                        <span class="anteprima-tag">
+
+                            {% if interesse.padre %}
+                                {{ interesse.padre.nome|lower|capfirst }} ·
+                            {% endif %}
+
+                            {% if interesse.padre_id %}
+                                {{ interesse.nome }}
+                            {% else %}
+                                {{ interesse.nome|lower|capfirst }}
+                            {% endif %}
+
+                        </span>
+
+                    {% empty %}
+
+                        <p class="anteprima-testo-vuoto">
+                            Nessun interesse selezionato.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- COLONNA LATERALE -->
+
+        <aside class="anteprima-colonna-laterale">
+
+            <!-- INFORMAZIONI -->
+
+            <section class="anteprima-riquadro">
+
+                <h2>Informazioni</h2>
+
+                <div class="anteprima-info">
+
+                    <div class="anteprima-info-riga">
+
+                        <span class="anteprima-info-icona">
+                            📍
+                        </span>
+
+                        <span>{{ persona.citta }}</span>
+
+                    </div>
+
+                    <div class="anteprima-info-riga">
+
+                        <span class="anteprima-info-icona">
+                            ◇
+                        </span>
+
+                        <span>
+                            {{ persona.get_genere_display }}
+                        </span>
+
+                    </div>
+
+                    {% if persona.occupazione %}
+
+                        <div class="anteprima-info-riga">
+
+                            <span class="anteprima-info-icona">
+                                ♙
+                            </span>
+
+                            <span>
+                                {{ persona.get_occupazione_display }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+                    <div class="anteprima-info-riga">
+
+                        <span class="anteprima-info-icona">
+                            ◎
+                        </span>
+
+                        <span>
+                            {{ persona.lingue|join:", " }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROFILO PUBBLICO -->
+
+            <section class="anteprima-riquadro anteprima-nota">
+
+                <h2>Profilo pubblico</h2>
+
+                <p>
+                    Qui puoi consultare le informazioni
+                    pubbliche di {{ persona.nome }}.
+                </p>
+
+                {% if match_esistente %}
+
+                    <div class="dettaglio-azioni-match">
+
+                        <!-- APRI CHAT -->
+
+                        <a
+                            href="{% url 'chat_privata' persona.pk %}{% if request.GET.origine == 'persone' %}?origine=persone{% elif request.GET.origine == 'notifiche' %}?origine=notifiche{% elif request.GET.origine == 'like_ricevuti' %}?origine=like_ricevuti{% elif request.GET.ritorno == 'persone' %}?origine=persone{% elif request.GET.ritorno == 'notifiche' %}?origine=notifiche{% elif request.GET.ritorno == 'like_ricevuti' %}?origine=like_ricevuti{% endif %}"
+                            class="dettaglio-apri-chat"
+                        >
+                            Apri la chat →
+                        </a>
+
+                        <!-- ANNULLA MATCH -->
+
+                        <button
+                            type="button"
+                            id="apri-annulla-match"
+                            class="dettaglio-annulla-match"
+                        >
+                            Annulla Match
+                        </button>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     POPUP CONFERMA ANNULLAMENTO MATCH
+========================================== -->
+
+{% if match_esistente %}
+
+<div
+    id="popup-annulla-match"
+    class="annulla-match-overlay"
+    hidden
+>
+
+    <section
+        class="annulla-match-popup"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="annulla-match-titolo"
+        aria-describedby="annulla-match-descrizione"
+        tabindex="-1"
+    >
+
+        <!-- CHIUSURA -->
+
+        <button
+            type="button"
+            id="chiudi-annulla-match"
+            class="annulla-match-chiudi"
+            aria-label="Chiudi"
+        >
+            ×
+        </button>
+
+        <!-- ICONA -->
+
+        <div class="annulla-match-icona">
+            ♡
+        </div>
+
+        <!-- TITOLO -->
+
+        <h2 id="annulla-match-titolo">
+            Annullare il Match?
+        </h2>
+
+        <p
+            id="annulla-match-descrizione"
+            class="annulla-match-descrizione"
+        >
+            Vuoi davvero annullare il Match con
+            <strong>{{ persona.nome }}</strong>?
+
+            La vostra conversazione e tutti
+            gli eventuali messaggi verranno
+            eliminati definitivamente.
+
+            Questa persona non ti verrà più proposta.
+        </p>
+
+        <!-- AZIONI -->
+
+        <div class="annulla-match-azioni">
+
+            <button
+                type="button"
+                id="mantieni-match"
+                class="annulla-match-mantieni"
+            >
+                Mantieni Match
+            </button>
+
+            <form
+                method="post"
+                action="{% url 'annulla_match' persona.pk %}"
+                class="annulla-match-form"
+            >
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="origine"
+                    value="{% if request.GET.origine == 'notifiche' or request.GET.ritorno == 'notifiche' %}notifiche{% else %}match_chat{% endif %}"
+                >
+
+                <button
+                    type="submit"
+                    class="annulla-match-conferma"
+                >
+                    Sì, annulla Match
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const overlay = document.getElementById(
+        'popup-annulla-match'
+    );
+
+    const popup = overlay.querySelector(
+        '.annulla-match-popup'
+    );
+
+    const apri = document.getElementById(
+        'apri-annulla-match'
+    );
+
+    const chiudi = document.getElementById(
+        'chiudi-annulla-match'
+    );
+
+    const mantieni = document.getElementById(
+        'mantieni-match'
+    );
+
+    const conferma = popup.querySelector(
+        '.annulla-match-conferma'
+    );
+
+    function apriPopup() {
+        overlay.hidden = false;
+        document.body.classList.add('annulla-match-aperto');
+        chiudi.focus();
+    }
+
+    function chiudiPopup() {
+        overlay.hidden = true;
+        document.body.classList.remove('annulla-match-aperto');
+        apri.focus();
+    }
+
+    apri.addEventListener('click', apriPopup);
+
+    chiudi.addEventListener('click', chiudiPopup);
+
+    mantieni.addEventListener('click', chiudiPopup);
+
+    // Clic sullo sfondo: chiusura senza annullamento.
+    overlay.addEventListener('click', function (event) {
+        if (event.target === overlay) {
+            chiudiPopup();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+
+        if (overlay.hidden) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            chiudiPopup();
+            return;
+        }
+
+        if (event.key === 'Tab') {
+
+            const elementi = [
+                chiudi,
+                mantieni,
+                conferma
+            ];
+
+            const primo = elementi[0];
+            const ultimo = elementi[elementi.length - 1];
+
+            if (
+                event.shiftKey &&
+                document.activeElement === primo
+            ) {
+                event.preventDefault();
+                ultimo.focus();
+            } else if (
+                !event.shiftKey &&
+                document.activeElement === ultimo
+            ) {
+                event.preventDefault();
+                primo.focus();
+            }
+        }
+    });
+
+});
+</script>
+
+{% endif %}
+
+{% endblock %}

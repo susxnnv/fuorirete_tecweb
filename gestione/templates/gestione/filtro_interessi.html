@@ -1,0 +1,171 @@
+
+<!-- ==========================================
+     FILTRO INTERESSI CONDIVISO - FUORIRETE
+========================================== -->
+
+<div class="filtro-interessi-widget">
+
+    <!-- MACROCATEGORIE -->
+
+
+    <!-- MACROCATEGORIE CON SCORRIMENTO ORIZZONTALE -->
+
+    <div class="filtro-interessi-navigazione">
+
+        <!-- FRECCIA SINISTRA -->
+
+        <button
+            type="button"
+            class="filtro-interessi-freccia filtro-interessi-freccia-sinistra"
+            aria-label="Scorri le categorie verso sinistra"
+        >
+            &#10094;
+        </button>
+
+        <!-- CATEGORIE SCORREVOLI -->
+
+        <div
+            class="filtro-interessi-categorie"
+            role="group"
+            aria-label="Categorie di interessi"
+            tabindex="0"
+        >
+
+            {% for categoria in categorie_filtri %}
+
+                <button
+                    type="button"
+                    class="filtro-interessi-categoria"
+                    data-categoria="{{ categoria.pk }}"
+                    aria-controls="filtro-interessi-panel-{{ categoria.pk }}"
+                    aria-expanded="false"
+                >
+                    {{ categoria.nome|lower|capfirst }}
+                </button>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- FRECCIA DESTRA -->
+
+        <button
+            type="button"
+            class="filtro-interessi-freccia filtro-interessi-freccia-destra"
+            aria-label="Scorri le categorie verso destra"
+        >
+            &#10095;
+        </button>
+
+    </div>
+
+
+    <!-- SOTTOCATEGORIE -->
+
+    {% for categoria in categorie_filtri %}
+
+        <section
+            class="filtro-interessi-pannello"
+            id="filtro-interessi-panel-{{ categoria.pk }}"
+            data-pannello="{{ categoria.pk }}"
+            hidden
+        >
+
+            <div class="filtro-interessi-pannello-testa">
+
+                <h4>
+                    {{ categoria.nome|lower|capfirst }}
+                </h4>
+
+                <!-- INPUT PER LA CATEGORIA GENERALE -->
+
+                <input
+                    type="checkbox"
+                    name="interessi"
+                    value="{{ categoria.pk }}"
+                    class="filtro-interessi-input-generale"
+                    data-macro="{{ categoria.pk }}"
+                    {% if categoria.pk in filtro_interessi %}checked{% endif %}
+                    hidden
+                >
+
+                <!-- PULSANTE CATEGORIA GENERALE -->
+
+                <button
+                    type="button"
+                    class="filtro-interessi-seleziona-generale"
+                    data-seleziona-macro="{{ categoria.pk }}"
+                    aria-pressed="false"
+                >
+                    Seleziona tutta la categoria
+                </button>
+
+            </div>
+
+
+            <!-- GRIGLIA DELLE SOTTOCATEGORIE -->
+
+            <div class="filtro-interessi-sottocategorie">
+
+                {% for sottointeresse in categoria.sottointeressi.all %}
+
+                    <label class="filtro-interessi-opzione">
+
+                        <input
+                            type="checkbox"
+                            name="interessi"
+                            value="{{ sottointeresse.pk }}"
+                            class="filtro-interessi-input-sotto"
+                            data-padre="{{ categoria.pk }}"
+                            data-nome="{{ sottointeresse.nome }}"
+                            {% if sottointeresse.pk in filtro_interessi %}checked{% endif %}
+                        >
+
+                        <span>
+                            {{ sottointeresse.nome }}
+                        </span>
+
+                    </label>
+
+                {% empty %}
+
+                    <p class="filtro-interessi-vuoto">
+                        Nessuna sottocategoria disponibile.
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    {% endfor %}
+
+
+    <!-- RIEPILOGO DEGLI INTERESSI -->
+
+    <div class="filtro-interessi-riepilogo">
+
+        <div class="filtro-interessi-riepilogo-testa">
+
+            <strong>
+                Interessi selezionati
+            </strong>
+
+            <button
+                type="button"
+                class="filtro-interessi-cancella"
+            >
+                Cancella tutto
+            </button>
+
+        </div>
+
+        <div
+            class="filtro-interessi-tags"
+            aria-live="polite"
+        ></div>
+
+    </div>
+
+</div>

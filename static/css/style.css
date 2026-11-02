@@ -1,0 +1,55 @@
+
+/* =========================================
+   FUORIRETE - STILE GENERALE
+========================================= */
+
+/* IMPOSTAZIONI GENERALI */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-color: #f8f5f1;
+    color: #38312e;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+/* TIPOGRAFIA */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+}
+
+button, input, textarea, select {
+    font-family: inherit;
+}
+
+/* IMMAGINI */
+
+img {
+    max-width: 100%;
+}
+
+/* CONTENITORE PRINCIPALE */
+
+body > main {
+    margin: 0;
+    padding: 0;
+}
+
+/* ACCESSIBILITÀ */
+
+:focus-visible {
+    outline: 2px solid #fa5943;
+    outline-offset: 3px;
+}

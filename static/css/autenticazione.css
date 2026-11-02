@@ -1,0 +1,283 @@
+
+/* =====================================
+   AUTENTICAZIONE
+===================================== */
+
+/* CONTENITORE */
+
+.auth-page {
+    max-width: 520px;
+    margin: 45px auto;
+    padding: 20px;
+    text-align: center;
+    color: #38312e;
+}
+
+.auth-page h1 {
+    font-size: 38px;
+    font-weight: 700;
+    margin: 0 0 24px;
+}
+
+/* TESTO INTRODUTTIVO */
+
+.auth-intro {
+    background: #fff5f0;
+    border: 1px solid #f4dfd6;
+    border-radius: 17px;
+    padding: 20px;
+    line-height: 1.5;
+    color: #7a5f54;
+    margin-bottom: 22px;
+    font-size: 14px;
+}
+
+/* RIQUADRO FORM */
+
+.auth-card {
+    background: white;
+    border: 1px solid #ece3df;
+    border-radius: 22px;
+    padding: 25px;
+    text-align: left;
+}
+
+/* SINGOLI CAMPI */
+
+.auth-field {
+    background: #fffaf7;
+    border: 1px solid #f0e3dc;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 15px;
+}
+
+.auth-field label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* INPUT */
+
+.auth-field input:not([type="checkbox"]),
+.auth-field select,
+.auth-field textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #e5d9d2;
+    border-radius: 10px;
+    background: white;
+    font: inherit;
+    font-size: 14px;
+}
+
+.auth-field input:focus,
+.auth-field select:focus,
+.auth-field textarea:focus {
+    border-color: #fa5943;
+    outline: 2px solid #fa594322;
+}
+
+/* CHECKBOX */
+
+.auth-field input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+    accent-color: #fa5943;
+}
+
+.auth-field:has(input[type="checkbox"]) label {
+    line-height: 1.7;
+}
+
+/* MESSAGGI DI AIUTO */
+
+.auth-help {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #8a7469;
+    margin-top: 10px;
+}
+
+.auth-help ul,
+.auth-errors ul {
+    padding-left: 18px;
+}
+
+/* ERRORI */
+
+.auth-errors {
+    color: #b82929;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+/* PULSANTI */
+
+.auth-button {
+    display: block;
+    background: #fa5943;
+    color: white;
+    border: 0;
+    border-radius: 11px;
+    padding: 13px 35px;
+    min-width: 155px;
+    margin: 24px auto;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.auth-button:hover {
+    background: #e84b36;
+}
+
+.auth-button-secondary {
+    background: #7d716c;
+}
+
+.auth-button-secondary:hover {
+    background: #625853;
+}
+
+/* COLLEGAMENTI INFERIORI */
+
+.auth-footer {
+    border-top: 1px solid #eee1db;
+    padding-top: 18px;
+    text-align: center;
+    font-size: 13px;
+    color: #876e63;
+}
+
+.auth-footer a {
+    color: #2874cb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.auth-footer span {
+    display: block;
+    margin-top: 6px;
+}
+
+.auth-back {
+    display: block;
+    text-align: center;
+    margin-top: 17px;
+    color: #fa5943;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.auth-back:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .auth-page {
+        margin: 18px auto;
+        padding: 14px;
+    }
+
+    .auth-page h1 {
+        font-size: 32px;
+    }
+
+    .auth-card {
+        padding: 16px;
+    }
+
+}
+
+
+/* ==========================================
+   PASSWORD - MOSTRA / NASCONDI
+========================================== */
+
+.auth-field .password-contenitore {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+/* Campo password */
+
+.auth-field .password-contenitore input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding-right: 52px;
+}
+
+/* Occhietto dentro il campo */
+
+.auth-field .password-contenitore .password-occhio {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    left: auto;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    padding: 6px;
+    margin: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    box-shadow: none;
+
+    color: #90796e;
+    cursor: pointer;
+}
+
+.auth-field .password-contenitore .password-occhio:hover {
+    background: #fff0e9;
+    color: #fa5943;
+}
+
+.auth-field .password-contenitore .password-occhio:focus-visible {
+    outline: 2px solid #fa5943;
+    outline-offset: 2px;
+}
+
+/* Disegno dell'occhio */
+
+.auth-field .password-occhio svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    pointer-events: none;
+}
+
+.auth-field .gestione-immagine-pulsante {
+    display: inline-flex;
+    font-size: 12px;
+    margin-bottom: 0;
+}

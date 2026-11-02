@@ -1,0 +1,293 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}Gestisci eventi | FuoriRete{% endblock %}
+
+{% block area_content %}
+
+<link rel="stylesheet" href="{% static 'css/eventi_community.css' %}">
+
+<main class="eventi-pagina">
+
+    <a
+        href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}"
+        class="eventi-indietro"
+    >
+        ← Torna indietro
+    </a>
+
+    <header class="eventi-intestazione">
+
+        <div>
+            <span class="eventi-etichetta">
+                GESTIONE COMMUNITY
+            </span>
+
+            <h1>Gestisci eventi</h1>
+
+            <p>
+                Community:
+                <strong>{{ community.titolo }}</strong>
+            </p>
+        </div>
+
+        <a
+            href="{% url 'creazione_evento_community' community.pk %}?origine={{ request.GET.origine }}"
+            class="eventi-pulsante"
+        >
+            + Aggiungi evento
+        </a>
+
+    </header>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="eventi-feedback">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+
+    <!-- EVENTI IN PROGRAMMA -->
+
+    <section class="eventi-sezione">
+
+        <h2>Eventi in programma</h2>
+
+        <div class="eventi-elenco">
+
+            {% for evento in eventi_futuri %}
+
+                <article class="eventi-card">
+
+                    <div class="eventi-card-contenuto">
+
+                        <div class="eventi-data">
+                            <strong>{{ evento.inizio|date:"d" }}</strong>
+                            <span>{{ evento.inizio|date:"M"|upper }}</span>
+                        </div>
+
+                        <div class="eventi-card-info">
+
+                            <h3>{{ evento.titolo }}</h3>
+
+                            <p>
+                                ⏱ {{ evento.inizio|date:"d/m/Y H:i" }}
+                                {% if evento.fine %}
+                                    – {{ evento.fine|date:"d/m/Y H:i" }}
+                                {% endif %}
+                            </p>
+
+                            <p>⌖ {{ evento.luogo }}</p>
+
+                            <p>
+                                {% if evento.costo == 0 %}
+                                    Gratuito
+                                {% else %}
+                                    € {{ evento.costo|floatformat:2 }}
+                                {% endif %}
+                            </p>
+
+                            {% if evento.descrizione %}
+                                <p class="eventi-descrizione">
+                                    {{ evento.descrizione|linebreaksbr }}
+                                </p>
+                            {% endif %}
+
+                            {% if evento.cosa_portare %}
+                                <p class="eventi-portare">
+                                    <strong>Cosa portare:</strong>
+                                    {{ evento.cosa_portare|linebreaksbr }}
+                                </p>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="eventi-card-azioni">
+
+                        <a
+                            href="{% url 'modifica_evento_community' community.pk evento.pk %}?origine={{ request.GET.origine }}"
+                            class="eventi-azione-secondaria"
+                        >
+                            Modifica
+                        </a>
+
+                        <button
+                            type="button"
+                            class="eventi-azione-elimina apri-elimina-evento"
+                            data-elimina-url="{% url 'elimina_evento_community' community.pk evento.pk %}?origine={{ request.GET.origine }}"
+                            data-elimina-titolo="{{ evento.titolo }}"
+                        >
+                            Elimina
+                        </button>
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <p class="eventi-vuoto">
+                    Non ci sono eventi in programma.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- EVENTI PASSATI -->
+
+    <section class="eventi-sezione">
+
+        <h2>Eventi passati</h2>
+
+        <div class="eventi-elenco">
+
+            {% for evento in eventi_passati %}
+
+                <article class="eventi-card eventi-card-passato">
+
+                    <div class="eventi-card-contenuto">
+
+                        <div class="eventi-data">
+                            <strong>{{ evento.inizio|date:"d" }}</strong>
+                            <span>{{ evento.inizio|date:"M"|upper }}</span>
+                        </div>
+
+                        <div class="eventi-card-info">
+
+                            <h3>{{ evento.titolo }}</h3>
+
+                            <p>
+                                ⏱ {{ evento.inizio|date:"d/m/Y H:i" }}
+                                {% if evento.fine %}
+                                    – {{ evento.fine|date:"d/m/Y H:i" }}
+                                {% endif %}
+                            </p>
+
+                            <p>⌖ {{ evento.luogo }}</p>
+
+                            <p>
+                                {% if evento.costo == 0 %}
+                                    Gratuito
+                                {% else %}
+                                    € {{ evento.costo|floatformat:2 }}
+                                {% endif %}
+                            </p>
+
+                            {% if evento.descrizione %}
+                                <p class="eventi-descrizione">
+                                    {{ evento.descrizione|linebreaksbr }}
+                                </p>
+                            {% endif %}
+
+                            {% if evento.cosa_portare %}
+                                <p class="eventi-portare">
+                                    <strong>Cosa portare:</strong>
+                                    {{ evento.cosa_portare|linebreaksbr }}
+                                </p>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="eventi-card-azioni">
+
+                        <a
+                            href="{% url 'modifica_evento_community' community.pk evento.pk %}"
+                            class="eventi-azione-secondaria"
+                        >
+                            Modifica
+                        </a>
+
+                        <button
+                            type="button"
+                            class="eventi-azione-elimina apri-elimina-evento"
+                            data-elimina-url="{% url 'elimina_evento_community' community.pk evento.pk %}"
+                            data-elimina-titolo="{{ evento.titolo }}"
+                        >
+                            Elimina
+                        </button>
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <p class="eventi-vuoto">
+                    Non ci sono eventi passati.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- POPUP ELIMINAZIONE -->
+
+<div
+    id="elimina-evento-overlay"
+    class="eventi-overlay"
+    hidden
+>
+    <section
+        class="eventi-popup"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="elimina-evento-titolo"
+    >
+
+        <h2 id="elimina-evento-titolo">
+            Eliminare questo evento?
+        </h2>
+
+        <p>
+            Stai per eliminare
+            <strong id="elimina-evento-nome"></strong>.
+            L'operazione è definitiva.
+        </p>
+
+        <div class="eventi-popup-azioni">
+
+            <button
+                type="button"
+                id="annulla-elimina-evento"
+                class="eventi-azione-secondaria"
+            >
+                Annulla
+            </button>
+
+            <form
+                id="elimina-evento-form"
+                method="post"
+            >
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="eventi-azione-elimina"
+                >
+                    Conferma eliminazione
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+</div>
+
+<script src="{% static 'js/gestione_eventi.js' %}" defer></script>
+
+{% endblock %}

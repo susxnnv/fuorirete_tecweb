@@ -1,0 +1,218 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}Notifiche | FuoriRete{% endblock %}
+
+{% block area_content %}
+
+<link rel="stylesheet" href="{% static 'css/notifiche.css' %}?v=2">
+
+<main class="notifiche-pagina">
+
+    <!-- NAVIGAZIONE -->
+
+    <a
+        href="{% url 'profilo' %}"
+        class="notifiche-indietro"
+    >
+        ← Torna al Profilo
+    </a>
+
+
+    <!-- INTESTAZIONE -->
+
+    <header class="notifiche-intestazione">
+
+        <div>
+
+            <span class="notifiche-etichetta">
+                FUORIRETE · ATTIVITÀ
+            </span>
+
+            <h1>Le tue notifiche</h1>
+
+            <p>
+                Tutti gli aggiornamenti relativi
+                alle tue attività su FuoriRete.
+            </p>
+
+        </div>
+
+        {% if numero_non_lette > 0 %}
+
+            <span class="notifiche-contatore">
+                {{ numero_non_lette }}
+                da leggere
+            </span>
+
+        {% endif %}
+
+    </header>
+
+    <!-- ELENCO NOTIFICHE -->
+
+    <section class="notifiche-elenco">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="notifiche-messaggio">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% for notifica in notifiche %}
+
+            <article class="notifiche-elemento">
+
+                <!-- APERTURA NOTIFICA -->
+
+                <form
+                    method="post"
+                    action="{% url 'apri_notifica' notifica.pk %}"
+                    class="notifiche-form"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="notifiche-card {% if not notifica.letta %}notifiche-non-letta{% endif %}"
+                        aria-label="{{ notifica.testo }}. Apri notifica"
+                    >
+
+                        <!-- ICONA -->
+
+                        <span class="notifiche-icona" aria-hidden="true">
+
+                            {% if notifica.tipo == 'MESSAGGIO_PRIVATO' or notifica.tipo == 'MESSAGGIO_COMMUNITY' %}
+                                ✉
+
+                            {% elif notifica.tipo == 'MATCH' or notifica.tipo == 'LIKE_RICEVUTO' %}
+                                ♥
+
+                            {% elif notifica.tipo == 'NUOVO_EVENTO_COMMUNITY' or notifica.tipo == 'EVENTO_MODIFICATO' %}
+                                ▦
+
+                            {% else %}
+                                ♧
+                            {% endif %}
+
+                        </span>
+
+                        <!-- TESTO -->
+
+                        <span class="notifiche-contenuto">
+
+                            <span class="notifiche-testo">
+                                {{ notifica.testo }}
+                            </span>
+
+                            <span class="notifiche-data">
+                                {{ notifica.data_ora|date:"d/m/Y · H:i" }}
+                            </span>
+
+                        </span>
+
+                        {% if not notifica.letta %}
+                            <span
+                                class="notifiche-punto"
+                                aria-hidden="true"
+                            ></span>
+                        {% endif %}
+
+                        <span
+                            class="notifiche-freccia"
+                            aria-hidden="true"
+                        >
+                            →
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- AZIONI RICHIESTA COMMUNITY -->
+
+                {% if notifica.tipo == 'RICHIESTA_COMMUNITY' %}
+
+                    {% if notifica.richiesta_pendente %}
+
+                        <form
+                            method="post"
+                            action="{% url 'gestisci_richiesta_community' notifica.community_collegata.pk notifica.richiesta_pendente.pk %}"
+                            class="notifiche-richiesta-azioni"
+                        >
+
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="origine"
+                                value="notifiche"
+                            >
+
+                            <button
+                                type="submit"
+                                name="azione"
+                                value="accetta"
+                                class="notifiche-accetta"
+                            >
+                                ✓ Accetta
+                            </button>
+
+                            <button
+                                type="submit"
+                                name="azione"
+                                value="rifiuta"
+                                class="notifiche-rifiuta"
+                            >
+                                × Rifiuta
+                            </button>
+
+                        </form>
+
+                    {% elif notifica.stato_richiesta == 'ACCEPTED' %}
+
+                        <div class="notifiche-richiesta-stato">
+                            ✓ Richiesta accettata
+                        </div>
+
+                    {% elif notifica.stato_richiesta == 'REJECTED' %}
+
+                        <div class="notifiche-richiesta-stato">
+                            Richiesta rifiutata
+                        </div>
+
+                    {% endif %}
+
+                {% endif %}
+
+            </article>
+
+        {% empty %}
+
+            <div class="notifiche-vuoto">
+
+                <span aria-hidden="true">♧</span>
+
+                <h2>Nessuna notifica</h2>
+
+                <p>
+                    Non hai ancora ricevuto notifiche.
+                    Quando ci saranno aggiornamenti,
+                    compariranno qui.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,1206 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+{% block area_content %}
+
+<link rel="stylesheet" href="{% static 'css/filtro_interessi.css' %}?v=2">
+<div class="persone-pagina">
+    
+
+    <!-- ===================================== -->
+    <!-- POPUP MATCH                           -->
+    <!-- ===================================== -->
+
+    {% if match_recente %}
+
+    <div
+        id="popup-match"
+        class="match-overlay"
+    >
+
+        <section
+            class="match-popup"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="match-titolo"
+            aria-describedby="match-descrizione"
+            tabindex="-1"
+        >
+
+            <!-- CHIUSURA -->
+
+            <button
+                type="button"
+                id="chiudi-match"
+                class="match-chiudi"
+                aria-label="Chiudi popup Match"
+            >
+                ×
+            </button>
+
+
+            <!-- ICONA -->
+
+            <div class="match-icona">
+                ♡
+            </div>
+
+
+            <!-- TITOLO -->
+
+            <h2 id="match-titolo">
+                È un Match!
+            </h2>
+
+            <p id="match-descrizione" class="match-descrizione">
+                Tu e
+                <strong>{{ match_recente.nome }}</strong>
+                vi siete messi Like a vicenda!
+            </p>
+
+
+            <!-- MESSAGGIO -->
+
+            <div class="match-messaggio">
+
+                <span class="match-messaggio-icona">
+                    ♡
+                </span>
+
+                <p>
+                    Avete mostrato interesse reciproco.
+                    Adesso potete iniziare a conoscervi!
+                </p>
+
+            </div>
+
+
+            <!-- AZIONI -->
+
+            <div class="match-azioni">
+
+                <a
+                    href="{% url 'chat_privata' match_recente.profilo_id %}?origine=persone"
+                    class="match-apri-chat"
+                >
+                    Apri la chat →
+                </a>
+
+                <a
+                    href="{% url 'dettaglio_persona' match_recente.profilo_id %}?origine=persone"
+                    class="match-continua"
+                >
+                    Visualizza profilo →
+                </a>
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+    
+{% if match_recente %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const overlay = document.getElementById('popup-match');
+
+    const popup = overlay.querySelector('.match-popup');
+
+    const pulsanteChiudi = document.getElementById('chiudi-match');
+
+    const pulsanteProfilo = popup.querySelector('.match-continua');
+
+    const pulsanteChat = popup.querySelector('.match-apri-chat');
+
+    // Il popup è già visibile al caricamento della pagina.
+    document.body.classList.add('match-aperto');
+
+    pulsanteChiudi.focus();
+
+    function chiudiMatch() {
+
+        overlay.hidden = true;
+
+        document.body.classList.remove('match-aperto');
+
+        // Torniamo al pulsante Filtri oppure alla pagina.
+        const pulsanteFiltri = document.getElementById('apri-filtri');
+
+        if (pulsanteFiltri) {
+            pulsanteFiltri.focus();
+        }
+    }
+
+    pulsanteChiudi.addEventListener('click', chiudiMatch);
+
+    // Cliccando sullo sfondo esterno chiudiamo il popup.
+    overlay.addEventListener('click', function (event) {
+
+        if (event.target === overlay) {
+            chiudiMatch();
+        }
+
+    });
+
+    document.addEventListener('keydown', function (event) {
+
+        if (overlay.hidden) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+
+            event.preventDefault();
+            chiudiMatch();
+            return;
+
+        }
+
+        // Manteniamo il focus all'interno del popup.
+        if (event.key === 'Tab') {
+
+            const elementi = [
+                pulsanteChiudi,
+                pulsanteChat,
+                pulsanteProfilo
+            ];
+
+            const primo = elementi[0];
+            const ultimo = elementi[elementi.length - 1];
+
+            if (
+                event.shiftKey &&
+                document.activeElement === primo
+            ) {
+
+                event.preventDefault();
+                ultimo.focus();
+
+            } else if (
+                !event.shiftKey &&
+                document.activeElement === ultimo
+            ) {
+
+                event.preventDefault();
+                primo.focus();
+
+            }
+
+        }
+
+    });
+
+});
+</script>
+
+{% endif %}
+
+
+    {% endif %}
+
+    <!-- INTESTAZIONE -->
+
+    <section class="persone-intestazione">
+
+        <div class="persone-intestazione-testo">
+
+            <h1>Persone</h1>
+
+            <p>
+                Scopri persone compatibili con te.
+            </p>
+
+        </div>
+
+        <button
+            type="button"
+            class="persone-pulsante-filtri"
+            id="apri-filtri"
+            aria-haspopup="dialog"
+            aria-controls="popup-filtri"
+        >
+            ☷ &nbsp; Filtri
+
+            {% if filtri_attivi %}
+                <span class="persone-filtri-indicatore"></span>
+            {% endif %}
+        </button>
+
+    </section>
+
+
+    {% if persona %}
+
+        <!-- SCHEDA PERSONA -->
+
+                
+        <article
+            class="persone-scheda"
+            data-dettaglio-url="{% url 'dettaglio_persona' persona.pk %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}"
+            tabindex="0"
+            role="link"
+            aria-label="Visualizza il profilo di {{ persona.nome }}"
+        >
+
+
+            <div class="persone-scheda-foto">
+
+                {% if persona.foto %}
+
+                    <img
+                        src="{{ persona.foto.url }}"
+                        alt="Foto di {{ persona.nome }}"
+                    >
+
+                {% else %}
+
+                    <div class="persone-foto-assente">
+                        Nessuna foto disponibile
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="persone-scheda-contenuto">
+
+                <!-- IDENTITA -->
+
+                <div class="persone-scheda-identita">
+
+                    <h2>
+                        {{ persona.nome }},
+                        {{ persona.eta }}
+                    </h2>
+
+                    <p class="persone-scheda-meta">
+
+                        📍 {{ persona.citta }}
+
+                        {% if persona.occupazione %}
+                            · {{ persona.get_occupazione_display }}
+                        {% endif %}
+
+                        {% if persona.lingue %}
+                            · {{ persona.lingue|join:", " }}
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- DESCRIZIONE -->
+
+                <div class="persone-scheda-descrizione">
+
+                    {% if persona.descrizione %}
+
+                        <p>
+                            {{ persona.descrizione|truncatechars:150 }}
+                        </p>
+
+                    {% else %}
+
+                        <p class="persone-testo-secondario">
+                            Nessuna descrizione inserita.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- INTERESSI -->
+
+                <div class="persone-scheda-sezione">
+
+                    <h3>Interessi</h3>
+
+                    <div class="persone-scheda-tags">
+
+                        {% for interesse in persona.interessi.all %}
+
+                            <span class="persone-tag-interesse">
+
+                                {% if interesse.padre %}
+                                    {{ interesse.padre.nome|lower|capfirst }} ·
+                                {% endif %}
+
+                                {% if interesse.padre_id %}
+                                    {{ interesse.nome }}
+                                {% else %}
+                                    {{ interesse.nome|lower|capfirst }}
+                                {% endif %}
+
+
+                            </span>
+
+                        {% empty %}
+
+                            <span class="persone-testo-secondario">
+                                Nessun interesse.
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- COSA CERCA -->
+
+                <div class="persone-scheda-sezione">
+
+                    <h3>Cosa cerca</h3>
+
+                    <div class="persone-scheda-tags">
+
+                        {% for scelta in persona.cosa_cerca %}
+
+                            <span class="persone-tag-cerca">
+
+                                {% if scelta == 'AMICIZIE' %}
+                                    Amicizie
+                                {% elif scelta == 'COMPAGNO_STUDIO' %}
+                                    Compagni di studio
+                                {% elif scelta == 'COINQUILINO' %}
+                                    Coinquilini
+                                {% else %}
+                                    {{ scelta }}
+                                {% endif %}
+
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+                
+                <!-- LIKE E DISLIKE -->
+
+                <div class="persone-scheda-azioni">
+
+                    <!-- DISLIKE -->
+
+                    <form
+                        method="post"
+                        action="{% url 'valuta_persona' persona.pk %}"
+                        class="persone-form-valutazione"
+                        autocomplete="off"
+                    >
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="azione"
+                            value="dislike"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="filtri"
+                            value="{{ request.GET.urlencode }}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="persone-pulsante-dislike"
+                            aria-label="Scarta il profilo di {{ persona.nome }}"
+                            title="Scarta profilo"
+                        >
+                            ×
+                        </button>
+
+                    </form>
+
+
+                    <!-- LIKE -->
+
+                    <form
+                        method="post"
+                        action="{% url 'valuta_persona' persona.pk %}"
+                        class="persone-form-valutazione"
+                    >
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="azione"
+                            value="like"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="filtri"
+                            value="{{ request.GET.urlencode }}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="persone-pulsante-like"
+                            aria-label="Metti Like a {{ persona.nome }}"
+                            title="Mi piace"
+                        >
+                            ♡
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+            </div>
+
+        </article>
+
+    {% else %}
+
+        <!-- NESSUN PROFILO DISPONIBILE -->
+
+        <section class="persone-nessun-profilo">
+
+            <h2>Nessuna persona disponibile</h2>
+
+            {% if filtri_attivi %}
+
+                <p>
+                    Nessun profilo corrisponde ai filtri selezionati.
+                </p>
+
+                <p>
+                    Prova a modificare o azzerare i filtri.
+                </p>
+
+                <a href="{% url 'persone' %}"
+                   class="persone-azzera-link">
+                    Azzera filtri
+                </a>
+
+            {% else %}
+
+                <p>
+                    Al momento non ci sono altri profili
+                    da mostrarti.
+                </p>
+
+                <p>
+                    Torna più tardi per conoscere nuove persone!
+                </p>
+
+            {% endif %}
+
+        </section>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================== -->
+<!-- POPUP FILTRI PERSONE                  -->
+<!-- ===================================== -->
+
+<div
+    class="persone-filtri-overlay"
+    id="popup-filtri"
+    hidden
+>
+
+    <section
+        class="persone-filtri-popup"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="persone-filtri-titolo"
+        aria-describedby="persone-filtri-descrizione"
+        tabindex="-1"
+    >
+
+        <div class="persone-filtri-testata">
+
+            <div>
+
+                <h2 id="persone-filtri-titolo">
+                    Filtri
+                </h2>
+
+                <p id="persone-filtri-descrizione">
+                    Tutti i filtri sono opzionali.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="persone-filtri-chiudi"
+                id="chiudi-filtri"
+                aria-label="Chiudi filtri"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- FORM GET -->
+
+        <form
+            method="get"
+            action="{% url 'persone' %}"
+            class="persone-filtri-form"
+        >
+
+            <!-- ETA MASSIMA -->
+            
+            <!-- INTERVALLO DI ETA -->
+            <div class="persone-filtro-sezione">
+
+                <div class="persone-filtro-riga-titolo">
+
+                    <span id="etichetta-fascia-eta">
+                        Fascia d'età
+                    </span>
+
+                    <strong class="persone-eta-valori">
+                        <span id="valore-eta-minima">
+                            {{ eta_minima }}
+                        </span>
+                        –
+                        <span id="valore-eta-massima">
+                            {{ eta_massima }}
+                        </span>
+                        anni
+                    </strong>
+
+                </div>
+
+                <!-- BARRA UNICA CON DUE CURSORI -->
+
+                <div class="persone-eta-doppio-slider">
+
+                    <div class="persone-eta-traccia"></div>
+
+                    <div
+                        class="persone-eta-intervallo"
+                        id="persone-eta-intervallo"
+                    ></div>
+
+                    <input
+                        type="range"
+                        id="filtro-eta-minima"
+                        name="eta_minima"
+                        min="18"
+                        max="100"
+                        step="1"
+                        value="{{ eta_minima }}"
+                        aria-label="Età minima"
+                    >
+
+                    <input
+                        type="range"
+                        id="filtro-eta-massima"
+                        name="eta_massima"
+                        min="18"
+                        max="100"
+                        step="1"
+                        value="{{ eta_massima }}"
+                        aria-label="Età massima"
+                    >
+
+                </div>
+
+                <div class="persone-filtro-limiti">
+                    <span>18</span>
+                    <span>100</span>
+                </div>
+
+            </div>
+            
+
+            <!-- CITTA, OCCUPAZIONI E LINGUE -->
+
+            <div class="persone-filtri-griglia">
+
+                <!-- CITTA -->
+
+                <div class="persone-filtro-campo">
+
+                    <label for="filtro-citta">
+                        Città
+                    </label>
+
+                    <input
+                        type="text"
+                        id="filtro-citta"
+                        name="citta"
+                        value="{{ filtro_citta }}"
+                        placeholder="Es. Modena"
+                        maxlength="100"
+                    >
+
+                </div>
+
+
+                <!-- OCCUPAZIONI MULTIPLE CON RICERCA -->
+
+                <div class="persone-filtro-campo">
+
+                    <span class="persone-filtro-etichetta">
+                        Occupazione
+                    </span>
+
+                    <details class="persone-multiselect">
+
+                        <summary class="persone-multiselect-trigger"
+                                aria-label="Seleziona occupazioni">
+
+                            <span class="persone-multiselect-testo">
+                                Seleziona occupazioni
+                            </span>
+
+                            <span class="persone-multiselect-freccia">
+                                ▾
+                            </span>
+
+                        </summary>
+
+                        <div class="persone-multiselect-menu">
+
+                            <div class="persone-multiselect-opzioni">
+
+                                {% for valore, etichetta in occupazioni_disponibili %}
+
+                                    <label class="persone-filtro-opzione">
+
+                                        <input
+                                            type="checkbox"
+                                            name="occupazione"
+                                            value="{{ valore }}"
+                                            {% if valore in filtro_occupazioni %}checked{% endif %}
+                                        >
+
+                                        <span>{{ etichetta }}</span>
+
+                                    </label>
+
+                                {% endfor %}
+
+                            </div>
+
+                            <p class="persone-multiselect-vuoto" hidden>
+                                Nessun risultato trovato.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+
+                <!-- LINGUE MULTIPLE CON RICERCA -->
+
+                <div class="persone-filtro-campo">
+
+                    <span class="persone-filtro-etichetta">
+                        Lingue
+                    </span>
+
+                    <details class="persone-multiselect">
+
+                        <summary class="persone-multiselect-trigger"
+                                aria-label="Seleziona lingue">
+
+                            <span class="persone-multiselect-testo">
+                                Seleziona lingue
+                            </span>
+
+                            <span class="persone-multiselect-freccia">
+                                ▾
+                            </span>
+
+                        </summary>
+
+                        <div class="persone-multiselect-menu">
+
+                            <div class="persone-multiselect-opzioni">
+
+                                {% for lingua in lingue_disponibili %}
+
+                                    <label class="persone-filtro-opzione">
+
+                                        <input
+                                            type="checkbox"
+                                            name="lingua"
+                                            value="{{ lingua }}"
+                                            {% if lingua in filtro_lingue %}checked{% endif %}
+                                        >
+
+                                        <span>{{ lingua }}</span>
+
+                                    </label>
+
+                                {% endfor %}
+
+                            </div>
+
+                            <p class="persone-multiselect-vuoto" hidden>
+                                Nessun risultato trovato.
+                            </p>
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </div>
+
+            <!-- COSA CERCA -->
+
+            <div class="persone-filtro-sezione">
+
+                <h3>Cosa cerca</h3>
+
+                <div class="persone-filtro-opzioni">
+
+                    {% for valore in opzioni_cosa_cerca %}
+
+                        <label class="persone-filtro-opzione">
+
+                            <input
+                                type="checkbox"
+                                name="cosa_cerca"
+                                value="{{ valore }}"
+                                {% if valore in filtro_cosa_cerca %}checked{% endif %}
+                            >
+
+                            <span>
+
+                                {% if valore == 'AMICIZIE' %}
+                                    Amicizie
+                                {% elif valore == 'COMPAGNO_STUDIO' %}
+                                    Compagni di studio
+                                {% elif valore == 'COINQUILINO' %}
+                                    Coinquilini
+                                {% endif %}
+
+                            </span>
+
+                        </label>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INTERESSI -->
+
+            <div class="persone-filtro-sezione">
+
+                <h3>Interessi</h3>
+
+                <p class="filtro-interessi-descrizione">
+                    Seleziona uno o più interessi.
+                    Basta una corrispondenza.
+                </p>
+
+                {% include 'gestione/filtro_interessi.html' %}
+
+            </div>
+
+            <!-- AZIONI -->
+
+            <div class="persone-filtri-azioni">
+
+                <a href="{% url 'persone' %}"
+                   class="persone-filtri-azzera">
+                    Azzera filtri
+                </a>
+
+                <button
+                    type="submit"
+                    class="persone-filtri-applica"
+                >
+                    Applica filtri
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</div>
+
+
+<!-- ===================================== -->
+<!-- JAVASCRIPT POPUP                       -->
+<!-- ===================================== -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ========================================
+    // POPUP FILTRI
+    // ========================================
+
+    const pulsanteApri = document.getElementById('apri-filtri');
+    const overlay = document.getElementById('popup-filtri');
+    const popup = overlay.querySelector('.persone-filtri-popup');
+    const pulsanteChiudi = document.getElementById('chiudi-filtri');
+
+    let elementoPrecedente = null;
+
+    function apriFiltri() {
+        elementoPrecedente = document.activeElement;
+        overlay.hidden = false;
+        document.body.classList.add('persone-filtri-aperti');
+        pulsanteChiudi.focus();
+    }
+
+    function chiudiFiltri() {
+        overlay.hidden = true;
+        document.body.classList.remove('persone-filtri-aperti');
+
+        if (elementoPrecedente) {
+            elementoPrecedente.focus();
+        }
+    }
+
+    pulsanteApri.addEventListener('click', apriFiltri);
+    pulsanteChiudi.addEventListener('click', chiudiFiltri);
+
+    overlay.addEventListener('click', function (event) {
+        if (event.target === overlay) {
+            chiudiFiltri();
+        }
+    });
+
+
+    // ========================================
+    // SLIDER ETA MINIMA E MASSIMA
+    // ========================================
+
+    // ========================================
+    // BARRA ETA CON DUE CURSORI
+    // ========================================
+
+    const sliderMinimo = document.getElementById(
+        'filtro-eta-minima'
+    );
+
+    const sliderMassimo = document.getElementById(
+        'filtro-eta-massima'
+    );
+
+    const valoreMinimo = document.getElementById(
+        'valore-eta-minima'
+    );
+
+    const valoreMassimo = document.getElementById(
+        'valore-eta-massima'
+    );
+
+    const intervalloEta = document.getElementById(
+        'persone-eta-intervallo'
+    );
+
+    function aggiornaIntervalloEta() {
+
+        const minimo = Number(sliderMinimo.value);
+        const massimo = Number(sliderMassimo.value);
+
+        const percentualeMinima =
+            ((minimo - 18) / (100 - 18)) * 100;
+
+        const percentualeMassima =
+            ((massimo - 18) / (100 - 18)) * 100;
+
+        intervalloEta.style.left =
+            percentualeMinima + '%';
+
+        intervalloEta.style.right =
+            (100 - percentualeMassima) + '%';
+
+        valoreMinimo.textContent = minimo;
+        valoreMassimo.textContent = massimo;
+
+        // Il cursore attualmente selezionato
+        // resta davanti all'altro.
+
+        if (minimo >= 90) {
+            sliderMinimo.style.zIndex = '2';
+            sliderMassimo.style.zIndex = '1';
+        } else {
+            sliderMinimo.style.zIndex = '1';
+            sliderMassimo.style.zIndex = '2';
+        }
+    }
+
+    // MUOVO IL CURSORE SINISTRO
+
+    sliderMinimo.addEventListener('input', function () {
+
+        if (
+            Number(sliderMinimo.value) >
+            Number(sliderMassimo.value)
+        ) {
+            sliderMinimo.value = sliderMassimo.value;
+        }
+
+        aggiornaIntervalloEta();
+    });
+
+    // MUOVO IL CURSORE DESTRO
+
+    sliderMassimo.addEventListener('input', function () {
+
+        if (
+            Number(sliderMassimo.value) <
+            Number(sliderMinimo.value)
+        ) {
+            sliderMassimo.value = sliderMinimo.value;
+        }
+
+        aggiornaIntervalloEta();
+    });
+
+    // STATO INIZIALE
+
+    aggiornaIntervalloEta();
+
+
+    // ========================================
+    // MULTISELEZIONE CON RICERCA
+    // ========================================
+
+    const multiselects = document.querySelectorAll(
+        '.persone-multiselect'
+    );
+
+    multiselects.forEach(function (multiselect) {
+
+        const triggerTesto = multiselect.querySelector(
+            '.persone-multiselect-testo'
+        );
+
+        const opzioni = Array.from(
+            multiselect.querySelectorAll(
+                '.persone-multiselect-opzioni .persone-filtro-opzione'
+            )
+        );
+
+        const testoIniziale = triggerTesto.textContent.trim();
+
+        function aggiornaSelezione() {
+
+            const selezionati = opzioni.filter(function (opzione) {
+                return opzione.querySelector(
+                    'input[type="checkbox"]'
+                ).checked;
+            });
+
+            if (selezionati.length === 0) {
+
+                triggerTesto.textContent = testoIniziale;
+
+            } else if (selezionati.length === 1) {
+
+                triggerTesto.textContent = selezionati[0]
+                    .querySelector('span')
+                    .textContent
+                    .trim();
+
+            } else {
+
+                triggerTesto.textContent =
+                    selezionati.length + ' selezionate';
+
+            }
+        }
+
+        opzioni.forEach(function (opzione) {
+
+            const checkbox = opzione.querySelector(
+                'input[type="checkbox"]'
+            );
+
+            checkbox.addEventListener(
+                'change',
+                aggiornaSelezione
+            );
+
+        });
+
+        multiselect.addEventListener('toggle', function () {
+
+            if (multiselect.open) {
+
+                multiselects.forEach(function (altro) {
+
+                    if (altro !== multiselect) {
+                        altro.open = false;
+                    }
+
+                });
+
+            }
+
+        });
+
+        aggiornaSelezione();
+
+    });
+
+    // Chiudi i menu cliccando fuori da essi
+
+    document.addEventListener('click', function (event) {
+
+        multiselects.forEach(function (multiselect) {
+
+            if (
+                multiselect.open &&
+                !multiselect.contains(event.target)
+            ) {
+                multiselect.open = false;
+            }
+
+        });
+
+    });
+
+
+    // ========================================
+    // TASTIERA: ESC E TAB
+    // ========================================
+
+    document.addEventListener('keydown', function (event) {
+
+        if (overlay.hidden) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+
+            const menuAperti = Array.from(multiselects).filter(
+                function (multiselect) {
+                    return multiselect.open;
+                }
+            );
+
+            if (menuAperti.length > 0) {
+
+                menuAperti.forEach(function (multiselect) {
+                    multiselect.open = false;
+                });
+
+            } else {
+
+                chiudiFiltri();
+
+            }
+
+            event.preventDefault();
+            return;
+        }
+
+        if (event.key === 'Tab') {
+
+            const elementi = Array.from(
+                popup.querySelectorAll(
+                    'button:not([disabled]), a[href], summary, input:not([disabled]), select:not([disabled])'
+                )
+            ).filter(function (elemento) {
+
+                return elemento.getClientRects().length > 0;
+
+            });
+
+            if (!elementi.length) {
+                return;
+            }
+
+            const primo = elementi[0];
+            const ultimo = elementi[elementi.length - 1];
+
+            if (
+                event.shiftKey &&
+                document.activeElement === primo
+            ) {
+
+                event.preventDefault();
+                ultimo.focus();
+
+            } else if (
+                !event.shiftKey &&
+                document.activeElement === ultimo
+            ) {
+
+                event.preventDefault();
+                primo.focus();
+
+            }
+
+        }
+
+    });
+
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const scheda = document.querySelector('.persone-scheda');
+
+    if (!scheda) {
+        return;
+    }
+
+    function apriDettaglio() {
+        window.location.href = scheda.dataset.dettaglioUrl;
+    }
+
+    scheda.addEventListener('click', function (event) {
+
+        // I pulsanti e gli altri controlli interattivi
+        // non devono aprire DettaglioPersona.
+        if (event.target.closest('button, a, input, select, textarea, form')) {
+            return;
+        }
+
+        apriDettaglio();
+    });
+
+    scheda.addEventListener('keydown', function (event) {
+
+        // Invio o Spazio aprono il dettaglio quando
+        // il focus si trova sulla scheda.
+        if (
+            event.target === scheda &&
+            (event.key === 'Enter' || event.key === ' ')
+        ) {
+            event.preventDefault();
+            apriDettaglio();
+        }
+
+    });
+
+});
+</script>
+
+<script src="{% static 'js/filtro_interessi.js' %}" defer></script>
+
+{% endblock %}

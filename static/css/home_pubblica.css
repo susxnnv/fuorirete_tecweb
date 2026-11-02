@@ -1,0 +1,403 @@
+
+/* =====================================
+   HOME PUBBLICA
+===================================== */
+
+.home-pubblica {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 24px 70px;
+    color: #38312e;
+}
+
+/* PRESENTAZIONE */
+
+.presentazione {
+    text-align: center;
+    margin: 0 auto 40px;
+}
+
+.presentazione h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0 0 22px;
+}
+
+.presentazione-testo {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    box-sizing: border-box;
+    background: #fff5f0;
+    border: 1px solid #f4dfd6;
+    border-radius: 17px;
+    color: #806458;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.presentazione-azioni {
+    margin-top: 22px;
+}
+
+.pulsante-principale {
+    display: inline-block;
+    min-width: 140px;
+    box-sizing: border-box;
+    background: #fa5943;
+    color: white;
+    padding: 13px 38px;
+    border-radius: 11px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+
+.pulsante-principale:hover {
+    background: #e84b36;
+}
+
+.presentazione-azioni p {
+    font-size: 12px;
+    color: #876e63;
+    margin-top: 12px;
+}
+
+.presentazione-azioni a:not(.pulsante-principale) {
+    color: #2874cb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.presentazione-azioni a:not(.pulsante-principale):hover {
+    text-decoration: underline;
+}
+
+
+/* COMMUNITY PUBBLICHE */
+
+.community-pubbliche {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.community-pubbliche h2 {
+    font-size: 28px;
+    margin: 0 0 5px;
+}
+
+.community-sottotitolo {
+    color: #90786d;
+    font-size: 14px;
+    margin: 0 0 18px;
+}
+
+.community-contenitore {
+    background: white;
+    border: 1px solid #eae1db;
+    border-radius: 22px;
+    padding: 30px;
+    min-height: 210px;
+}
+
+
+/* COMMUNITY PRESENTI */
+
+.community-card {
+    padding: 18px;
+    margin-bottom: 15px;
+    background: #fffaf7;
+    border: 1px solid #f0e3dc;
+    border-radius: 14px;
+}
+
+.community-card:last-child {
+    margin-bottom: 0;
+}
+
+.community-card h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.community-card p {
+    color: #806c62;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.community-citta {
+    font-size: 13px !important;
+}
+
+
+/* NESSUNA COMMUNITY */
+
+.community-vuote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 180px;
+    padding: 20px 15px;
+}
+
+.community-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 16px;
+    background: #fff0e9;
+    border-radius: 50%;
+    color: #fa5943;
+    font-size: 26px;
+}
+
+.community-vuote h3 {
+    margin: 0 0 8px;
+    font-size: 19px;
+}
+
+.community-vuote p {
+    margin: 0;
+    color: #987c70;
+    font-size: 14px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .home-pubblica {
+        padding: 20px 16px 50px;
+    }
+
+    .presentazione h1 {
+        font-size: 38px;
+    }
+
+    .presentazione {
+        margin-bottom: 35px;
+    }
+
+    .presentazione-testo {
+        padding: 18px;
+    }
+
+    .community-contenitore {
+        padding: 18px;
+    }
+
+}
+
+
+/* ==========================================
+   HOME PUBBLICA - COMMUNITY ORIZZONTALI
+========================================== */
+
+.community-pubbliche {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.community-pubbliche-intestazione {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 17px;
+}
+
+.community-pubbliche-intestazione h2 {
+    margin: 0 0 7px;
+    font-size: 27px;
+    color: #38312e;
+}
+
+.community-pubbliche-intestazione .community-sottotitolo {
+    margin: 0;
+    font-size: 13px;
+    color: #90786d;
+}
+
+.community-pubbliche-scorri {
+    flex-shrink: 0;
+    color: #fa5943;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* CAROSELLO */
+
+.community-pubbliche .community-contenitore {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 10px 5px 18px;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #edc6b9 transparent;
+}
+
+/* SINGOLA CARD */
+
+.community-pubbliche .community-card {
+    display: flex;
+    flex-direction: column;
+
+    flex: 0 0 255px;
+    width: 255px;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+
+    overflow: hidden;
+
+    background: #ffffff;
+    border: 1px solid #eae2dc;
+    border-radius: 18px;
+
+    box-shadow: 0 4px 12px rgba(40, 30, 20, .04);
+
+    scroll-snap-align: start;
+}
+
+/* IMMAGINE */
+
+.community-card-immagine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 145px;
+    overflow: hidden;
+
+    background: #fff0e9;
+    color: #fa5943;
+    font-size: 39px;
+}
+
+.community-card-immagine img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* CONTENUTO */
+
+.community-card-contenuto {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 18px;
+}
+
+.community-pubbliche .community-card h3 {
+    margin: 0 0 7px;
+    font-size: 17px;
+    line-height: 1.3;
+    color: #38312e;
+}
+
+.community-pubbliche .community-citta {
+    margin: 0 0 11px;
+    font-size: 11px;
+    color: #fa5943;
+    font-weight: 600;
+}
+
+.community-pubbliche .community-card-descrizione {
+    margin: 0 0 18px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #806c62;
+}
+
+/* VALUTAZIONE */
+
+.community-card-valutazione {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    margin-top: auto;
+    padding-top: 13px;
+
+    border-top: 1px solid #f0e8e2;
+}
+
+.community-card-valutazione strong {
+    color: #fa5943;
+    font-size: 14px;
+}
+
+.community-card-valutazione small {
+    color: #9b867b;
+    font-size: 10px;
+}
+
+/* NESSUNA COMMUNITY */
+
+.community-pubbliche .community-vuote {
+    flex: 1;
+    padding: 35px 20px;
+    background: #ffffff;
+    border: 1px solid #eae2dc;
+    border-radius: 18px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .community-pubbliche-intestazione {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .community-pubbliche .community-card {
+        flex-basis: 230px;
+        width: 230px;
+    }
+
+    .community-pubbliche-intestazione h2 {
+        font-size: 23px;
+    }
+}
+
+
+/* COMMUNITY - CARD INTERAMENTE CLICCABILE */
+
+.community-pubbliche .community-card {
+    cursor: pointer;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+
+.community-pubbliche .community-card:hover {
+    border-color: #fa5943;
+    transform: translateY(-3px);
+    box-shadow: 0 9px 22px rgba(40, 30, 20, .09);
+}
+
+.community-pubbliche .community-card:focus-visible {
+    outline: 2px solid #fa5943;
+    outline-offset: 3px;
+}

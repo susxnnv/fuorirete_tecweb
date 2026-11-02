@@ -1,0 +1,482 @@
+
+{% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block area_content %}
+
+<link rel="stylesheet" href="{% static 'css/gestione_immagini.css' %}">
+
+<div class="modifica-profilo-pagina">
+
+    <!-- INTESTAZIONE -->
+
+    <section class="modifica-profilo-intestazione">
+
+        <div>
+            <h1>Modifica profilo</h1>
+
+            <p>
+                Aggiorna le tue informazioni personali
+                e personalizza il tuo profilo FuoriRete.
+            </p>
+        </div>
+
+        <a href="{% url 'profilo' %}"
+           class="modifica-profilo-indietro">
+            ← Torna al profilo
+        </a>
+
+    </section>
+
+
+    <!-- FORM -->
+
+    <form method="post"
+          enctype="multipart/form-data"
+          class="modifica-profilo-form"
+          novalidate
+          autocomplete="off">
+
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="modifica-profilo-errori">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+
+        <!-- INFORMAZIONI PERSONALI -->
+
+        <section class="modifica-profilo-riquadro">
+
+            <h2>Informazioni personali</h2>
+
+            <p class="modifica-profilo-sottotitolo">
+                Queste informazioni saranno visibili
+                all'interno del tuo profilo.
+            </p>
+
+            <div class="modifica-profilo-griglia">
+
+                {% for field in form %}
+
+                    {% if field.name == 'nome' or field.name == 'foto' or field.name == 'data_nascita' or field.name == 'genere' or field.name == 'citta' or field.name == 'occupazione' %}
+
+                        <div class="modifica-profilo-campo">
+
+                            {% if field.name == 'foto' %}
+
+                                <label for="id_foto">
+                                    Foto del profilo
+                                </label>
+
+                                <div class="gestione-immagine">
+
+                                    <!-- FOTO ATTUALE -->
+
+                                    <div class="gestione-immagine-anteprima">
+
+                                        <img
+                                            id="anteprima-foto"
+                                            src="{{ request.user.profilo.foto.url }}"
+                                            alt="Foto attuale del profilo"
+                                        >
+
+                                    </div>
+
+                                    <!-- MODIFICA FOTO -->
+
+                                    <div class="gestione-immagine-comandi">
+
+                                        <span class="gestione-immagine-descrizione">
+                                            Foto attuale
+                                        </span>
+
+                                        <label
+                                            for="id_foto"
+                                            class="gestione-immagine-pulsante"
+                                        >
+                                            Modifica foto
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="id_foto"
+                                            name="foto"
+                                            accept="image/*"
+                                            class="gestione-immagine-input"
+                                            data-anteprima="anteprima-foto"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            {% else %}
+
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                            {% endif %}
+
+
+                            {% if field.help_text %}
+                                <div class="modifica-profilo-aiuto">
+                                    {{ field.help_text }}
+                                </div>
+                            {% endif %}
+
+                            {% if field.errors %}
+                                <div class="modifica-profilo-errori">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <!-- DESCRIZIONE -->
+
+        <section class="modifica-profilo-riquadro">
+
+            <h2>Su di me</h2>
+
+            <p class="modifica-profilo-sottotitolo">
+                Racconta qualcosa di te agli altri utenti.
+            </p>
+
+            <div class="modifica-profilo-campo">
+
+                <label for="{{ form.descrizione.id_for_label }}">
+                    {{ form.descrizione.label }}
+                </label>
+
+                {{ form.descrizione }}
+
+                {% if form.descrizione.errors %}
+                    <div class="modifica-profilo-errori">
+                        {{ form.descrizione.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- LINGUE -->
+
+        <!-- LINGUE -->
+
+        <section class="modifica-profilo-riquadro">
+
+            <h2>Lingue parlate</h2>
+
+            <p class="modifica-profilo-sottotitolo">
+                Seleziona da 1 a 4 lingue.
+            </p>
+
+            <div class="lingue-dropdown" id="lingue-dropdown">
+
+                <!-- PULSANTE MENU -->
+
+                <button
+                    type="button"
+                    class="lingue-dropdown-trigger"
+                    id="lingue-dropdown-trigger"
+                    aria-expanded="false"
+                    aria-controls="lingue-dropdown-opzioni"
+                >
+
+                    <span
+                        class="lingue-dropdown-selezionate"
+                        id="lingue-dropdown-selezionate"
+                    >
+                        Seleziona le lingue...
+                    </span>
+
+                    <span
+                        class="lingue-dropdown-freccia"
+                        aria-hidden="true"
+                    >
+                        ▾
+                    </span>
+
+                </button>
+
+                <!-- OPZIONI MULTIPLE -->
+
+                <div
+                    class="lingue-dropdown-opzioni"
+                    id="lingue-dropdown-opzioni"
+                >
+
+                    {{ form.lingue }}
+
+                </div>
+
+            </div>
+
+            <p class="lingue-dropdown-aiuto" id="lingue-dropdown-aiuto">
+                Puoi selezionare fino a 4 lingue.
+            </p>
+
+            {% if form.lingue.errors %}
+                <div class="modifica-profilo-errori">
+                    {{ form.lingue.errors }}
+                </div>
+            {% endif %}
+
+        </section>
+
+
+        <!-- COSA CERCHI -->
+
+        <section class="modifica-profilo-riquadro">
+
+            <h2>Cosa cerchi?</h2>
+
+            <p class="modifica-profilo-sottotitolo">
+                Indica quali nuove conoscenze vorresti fare.
+            </p>
+
+            <div class="modifica-profilo-scelte">
+
+                {{ form.cosa_cerca }}
+
+            </div>
+
+            {% if form.cosa_cerca.errors %}
+                <div class="modifica-profilo-errori">
+                    {{ form.cosa_cerca.errors }}
+                </div>
+            {% endif %}
+
+        </section>
+
+
+        <!-- INTERESSI -->
+
+        <section class="modifica-profilo-riquadro">
+
+            <h2>I tuoi interessi</h2>
+
+            <p class="modifica-profilo-sottotitolo">
+                Seleziona da 1 a 10 interessi.
+            </p>
+
+            <div class="modifica-profilo-scelte">
+
+                {{ form.interessi }}
+
+            </div>
+
+            {% if form.interessi.errors %}
+                <div class="modifica-profilo-errori">
+                    {{ form.interessi.errors }}
+                </div>
+            {% endif %}
+
+        </section>
+
+
+        <!-- AZIONI -->
+
+        <div class="modifica-profilo-azioni">
+
+            <a href="{% url 'profilo' %}"
+               class="modifica-profilo-annulla">
+                Annulla
+            </a>
+
+            <button type="submit"
+                    class="modifica-profilo-salva">
+                Salva modifiche
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- MODIFICA INTERESSI -->
+
+    <div class="modifica-interessi-collegamento">
+
+        <h2>I tuoi interessi</h2>
+
+        <p>
+            Vuoi aggiornare le tue passioni?
+            Puoi modificare gli interessi del tuo profilo.
+        </p>
+
+        <a href="{% url 'modifica_interessi' %}"
+           class="modifica-interessi-pulsante">
+            Modifica interessi →
+        </a>
+
+    </div>
+
+</div>
+
+<script src="{% static 'js/gestione_immagini.js' %}" defer></script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const contenitore = document.getElementById('lingue-dropdown');
+    const trigger = document.getElementById('lingue-dropdown-trigger');
+    const opzioni = document.getElementById('lingue-dropdown-opzioni');
+    const selezionate = document.getElementById('lingue-dropdown-selezionate');
+    const aiuto = document.getElementById('lingue-dropdown-aiuto');
+
+    if (!contenitore || !trigger || !opzioni || !selezionate) {
+        return;
+    }
+
+    const checkbox = Array.from(
+        opzioni.querySelectorAll('input[type="checkbox"]')
+    );
+
+    const massimo = 4;
+
+    function nomeLingua(input) {
+
+        const label = input.closest('label');
+
+        return label ? label.textContent.trim() : input.value;
+
+    }
+
+    function impostaApertura(aperto) {
+
+        trigger.setAttribute('aria-expanded', String(aperto));
+
+        opzioni.classList.toggle('lingue-js-chiuso', !aperto);
+
+    }
+
+    function aggiornaSelezione() {
+
+        const attive = checkbox.filter(input => input.checked);
+
+        selezionate.replaceChildren();
+
+        if (attive.length === 0) {
+
+            const placeholder = document.createElement('span');
+
+            placeholder.className = 'lingue-dropdown-placeholder';
+            placeholder.textContent = 'Seleziona le lingue...';
+
+            selezionate.appendChild(placeholder);
+
+        } else {
+
+            attive.forEach(input => {
+
+                const tag = document.createElement('span');
+
+                tag.className = 'lingue-dropdown-tag';
+                tag.textContent = nomeLingua(input);
+
+                selezionate.appendChild(tag);
+
+            });
+
+        }
+
+        // Limite massimo di quattro lingue.
+
+        const limiteRaggiunto = attive.length >= massimo;
+
+        checkbox.forEach(input => {
+
+            const disabilita = limiteRaggiunto && !input.checked;
+
+            input.disabled = disabilita;
+
+            const label = input.closest('label');
+
+            if (label) {
+                label.classList.toggle(
+                    'lingue-disabilitata',
+                    disabilita
+                );
+            }
+
+        });
+
+        if (aiuto) {
+
+            aiuto.textContent =
+                attive.length + ' di ' + massimo +
+                ' lingue selezionate.';
+
+        }
+
+    }
+
+    // Apertura iniziale.
+
+    impostaApertura(false);
+    aggiornaSelezione();
+
+    trigger.addEventListener('click', function () {
+
+        const aperto =
+            trigger.getAttribute('aria-expanded') === 'true';
+
+        impostaApertura(!aperto);
+
+    });
+
+    checkbox.forEach(input => {
+
+        input.addEventListener('change', aggiornaSelezione);
+
+    });
+
+    // Chiusura cliccando fuori dal menu.
+
+    document.addEventListener('click', function (event) {
+
+        if (!contenitore.contains(event.target)) {
+            impostaApertura(false);
+        }
+
+    });
+
+    // Chiusura con Escape.
+
+    document.addEventListener('keydown', function (event) {
+
+        if (event.key === 'Escape') {
+
+            impostaApertura(false);
+
+            if (contenitore.contains(document.activeElement)) {
+                trigger.focus();
+            }
+
+        }
+
+    });
+
+});
+</script>
+
+
+{% endblock %}

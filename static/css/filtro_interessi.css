@@ -1,0 +1,385 @@
+
+/* ==========================================
+   FILTRO INTERESSI - FUORIRETE
+========================================== */
+
+.filtro-interessi-widget {
+    width: 100%;
+    min-width: 0;
+    color: #38312e;
+}
+
+/* MACROCATEGORIE */
+
+
+/* NAVIGAZIONE ORIZZONTALE DELLE MACROCATEGORIE */
+
+.filtro-interessi-navigazione {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 18px;
+}
+
+/* CONTENITORE SCORREVOLE */
+
+.filtro-interessi-categorie {
+    display: flex;
+    flex: 1;
+    flex-wrap: nowrap;
+    gap: 8px;
+
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* NASCONDE LA SCROLLBAR SU CHROME E SAFARI */
+
+.filtro-interessi-categorie::-webkit-scrollbar {
+    display: none;
+}
+
+/* EVITA CHE I PULSANTI VADANO A CAPO */
+
+.filtro-interessi-categoria {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* FRECCE LATERALI */
+
+.filtro-interessi-freccia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+    padding: 0;
+
+    border: 1px solid #eadfd8;
+    border-radius: 50%;
+
+    background: #ffffff;
+    color: #806c62;
+
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.filtro-interessi-freccia:hover:not(:disabled) {
+    border-color: #fa5943;
+    color: #fa5943;
+    background: #fff0e9;
+}
+
+.filtro-interessi-freccia:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+
+.filtro-interessi-categoria {
+    padding: 9px 13px;
+    border: 1px solid #eadfd8;
+    border-radius: 22px;
+    background: #ffffff;
+    color: #695a53;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filtro-interessi-categoria:hover {
+    border-color: #fa5943;
+    color: #fa5943;
+}
+
+.filtro-interessi-categoria.is-active {
+    background: #fa5943;
+    border-color: #fa5943;
+    color: #ffffff;
+}
+
+/* PANNELLO DELLA CATEGORIA ATTIVA */
+
+.filtro-interessi-pannello {
+    padding: 16px 0;
+    border-top: 1px solid #f0e9e4;
+}
+
+.filtro-interessi-pannello[hidden] {
+    display: none;
+}
+
+.filtro-interessi-pannello-testa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filtro-interessi-pannello-testa h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* INPUT NASCOSTO DELLA MACROCATEGORIA */
+
+.filtro-interessi-input-generale[hidden] {
+    display: none;
+}
+
+/* PULSANTE CATEGORIA GENERALE */
+
+.filtro-interessi-seleziona-generale {
+    padding: 8px 12px;
+    border: 1px solid #eadfd8;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #806c62;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filtro-interessi-seleziona-generale:hover {
+    border-color: #fa5943;
+    color: #fa5943;
+}
+
+.filtro-interessi-seleziona-generale.is-selected {
+    border-color: #fa5943;
+    background: #fff0e9;
+    color: #d94d39;
+}
+
+/* SOTTOCATEGORIE */
+
+.filtro-interessi-sottocategorie {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.filtro-interessi-opzione {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    min-width: 0;
+    min-height: 38px;
+    padding: 9px 11px;
+
+    border: 1px solid #eee3dc;
+    border-radius: 10px;
+    background: #faf8f6;
+
+    color: #63554d;
+    font-size: 11px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.filtro-interessi-opzione:hover {
+    border-color: #f3cabf;
+    background: #fff7f2;
+}
+
+.filtro-interessi-opzione:has(input:checked) {
+    border-color: #fa5943;
+    background: #fff0e9;
+    color: #b84331;
+}
+
+.filtro-interessi-widget
+.filtro-interessi-opzione input[type="checkbox"] {
+    appearance: auto;
+
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    max-width: 14px;
+
+    flex: 0 0 14px;
+
+    padding: 0;
+    margin: 0;
+
+    accent-color: #fa5943;
+    cursor: pointer;
+}
+
+.filtro-interessi-opzione span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.filtro-interessi-vuoto,
+.filtro-interessi-descrizione {
+    color: #90796e;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.filtro-interessi-descrizione {
+    margin: 0 0 14px;
+}
+
+/* RIEPILOGO */
+
+.filtro-interessi-riepilogo {
+    margin-top: 19px;
+    padding-top: 17px;
+    border-top: 1px solid #f0e9e4;
+}
+
+.filtro-interessi-riepilogo-testa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.filtro-interessi-riepilogo-testa strong {
+    font-size: 12px;
+}
+
+.filtro-interessi-cancella {
+    padding: 4px;
+    border: 0;
+    background: transparent;
+
+    color: #90796e;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.filtro-interessi-cancella:hover {
+    color: #fa5943;
+}
+
+.filtro-interessi-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.filtro-interessi-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 10px;
+
+    border: 0;
+    border-radius: 20px;
+
+    background: #fff0e9;
+    color: #d94d39;
+
+    font: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filtro-interessi-tag:hover {
+    background: #ffe1d5;
+}
+
+.filtro-interessi-riepilogo-vuoto {
+    color: #a18d83;
+    font-size: 11px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 520px) {
+
+    .filtro-interessi-sottocategorie {
+        grid-template-columns: 1fr;
+    }
+
+    .filtro-interessi-pannello-testa {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+
+
+/* ==========================================
+   CORREZIONE CAROSELLO MACROCATEGORIE
+========================================== */
+
+.filtro-interessi-widget .filtro-interessi-navigazione {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 18px;
+}
+
+.filtro-interessi-widget .filtro-interessi-categorie {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex: 1 1 0;
+    gap: 8px;
+    min-width: 0;
+    margin: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.filtro-interessi-widget .filtro-interessi-categorie::-webkit-scrollbar {
+    display: none;
+}
+
+.filtro-interessi-widget .filtro-interessi-categoria {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.filtro-interessi-widget .filtro-interessi-freccia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #eadfd8;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #806c62;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.filtro-interessi-widget .filtro-interessi-freccia:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
