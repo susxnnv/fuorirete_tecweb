@@ -3,47 +3,132 @@
 
 {% block area_content %}
 
-<section class="home-benvenuto">
+<div class="home-pagina">
 
-    <p class="home-etichetta">
-        Bentornata su FuoriRete
-    </p>
+    <!-- BENVENUTO -->
 
-    <h1>
-        Ciao {{ request.user.profilo.nome }} 👋
-    </h1>
+    <section class="home-benvenuto">
 
-    <p>
-        Scopri nuove persone compatibili con te e trova community
-        con cui condividere interessi ed esperienze.
-    </p>
+        <p class="home-etichetta">
+            <span class="home-tratti" aria-hidden="true">
+                <svg viewBox="0 0 42 42" fill="none">
+                    <path d="M12 4 L8 15 M27 9 L18 17 M36 25 L24 26"
+                          stroke="currentColor"
+                          stroke-width="5"
+                          stroke-linecap="round"/>
+                </svg>
+            </span>
+            Bentornata su FuoriRete
+        </p>
 
-</section>
+        <h1>
+            Ciao {{ request.user.profilo.nome }} 👋
+        </h1>
 
-<section class="home-scelte">
+        <h2 class="home-frase-principale">
+            Le connessioni migliori nascono dagli interessi condivisi<span class="home-esclamativo">!</span>
+        </h2>
 
-    <a href="{% url 'persone' %}" class="home-riquadro">
+        <p class="home-frase-secondaria">
+            Conosci nuove persone e trova la tua community ideale.
+        </p>
 
-        <span class="home-icona">♙</span>
+    </section>
 
-        <div>
-            <h2>Persone</h2>
-            <p>Scopri profili compatibili con i tuoi interessi.</p>
-        </div>
 
-    </a>
+    <!-- SEZIONI PRINCIPALI -->
 
-    <a href="{% url 'community' %}" class="home-riquadro">
+    <section class="home-scelte" aria-label="Esplora FuoriRete">
 
-        <span class="home-icona">♧</span>
+        <!-- PERSONE -->
 
-        <div>
-            <h2>Community</h2>
-            <p>Trova gruppi, attività ed eventi vicino a te.</p>
-        </div>
+        <a href="{% url 'persone' %}"
+           class="home-riquadro home-riquadro-persone">
 
-    </a>
+            <span class="home-icona" aria-hidden="true">
+                <svg viewBox="0 0 100 90" fill="none">
 
-</section>
+                    <!-- Prima persona -->
+                    <circle cx="32" cy="30" r="13"
+                            stroke="#007d83"
+                            stroke-width="4"/>
+
+                    <path d="M9 76V67C9 53 19 46 32 46C45 46 55 53 55 67"
+                          stroke="#007d83"
+                          stroke-width="4"
+                          stroke-linecap="round"/>
+
+                    <!-- Seconda persona -->
+                    <circle cx="69" cy="30" r="13"
+                            stroke="#8cbfbe"
+                            stroke-width="4"/>
+
+                    <path d="M48 59C52 50 60 46 69 46C82 46 92 53 92 67V76"
+                          stroke="#8cbfbe"
+                          stroke-width="4"
+                          stroke-linecap="round"/>
+
+                    <!-- Cuore -->
+                    <path d="M50 80L35 65C26 56 39 44 50 56C61 44 74 56 65 65L50 80Z"
+                          fill="#fffdfc"
+                          stroke="#ff8071"
+                          stroke-width="4"
+                          stroke-linejoin="round"/>
+
+                </svg>
+            </span>
+
+            <div class="home-riquadro-testo">
+                <h2>Persone</h2>
+                <p>Scopri profili compatibili con i tuoi interessi!</p>
+            </div>
+
+        </a>
+
+
+        <!-- COMMUNITY -->
+
+        <a href="{% url 'community' %}"
+           class="home-riquadro home-riquadro-community">
+
+            <span class="home-icona" aria-hidden="true">
+                <svg viewBox="0 0 100 90" fill="none">
+
+                    <!-- Calendario -->
+                    <rect x="17" y="17"
+                          width="66" height="63"
+                          rx="12"
+                          stroke="#007d83"
+                          stroke-width="4"/>
+
+                    <path d="M17 38H83"
+                          stroke="#007d83"
+                          stroke-width="4"/>
+
+                    <path d="M35 9V25M65 9V25"
+                          stroke="#8cbfbe"
+                          stroke-width="5"
+                          stroke-linecap="round"/>
+
+                    <!-- Stella -->
+                    <path d="M50 47L55 57L66 59L58 67L60 78L50 72L40 78L42 67L34 59L45 57Z"
+                          fill="#ffece8"
+                          stroke="#ff8071"
+                          stroke-width="3.5"
+                          stroke-linejoin="round"/>
+
+                </svg>
+            </span>
+
+            <div class="home-riquadro-testo">
+                <h2>Community</h2>
+                <p>Trova gruppi, attività ed eventi vicino a te!</p>
+            </div>
+
+        </a>
+
+    </section>
+
+</div>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 
 {% extends 'gestione/base_autenticata.html' %}
+{% load static %}
 
 {% block area_content %}
 
@@ -249,7 +250,13 @@
                     <div class="anteprima-info-riga">
 
                         <span class="anteprima-info-icona">
-                            ◇
+                            {% if persona.genere == 'DONNA' %}
+                                ♀
+                            {% elif persona.genere == 'UOMO' %}
+                                ♂
+                            {% else %}
+                                ⚧
+                            {% endif %}
                         </span>
 
                         <span>
@@ -263,7 +270,7 @@
                         <div class="anteprima-info-riga">
 
                             <span class="anteprima-info-icona">
-                                ♙
+                               💼 
                             </span>
 
                             <span>
@@ -277,7 +284,7 @@
                     <div class="anteprima-info-riga">
 
                         <span class="anteprima-info-icona">
-                            ◎
+                            🌍
                         </span>
 
                         <span>
@@ -287,47 +294,6 @@
                     </div>
 
                 </div>
-
-            </section>
-
-
-            <!-- PROFILO PUBBLICO -->
-
-            <section class="anteprima-riquadro anteprima-nota">
-
-                <h2>Profilo pubblico</h2>
-
-                <p>
-                    Qui puoi consultare le informazioni
-                    pubbliche di {{ persona.nome }}.
-                </p>
-
-                {% if match_esistente %}
-
-                    <div class="dettaglio-azioni-match">
-
-                        <!-- APRI CHAT -->
-
-                        <a
-                            href="{% url 'chat_privata' persona.pk %}{% if request.GET.origine == 'persone' %}?origine=persone{% elif request.GET.origine == 'notifiche' %}?origine=notifiche{% elif request.GET.origine == 'like_ricevuti' %}?origine=like_ricevuti{% elif request.GET.ritorno == 'persone' %}?origine=persone{% elif request.GET.ritorno == 'notifiche' %}?origine=notifiche{% elif request.GET.ritorno == 'like_ricevuti' %}?origine=like_ricevuti{% endif %}"
-                            class="dettaglio-apri-chat"
-                        >
-                            Apri la chat →
-                        </a>
-
-                        <!-- ANNULLA MATCH -->
-
-                        <button
-                            type="button"
-                            id="apri-annulla-match"
-                            class="dettaglio-annulla-match"
-                        >
-                            Annulla Match
-                        </button>
-
-                    </div>
-
-                {% endif %}
 
             </section>
 

@@ -208,10 +208,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
         <div class="persone-intestazione-testo">
 
-            <h1>Persone</h1>
+        
+        <h1>
+            Persone
+
+            <svg
+                class="persone-titolo-sottolineatura"
+                viewBox="0 0 110 12"
+                fill="none"
+                aria-hidden="true"
+            >
+                <path
+                    d="M3 6 Q55 11 107 4"
+                    stroke="#007d83"
+                    stroke-width="6"
+                    stroke-linecap="round"
+                />
+            </svg>
+
+            <svg
+                class="persone-titolo-tratti"
+                viewBox="0 0 42 42"
+                fill="none"
+                stroke="#ff6554"
+                stroke-width="5"
+                stroke-linecap="round"
+                aria-hidden="true"
+            >
+                <path d="M12 4 L8 15"/>
+                <path d="M27 9 L18 17"/>
+                <path d="M36 25 L24 26"/>
+            </svg>
+        </h1>
+
 
             <p>
-                Scopri persone compatibili con te.
+                Scopri persone compatibili con te!
             </p>
 
         </div>
@@ -302,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {% if persona.descrizione %}
 
                         <p>
-                            {{ persona.descrizione|truncatechars:150 }}
+                            {{ persona.descrizione}}
                         </p>
 
                     {% else %}
@@ -394,6 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         method="post"
                         action="{% url 'valuta_persona' persona.pk %}"
                         class="persone-form-valutazione"
+                        data-direzione="sinistra"
                         autocomplete="off"
                     >
                         {% csrf_token %}
@@ -410,13 +443,25 @@ document.addEventListener('DOMContentLoaded', function () {
                             value="{{ request.GET.urlencode }}"
                         >
 
+
                         <button
                             type="submit"
                             class="persone-pulsante-dislike"
                             aria-label="Scarta il profilo di {{ persona.nome }}"
-                            title="Scarta profilo"
+                            title="Non mi interessa"
                         >
-                            ×
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.8"
+                                stroke-linecap="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M5 5L19 19M19 5L5 19"/>
+                            </svg>
+
+                            <span>Non mi interessa</span>
                         </button>
 
                     </form>
@@ -428,6 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         method="post"
                         action="{% url 'valuta_persona' persona.pk %}"
                         class="persone-form-valutazione"
+                        data-direzione="destra"
                     >
                         {% csrf_token %}
 
@@ -443,13 +489,22 @@ document.addEventListener('DOMContentLoaded', function () {
                             value="{{ request.GET.urlencode }}"
                         >
 
+
                         <button
                             type="submit"
                             class="persone-pulsante-like"
                             aria-label="Metti Like a {{ persona.nome }}"
                             title="Mi piace"
                         >
-                            ♡
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"/>
+                            </svg>
+
+                            <span>Mi piace</span>
                         </button>
 
                     </form>
@@ -526,10 +581,6 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="persone-filtri-testata">
 
             <div>
-
-                <h2 id="persone-filtri-titolo">
-                    Filtri
-                </h2>
 
                 <p id="persone-filtri-descrizione">
                     Tutti i filtri sono opzionali.
@@ -802,13 +853,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
             </div>
 
-
-
             <!-- INTERESSI -->
 
             <div class="persone-filtro-sezione">
 
-                <h3>Interessi</h3>
+                <h3 class="persone-filtri-titolo-interessi">
+                    Interessi
+
+                    <svg
+                        viewBox="0 0 110 12"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M3 6 Q55 11 107 4"
+                            stroke="#007d83"
+                            stroke-width="4"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </h3>
 
                 <p class="filtro-interessi-descrizione">
                     Seleziona uno o più interessi.
@@ -1169,15 +1233,18 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
+    // Apertura del dettaglio della persona
+
     function apriDettaglio() {
         window.location.href = scheda.dataset.dettaglioUrl;
     }
 
     scheda.addEventListener('click', function (event) {
 
-        // I pulsanti e gli altri controlli interattivi
-        // non devono aprire DettaglioPersona.
-        if (event.target.closest('button, a, input, select, textarea, form')) {
+        // I controlli interattivi non aprono il dettaglio.
+        if (event.target.closest(
+            'button, a, input, select, textarea, form'
+        )) {
             return;
         }
 
@@ -1186,8 +1253,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     scheda.addEventListener('keydown', function (event) {
 
-        // Invio o Spazio aprono il dettaglio quando
-        // il focus si trova sulla scheda.
         if (
             event.target === scheda &&
             (event.key === 'Enter' || event.key === ' ')
@@ -1195,6 +1260,68 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             apriDettaglio();
         }
+
+    });
+
+    // Animazione Like e Dislike
+
+    const formValutazioni = scheda.querySelectorAll(
+        '.persone-form-valutazione'
+    );
+
+    let invioInCorso = false;
+
+    formValutazioni.forEach(function (form) {
+
+        form.addEventListener('submit', function (event) {
+
+            if (invioInCorso) {
+                event.preventDefault();
+                return;
+            }
+
+            // Se l'utente preferisce animazioni ridotte,
+            // il form viene inviato normalmente.
+            if (
+                window.matchMedia(
+                    '(prefers-reduced-motion: reduce)'
+                ).matches
+            ) {
+                return;
+            }
+
+            event.preventDefault();
+            invioInCorso = true;
+
+            // Direzione dell'animazione:
+            // Like a destra, Dislike a sinistra.
+            const direzione = form.dataset.direzione || 'destra';
+
+            if (direzione === 'sinistra') {
+                scheda.classList.add('persone-scheda-dislike');
+            } else {
+                scheda.classList.add('persone-scheda-like');
+            }
+
+            // Disabilita i pulsanti per impedire
+            // valutazioni multiple durante l'animazione.
+            formValutazioni.forEach(function (altroForm) {
+                const pulsante = altroForm.querySelector(
+                    'button[type="submit"]'
+                );
+
+                if (pulsante) {
+                    pulsante.disabled = true;
+                }
+            });
+
+            // Terminata l'animazione, invia il form
+            // originale a Django.
+            window.setTimeout(function () {
+                HTMLFormElement.prototype.submit.call(form);
+            }, 320);
+
+        });
 
     });
 
