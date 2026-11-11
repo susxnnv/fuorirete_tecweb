@@ -10,54 +10,100 @@
     {% endif %}
 {% endblock %}
 
-{% block content %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/selezione_interessi.css' %}?v=6">
+{% endblock %}
 
-<link rel="stylesheet" href="{% static 'css/selezione_interessi.css' %}?v=4">
+{% block content %}
 
 <main class="interessi-pagina">
 
-    <!-- INTESTAZIONE -->
+    <!-- =====================================
+         INTESTAZIONE
+    ===================================== -->
 
     <header class="interessi-intestazione">
 
-        {% if modalita_modifica %}
+        <div class="interessi-intestazione-testo">
 
-            <span class="interessi-fase">
-                MODIFICA PROFILO
+            {% if modalita_modifica %}
+
+                <span class="interessi-fase">
+                    MODIFICA PROFILO
+                </span>
+
+                <div class="interessi-titolo-contenitore">
+
+                    <h1>Modifica i tuoi interessi</h1>
+
+                    <span class="interessi-titolo-trilli"
+                          aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+
+                </div>
+
+            {% else %}
+
+                <span class="interessi-fase">
+                    PASSAGGIO 2 DI 2
+                </span>
+
+                <div class="interessi-titolo-contenitore">
+
+                    <h1>Scegli i tuoi interessi</h1>
+
+                    <span class="interessi-titolo-trilli"
+                          aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+            <p class="interessi-descrizione">
+                Raccontaci cosa ti piace!
+            </p>
+
+            <p class="interessi-istruzioni">
+                Seleziona da 1 a 6 interessi.
+            </p>
+
+        </div>
+
+
+        <!-- RIQUADRO INFORMATIVO -->
+
+        <aside class="interessi-info">
+
+            <span class="interessi-info-icona"
+                  aria-hidden="true">
+                i
             </span>
 
-            <h1>Modifica i tuoi interessi</h1>
+            <p>
+                Apri una categoria per scoprire gli interessi
+                specifici oppure scegli direttamente
+                la categoria generale.
+            </p>
 
-        {% else %}
-
-            <span class="interessi-fase">
-                PASSAGGIO 2 DI 2
-            </span>
-
-            <h1>Scegli i tuoi interessi</h1>
-
-        {% endif %}
-
-        <p>
-            Raccontaci cosa ti piace! Apri una categoria per
-            scoprire gli interessi specifici oppure scegli
-            direttamente la categoria generale.
-        </p>
-
-        <p class="interessi-istruzioni">
-            Seleziona da 1 a 6 interessi.
-        </p>
+        </aside>
 
     </header>
 
 
-    <!-- FORM SELEZIONE INTERESSI -->
+    <!-- =====================================
+         FORM SELEZIONE INTERESSI
+    ===================================== -->
 
     <form method="post" id="form-interessi" novalidate>
 
         {% csrf_token %}
-
-        <!-- ERRORI DEL FORM -->
 
         {% if form.interessi.errors %}
 
@@ -76,11 +122,11 @@
         {% endif %}
 
 
-        <!-- BUBBLE CLOUD -->
-
         <div class="cloud-layout">
 
-            <!-- AREA DELLE BOLLE -->
+            <!-- =====================================
+                 AREA DELLE CATEGORIE
+            ===================================== -->
 
             <div class="cloud-area">
 
@@ -93,7 +139,7 @@
                             data-categoria="{{ categoria.pk }}"
                         >
 
-                            <!-- CERCHIO MACROCATEGORIA -->
+                            <!-- MACROCATEGORIA -->
 
                             <button
                                 type="button"
@@ -102,16 +148,64 @@
                                 aria-controls="satelliti-{{ categoria.pk }}"
                             >
 
+                                <!-- EMOJI RAPPRESENTATIVA -->
+
                                 <span
                                     class="cloud-macro-simbolo"
                                     aria-hidden="true"
                                 >
-                                    ✦
+
+                                    {% with nome=categoria.nome|lower %}
+
+                                        {% if nome == 'animali' %}
+                                            🐶
+                                        {% elif nome == 'arte e creatività' %}
+                                            🎨
+                                        {% elif nome == 'cibo e gastronomia' %}
+                                            🍔
+                                        {% elif nome == 'cinema' %}
+                                            🎬
+                                        {% elif nome == 'eventi' %}
+                                            🗓️
+                                        {% elif nome == 'fitness e benessere' %}
+                                            💪
+                                        {% elif nome == 'giochi' %}
+                                            🎮
+                                        {% elif nome == 'moda e stile' %}
+                                            👗
+                                        {% elif nome == 'motori' %}
+                                            🚗
+                                        {% elif nome == 'musica' %}
+                                            🎵
+                                        {% elif nome == 'natura' %}
+                                            🌱
+                                        {% elif nome == 'scienza e conoscenza' %}
+                                            📚
+                                        {% elif nome == 'socialità' %}
+                                            👥
+                                        {% elif nome == 'sport' %}
+                                            ⚽
+                                        {% elif nome == 'viaggi' %}
+                                            ✈️
+                                        {% elif nome == 'volontariato' %}
+                                            🤝
+                                        {% else %}
+                                            ✨
+                                        {% endif %}
+
+                                    {% endwith %}
+
                                 </span>
+
+
+                                <!-- NOME DELLA CATEGORIA -->
 
                                 <span class="cloud-macro-nome">
                                     {{ categoria.nome|lower|capfirst }}
                                 </span>
+
+
+                                <!-- CHECK SELEZIONE -->
 
                                 <span
                                     class="cloud-macro-check"
@@ -123,7 +217,7 @@
                             </button>
 
 
-                            <!-- SELEZIONE MACROCATEGORIA GENERALE -->
+                            <!-- INPUT MACROCATEGORIA -->
 
                             <input
                                 type="checkbox"
@@ -137,7 +231,9 @@
                             >
 
 
-                            <!-- SOTTOCATEGORIE / SATELLITI -->
+                            <!-- =====================================
+                                 SOTTOCATEGORIE
+                            ===================================== -->
 
                             <div
                                 class="cloud-satelliti"
@@ -195,7 +291,9 @@
             </div>
 
 
-            <!-- RIEPILOGO INTERESSI SELEZIONATI -->
+            <!-- =====================================
+                 SIDEBAR RIEPILOGO
+            ===================================== -->
 
             <aside class="interessi-riepilogo">
 
@@ -206,7 +304,8 @@
                         <h2>I tuoi interessi</h2>
 
                         <p>
-                            Puoi modificare la selezione quando vuoi.
+                            Potrai modificare la selezione
+                            anche in futuro.
                         </p>
 
                     </div>
@@ -218,7 +317,7 @@
                 </div>
 
 
-                <!-- ELENCO INTERESSI SCELTI -->
+                <!-- INTERESSI SELEZIONATI -->
 
                 <div
                     id="interessi-scelti"
@@ -233,7 +332,7 @@
                 </div>
 
 
-                <!-- NOTA DEL RIEPILOGO -->
+                <!-- NOTA DECORATIVA -->
 
                 <div class="cloud-riepilogo-nota">
 
@@ -249,7 +348,7 @@
                 </div>
 
 
-                <!-- MESSAGGI DI VALIDAZIONE JAVASCRIPT -->
+                <!-- VALIDAZIONE JAVASCRIPT -->
 
                 <p
                     id="interessi-messaggio"
@@ -291,7 +390,7 @@
 <!-- JAVASCRIPT INTERESSI -->
 
 <script
-    src="{% static 'js/selezione_interessi.js' %}?v=4"
+    src="{% static 'js/selezione_interessi.js' %}?v=6"
     defer
 ></script>
 

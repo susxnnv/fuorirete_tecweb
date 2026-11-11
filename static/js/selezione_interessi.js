@@ -122,8 +122,25 @@ document.addEventListener("DOMContentLoaded", function () {
             const y =
                 centroY + raggio * Math.sin(angolo);
 
+
             satellite.style.left = x + "px";
             satellite.style.top = y + "px";
+
+            satellite.style.setProperty(
+                "--indice-satellite",
+                indice
+            );
+
+            satellite.style.setProperty(
+                "--spostamento-x",
+                (centroX - x) + "px"
+            );
+
+            satellite.style.setProperty(
+                "--spostamento-y",
+                (centroY - y) + "px"
+            );
+
 
         });
 
@@ -136,24 +153,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function chiudiCategoria(cluster) {
 
+        const satelliti = cluster.querySelectorAll(
+            ".cloud-satellite"
+        );
+
+        satelliti.forEach(function (satellite) {
+
+            // Interrompe il movimento eventualmente in corso.
+            satellite.getAnimations().forEach(function (animazione) {
+                animazione.cancel();
+            });
+
+            // Ripristina lo stato originale.
+            satellite.style.opacity = "";
+            satellite.style.pointerEvents = "";
+        });
+
         cluster.classList.remove("is-open");
 
-        const macro = cluster.querySelector(
+        cluster.querySelector(
             ".cloud-macro"
-        );
+        ).setAttribute("aria-expanded", "false");
 
-        macro.setAttribute("aria-expanded", "false");
-
-        const satelliti = cluster.querySelector(
+        cluster.querySelector(
             ".cloud-satelliti"
-        );
-
-        satelliti.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
+        ).setAttribute("aria-hidden", "true");
     }
+
+
 
     function chiudiTutte() {
 
@@ -163,10 +190,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+
     function apriCategoria(cluster) {
 
         chiudiTutte();
 
+        // Attivazione della categoria.
         cluster.classList.add("is-open");
 
         cluster.querySelector(
@@ -177,9 +206,94 @@ document.addEventListener("DOMContentLoaded", function () {
             ".cloud-satelliti"
         ).setAttribute("aria-hidden", "false");
 
+        // Calcola le posizioni finali.
         posizionaSatelliti(cluster);
 
+        const satelliti = Array.from(
+            cluster.querySelectorAll(".cloud-satellite")
+        );
+
+        // Accessibilità: se il sistema richiede
+        // movimento ridotto, mostra subito i satelliti.
+        if (window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches) {
+            return;
+        }
+
+        const centroX = cluster.clientWidth / 2;
+        const centroY = cluster.clientHeight / 2;
+
+        const DURATA = 360;
+        const INTERVALLO = 115;
+
+        // Nasconde TUTTI i satelliti prima di avviare
+        // la sequenza, evitando comparse improvvise.
+        satelliti.forEach(function (satellite) {
+            satellite.style.opacity = "0";
+            satellite.style.pointerEvents = "none";
+        });
+
+        satelliti.forEach(function (satellite, indice) {
+
+            const fineX = parseFloat(satellite.style.left);
+            const fineY = parseFloat(satellite.style.top);
+
+            let inizioX = centroX;
+            let inizioY = centroY;
+
+            if (indice > 0) {
+
+                // Ogni satellite parte dalla posizione
+                // finale del satellite precedente.
+                const precedente = satelliti[indice - 1];
+
+                inizioX = parseFloat(precedente.style.left);
+                inizioY = parseFloat(precedente.style.top);
+            }
+
+            const dx = inizioX - fineX;
+            const dy = inizioY - fineY;
+
+            // Movimento progressivo in senso orario.
+            const animazione = satellite.animate(
+                [
+                    {
+                        opacity: 0,
+                        transform:
+                            `translate(-50%, -50%) ` +
+                            `translate(${dx}px, ${dy}px) ` +
+                            `scale(0.7)`
+                    },
+                    {
+                        opacity: 1,
+                        transform:
+                            "translate(-50%, -50%) " +
+                            "translate(0px, 0px) scale(1)"
+                    }
+                ],
+                {
+                    duration: DURATA,
+                    delay: indice * INTERVALLO,
+                    easing: "cubic-bezier(.22, 1, .36, 1)",
+                    fill: "both"
+                }
+            );
+
+            // Al termine lascia la bolla nella posizione
+            // finale e ripristina la sua interattività.
+            animazione.onfinish = function () {
+
+                satellite.style.opacity = "1";
+                satellite.style.pointerEvents = "";
+
+                animazione.cancel();
+            };
+
+        });
     }
+
+
 
 
     // ======================================

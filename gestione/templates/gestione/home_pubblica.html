@@ -1,154 +1,267 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home_pubblica.css' %}?v=2">
+{% endblock %}
+
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/home_pubblica.css' %}">
+<div class="home-pubblica">
 
-<main class="home-pubblica">
+    <!-- DECORAZIONI DELLO SFONDO -->
+    <div class="home-decorazione home-decorazione-alta"
+         aria-hidden="true"></div>
 
-    <!-- PRESENTAZIONE DELLA PIATTAFORMA -->
+    <div class="home-decorazione home-decorazione-bassa"
+         aria-hidden="true"></div>
 
-    <section class="presentazione">
+    <div class="home-pubblica-contenuto">
 
-        <h1>FuoriRete</h1>
+        <!-- PRESENTAZIONE DELLA PIATTAFORMA -->
 
-        <div class="presentazione-testo">
-            Trova persone con i tuoi stessi interessi
-            e scopri nuove community.
-        </div>
+        <section class="presentazione">
 
-        <div class="presentazione-azioni">
-       
-            <a href="{% url 'login' %}" class="pulsante-principale">
-                Accedi
-            </a>
+            <div class="home-logo">
 
-            <p>
-                Non hai ancora un account?
-                <a href="{% url 'registrazione' %}">Registrati</a>
-            </p>
+                <!-- CUORE -->
+                <svg class="home-logo-cuore"
+                     viewBox="0 0 64 64"
+                     fill="none"
+                     aria-hidden="true">
 
-        
-        </div>
+                    <path
+                        d="M32 55
+                           C27 50 7 34 7 20
+                           C7 10 14 6 22 6
+                           C27 6 30 9 32 13
+                           C34 9 37 6 42 6
+                           C50 6 57 10 57 20
+                           C57 34 37 50 32 55Z"
+                        stroke="currentColor"
+                        stroke-width="6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
 
-    </section>
+                </svg>
 
-    <!-- COMMUNITY PUBBLICHE -->
+                <h1>FuoriRete</h1>
 
-    <section class="community-pubbliche">
+                <!-- TRILLI DEL LOGO -->
+                <span class="home-logo-trilli"
+                      aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
 
-        <div class="community-pubbliche-intestazione">
-
-            <div>
-                <h2>Scopri le community</h2>
-
-                <p class="community-sottotitolo">
-                    Esplora i gruppi più apprezzati
-                    della community FuoriRete.
-                </p>
             </div>
 
-            {% if community %}
-                <span class="community-pubbliche-scorri">
-                    Scorri per esplorare →
-                </span>
-            {% endif %}
+            <p class="presentazione-testo">
+                Trova persone con i tuoi stessi interessi
+                e scopri nuove community
+                <span class="presentazione-esclamativo">!</span>
+            </p>
 
-        </div>
+            <div class="presentazione-azioni">
 
-        <div class="community-contenitore">
+                <a href="{% url 'login' %}"
+                   class="pulsante-principale">
+                    Accedi
+                </a>
 
-            {% if community %}
+                <p>
+                    Non hai ancora un account?
+                    <a href="{% url 'registrazione' %}">
+                        Registrati!
+                    </a>
+                </p>
 
-                {% for gruppo in community %}
+            </div>
 
-                    <article class="community-card"
+        </section>
+
+
+        <!-- COMMUNITY PUBBLICHE -->
+
+        <section class="community-pubbliche">
+
+            <div class="community-pubbliche-intestazione">
+
+                <div class="community-intestazione-testo">
+
+                    <div class="community-titolo-contenitore">
+
+                        <!-- TRILLI -->
+                        <span class="community-titolo-trilli"
+                              aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+
+                        <h2>
+                            Scopri le
+                            <span class="community-titolo-sottolineato">
+                                community
+                            </span>
+                        </h2>
+
+                    </div>
+
+                    <p class="community-sottotitolo">
+                        Esplora i gruppi più apprezzati
+                        della community FuoriRete.
+                    </p>
+
+                </div>
+
+                {% if community %}
+
+                    <span class="community-pubbliche-scorri">
+                        Scorri per esplorare
+                        <span aria-hidden="true">→</span>
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- CAROSELLO COMMUNITY -->
+
+            <div class="community-contenitore">
+
+                {% if community %}
+
+                    {% for gruppo in community %}
+
+                        <article
+                            class="community-card"
                             data-url="{% url 'dettaglio_community' gruppo.pk %}?origine=home_pubblica"
                             tabindex="0"
                             role="link"
-                            aria-label="Apri la community {{ gruppo.titolo }}">                   
+                            aria-label="Apri la community {{ gruppo.titolo }}"
+                        >
 
-                        <div class="community-card-immagine">
+                            <!-- IMMAGINE -->
 
-                            {% if gruppo.immagine %}
-                                <img
-                                    src="{{ gruppo.immagine.url }}"
-                                    alt="Immagine della community {{ gruppo.titolo }}"
-                                >
-                            {% else %}
-                                <span aria-hidden="true">♧</span>
-                            {% endif %}
+                            <div class="community-card-immagine">
 
-                        </div>
+                                {% if gruppo.immagine %}
 
-                        <div class="community-card-contenuto">
-
-                            <h3>{{ gruppo.titolo }}</h3>
-
-                            <p class="community-citta">
-                                {{ gruppo.citta }}
-                            </p>
-
-                            <p class="community-card-descrizione">
-                                {{ gruppo.descrizione|truncatewords:18 }}
-                            </p>
-
-                            <div class="community-card-valutazione">
-
-                                {% if gruppo.numero_valutazioni %}
-
-                                    <strong>
-                                        ★ {{ gruppo.media_valutazioni|floatformat:1 }}
-                                    </strong>
-
-                                    <small>
-                                        {{ gruppo.numero_valutazioni }}
-                                        valutazioni
-                                    </small>
+                                    <img
+                                        src="{{ gruppo.immagine.url }}"
+                                        alt="Immagine della community {{ gruppo.titolo }}"
+                                    >
 
                                 {% else %}
 
-                                    <small>
-                                        Nessuna valutazione
-                                    </small>
+                                    <span class="community-immagine-placeholder"
+                                          aria-hidden="true">
+                                        ♧
+                                    </span>
 
                                 {% endif %}
 
                             </div>
 
+
+                            <!-- CONTENUTO -->
+
+                            <div class="community-card-contenuto">
+
+                                <h3>{{ gruppo.titolo }}</h3>
+
+                                <p class="community-citta">
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"
+                                        />
+                                        <circle cx="12" cy="10" r="2.5"/>
+                                    </svg>
+
+                                    {{ gruppo.citta }}
+
+                                </p>
+
+                                <p class="community-card-descrizione">
+                                    {{ gruppo.descrizione|truncatewords:18 }}
+                                </p>
+
+                                <!-- VALUTAZIONE -->
+
+                                <div class="community-card-valutazione">
+
+                                    {% if gruppo.numero_valutazioni %}
+
+                                        <strong>
+                                            ★ {{ gruppo.media_valutazioni|floatformat:1 }}
+                                        </strong>
+
+                                        <small>
+                                            {{ gruppo.numero_valutazioni }}
+                                            valutazioni
+                                        </small>
+
+                                    {% else %}
+
+                                        <small>
+                                            Nessuna valutazione
+                                        </small>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <!-- NESSUNA COMMUNITY -->
+
+                    <div class="community-vuote">
+
+                        <div class="community-icona"
+                             aria-hidden="true">
+                            ♧
                         </div>
 
-                    </article>
+                        <h3>Nessuna community disponibile</h3>
 
-                {% endfor %}
+                        <p>
+                            Al momento non sono presenti
+                            community su FuoriRete.
+                        </p>
 
-            {% else %}
-
-                <div class="community-vuote">
-
-                    <div class="community-icona">
-                        ♧
                     </div>
 
-                    <h3>Nessuna community disponibile</h3>
+                {% endif %}
 
-                    <p>
-                        Al momento non sono presenti
-                        community su FuoriRete.
-                    </p>
+            </div>
 
-                </div>
+        </section>
 
-            {% endif %}
+    </div>
 
-        </div>
-
-    </section>
+</div>
 
 
-</main>
-
+<!-- APERTURA DEL DETTAGLIO COMMUNITY -->
 
 <script>
     document.querySelectorAll(
@@ -162,14 +275,15 @@
         card.addEventListener('click', apriCommunity);
 
         card.addEventListener('keydown', function (event) {
+
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 apriCommunity();
             }
+
         });
 
     });
 </script>
-
 
 {% endblock %}

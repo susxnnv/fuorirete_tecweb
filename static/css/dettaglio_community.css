@@ -7,7 +7,8 @@
     width: 100%;
     max-width: 860px;
     margin: 26px auto 60px;
-    color: #292421;
+    padding: 0 16px;
+    color: #07505a;
 }
 
 /* NAVIGAZIONE */
@@ -29,14 +30,16 @@
 
 /* RIQUADRI */
 
+
 .dettaglio-community-banner,
 .dettaglio-community-riquadro {
     overflow: hidden;
     background: #ffffff;
-    border: 1px solid #eae2dc;
-    border-radius: 19px;
-    box-shadow: 0 4px 12px rgba(40, 30, 20, .035);
+    border: 1px solid #eee2dc;
+    border-radius: 20px;
+    box-shadow: 0 5px 17px rgba(40, 30, 20, .045);
 }
+
 
 /* BANNER */
 
@@ -83,23 +86,31 @@
     letter-spacing: 1px;
 }
 
+
 .dettaglio-community-titolo h1 {
     margin: 0 0 9px;
-    color: #302823;
+    color: #07505a;
     font-size: 26px;
+    font-weight: 800;
     line-height: 1.25;
+    letter-spacing: -.5px;
     overflow-wrap: anywhere;
 }
 
+
+
 .dettaglio-community-citta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     margin: 0;
-    color: #977f73;
+    color: #527682;
     font-size: 12px;
+    font-weight: 500;
 }
 
 .dettaglio-community-citta span {
-    color: #fa5943;
-    font-size: 17px;
+    font-size: 14px;
 }
 
 .dettaglio-community-valutazione {
@@ -122,13 +133,16 @@
     font-size: 11px;
 }
 
+
 .dettaglio-community-descrizione {
     margin: 0;
-    color: #594b43;
+    color: #36545d;
     font-size: 13px;
-    line-height: 1.8;
+    font-weight: 500;
+    line-height: 1.7;
     overflow-wrap: anywhere;
 }
+
 
 /* SEZIONI */
 
@@ -137,10 +151,13 @@
     padding: 22px 25px;
 }
 
+
 .dettaglio-community-riquadro h2 {
     margin: 0 0 16px;
-    font-size: 16px;
-    color: #302823;
+    font-size: 17px;
+    font-weight: 800;
+    color: #07505a;
+    letter-spacing: -.3px;
 }
 
 /* INTERESSI */
@@ -194,17 +211,20 @@
     padding-bottom: 0;
 }
 
+
 .dettaglio-community-info-riga span {
-    color: #90796e;
+    color: #66818a;
     font-size: 12px;
+    font-weight: 500;
 }
 
 .dettaglio-community-info-riga strong {
-    color: #302823;
+    color: #07505a;
     font-size: 12px;
     font-weight: 700;
     text-align: right;
 }
+
 
 /* AZIONI */
 
@@ -219,12 +239,15 @@
     margin: 0;
 }
 
+
 .dettaglio-community-azioni p {
     margin: 0;
-    color: #90796e;
+    color: #527682;
     font-size: 12px;
+    font-weight: 500;
     line-height: 1.7;
 }
+
 
 .dettaglio-community-stato {
     display: inline-block;
@@ -590,4 +613,716 @@ label:nth-of-type(-n+5) {
 .dettaglio-community-gestione-azioni button {
     font-family: inherit;
     cursor: pointer;
+}
+
+
+/* ==========================================
+   DETTAGLIO COMMUNITY - STILE FUORIRETE
+========================================== */
+
+/* SFONDO PASTELLO */
+
+body:has(.dettaglio-community-pagina) {
+    background-color: #fcf8f6;
+    background-image:
+        radial-gradient(
+            ellipse at 100% 30%,
+            rgba(216, 240, 235, .55),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 0% 85%,
+            rgba(255, 218, 214, .55),
+            transparent 40%
+        );
+    background-attachment: fixed;
+}
+
+
+/* CONTENITORE */
+
+.dettaglio-community-pagina {
+    max-width: 860px;
+    margin: 26px auto 60px;
+    padding: 0 16px;
+    color: #07505a;
+}
+
+
+/* CARD GENERALI */
+
+.dettaglio-community-banner,
+.dettaglio-community-riquadro {
+    background: #ffffff;
+    border: 1px solid #eadfd9;
+    border-radius: 19px;
+    box-shadow: 0 5px 18px rgba(40, 30, 20, .045);
+}
+
+
+/* ==========================================
+   BANNER PRINCIPALE
+========================================== */
+
+.dettaglio-community-identita {
+    padding: 25px 27px;
+}
+
+.dettaglio-community-etichetta {
+    color: #ff5954;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+/* TITOLO SENZA DECORAZIONI */
+
+.dettaglio-community-titolo h1 {
+    color: #07505a;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+}
+
+/* Nessuna sottolineatura o trillo sul titolo */
+
+.dettaglio-community-titolo h1::before,
+.dettaglio-community-titolo h1::after {
+    content: none;
+}
+
+/* CITTÀ */
+
+.dettaglio-community-citta {
+    color: #527682;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* DESCRIZIONE */
+
+.dettaglio-community-descrizione {
+    color: #204b55;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.7;
+}
+
+/* VALUTAZIONE */
+
+.dettaglio-community-senza-voti {
+    display: inline-block;
+    padding: 7px 12px;
+
+    background: #fff0eb;
+    border-radius: 20px;
+
+    color: #97766a;
+    font-size: 11px;
+}
+
+
+/* ==========================================
+   TITOLI DELLE SEZIONI
+========================================== */
+
+.dettaglio-community-riquadro {
+    padding: 22px 25px;
+    margin-bottom: 15px;
+}
+
+/* Solo i titoli delle sezioni informative */
+
+/* ==========================================
+   ACCESSO - HOME PUBBLICA
+========================================== */
+
+/* Stile dedicato al visitatore non autenticato */
+
+.dettaglio-community-accesso:has(
+    .dettaglio-community-accesso-testo
+) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+    padding: 20px 24px;
+
+    background: linear-gradient(
+        110deg,
+        #fff8f5 0%,
+        #ffebe5 100%
+    );
+
+    border: 3px solid #ffffff;
+    border-radius: 19px;
+
+    box-shadow:
+        0 0 0 1px #eadfd9,
+        0 6px 18px rgba(40, 30, 20, .055);
+}
+
+/* Cuore + testi */
+
+.dettaglio-community-accesso-testo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.dettaglio-community-cuore {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 36px;
+
+    color: #ff5954;
+    font-size: 43px;
+    font-family: Arial, sans-serif;
+    line-height: 1;
+}
+
+.dettaglio-community-accesso-contenuto {
+    min-width: 0;
+}
+
+.dettaglio-community-accesso-contenuto h2 {
+    margin: 0 0 7px;
+
+    color: #07505a;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.dettaglio-community-accesso-contenuto p {
+    margin: 0;
+
+    color: #365d66;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* PULSANTE ACCEDI */
+
+.dettaglio-community-accesso:has(
+    .dettaglio-community-accesso-testo
+) .dettaglio-community-pulsante {
+    flex-shrink: 0;
+
+    min-width: 130px;
+    min-height: 43px;
+
+    padding: 11px 24px;
+
+    background: #ff5954;
+    border: 1px solid #ff5954;
+    border-radius: 23px;
+
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+
+    box-shadow: 0 4px 12px rgba(255, 89, 84, .12);
+
+    transition:
+        background-color .2s ease,
+        transform .2s ease;
+}
+
+.dettaglio-community-accesso
+.dettaglio-community-pulsante:hover {
+    background: #e84b46;
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .dettaglio-community-identita {
+        padding: 20px;
+    }
+
+    .dettaglio-community-riquadro {
+        padding: 19px;
+    }
+
+    .dettaglio-community-accesso:has(
+        .dettaglio-community-accesso-testo
+    ) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        padding: 19px;
+    }
+
+    .dettaglio-community-accesso-testo {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .dettaglio-community-cuore {
+        font-size: 35px;
+        flex-basis: 30px;
+    }
+
+    .dettaglio-community-accesso:has(
+        .dettaglio-community-accesso-testo
+    ) .dettaglio-community-pulsante {
+        align-self: flex-start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dettaglio-community-accesso
+    .dettaglio-community-pulsante {
+        transition: none;
+    }
+}
+
+
+/* ==========================================
+   FUORIRETE - TRE TRILLI DECORATIVI
+========================================== */
+
+
+/* ==========================================
+   TRILLI - STILE PAGINA PERSONE
+========================================== */
+
+/* Titoli delle sezioni */
+
+.dettaglio-community-riquadro
+.dettaglio-community-titolo-decorato {
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: calc(100% - 38px);
+
+    margin: 0 0 18px;
+    padding: 0;
+
+    color: #07505a;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+/* Contenitore dei tre trilli */
+
+.dettaglio-community-trilli {
+    position: absolute;
+    display: block;
+
+    width: 36px;
+    height: 35px;
+
+    top: -13px;
+    right: -28px;
+
+    transform: scale(0.65);
+    transform-origin: top left;
+
+    pointer-events: none;
+}
+
+/* Forma delle lineette */
+
+.dettaglio-community-trilli span {
+    position: absolute;
+    display: block;
+
+    width: 4px;
+    height: 16px;
+
+    background: #ff5954;
+    border-radius: 10px;
+}
+
+/* Primo trillo: alto, inclinato */
+
+.dettaglio-community-trilli span:nth-child(1) {
+    top: 0;
+    left: 8px;
+    transform: rotate(18deg);
+}
+
+/* Secondo trillo: diagonale verso destra */
+
+.dettaglio-community-trilli span:nth-child(2) {
+    top: 10px;
+    left: 23px;
+    transform: rotate(48deg);
+}
+
+/* Terzo trillo: quasi orizzontale */
+
+.dettaglio-community-trilli span:nth-child(3) {
+    top: 26px;
+    left: 27px;
+
+    height: 11px;
+    transform: rotate(70deg);
+}
+
+
+/* ==========================================
+   DETTAGLIO COMMUNITY - NON MEMBRO
+========================================== */
+
+/* CARD CON SFONDO PESCA */
+
+.dettaglio-community-azioni:has(
+    .dettaglio-community-nonmembro
+) {
+    padding: 20px 24px;
+
+    background: linear-gradient(
+        110deg,
+        #fff8f5 0%,
+        #ffebe5 100%
+    );
+
+    border: 3px solid #ffffff;
+    border-radius: 19px;
+
+    box-shadow:
+        0 0 0 1px #eadfd9,
+        0 6px 18px rgba(40, 30, 20, .055);
+}
+
+
+/* CONTENUTO PRINCIPALE */
+
+.dettaglio-community-nonmembro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+}
+
+
+/* ICONA + TESTI */
+
+.dettaglio-community-nonmembro-presentazione {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+    flex: 1;
+}
+
+
+/* ICONA PERSONE */
+
+.dettaglio-community-nonmembro-icona {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 45px;
+    height: 45px;
+    flex: 0 0 45px;
+
+    color: #ff5954;
+}
+
+.dettaglio-community-nonmembro-icona svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* TESTI */
+
+.dettaglio-community-nonmembro-testo {
+    min-width: 0;
+}
+
+.dettaglio-community-nonmembro-testo h2 {
+    margin: 0 0 7px;
+
+    color: #07505a;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.dettaglio-community-nonmembro-testo p {
+    margin: 0;
+
+    color: #365d66;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+
+/* FORM */
+
+.dettaglio-community-nonmembro form {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+
+/* PULSANTE RICHIEDI */
+
+.dettaglio-community-nonmembro
+.dettaglio-community-pulsante {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 190px;
+    min-height: 43px;
+
+    padding: 11px 22px;
+
+    background: #ff5954;
+    border: 1px solid #ff5954;
+    border-radius: 23px;
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    box-shadow: 0 4px 12px rgba(255, 89, 84, .12);
+
+    cursor: pointer;
+    transition:
+        background-color .2s ease,
+        transform .2s ease;
+}
+
+.dettaglio-community-nonmembro
+.dettaglio-community-pulsante:hover {
+    background: #e84b46;
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .dettaglio-community-azioni:has(
+        .dettaglio-community-nonmembro
+    ) {
+        padding: 19px;
+    }
+
+    .dettaglio-community-nonmembro {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 19px;
+    }
+
+    .dettaglio-community-nonmembro-presentazione {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .dettaglio-community-nonmembro-icona {
+        width: 37px;
+        height: 37px;
+        flex-basis: 37px;
+    }
+
+    .dettaglio-community-nonmembro form {
+        align-self: flex-start;
+        max-width: 100%;
+    }
+
+    .dettaglio-community-nonmembro
+    .dettaglio-community-pulsante {
+        min-width: 0;
+        max-width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .dettaglio-community-nonmembro
+    .dettaglio-community-pulsante {
+        transition: none;
+    }
+}
+
+
+/* ==========================================
+   DETTAGLIO COMMUNITY - RICHIESTA IN ATTESA
+========================================== */
+
+/* CARD PESCA */
+
+.dettaglio-community-azioni:has(.dettaglio-community-richiesta-attesa) {
+    padding: 20px 24px;
+    background: linear-gradient(110deg, #fff8f5, #ffebe5);
+    border: 3px solid #ffffff;
+    border-radius: 19px;
+    box-shadow:
+        0 0 0 1px #eadfd9,
+        0 6px 18px rgba(40, 30, 20, .055);
+}
+
+/* LAYOUT ORIZZONTALE */
+
+.dettaglio-community-richiesta-attesa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    min-width: 0;
+}
+
+/* ICONA E TESTI */
+
+.dettaglio-community-attesa-presentazione {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+/* OROLOGIO CORALLO */
+
+.dettaglio-community-attesa-icona {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    flex: 0 0 45px;
+    color: #ff5954;
+}
+
+.dettaglio-community-attesa-icona svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* TESTI */
+
+.dettaglio-community-attesa-testo {
+    min-width: 0;
+}
+
+.dettaglio-community-attesa-intestazione {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 7px;
+}
+
+.dettaglio-community-attesa-intestazione h2 {
+    margin: 0;
+    color: #07505a;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+/* BADGE IN ATTESA */
+
+.dettaglio-community-attesa-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 11px;
+    background: #fff0e9;
+    border: 1px solid #f0d0c5;
+    border-radius: 20px;
+    color: #c4503d;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* DESCRIZIONE */
+
+.dettaglio-community-attesa-testo p {
+    margin: 0;
+    color: #365d66;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* FORM */
+
+.dettaglio-community-richiesta-attesa form {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+/* PULSANTE SECONDARIO */
+
+.dettaglio-community-richiesta-attesa
+.dettaglio-community-pulsante-secondario {
+    min-height: 43px;
+    padding: 11px 20px;
+    background: #ffffff;
+    border: 1px solid #eadbd3;
+    border-radius: 23px;
+    color: #a15c50;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color .2s, border-color .2s;
+}
+
+.dettaglio-community-richiesta-attesa
+.dettaglio-community-pulsante-secondario:hover {
+    background: #fff0e9;
+    border-color: #ff5954;
+    color: #c4503d;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 650px) {
+
+    .dettaglio-community-azioni:has(.dettaglio-community-richiesta-attesa) {
+        padding: 19px;
+    }
+
+    .dettaglio-community-richiesta-attesa {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 19px;
+    }
+
+    .dettaglio-community-attesa-presentazione {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .dettaglio-community-attesa-icona {
+        width: 37px;
+        height: 37px;
+        flex-basis: 37px;
+    }
+
+    .dettaglio-community-richiesta-attesa form {
+        align-self: flex-start;
+    }
 }

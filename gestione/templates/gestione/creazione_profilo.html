@@ -2,48 +2,152 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/autenticazione.css' %}?v=6">
+<link rel="stylesheet" href="{% static 'css/gestione_immagini.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/autenticazione.css' %}">
-<link rel="stylesheet" href="{% static 'css/gestione_immagini.css' %}">
+<main class="auth-page auth-page--creazione-profilo">
 
-<main class="auth-page">
+    <!-- INTESTAZIONE -->
 
-    <h1>CREA IL TUO PROFILO</h1>
+    <header class="creazione-profilo-intestazione">
 
-    <p class="auth-intro">
-        Completa il tuo profilo personale per iniziare
-        a scoprire persone e community su FuoriRete.
-    </p>
+        <div class="creazione-profilo-titolo">
+            <h1>Crea il tuo profilo</h1>
 
-    <section class="auth-card">
+            <span class="creazione-profilo-trilli"
+                  aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+        </div>
 
-        <!-- FORM DI CREAZIONE PROFILO -->
+        <p class="auth-intro">
+            Completa il tuo profilo personale per iniziare
+            a scoprire persone e community su FuoriRete.
+        </p>
 
-        <form method="post"
-              enctype="multipart/form-data"
-              novalidate
-              autocomplete="off">
+    </header>
 
-            {% csrf_token %}
+
+    <!-- FORM PRINCIPALE -->
+
+    <form
+        method="post"
+        enctype="multipart/form-data"
+        novalidate
+        autocomplete="off"
+        class="creazione-profilo-form"
+    >
+
+        {% csrf_token %}
+
+        <div class="auth-card">
 
             {% if form.non_field_errors %}
-                <div class="auth-errors">
+                <div class="auth-errors" role="alert">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
 
-            {% for field in form %}
 
-                <div class="auth-field">
+            <!-- =====================================
+                 1. DATI PERSONALI E FOTO
+            ===================================== -->
 
-                    <label for="{{ field.id_for_label }}">
-                        {{ field.label }}
-                    </label>
+            <section class="profilo-sezione profilo-sezione-iniziale">
 
-                    {% if field.name == 'foto' %}
+                <div class="profilo-griglia-iniziale">
 
-                        <!-- FOTO DEL PROFILO -->
+                    <!-- DATI PERSONALI -->
+
+                    <div class="profilo-dati-personali">
+
+                        <h2 class="profilo-sezione-titolo">
+                            <span class="profilo-sezione-icona"
+                                  aria-hidden="true">👤</span>
+                            <span>Dati personali</span>
+                        </h2>
+
+                        <!-- NOME -->
+
+                        <div class="auth-field">
+
+                            <label for="{{ form.nome.id_for_label }}">
+                                {{ form.nome.label }}
+                                {% if form.nome.field.required %}
+                                    <span class="profilo-obbligatorio">*</span>
+                                {% endif %}
+                            </label>
+
+                            {{ form.nome }}
+
+                            {% if form.nome.errors %}
+                                <div class="auth-errors" role="alert">
+                                    {{ form.nome.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="profilo-griglia-due">
+
+                            <!-- DATA DI NASCITA -->
+
+                            <div class="auth-field">
+
+                                <label for="{{ form.data_nascita.id_for_label }}">
+                                    {{ form.data_nascita.label }}
+                                    {% if form.data_nascita.field.required %}
+                                        <span class="profilo-obbligatorio">*</span>
+                                    {% endif %}
+                                </label>
+
+                                {{ form.data_nascita }}
+
+                                {% if form.data_nascita.errors %}
+                                    <div class="auth-errors" role="alert">
+                                        {{ form.data_nascita.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- GENERE -->
+
+                            <div class="auth-field">
+
+                                <label for="{{ form.genere.id_for_label }}">
+                                    {{ form.genere.label }}
+                                    {% if form.genere.field.required %}
+                                        <span class="profilo-obbligatorio">*</span>
+                                    {% endif %}
+                                </label>
+
+                                {{ form.genere }}
+
+                                {% if form.genere.errors %}
+                                    <div class="auth-errors" role="alert">
+                                        {{ form.genere.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FOTO -->
+
+                    <div class="profilo-foto-colonna">
 
                         <div class="gestione-immagine gestione-immagine-creazione">
 
@@ -66,21 +170,15 @@
 
                             <div class="gestione-immagine-comandi">
 
-                                <span class="gestione-immagine-descrizione">
-                                    Scegli una foto da mostrare
-                                    sul tuo profilo.
-                                </span>
-
                                 <div class="gestione-immagine-azioni">
 
-                                <button
-                                    type="button"
-                                    class="gestione-immagine-pulsante"
-                                    onclick="this.closest('.gestione-immagine').querySelector('input[type=file]').click()"
-                                >
-                                    Scegli foto
-                                </button>
-
+                                    <button
+                                        type="button"
+                                        class="gestione-immagine-pulsante"
+                                        onclick="this.closest('.gestione-immagine').querySelector('input[type=file]').click()"
+                                    >
+                                        Scegli foto
+                                    </button>
 
                                     <button
                                         type="button"
@@ -94,57 +192,220 @@
                                 </div>
 
                                 <div class="gestione-immagine-input">
-
-                                    {{ field }}
-
+                                    {{ form.foto }}
                                 </div>
 
                             </div>
 
                         </div>
 
-                    {% else %}
+                        {% if form.foto.errors %}
+                            <div class="auth-errors" role="alert">
+                                {{ form.foto.errors }}
+                            </div>
+                        {% endif %}
 
-                        {{ field }}
+                    </div>
 
-                    {% endif %}
+                </div>
 
-                    {% if field.help_text %}
-                        <div class="auth-help">
-                            {{ field.help_text }}
-                        </div>
-                    {% endif %}
+            </section>
 
-                    {% if field.errors %}
-                        <div class="auth-errors">
-                            {{ field.errors }}
+
+            <!-- =====================================
+                 2. DOVE TI TROVI
+            ===================================== -->
+
+            <section class="profilo-sezione">
+
+                <h2 class="profilo-sezione-titolo">
+                    <span class="profilo-sezione-icona"
+                          aria-hidden="true">📍</span>
+                    <span>Dove ti trovi</span>
+                </h2>
+
+                <div class="auth-field">
+
+                    <label for="{{ form.citta.id_for_label }}">
+                        {{ form.citta.label }}
+                        {% if form.citta.field.required %}
+                            <span class="profilo-obbligatorio">*</span>
+                        {% endif %}
+                    </label>
+
+                    {{ form.citta }}
+
+                    {% if form.citta.errors %}
+                        <div class="auth-errors" role="alert">
+                            {{ form.citta.errors }}
                         </div>
                     {% endif %}
 
                 </div>
 
-            {% endfor %}
+            </section>
+
+
+            <!-- =====================================
+                 3. OCCUPAZIONE E LINGUE
+            ===================================== -->
+
+            <div class="profilo-griglia-due profilo-sezioni-affiancate">
+
+                <!-- OCCUPAZIONE -->
+
+                <section class="profilo-sezione">
+
+                    <h2 class="profilo-sezione-titolo">
+                        <span class="profilo-sezione-icona"
+                              aria-hidden="true">💼</span>
+                        <span>Occupazione</span>
+                    </h2>
+
+                    <div class="auth-field">
+
+                        <label for="{{ form.occupazione.id_for_label }}"
+                               class="profilo-label-interno">
+                            {{ form.occupazione.label }}
+                        </label>
+
+                        {{ form.occupazione }}
+
+                        {% if form.occupazione.errors %}
+                            <div class="auth-errors" role="alert">
+                                {{ form.occupazione.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+
+                <!-- LINGUE PARLATE -->
+
+                <section class="profilo-sezione">
+
+                    <h2 class="profilo-sezione-titolo">
+                        <span class="profilo-sezione-icona"
+                              aria-hidden="true">🌍</span>
+                        <span>Lingue parlate</span>
+                    </h2>
+
+                    <div class="auth-field profilo-opzioni-field">
+
+                        <div class="profilo-checkbox-grid profilo-lingue">
+                            {{ form.lingue }}
+                        </div>
+
+                        {% if form.lingue.errors %}
+                            <div class="auth-errors" role="alert">
+                                {{ form.lingue.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =====================================
+                 4. DESCRIZIONE
+            ===================================== -->
+
+            <section class="profilo-sezione">
+
+                <h2 class="profilo-sezione-titolo">
+                    <span class="profilo-sezione-icona"
+                          aria-hidden="true">📝</span>
+                    <span>Descrizione</span>
+                </h2>
+
+                <div class="auth-field">
+
+                    <label for="{{ form.descrizione.id_for_label }}"
+                           class="profilo-label-interno">
+                        {{ form.descrizione.label }}
+                    </label>
+
+                    {{ form.descrizione }}
+
+                    {% if form.descrizione.errors %}
+                        <div class="auth-errors" role="alert">
+                            {{ form.descrizione.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 5. COSA CERCHI
+            ===================================== -->
+
+            <section class="profilo-sezione">
+
+                <h2 class="profilo-sezione-titolo">
+                    <span class="profilo-sezione-icona"
+                          aria-hidden="true">💕</span>
+                    <span>Cosa cerchi?</span>
+                </h2>
+
+                <div class="auth-field profilo-opzioni-field">
+
+                    <div class="profilo-checkbox-grid profilo-cosa-cerchi">
+                        {{ form.cosa_cerca }}
+                    </div>
+
+                    {% if form.cosa_cerca.errors %}
+                        <div class="auth-errors" role="alert">
+                            {{ form.cosa_cerca.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- =====================================
+             PULSANTE FUORI DALLA CARD
+        ===================================== -->
+
+        <div class="creazione-profilo-azioni">
 
             <button type="submit" class="auth-button">
                 Completa il profilo
             </button>
 
-        </form>
+        </div>
 
-        <!-- LOGOUT -->
+    </form>
 
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
 
-            <button
-                type="submit"
-                class="auth-button auth-button-secondary"
-            >
-                Esci
-            </button>
-        </form>
+    <!-- LOGOUT FUORI DALLA CARD -->
 
-    </section>
+    <form
+        method="post"
+        action="{% url 'logout' %}"
+        class="creazione-profilo-logout"
+    >
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="auth-button auth-button-secondary"
+        >
+            Esci
+        </button>
+
+    </form>
 
 </main>
 

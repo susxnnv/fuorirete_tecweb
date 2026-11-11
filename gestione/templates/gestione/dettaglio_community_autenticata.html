@@ -6,7 +6,7 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}?v=2">
+<link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}?v=9">
 
 <div class="dettaglio-community-pagina">
 
@@ -69,7 +69,7 @@
                     <h1>{{ community.titolo }}</h1>
 
                     <p class="dettaglio-community-citta">
-                        <span aria-hidden="true">⌖</span>
+                        <span aria-hidden="true">📍</span>
                         {{ community.citta }}
                     </p>
 
@@ -114,7 +114,16 @@
 
     <section class="dettaglio-community-riquadro">
 
-        <h2>Interessi della community</h2>
+
+        <h2 class="dettaglio-community-titolo-decorato">
+            <span class="dettaglio-community-trilli" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+            Interessi della community
+        </h2>
+
 
         <div class="dettaglio-community-interessi">
 
@@ -153,7 +162,14 @@
 
     <section class="dettaglio-community-riquadro">
 
-        <h2>Informazioni sulla community</h2>
+        <h2 class="dettaglio-community-titolo-decorato">
+            <span class="dettaglio-community-trilli" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+            Informazioni sulla community
+        </h2>
 
         <div class="dettaglio-community-info">
 
@@ -205,17 +221,24 @@
 
         <!-- MESSAGGI DI CONFERMA -->
 
+        <!-- MESSAGGI DI CONFERMA -->
+
         {% if messages %}
 
             {% for message in messages %}
 
-                <p class="dettaglio-community-feedback">
-                    {{ message }}
-                </p>
+                {% if message.message != "Richiesta di partecipazione inviata!" %}
+
+                    <p class="dettaglio-community-feedback">
+                        {{ message }}
+                    </p>
+
+                {% endif %}
 
             {% endfor %}
 
         {% endif %}
+
 
 
         <!-- ANTEPRIMA DAL PUNTO DI VISTA DI UN MEMBRO -->
@@ -368,76 +391,160 @@
 
         <!-- RICHIESTA IN ATTESA -->
 
+        <!-- RICHIESTA IN ATTESA -->
+
         {% elif stato_richiesta == 'PENDING' %}
 
-            <span class="dettaglio-community-stato">
-                Richiesta in attesa
-            </span>
+            <div class="dettaglio-community-richiesta-attesa">
 
-            <h2>Hai già inviato una richiesta</h2>
+                <div class="dettaglio-community-attesa-presentazione">
 
-            <p>
-                L'organizzatore deve ancora
-                accettare o rifiutare la tua richiesta.
-            </p>
+                    <!-- ICONA OROLOGIO -->
 
-            <form
-                method="post"
-                action="{% url 'annulla_richiesta_community' community.pk %}"
-            >
+                    <span
+                        class="dettaglio-community-attesa-icona"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="12" cy="12" r="9"/>
+                            <path d="M12 7v5l3.5 2"/>
+                        </svg>
+                    </span>
 
-                {% csrf_token %}
+                    <!-- TITOLO E DESCRIZIONE -->
 
-                <input
-                    type="hidden"
-                    name="origine"
-                    value="{{ origine_community }}"
+                    <div class="dettaglio-community-attesa-testo">
+
+                        <div class="dettaglio-community-attesa-intestazione">
+
+                            <h2>Richiesta inviata!</h2>
+
+                            <span class="dettaglio-community-attesa-badge">
+                                In attesa
+                            </span>
+
+                        </div>
+
+                        <p>
+                            La tua richiesta è in attesa di una risposta
+                            dall'organizzatore.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- ANNULLA RICHIESTA -->
+
+                <form
+                    method="post"
+                    action="{% url 'annulla_richiesta_community' community.pk %}"
                 >
 
-                <button
-                    type="submit"
-                    class="dettaglio-community-pulsante-secondario"
-                >
-                    Annulla richiesta
-                </button>
+                    {% csrf_token %}
 
-            </form>
+                    <input
+                        type="hidden"
+                        name="origine"
+                        value="{{ origine_community }}"
+                    >
+
+                    <button
+                        type="submit"
+                        class="dettaglio-community-pulsante-secondario"
+                    >
+                        Annulla richiesta
+                    </button>
+
+                </form>
+
+            </div>
 
 
         <!-- NON MEMBRO -->
 
         {% else %}
 
-            <h2>Partecipa alla community</h2>
+            <div class="dettaglio-community-nonmembro">
 
-            <p>
-                Invia una richiesta di partecipazione
-                all'organizzatore della community.
-            </p>
+                <!-- ICONA E TESTI -->
 
-            <form
-                method="post"
-                action="{% url 'invia_richiesta_community' community.pk %}"
-            >
+                <div class="dettaglio-community-nonmembro-presentazione">
 
-                {% csrf_token %}
+                    <span
+                        class="dettaglio-community-nonmembro-icona"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            viewBox="0 0 48 48"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="24" cy="15" r="6"/>
 
-                <input
-                    type="hidden"
-                    name="origine"
-                    value="{{ origine_community }}"
+                            <path d="M12 38v-5a12 12 0 0 1 24 0v5"/>
+
+                            <circle cx="9" cy="22" r="4"/>
+
+                            <path d="M3 37v-4a8 8 0 0 1 7-8"/>
+
+                            <circle cx="39" cy="22" r="4"/>
+
+                            <path d="M45 37v-4a8 8 0 0 0-7-8"/>
+                        </svg>
+                    </span>
+
+                    <div class="dettaglio-community-nonmembro-testo">
+
+                        <h2>Partecipa alla community</h2>
+
+                        <p>
+                            Invia una richiesta di partecipazione
+                            all'organizzatore della community.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- RICHIESTA DI PARTECIPAZIONE -->
+
+                <form
+                    method="post"
+                    action="{% url 'invia_richiesta_community' community.pk %}"
                 >
 
-                <button
-                    type="submit"
-                    class="dettaglio-community-pulsante"
-                >
-                    Richiedi di partecipare →
-                </button>
+                    {% csrf_token %}
 
-            </form>
+                    <input
+                        type="hidden"
+                        name="origine"
+                        value="{{ origine_community }}"
+                    >
+
+                    <button
+                        type="submit"
+                        class="dettaglio-community-pulsante"
+                    >
+                        Richiedi di partecipare →
+                    </button>
+
+                </form>
+
+            </div>
 
         {% endif %}
+
 
     </section>
 

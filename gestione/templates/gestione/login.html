@@ -2,17 +2,30 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/autenticazione.css' %}?v=4">
+{% endblock %}
+
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/autenticazione.css' %}?v=2">
+<main class="auth-page auth-page--login">
 
-<main class="auth-page">
+    <div class="login-titolo-decorato">
 
-    <h1>ACCEDI</h1>
+        <h1>Accedi</h1>
+
+        <span class="login-titolo-trilli" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+
+    </div>
 
     <p class="auth-intro">
         Accedi al tuo account FuoriRete.
     </p>
+
 
     <section class="auth-card">
 
@@ -20,7 +33,7 @@
             {% csrf_token %}
 
             {% if form.non_field_errors %}
-                <div class="auth-errors">
+                <div class="auth-errors" role="alert">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
@@ -33,8 +46,8 @@
                     </label>
 
                     {% if field.field.widget.input_type == 'password' %}
-
                         <div class="password-contenitore">
+
                             {{ field }}
 
                             <button
@@ -48,17 +61,14 @@
                                     <circle cx="12" cy="12" r="3"/>
                                 </svg>
                             </button>
+
                         </div>
-
                     {% else %}
-
                         {{ field }}
-
                     {% endif %}
 
-
                     {% if field.errors %}
-                        <div class="auth-errors">
+                        <div class="auth-errors" role="alert">
                             {{ field.errors }}
                         </div>
                     {% endif %}
@@ -69,14 +79,11 @@
             <button type="submit" class="auth-button">
                 Accedi
             </button>
-
         </form>
 
         <div class="auth-footer">
             Non hai un account?
-            <a href="{% url 'registrazione' %}">
-                Registrati
-            </a>
+            <a href="{% url 'registrazione' %}">Registrati</a>
         </div>
 
         <a href="{% url 'home_pubblica' %}" class="auth-back">

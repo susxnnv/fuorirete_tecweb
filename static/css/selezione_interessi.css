@@ -588,3 +588,138 @@
         display: none;
     }
 }
+
+
+/* ==========================================
+   SATELLITI - ANIMAZIONE GESTITA DA JAVASCRIPT
+========================================== */
+
+.cloud-cluster .cloud-satellite {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    animation: none;
+}
+
+.cloud-cluster.is-open .cloud-satellite {
+    opacity: 1;
+    animation: none;
+}
+
+/* ==========================================
+   RIQUADRO INFORMATIVO
+========================================== */
+
+.interessi-intestazione {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 34px;
+    align-items: start;
+}
+
+.interessi-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 18px 20px;
+
+    background: #edf7f5;
+    border: 1px solid #cfe8e3;
+    border-radius: 18px;
+
+    box-sizing: border-box;
+}
+
+.interessi-info-icona {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+
+    margin-top: 1px;
+
+    border: 2px solid #0b6a74;
+    border-radius: 50%;
+
+    color: #0b6a74;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.interessi-info p {
+    margin: 0;
+    color: #0b6a74;
+    font-size: 13px;
+    line-height: 1.6;
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .interessi-intestazione {
+        grid-template-columns: 1fr;
+    }
+
+    .interessi-info {
+        max-width: 100%;
+    }
+}
+
+/* ==========================================
+   DIFFERENZA VISIVA:
+   MACRO-CATEGORIE VS SOTTOINTERESSI
+========================================== */
+
+/* CERCHI PRINCIPALI / GENERALI */
+
+.cloud-macro {
+    background: #fff8f4;
+    border: 1px solid #eadfd9;
+    box-shadow: 0 5px 14px rgba(40, 30, 20, 0.04);
+}
+
+/* Quando selezionata la categoria generale */
+.cloud-cluster:has(.cloud-input-macro:checked) .cloud-macro {
+    background: #ff5a54;
+    border-color: #ff5a54;
+    color: #ffffff;
+}
+
+/* Quando è aperta ma non selezionata */
+.cloud-cluster.is-open .cloud-macro:not(:hover) {
+    border-color: #ffb8ac;
+    box-shadow: 0 8px 20px rgba(250, 89, 67, 0.10);
+}
+
+
+/* SOTTOCATEGORIE / SPECIFICI */
+
+.cloud-satellite-contenuto {
+    background: #ffffff;
+    border: 1px solid #e8ddd7;
+    color: #70584f;
+    box-shadow: 0 6px 16px rgba(40, 30, 20, 0.05);
+}
+
+/* Hover dei sottointeressi */
+.cloud-satellite:hover .cloud-satellite-contenuto {
+    background: #fff4ef;
+    border-color: #ffb3a6;
+    color: #5f4a42;
+}
+
+/* Sottointeresse selezionato */
+.cloud-satellite input:checked + .cloud-satellite-contenuto {
+    background: #0f6e79;
+    border-color: #0f6e79;
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(15, 110, 121, 0.20);
+}
+
+/* Check dei sottointeressi selezionati */
+.cloud-satellite-check {
+    color: inherit;
+}

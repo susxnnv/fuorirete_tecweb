@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}">
+<link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}?v=6">
 
 <main class="dettaglio-community-pagina">
 
@@ -48,7 +48,7 @@
                     <h1>{{ community.titolo }}</h1>
 
                     <p class="dettaglio-community-citta">
-                        <span aria-hidden="true">⌖</span>
+                        <span aria-hidden="true">📍</span>
                         {{ community.citta }}
                     </p>
                 </div>
@@ -90,7 +90,14 @@
 
     <section class="dettaglio-community-riquadro">
 
-        <h2>Interessi della community</h2>
+        <h2 class="dettaglio-community-titolo-decorato">
+            <span class="dettaglio-community-trilli" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+            Interessi della community
+        </h2>
 
         <div class="dettaglio-community-interessi">
 
@@ -127,7 +134,14 @@
 
     <section class="dettaglio-community-riquadro">
 
-        <h2>Informazioni sulla community</h2>
+        <h2 class="dettaglio-community-titolo-decorato">
+            <span class="dettaglio-community-trilli" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+            Informazioni sulla community
+        </h2>
 
         <div class="dettaglio-community-info">
 
@@ -165,7 +179,7 @@
 
     <!-- ACCESSO ALLA COMMUNITY -->
 
-    <section class="dettaglio-community-riquadro dettaglio-community-azioni">
+    <section class="dettaglio-community-riquadro dettaglio-community-azioni dettaglio-community-accesso">
 
         {% if request.user.is_authenticated %}
 
@@ -194,19 +208,35 @@
 
         {% else %}
 
-            <h2>Vuoi entrare in questa community?</h2>
+            <div class="dettaglio-community-accesso-testo">
 
-            <p>
-                Accedi o registrati a FuoriRete
-                per partecipare alle attività.
-            </p>
+                <span
+                    class="dettaglio-community-cuore"
+                    aria-hidden="true"
+                >
+                    ♡
+                </span>
+
+                <div class="dettaglio-community-accesso-contenuto">
+
+                    <h2>Vuoi entrare in questa community?</h2>
+
+                    <p>
+                        Accedi o registrati a FuoriRete
+                        per partecipare alle attività.
+                    </p>
+
+                </div>
+
+            </div>
 
             <a href="{% url 'login' %}"
-               class="dettaglio-community-pulsante">
+            class="dettaglio-community-pulsante">
                 Accedi →
             </a>
 
         {% endif %}
+
 
     </section>
 

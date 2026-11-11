@@ -4,7 +4,7 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/community.css' %}">
+<link rel="stylesheet" href="{% static 'css/community.css' %}?v=10">
 <link rel="stylesheet" href="{% static 'css/filtro_interessi.css' %}?v=2">
 
 <div class="scoperta-community-pagina">
@@ -13,27 +13,57 @@
 
     <header class="scoperta-community-intestazione">
 
-        <div>
-            <span class="scoperta-community-etichetta">
-                FUORIRETE · COMMUNITY
-            </span>
+        <div class="scoperta-community-presentazione">
 
-            <h1>Scopri le community</h1>
+            <div class="scoperta-community-titolo">
+
+                <h1>Scopri le community</h1>
+
+                <span
+                    class="scoperta-community-trilli"
+                    aria-hidden="true"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+
+            </div>
 
             <p>
                 Trova gruppi che condividono le tue passioni
-                e scopri nuove occasioni per stare insieme.
+                e scopri nuove occasioni per stare insieme!
             </p>
+
+            <a
+                href="{% url 'creazione_community' %}"
+                class="scoperta-community-crea"
+            >
+                + Crea community
+            </a>
+
         </div>
 
-        <!-- PULSANTE CREAZIONE COMMUNITY -->
+        <!-- FILTRI IN ALTO A DESTRA -->
 
-        <a
-            href="{% url 'creazione_community' %}"
-            class="scoperta-community-crea"
+        <button
+            type="button"
+            id="apri-filtri-community"
+            class="scoperta-community-apri-filtri"
+            aria-haspopup="dialog"
+            aria-controls="filtri-community-overlay"
         >
-            + Crea community
-        </a>
+            <span aria-hidden="true">☷</span>
+            Filtri
+
+            {% if filtri_attivi %}
+                <span
+                    class="scoperta-community-puntino"
+                    aria-hidden="true"
+                ></span>
+            {% endif %}
+
+        </button>
 
     </header>
 
@@ -80,17 +110,6 @@
             </button>
 
         </form>
-
-        <button
-            type="button"
-            id="apri-filtri-community"
-            class="scoperta-community-apri-filtri"
-        >
-            ⚙ Filtri
-            {% if filtri_attivi %}
-                <span class="scoperta-community-puntino"></span>
-            {% endif %}
-        </button>
 
     </section>
 
@@ -159,7 +178,7 @@
                                 <h3>{{ gruppo.titolo }}</h3>
 
                                 <span class="scoperta-community-citta">
-                                    ♧ {{ gruppo.citta }}
+                                    📍 {{ gruppo.citta }}
                                 </span>
                             </div>
 
@@ -303,15 +322,9 @@
 
         <div class="scoperta-community-popup-testa">
 
-            <div>
-                <h2 id="titolo-filtri-community">
-                    Filtra le community
-                </h2>
-
-                <p>
-                    Scegli cosa vuoi trovare.
-                </p>
-            </div>
+            <p id="titolo-filtri-community">
+                Tutti i filtri sono opzionali.
+            </p>
 
             <button
                 type="button"
@@ -323,6 +336,7 @@
             </button>
 
         </div>
+
 
 
         <form
@@ -359,23 +373,6 @@
                 </p>
 
             </div>
-
-
-            <!-- FILTRO INTERESSI -->
-
-            <div class="scoperta-community-filtro-sezione">
-
-                <h3>Interessi</h3>
-
-                <p>
-                    Seleziona uno o più interessi.
-                    Basta una corrispondenza.
-                </p>
-
-                {% include 'gestione/filtro_interessi.html' %}
-
-            </div>
-
 
             <!-- FILTRO PARTECIPAZIONE -->
 
@@ -421,6 +418,21 @@
                     <span>Community a cui non partecipo</span>
 
                 </label>
+
+            </div>
+
+            <!-- FILTRO INTERESSI -->
+
+            <div class="scoperta-community-filtro-sezione scoperta-community-filtro-interessi-box">
+
+                <h3>Interessi</h3>
+
+                <p>
+                    Seleziona uno o più interessi.
+                    Basta una corrispondenza.
+                </p>
+
+                {% include 'gestione/filtro_interessi.html' %}
 
             </div>
 
