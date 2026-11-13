@@ -3,99 +3,64 @@
    HOME PUBBLICA - FUORIRETE
 ========================================== */
 
+
+/* SFONDO E CONTENITORE */
+
+body:has(.home-pubblica) {
+    margin: 0;
+    background: #f0eaff;
+}
+
 .home-pubblica {
     position: relative;
     isolation: isolate;
-    min-height: 100vh;
-    padding: 24px 24px 70px;
-    box-sizing: border-box;
-    overflow: hidden;
 
-    background: #fffaf8;
-    color: #07505a;
+    width: 100%;
+    min-height: calc(100dvh - 110px);
+
+    padding: 65px 24px 76px;
+    box-sizing: border-box;
+
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, 0.50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, 0.37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    color: #181337;
     font-family: 'Manrope', sans-serif;
 }
 
 .home-pubblica *,
 .home-pubblica *::before,
-.home-pubblica *::after {
+.home-pubblica *::after,
+.home-pubblica-footer *,
+.home-pubblica-footer *::before,
+.home-pubblica-footer *::after {
     box-sizing: border-box;
 }
 
 .home-pubblica-contenuto {
     position: relative;
     z-index: 1;
-    max-width: 1050px;
+
+    width: 100%;
+    max-width: 1100px;
     margin: 0 auto;
-}
-
-
-/* ==========================================
-   DECORAZIONI DELLO SFONDO
-========================================== */
-
-.home-decorazione {
-    position: absolute;
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* Decorazione superiore destra */
-
-.home-decorazione-alta {
-    top: -145px;
-    right: -135px;
-
-    width: 390px;
-    height: 370px;
-
-    background: #dff3ef;
-
-    border-radius: 45% 25% 55% 65%;
-    transform: rotate(-32deg);
-}
-
-.home-decorazione-alta::after {
-    content: "";
-    position: absolute;
-
-    top: 175px;
-    left: 55px;
-
-    width: 350px;
-    height: 170px;
-
-    background: #ffdedb;
-    border-radius: 55% 45% 60% 40%;
-}
-
-/* Decorazione inferiore sinistra */
-
-.home-decorazione-bassa {
-    bottom: -145px;
-    left: -145px;
-
-    width: 350px;
-    height: 290px;
-
-    background: #dff3ef;
-
-    border-radius: 45% 65% 35% 55%;
-    transform: rotate(22deg);
-}
-
-.home-decorazione-bassa::after {
-    content: "";
-    position: absolute;
-
-    top: 100px;
-    left: 20px;
-
-    width: 340px;
-    height: 190px;
-
-    background: #ffd9d5;
-    border-radius: 55% 40% 50% 60%;
 }
 
 
@@ -103,44 +68,46 @@
    PRESENTAZIONE
 ========================================== */
 
+
 .presentazione {
+    margin: 0 auto 42px;
     text-align: center;
-    margin: 0 auto 46px;
 }
 
 
-/* ==========================================
-   LOGO
-========================================== */
-
+/* LOGO */
 .home-logo {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    position: relative;
     width: fit-content;
     max-width: 100%;
-    margin: 0 auto 10px;
+    margin: 0 auto 20px;
 }
 
 .home-logo h1 {
     margin: 0;
 
-    color: #07505a;
-    font-size: 55px;
+    color: #181337;
+    font-size: 52px;
     font-weight: 800;
+    letter-spacing: -2px;
     line-height: 1.2;
-    letter-spacing: -2.4px;
 }
 
-.home-logo-cuore {
-    width: 59px;
-    height: 59px;
-    margin-right: 8px;
+.home-pubblica .home-logo-cuore {
+    display: block;
 
-    color: #ff5954;
-    flex-shrink: 0;
+    width: 55px;
+    height: 55px;
+    flex: 0 0 55px;
+
+    margin-right: 10px;
+
+    color: #ff5470;
 }
 
 
@@ -149,11 +116,13 @@
 .home-logo-trilli {
     position: absolute;
 
-    width: 41px;
-    height: 37px;
+    top: -14px;
+    right: -30px;
 
-    top: -12px;
-    right: -31px;
+    width: 40px;
+    height: 40px;
+
+    pointer-events: none;
 }
 
 .home-logo-trilli span {
@@ -161,10 +130,10 @@
     display: block;
 
     width: 5px;
-    height: 17px;
+    height: 16px;
 
-    background: #ff5954;
-    border-radius: 10px;
+    background: #ff6055;
+    border-radius: 5px;
 }
 
 .home-logo-trilli span:nth-child(1) {
@@ -187,28 +156,25 @@
 }
 
 
-/* ==========================================
-   TESTO DI PRESENTAZIONE
-========================================== */
+/* TESTO PRESENTAZIONE */
 
 .presentazione-testo {
-    max-width: 850px;
-    margin: 0 auto;
-
-    color: #07505a;
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 1.5;
+    max-width: 760px;
+    margin: 0 auto 18px;
+    font-size: 1.22rem;
+    line-height: 1.55;
+    color: #1f2257;
 }
 
 .presentazione-esclamativo {
     display: inline-block;
+    margin-left: 3px;
 
-    color: #07505a;
-    font-size: 26px;
+    color: #ff5470;
+    font-size: 22px;
     font-weight: 800;
 
-    transform: rotate(10deg);
+    transform: rotate(12deg);
 }
 
 
@@ -217,7 +183,7 @@
 ========================================== */
 
 .presentazione-azioni {
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .home-pubblica .pulsante-principale {
@@ -225,66 +191,67 @@
     align-items: center;
     justify-content: center;
 
-    width: 300px;
+    width: 275px;
     max-width: 100%;
+    min-height: 48px;
 
-    padding: 12px 24px;
+    padding: 12px 25px;
 
-    background: #ff5954;
+    background: #7144ff;
+    border: 1px solid transparent;
+    border-radius: 27px;
+
     color: #ffffff;
-
-    border: none;
-    border-radius: 30px;
-
     font-family: inherit;
-    font-size: 22px;
+    font-size: 17px;
     font-weight: 800;
     line-height: 1.3;
-
     text-decoration: none;
 
-    box-shadow: 0 4px 9px rgba(255, 89, 84, .17);
+    box-shadow:
+        0 7px 17px rgba(113, 68, 255, 0.22);
 
     transition:
-        background-color .2s ease,
-        transform .2s ease,
-        box-shadow .2s ease;
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .home-pubblica .pulsante-principale:hover {
-    background: #ee4d48;
+    background: #6035ec;
     color: #ffffff;
     text-decoration: none;
 
     transform: translateY(-2px);
 
-    box-shadow: 0 7px 14px rgba(255, 89, 84, .23);
+    box-shadow:
+        0 9px 20px rgba(113, 68, 255, 0.28);
 }
 
 .home-pubblica .pulsante-principale:focus-visible {
-    outline: 3px solid #07505a;
+    outline: 3px solid #ff5470;
     outline-offset: 4px;
 }
 
 
-/* LINK REGISTRAZIONE */
-
+/* REGISTRAZIONE */
 .presentazione-azioni p {
-    margin: 18px 0 0;
+    margin: 8px 0 0;
 
-    color: #527682;
+    color: #625c83;
     font-size: 13px;
     font-weight: 500;
+    line-height: 1.6;
 }
 
 .home-pubblica .presentazione-azioni a:not(.pulsante-principale) {
-    color: #ff5954;
+    color: #ef4566;
     font-weight: 800;
     text-decoration: none;
 }
 
 .home-pubblica .presentazione-azioni a:not(.pulsante-principale):hover {
-    color: #e84742;
+    color: #d52d55;
     text-decoration: underline;
 }
 
@@ -294,8 +261,10 @@
 ========================================== */
 
 .community-pubbliche {
-    max-width: 1050px;
+    width: 100%;
+    max-width: 1100px;
     margin: 0 auto;
+    margin-top: 0;
 }
 
 
@@ -307,7 +276,7 @@
     justify-content: space-between;
 
     gap: 20px;
-    margin-bottom: 21px;
+    margin-bottom: 25px;
 }
 
 .community-intestazione-testo {
@@ -322,39 +291,34 @@
 
 /* TITOLO */
 
-.community-pubbliche h2 {
-    margin: 0 0 7px;
+.home-pubblica .community-pubbliche h2 {
+    position: relative;
+    display: table;
 
-    color: #07505a;
+    margin: 0 0 16px;
+
+    color: #181337;
     font-size: 27px;
     font-weight: 800;
-    line-height: 1.25;
-    letter-spacing: -0.8px;
+    letter-spacing: -0.7px;
+    line-height: 1.3;
 }
 
 
-/* SOTTOLINEATURA CORALLO */
+/* SOTTOLINEATURA CORALLO, DRITTA */
 
-.community-titolo-sottolineato {
-    position: relative;
-    display: inline-block;
-    white-space: nowrap;
-}
-
-.community-titolo-sottolineato::after {
+.home-pubblica .community-pubbliche h2::after {
     content: "";
     position: absolute;
 
     left: 0;
-    bottom: -5px;
+    bottom: -7px;
 
-    width: 100%;
-    height: 5px;
+    width: 58px;
+    height: 4px;
 
-    background: #ff5954;
-    border-radius: 50%;
-
-    transform: rotate(1deg);
+    background: #ff6055;
+    border-radius: 4px;
 }
 
 
@@ -363,11 +327,13 @@
 .community-titolo-trilli {
     position: absolute;
 
-    top: -21px;
-    left: -29px;
+    top: -20px;
+    left: -30px;
 
     width: 34px;
     height: 40px;
+
+    pointer-events: none;
 }
 
 .community-titolo-trilli span {
@@ -377,8 +343,8 @@
     width: 4px;
     height: 15px;
 
-    background: #ff5954;
-    border-radius: 10px;
+    background: #ff6055;
+    border-radius: 5px;
 }
 
 .community-titolo-trilli span:nth-child(1) {
@@ -405,47 +371,49 @@
 .community-sottotitolo {
     margin: 0;
 
-    color: #66818a;
+    color: #625c83;
     font-size: 13px;
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 
-/* INDICAZIONE SCORRIMENTO */
+/* INDICATORE DI SCORRIMENTO */
 
 .community-pubbliche-scorri {
     flex-shrink: 0;
 
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 
-    color: #ff5954;
+    color: #ef4566;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
 }
 
 .community-pubbliche-scorri span {
     margin-left: 4px;
-    font-size: 19px;
+    font-size: 18px;
     vertical-align: -1px;
 }
 
 
 /* ==========================================
-   CAROSELLO DELLE COMMUNITY
+   CAROSELLO COMMUNITY
 ========================================== */
 
-.community-pubbliche .community-contenitore {
+.home-pubblica .community-contenitore {
     display: flex;
     align-items: stretch;
 
-    gap: 14px;
+    gap: 16px;
+
+    width: 100%;
 
     overflow-x: auto;
     overflow-y: hidden;
 
-    padding: 4px 3px 17px;
+    padding: 5px 4px 20px;
 
     background: transparent;
     border: none;
@@ -454,19 +422,19 @@
     scroll-behavior: smooth;
 
     scrollbar-width: thin;
-    scrollbar-color: #e9c5bd transparent;
+    scrollbar-color: #d5bef4 transparent;
 }
 
 
 /* ==========================================
-   SINGOLA CARD
+   CARD COMMUNITY
 ========================================== */
 
-.community-pubbliche .community-card {
+.home-pubblica .community-card {
     display: flex;
     flex-direction: column;
 
-    flex: 0 0 calc((100% - 42px) / 4);
+    flex: 0 0 calc((100% - 48px) / 4);
     min-width: 0;
 
     margin: 0;
@@ -475,53 +443,52 @@
     overflow: hidden;
 
     background: #ffffff;
+    border: 1px solid #e5dbf7;
+    border-radius: 18px;
 
-    border: 1px solid #eee7e2;
-    border-radius: 16px;
-
-    box-shadow: 0 5px 13px rgba(40, 30, 20, .08);
+    box-shadow:
+        0 6px 17px rgba(81, 59, 151, 0.10);
 
     cursor: pointer;
     scroll-snap-align: start;
 
     transition:
-        border-color .2s ease,
-        transform .2s ease,
-        box-shadow .2s ease;
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.community-pubbliche .community-card:hover {
-    border-color: #ffaaa3;
+.home-pubblica .community-card:hover {
+    border-color: #c8b3f4;
     transform: translateY(-3px);
 
-    box-shadow: 0 9px 19px rgba(40, 30, 20, .12);
+    box-shadow:
+        0 11px 24px rgba(81, 59, 151, 0.15);
 }
 
-.community-pubbliche .community-card:focus-visible {
-    outline: 3px solid #ff5954;
+.home-pubblica .community-card:focus-visible {
+    outline: 3px solid #7144ff;
     outline-offset: 3px;
 }
 
 
-/* ==========================================
-   IMMAGINE COMMUNITY
-========================================== */
+/* IMMAGINE */
 
-.community-card-immagine {
+.home-pubblica .community-card-immagine {
     display: flex;
     align-items: center;
     justify-content: center;
 
     width: 100%;
-    height: 110px;
+    height: 126px;
 
     overflow: hidden;
 
-    background: #fff0e9;
-    color: #ff5954;
+    background: #eee6ff;
+    color: #7545f5;
 }
 
-.community-card-immagine img {
+.home-pubblica .community-card-immagine img {
     display: block;
 
     width: 100%;
@@ -536,100 +503,98 @@
 }
 
 
-/* ==========================================
-   CONTENUTO DELLA CARD
-========================================== */
+/* CONTENUTO */
 
-.community-card-contenuto {
+.home-pubblica .community-card-contenuto {
     display: flex;
     flex-direction: column;
     flex: 1;
 
     min-width: 0;
-    padding: 11px 14px 13px;
+    padding: 14px 15px 15px;
 }
 
 
-/* TITOLO COMMUNITY */
+/* TITOLO CARD */
 
-.community-pubbliche .community-card h3 {
-    margin: 0 0 4px;
+.home-pubblica .community-card h3 {
+    margin: 0 0 6px;
 
-    color: #07505a;
+    color: #181337;
     font-size: 14px;
     font-weight: 800;
-    line-height: 1.35;
+    line-height: 1.4;
 
     overflow-wrap: anywhere;
 }
 
 
-/* CITTA */
+/* CITTÀ */
 
-.community-pubbliche .community-citta {
+.home-pubblica .community-citta {
     display: flex;
     align-items: center;
 
-    gap: 3px;
+    gap: 4px;
 
-    margin: 0 0 7px;
+    margin: 0 0 9px;
 
-    color: #ff5954;
+    color: #ef4566;
     font-size: 11px;
     font-weight: 700;
 }
 
-.community-citta svg {
-    width: 11px;
-    height: 11px;
-    flex-shrink: 0;
+.home-pubblica .community-citta svg {
+    display: inline-block;
+
+    width: 12px;
+    height: 12px;
+    flex: 0 0 12px;
 }
 
 
 /* DESCRIZIONE */
 
-.community-pubbliche .community-card-descrizione {
-    margin: 0 0 8px;
-
-    color: #4c6872;
-    font-size: 11px;
-    font-weight: 400;
-    line-height: 1.5;
-
+.home-pubblica .community-card-descrizione {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     line-clamp: 3;
 
     overflow: hidden;
+
+    margin: 0 0 12px;
+
+    color: #625c83;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.6;
 }
 
 
-/* ==========================================
-   VALUTAZIONE
-========================================== */
+/* VALUTAZIONE */
 
-.community-card-valutazione {
+.home-pubblica .community-card-valutazione {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 
-    gap: 5px;
+    gap: 6px;
 
     margin-top: auto;
-    padding-top: 8px;
+    padding-top: 10px;
 
-    border-top: 1px solid #f2ece8;
+    border-top: 1px solid #eee7f5;
 }
 
-.community-card-valutazione strong {
-    color: #ff5954;
+.home-pubblica .community-card-valutazione strong {
+    color: #ef4566;
     font-size: 11px;
     font-weight: 800;
 }
 
-.community-card-valutazione small {
-    color: #8b9a9f;
+.home-pubblica .community-card-valutazione small {
+    color: #77718d;
     font-size: 10px;
 }
 
@@ -638,55 +603,190 @@
    NESSUNA COMMUNITY
 ========================================== */
 
-.community-pubbliche .community-vuote {
+.home-pubblica .community-vuote {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
     flex: 1;
-    min-height: 190px;
+    min-height: 220px;
 
     padding: 30px 20px;
 
     background: #ffffff;
-
-    border: 1px solid #eee7e2;
-    border-radius: 16px;
+    border: 1px solid #e5dbf7;
+    border-radius: 18px;
 
     text-align: center;
 }
 
-.community-icona {
+.home-pubblica .community-icona {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
 
     margin: 0 auto 15px;
 
-    background: #fff0e9;
+    background: #f1eaff;
     border-radius: 50%;
 
-    color: #ff5954;
+    color: #7144ff;
     font-size: 27px;
 }
 
-.community-vuote h3 {
+.home-pubblica .community-vuote h3 {
     margin: 0 0 8px;
 
-    color: #07505a;
+    color: #181337;
     font-size: 18px;
+    font-weight: 800;
 }
 
-.community-vuote p {
+.home-pubblica .community-vuote p {
     margin: 0;
 
-    color: #66818a;
+    color: #625c83;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   FOOTER PUBBLICO
+========================================== */
+
+.home-pubblica-footer {
+    box-sizing: border-box;
+
+    width: 100%;
+    padding: 30px 24px;
+
+    background: #7542a7;
+    color: #ffffff;
+
+    font-family: 'Manrope', sans-serif;
+}
+
+.home-pubblica-footer-contenuto {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+
+/* LOGO */
+
+.home-pubblica-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    flex-shrink: 0;
+}
+
+.home-pubblica-footer-logo > span {
+    color: #ffffff;
+    font-size: 38px;
+    line-height: 0.7;
+}
+
+.home-pubblica-footer-logo strong {
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+/* SLOGAN */
+
+.home-pubblica-footer-slogan {
+    position: relative;
+
+    margin: 0;
+    padding: 0 23px;
+
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.home-pubblica-footer-slogan::after {
+    content: "";
+    position: absolute;
+
+    left: 50%;
+    bottom: -7px;
+
+    width: 76px;
+    height: 4px;
+
+    background: #ff7164;
+    border-radius: 4px;
+
+    transform: translateX(-50%);
+}
+
+
+/* STATISTICHE */
+
+.home-pubblica-footer-statistiche {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    flex-shrink: 0;
+}
+
+.home-pubblica-footer-statistica {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-width: 0;
+    padding: 0 17px;
+
+    border-left: 1px solid rgba(255, 255, 255, 0.35);
+
+    white-space: nowrap;
+}
+
+.home-pubblica-footer-statistica svg {
+    display: block;
+
+    width: 27px;
+    height: 27px;
+    flex-shrink: 0;
+
+    color: #ffffff;
+}
+
+.home-pubblica-footer-statistica strong {
+    color: #ffffff;
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.home-pubblica-footer-statistica span {
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 500;
 }
 
 
@@ -694,27 +794,56 @@
    RESPONSIVE - TABLET
 ========================================== */
 
+@media (max-width: 1050px) {
+
+    .home-pubblica-footer-contenuto {
+        gap: 12px;
+    }
+
+    .home-pubblica-footer-slogan {
+        padding: 0 12px;
+        font-size: 12px;
+    }
+
+    .home-pubblica-footer-statistica {
+        padding: 0 10px;
+    }
+
+    .home-pubblica-footer-statistica svg {
+        width: 23px;
+        height: 23px;
+    }
+
+    .home-pubblica-footer-statistica strong {
+        font-size: 19px;
+    }
+
+}
+
 @media (max-width: 900px) {
 
     .home-pubblica-contenuto {
         max-width: 740px;
     }
 
-    .community-pubbliche .community-card {
-        flex: 0 0 calc((100% - 28px) / 3);
+    .home-pubblica .community-card {
+        flex: 0 0 calc((100% - 32px) / 3);
     }
 
     .home-logo h1 {
-        font-size: 48px;
+        font-size: 46px;
     }
 
-    .home-logo-cuore {
-        width: 53px;
-        height: 53px;
+    .home-pubblica .home-logo-cuore {
+        width: 49px;
+        height: 49px;
+        flex-basis: 49px;
     }
 
-    .presentazione-testo {
-        font-size: 15px;
+    .home-pubblica-footer-contenuto {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 18px;
     }
 
 }
@@ -727,91 +856,78 @@
 @media (max-width: 600px) {
 
     .home-pubblica {
-        padding: 32px 18px 55px;
+        min-height: auto;
+        padding: 47px 18px 65px;
     }
 
     .presentazione {
-        margin-bottom: 55px;
+        margin-bottom: 48px;
     }
 
-    /* LOGO */
+    .home-logo {
+        margin-bottom: 16px;
+    }
 
     .home-logo h1 {
-        font-size: clamp(29px, 8vw, 39px);
-        letter-spacing: -1.5px;
+        font-size: clamp(29px, 8vw, 38px);
+        letter-spacing: -1.4px;
     }
 
-    .home-logo-cuore {
-        width: 42px;
-        height: 42px;
-        margin-right: 4px;
+    .home-pubblica .home-logo-cuore {
+        width: 41px;
+        height: 41px;
+        flex-basis: 41px;
+        margin-right: 5px;
     }
 
     .home-logo-trilli {
-        transform: scale(.7);
+        right: -25px;
+        transform: scale(0.7);
         transform-origin: top left;
-        right: -28px;
     }
-
-    /* PRESENTAZIONE */
 
     .presentazione-testo {
         max-width: 330px;
-        padding: 0 8px;
+        padding: 0 6px;
 
         font-size: 14px;
         line-height: 1.6;
     }
 
-    .presentazione-esclamativo {
-        font-size: 20px;
-    }
-
-    /* ACCESSO */
-
     .presentazione-azioni {
-        margin-top: 23px;
+        margin-top: 26px;
     }
 
     .home-pubblica .pulsante-principale {
-        width: 260px;
-
-        padding: 12px 20px;
-
-        font-size: 19px;
-        border-radius: 28px;
+        width: 245px;
+        font-size: 16px;
     }
 
     .presentazione-azioni p {
         font-size: 12px;
-        line-height: 1.6;
     }
-
-    /* INTESTAZIONE COMMUNITY */
 
     .community-pubbliche-intestazione {
         flex-direction: column;
         align-items: flex-start;
-
-        gap: 13px;
+        gap: 12px;
     }
 
     .community-titolo-contenitore {
-        margin-left: 12px;
+        margin-left: 10px;
     }
 
-    .community-pubbliche h2 {
+    .home-pubblica .community-pubbliche h2 {
         font-size: 23px;
     }
 
     .community-titolo-trilli {
-        transform: scale(.75);
+        transform: scale(0.75);
         transform-origin: bottom right;
     }
 
     .community-sottotitolo {
         font-size: 12px;
-        line-height: 1.6;
     }
 
     .community-pubbliche-scorri {
@@ -819,156 +935,88 @@
         font-size: 11px;
     }
 
-    /* CAROSELLO */
-
-    .community-pubbliche .community-contenitore {
+    .home-pubblica .community-contenitore {
         gap: 12px;
     }
 
-    .community-pubbliche .community-card {
+    .home-pubblica .community-card {
         flex: 0 0 235px;
         width: 235px;
     }
 
-    .community-card-immagine {
-        height: 115px;
+    .home-pubblica .community-card-immagine {
+        height: 120px;
     }
 
-    /* SFONDO */
-
-    .home-decorazione-alta {
-        right: -260px;
+    .home-pubblica-footer {
+        padding: 23px 12px;
     }
 
-    .home-decorazione-bassa {
-        left: -250px;
+    .home-pubblica-footer-contenuto {
+        flex-direction: column;
+        gap: 18px;
+        text-align: center;
+    }
+
+    .home-pubblica-footer-slogan {
+        padding: 0;
+        border-left: none;
+    }
+
+    .home-pubblica-footer-statistiche {
+        justify-content: center;
+        flex-wrap: wrap;
+
+        width: 100%;
+        row-gap: 14px;
+    }
+
+    .home-pubblica-footer-statistica {
+        padding: 0 11px;
+    }
+
+    .home-pubblica-footer-statistica:first-child {
+        border-left: none;
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    .home-pubblica-footer-statistica {
+        gap: 4px;
+        padding: 0 7px;
+    }
+
+    .home-pubblica-footer-statistica svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .home-pubblica-footer-statistica strong {
+        font-size: 17px;
+    }
+
+    .home-pubblica-footer-statistica span {
+        font-size: 10px;
     }
 
 }
 
 
 /* ==========================================
-   ACCESSIBILITA
+   ACCESSIBILITÀ
 ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
 
     .home-pubblica .pulsante-principale,
-    .community-pubbliche .community-card {
+    .home-pubblica .community-card {
         transition: none;
     }
 
-    .community-pubbliche .community-contenitore {
+    .home-pubblica .community-contenitore {
         scroll-behavior: auto;
-    }
-
-}
-
-/* Dimensioni delle icone SVG */
-
-.home-pubblica .home-logo-cuore {
-    display: block;
-    width: 59px;
-    height: 59px;
-    max-width: 59px;
-    flex: 0 0 59px;
-    color: #ff5954;
-}
-
-.home-pubblica .community-citta svg {
-    display: inline-block;
-    width: 11px;
-    height: 11px;
-    max-width: 11px;
-    flex: 0 0 11px;
-    color: #ff5954;
-}
-
-@media (max-width: 600px) {
-    .home-pubblica .home-logo-cuore {
-        width: 42px;
-        height: 42px;
-        max-width: 42px;
-        flex-basis: 42px;
-    }
-}
-
-
-/* ==========================================
-   HOME PUBBLICA - PRESENTAZIONE PIÙ COMPATTA
-========================================== */
-
-.home-pubblica {
-    padding-top: 18px;
-}
-
-.presentazione {
-    margin-bottom: 35px;
-}
-
-/* Logo leggermente più piccolo */
-.home-logo {
-    margin-bottom: 6px;
-}
-
-.home-logo h1 {
-    font-size: 48px;
-}
-
-.home-pubblica .home-logo-cuore {
-    width: 51px;
-    height: 51px;
-    max-width: 51px;
-    flex-basis: 51px;
-}
-
-/* Frase sotto il logo */
-.presentazione-testo {
-    font-size: 15px;
-}
-
-/* Pulsante Accedi */
-.presentazione-azioni {
-    margin-top: 19px;
-}
-
-.home-pubblica .pulsante-principale {
-    width: 280px;
-    padding: 11px 22px;
-    font-size: 19px;
-}
-
-/* Registrazione */
-.presentazione-azioni p {
-    margin-top: 14px;
-    font-size: 12px;
-}
-
-/* Manteniamo le proporzioni su mobile */
-@media (max-width: 600px) {
-
-    .home-pubblica {
-        padding-top: 25px;
-    }
-
-    .home-logo h1 {
-        font-size: clamp(29px, 8vw, 37px);
-    }
-
-    .home-pubblica .home-logo-cuore {
-        width: 40px;
-        height: 40px;
-        max-width: 40px;
-        flex-basis: 40px;
-    }
-
-    .presentazione-testo {
-        font-size: 13px;
-    }
-
-    .home-pubblica .pulsante-principale {
-        width: 250px;
-        font-size: 18px;
     }
 
 }

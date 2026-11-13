@@ -199,6 +199,50 @@
                         <span class="anteprima-tag">
 
                             {% if interesse.padre %}
+                                {% with categoria=interesse.padre.nome|lower %}
+                                    {% if categoria == 'animali' %}🐶
+                                    {% elif categoria == 'arte e creatività' %}🎨
+                                    {% elif categoria == 'cibo e gastronomia' %}🍔
+                                    {% elif categoria == 'cinema' %}🎬
+                                    {% elif categoria == 'eventi' %}🗓️
+                                    {% elif categoria == 'fitness e benessere' %}💪
+                                    {% elif categoria == 'giochi' %}🎮
+                                    {% elif categoria == 'moda e stile' %}👗
+                                    {% elif categoria == 'motori' %}🚗
+                                    {% elif categoria == 'musica' %}🎵
+                                    {% elif categoria == 'natura' %}🌱
+                                    {% elif categoria == 'scienza e conoscenza' %}📚
+                                    {% elif categoria == 'socialità' %}👥
+                                    {% elif categoria == 'sport' %}⚽
+                                    {% elif categoria == 'viaggi' %}✈️
+                                    {% elif categoria == 'volontariato' %}🤝
+                                    {% else %}✨
+                                    {% endif %}
+                                {% endwith %}
+                            {% else %}
+                                {% with categoria=interesse.nome|lower %}
+                                    {% if categoria == 'animali' %}🐶
+                                    {% elif categoria == 'arte e creatività' %}🎨
+                                    {% elif categoria == 'cibo e gastronomia' %}🍔
+                                    {% elif categoria == 'cinema' %}🎬
+                                    {% elif categoria == 'eventi' %}🗓️
+                                    {% elif categoria == 'fitness e benessere' %}💪
+                                    {% elif categoria == 'giochi' %}🎮
+                                    {% elif categoria == 'moda e stile' %}👗
+                                    {% elif categoria == 'motori' %}🚗
+                                    {% elif categoria == 'musica' %}🎵
+                                    {% elif categoria == 'natura' %}🌱
+                                    {% elif categoria == 'scienza e conoscenza' %}📚
+                                    {% elif categoria == 'socialità' %}👥
+                                    {% elif categoria == 'sport' %}⚽
+                                    {% elif categoria == 'viaggi' %}✈️
+                                    {% elif categoria == 'volontariato' %}🤝
+                                    {% else %}✨
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
+
+                            {% if interesse.padre %}
                                 {{ interesse.padre.nome|lower|capfirst }} ·
                             {% endif %}
 
@@ -217,6 +261,7 @@
                         </p>
 
                     {% endfor %}
+
 
                 </div>
 

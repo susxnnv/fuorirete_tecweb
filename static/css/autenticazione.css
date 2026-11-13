@@ -284,237 +284,71 @@
 
 
 /* ==========================================
-   LOGIN - STILE MINIMAL FUORIRETE
+   LOGIN - DESIGN DEFINITIVO FUORIRETE
 ========================================== */
-
-.auth-page.auth-page--login {
-    max-width: 480px;
-    min-height: auto;
-    margin: 55px auto 40px;
-    padding: 20px;
-    text-align: center;
-    color: #07505a;
-    background: transparent;
-}
-
-/* TITOLO */
-
-.auth-page--login h1 {
-    margin: 0 0 8px;
-    color: #07505a;
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -0.7px;
-}
-
-/* SOTTOTITOLO */
-
-.auth-page--login .auth-intro {
-    margin: 0 0 25px;
-    padding: 0;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    color: #66818a;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-/* CARD */
-
-.auth-page--login .auth-card {
-    padding: 28px;
-    background: #ffffff;
-    border: 1px solid #ece5e0;
-    border-radius: 17px;
-    box-shadow: 0 5px 18px rgba(40, 30, 20, 0.04);
-    text-align: left;
-}
-
-/* CAMPI */
-
-.auth-page--login .auth-field {
-    margin-bottom: 19px;
-    padding: 0;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-}
-
-.auth-page--login .auth-field label {
-    margin-bottom: 7px;
-    color: #07505a;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-/* INPUT */
-
-.auth-page--login .auth-field input:not([type="checkbox"]) {
-    width: 100%;
-    min-height: 43px;
-    padding: 10px 12px;
-    background: #ffffff;
-    border: 1px solid #e5dcd7;
-    border-radius: 9px;
-    color: #073943;
-    font-size: 13px;
-}
-
-.auth-page--login .auth-field input:focus {
-    border-color: #ff5954;
-    outline: 2px solid rgba(255, 89, 84, 0.13);
-    outline-offset: 0;
-}
-
-/* PASSWORD */
-
-.auth-page--login .password-contenitore input {
-    padding-right: 52px !important;
-}
-
-/* PULSANTE ACCEDI */
-
-.auth-page--login .auth-button {
-    width: 100%;
-    min-height: 44px;
-    margin: 22px 0 20px;
-    padding: 11px 20px;
-    background: #ff5954;
-    color: #ffffff;
-    border: none;
-    border-radius: 9px;
-    font-size: 14px;
-    font-weight: 700;
-    transition: background-color 0.2s ease;
-}
-
-.auth-page--login .auth-button:hover {
-    background: #e84b46;
-}
-
-/* COLLEGAMENTI */
-
-.auth-page--login .auth-footer {
-    padding-top: 17px;
-    border-top: 1px solid #f0e8e3;
-    color: #66818a;
-    font-size: 12px;
-}
-
-.auth-page--login .auth-footer a {
-    color: #ff5954;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.auth-page--login .auth-back {
-    margin-top: 16px;
-    color: #ff5954;
-    font-size: 12px;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-.auth-page--login .auth-footer a:hover,
-.auth-page--login .auth-back:hover {
-    text-decoration: underline;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 600px) {
-    .auth-page.auth-page--login {
-        margin: 30px auto;
-        padding: 16px;
-    }
-
-    .auth-page--login h1 {
-        font-size: 29px;
-    }
-
-    .auth-page--login .auth-card {
-        padding: 22px 19px;
-    }
-}
 
 
 /* ==========================================
-   LOGIN - RIFINITURA GRAFICA
+   SFONDO E CONTENITORE
 ========================================== */
-
-/* SFONDO E POSIZIONAMENTO */
 
 .auth-page.auth-page--login {
     position: relative;
     isolation: isolate;
 
-    max-width: 100%;
-    min-height: 100vh;
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: none;
+    min-height: 100dvh;
 
     margin: 0;
-    padding: 48px 20px 65px;
+    padding: 58px 20px 65px;
 
-    overflow: hidden;
+    background-color: #f0eaff;
 
-    background: #fffaf8;
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, 0.50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, 0.37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+
+    color: #181337;
+    text-align: center;
 }
 
-/* DECORAZIONI PASTELLO */
+
+/* ELIMINIAMO LE VECCHIE DECORAZIONI */
 
 .auth-page--login::before,
 .auth-page--login::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-
-    pointer-events: none;
-}
-
-/* Angolo superiore destro */
-
-.auth-page--login::before {
-    top: -135px;
-    right: -145px;
-
-    width: 350px;
-    height: 350px;
-
-    background: #dff3ef;
-
-    border-radius: 45% 25% 55% 65%;
-    transform: rotate(-32deg);
-
-    box-shadow: -45px 85px 0 -20px #ffdedb;
-}
-
-/* Angolo inferiore sinistro */
-
-.auth-page--login::after {
-    bottom: -145px;
-    left: -145px;
-
-    width: 330px;
-    height: 290px;
-
-    background: #dff3ef;
-
-    border-radius: 45% 65% 35% 55%;
-    transform: rotate(22deg);
-
-    box-shadow: 35px 85px 0 -15px #ffd9d5;
+    content: none;
 }
 
 
 /* ==========================================
-   TITOLO DECORATO
+   TITOLO
 ========================================== */
 
 .login-titolo-decorato {
     position: relative;
 
     width: fit-content;
-    margin: 0 auto 19px;
+    margin: 0 auto 22px;
 }
 
 .auth-page--login .login-titolo-decorato h1 {
@@ -522,51 +356,57 @@
 
     margin: 0;
 
-    color: #07505a;
-    font-size: 38px;
+    color: #181337;
+    font-size: 37px;
     font-weight: 800;
     letter-spacing: -1px;
     line-height: 1.3;
 }
 
-/* Sottolineatura curva */
+
+/* SOTTOLINEATURA DRITTA */
 
 .auth-page--login .login-titolo-decorato h1::after {
     content: "";
     position: absolute;
 
-    left: 13%;
-    bottom: -8px;
+    bottom: -6px;
+    left: 0;
 
-    width: 74%;
-    height: 5px;
+    width: 55px;
+    height: 4px;
 
-    background: #ff5954;
+    background: #ff6055;
+    border-radius: 4px;
 
-    border-radius: 50%;
-    transform: rotate(-1deg);
+    transform: none;
 }
 
-/* Tre trilli accanto al titolo */
 
-.auth-page--login .login-titolo-decorato .login-titolo-trilli {
+/* ==========================================
+   TRILLI CORALLO
+========================================== */
+
+.auth-page--login .login-titolo-trilli {
     position: absolute;
 
-    top: -14px;
+    top: -13px;
     right: -34px;
 
     width: 33px;
     height: 39px;
+
+    pointer-events: none;
 }
 
-.auth-page--login .login-titolo-decorato .login-titolo-trilli span {
-    display: block;
+.auth-page--login .login-titolo-trilli span {
     position: absolute;
+    display: block;
 
     width: 4px;
     height: 14px;
 
-    background: #ff5954;
+    background: #ff6055;
     border-radius: 10px;
 }
 
@@ -595,70 +435,169 @@
 ========================================== */
 
 .auth-page--login .auth-intro {
-    margin-bottom: 30px;
+    max-width: 460px;
 
-    color: #527682;
-    font-size: 15px;
+    margin: 0 auto 28px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+
+    color: #625c83;
+    font-size: 14px;
     font-weight: 500;
+    line-height: 1.6;
 }
 
 
 /* ==========================================
-   CARD PIÙ RAFFINATA
+   CARD LOGIN
 ========================================== */
 
 .auth-page--login .auth-card {
+    display: block;
+
+    box-sizing: border-box;
+
+    width: 100%;
     max-width: 460px;
 
-    padding: 30px 32px 27px;
+    margin: 0 auto;
+    padding: 30px 32px 28px;
 
-    border: 1px solid #eee5e1;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.97);
+
+    border: 1px solid #e5dbf7;
+    border-radius: 22px;
 
     box-shadow:
-        0 6px 18px rgba(40, 30, 20, .05),
-        0 15px 35px rgba(40, 30, 20, .025);
+        0 10px 30px rgba(81, 59, 151, 0.11);
+
+    text-align: left;
 }
 
 
 /* ==========================================
-   CAMPI INPUT
+   CAMPI DEL FORM
 ========================================== */
 
 .auth-page--login .auth-field {
-    margin-bottom: 22px;
+    margin: 0 0 21px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
 }
+
+
+/* ETICHETTE */
 
 .auth-page--login .auth-field label {
-    margin-bottom: 8px;
+    display: block;
 
-    color: #07505a;
-    font-size: 14px;
+    margin: 0 0 8px;
+
+    color: #181337;
+    font-size: 13px;
     font-weight: 700;
+    line-height: 1.5;
 }
+
+
+/* INPUT */
 
 .auth-page--login .auth-field input:not([type="checkbox"]) {
+    display: block;
+
+    box-sizing: border-box;
+
+    width: 100%;
     min-height: 46px;
 
-    background: #fffaf8;
-    border: 1px solid #e7dcd7;
+    padding: 11px 13px;
+
+    background: #ffffff;
+    border: 1px solid #ddd3f0;
     border-radius: 11px;
 
-    font-size: 14px;
+    color: #181337;
+    font-family: inherit;
+    font-size: 13px;
 
     transition:
-        border-color .2s ease,
-        background-color .2s ease,
-        box-shadow .2s ease;
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
+
+/* FOCUS VIOLA */
 
 .auth-page--login .auth-field input:focus {
     background: #ffffff;
-    border-color: #ff5954;
 
+    border-color: #7144ff;
     outline: none;
 
-    box-shadow: 0 0 0 3px rgba(255, 89, 84, .12);
+    box-shadow:
+        0 0 0 3px rgba(113, 68, 255, 0.13);
+}
+
+
+/* ==========================================
+   PASSWORD
+========================================== */
+
+.auth-page--login .password-contenitore {
+    position: relative;
+    width: 100%;
+}
+
+.auth-page--login .password-contenitore input {
+    padding-right: 52px !important;
+}
+
+
+/* ICONA OCCHIO */
+
+.auth-page--login .password-occhio {
+    color: #777092;
+}
+
+.auth-page--login .password-occhio:hover {
+    background: #f2edff;
+    color: #7144ff;
+}
+
+.auth-page--login .password-occhio:focus-visible {
+    outline: 2px solid #7144ff;
+    outline-offset: 2px;
+}
+
+
+/* ==========================================
+   ERRORI
+========================================== */
+
+.auth-page--login .auth-errors {
+    margin: 8px 0 13px;
+    padding: 10px 12px;
+
+    background: #fff0f3;
+
+    border: 1px solid #ffcbd5;
+    border-radius: 9px;
+
+    color: #ad2949;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.auth-page--login .auth-errors ul {
+    margin: 0;
+    padding-left: 17px;
 }
 
 
@@ -667,30 +606,47 @@
 ========================================== */
 
 .auth-page--login .auth-button {
-    min-height: 48px;
+    display: block;
 
-    margin: 25px 0 22px;
+    width: 100%;
+    min-height: 47px;
 
-    background: #ff5954;
-    border-radius: 11px;
+    margin: 24px 0 22px;
+    padding: 11px 20px;
 
-    font-size: 16px;
+    background: #7144ff;
+
+    border: none;
+    border-radius: 12px;
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
     font-weight: 800;
 
-    box-shadow: 0 5px 13px rgba(255, 89, 84, .14);
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 16px rgba(113, 68, 255, 0.20);
 
     transition:
-        background-color .2s ease,
-        transform .2s ease,
-        box-shadow .2s ease;
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .auth-page--login .auth-button:hover {
-    background: #ed4e49;
+    background: #6035ec;
 
     transform: translateY(-2px);
 
-    box-shadow: 0 7px 15px rgba(255, 89, 84, .2);
+    box-shadow:
+        0 9px 20px rgba(113, 68, 255, 0.27);
+}
+
+.auth-page--login .auth-button:focus-visible {
+    outline: 3px solid #ff5470;
+    outline-offset: 3px;
 }
 
 
@@ -701,127 +657,149 @@
 .auth-page--login .auth-footer {
     padding-top: 19px;
 
-    font-size: 13px;
+    border-top: 1px solid #eee7f5;
+
+    color: #625c83;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
 }
 
+
+/* REGISTRATI */
+
+.auth-page--login .auth-footer a {
+    color: #ef4566;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* TORNA ALLA HOME */
+
 .auth-page--login .auth-back {
+    display: block;
+
     margin-top: 17px;
-    font-size: 13px;
+
+    color: #ef4566;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+/* HOVER COLLEGAMENTI */
+
+.auth-page--login .auth-footer a:hover,
+.auth-page--login .auth-back:hover {
+    color: #d52d55;
+    text-decoration: underline;
 }
 
 
 /* ==========================================
-   RESPONSIVE
+   RESPONSIVE MOBILE
 ========================================== */
 
 @media (max-width: 600px) {
 
     .auth-page.auth-page--login {
-        padding: 45px 16px 55px;
+        padding: 40px 16px 55px;
     }
 
     .auth-page--login .login-titolo-decorato h1 {
-        font-size: 33px;
+        font-size: 32px;
     }
 
     .auth-page--login .auth-intro {
         font-size: 13px;
+        margin-bottom: 24px;
     }
 
     .auth-page--login .auth-card {
         padding: 24px 21px;
+        border-radius: 19px;
     }
 
-    .auth-page--login::before {
-        right: -270px;
+    .auth-page--login .auth-field {
+        margin-bottom: 19px;
     }
 
-    .auth-page--login::after {
-        left: -245px;
+    .auth-page--login .auth-button {
+        min-height: 45px;
     }
+
 }
 
 
 /* ==========================================
-   LOGIN - CENTRATURA DELLA CARD
+   ACCESSIBILITÀ
 ========================================== */
 
-.auth-page--login .auth-card {
-    display: block;
-    width: 100%;
-    max-width: 460px;
-    margin-left: auto;
-    margin-right: auto;
+@media (prefers-reduced-motion: reduce) {
+
+    .auth-page--login .auth-button,
+    .auth-page--login .auth-field input {
+        transition: none;
+    }
+
 }
 
 
 /* ==========================================
-   REGISTRAZIONE - FUORIRETE
+   REGISTRAZIONE - DESIGN DEFINITIVO FUORIRETE
 ========================================== */
 
-/* CONTENITORE PRINCIPALE */
+
+/* ==========================================
+   SFONDO E CONTENITORE
+========================================== */
 
 .auth-page.auth-page--registrazione {
     position: relative;
     isolation: isolate;
+    box-sizing: border-box;
 
     width: 100%;
-    max-width: 100%;
-    min-height: 100vh;
+    max-width: none;
+    min-height: 100dvh;
 
     margin: 0;
-    padding: 38px 24px 65px;
+    padding: 25px 24px 35px;
 
-    overflow: hidden;
-    background: #fffaf8;
+    background-color: #f0eaff;
 
-    color: #07505a;
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, 0.50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, 0.37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+
+    color: #181337;
     text-align: center;
 }
 
-
-/* ==========================================
-   DECORAZIONI SFONDO
-========================================== */
+/* ELIMINIAMO LE VECCHIE DECORAZIONI */
 
 .auth-page--registrazione::before,
 .auth-page--registrazione::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-}
-
-/* Angolo superiore destro */
-
-.auth-page--registrazione::before {
-    top: -160px;
-    right: -170px;
-
-    width: 350px;
-    height: 350px;
-
-    background: #ffdedb;
-    border-radius: 45% 25% 55% 65%;
-
-    transform: rotate(-32deg);
-}
-
-/* Angolo inferiore sinistro */
-
-.auth-page--registrazione::after {
-    bottom: -155px;
-    left: -145px;
-
-    width: 330px;
-    height: 290px;
-
-    background: #dff3ef;
-    border-radius: 45% 65% 35% 55%;
-
-    transform: rotate(22deg);
-
-    box-shadow: 35px 85px 0 -15px #ffd9d5;
+    content: none;
 }
 
 
@@ -831,90 +809,103 @@
 
 .registrazione-intestazione {
     max-width: 760px;
-    margin: 0 auto 25px;
+    margin: 0 auto 16px;
 }
 
 .registrazione-titolo {
     position: relative;
 
     width: fit-content;
-    margin: 0 auto 18px;
+    margin: 0 auto 15px;
 }
+
+
+/* TITOLO */
 
 .auth-page--registrazione .registrazione-titolo h1 {
     position: relative;
 
     margin: 0;
 
-    color: #07505a;
-    font-size: 38px;
+    color: #181337;
+    font-size: 37px;
     font-weight: 800;
-    line-height: 1.3;
     letter-spacing: -1px;
+    line-height: 1.3;
 }
 
-/* Sottolineatura corallo */
 
-.registrazione-titolo h1::after {
+/* SOTTOLINEATURA CORTA E DRITTA */
+
+.auth-page--registrazione .registrazione-titolo h1::after {
     content: "";
     position: absolute;
 
-    bottom: -7px;
-    left: 13%;
+    bottom: -6px;
+    left: 0;
 
-    width: 74%;
-    height: 5px;
+    width: 58px;
+    height: 4px;
 
-    background: #ff5954;
-    border-radius: 50%;
+    background: #ff6055;
+    border-radius: 4px;
 
-    transform: rotate(-1deg);
+    transform: none;
 }
 
-/* Trilli */
 
-.registrazione-trilli {
+/* ==========================================
+   TRILLI CORALLO
+========================================== */
+
+.auth-page--registrazione .registrazione-trilli {
     position: absolute;
 
-    top: -15px;
-    right: -35px;
+    top: -13px;
+    right: -34px;
 
     width: 35px;
     height: 39px;
+
+    pointer-events: none;
 }
 
-.registrazione-trilli span {
+.auth-page--registrazione .registrazione-trilli span {
     position: absolute;
     display: block;
 
     width: 4px;
     height: 14px;
 
-    background: #ff5954;
+    background: #ff6055;
     border-radius: 10px;
 }
 
-.registrazione-trilli span:nth-child(1) {
+.auth-page--registrazione .registrazione-trilli span:nth-child(1) {
     top: 0;
     left: 8px;
     transform: rotate(17deg);
 }
 
-.registrazione-trilli span:nth-child(2) {
+.auth-page--registrazione .registrazione-trilli span:nth-child(2) {
     top: 10px;
     left: 23px;
     transform: rotate(48deg);
 }
 
-.registrazione-trilli span:nth-child(3) {
+.auth-page--registrazione .registrazione-trilli span:nth-child(3) {
     top: 26px;
     left: 27px;
+
     height: 10px;
+
     transform: rotate(70deg);
 }
 
 
-/* SOTTOTITOLO SENZA CARD */
+/* ==========================================
+   SOTTOTITOLO
+========================================== */
 
 .auth-page--registrazione .auth-intro {
     max-width: 700px;
@@ -926,7 +917,7 @@
     border: none;
     border-radius: 0;
 
-    color: #527682;
+    color: #625c83;
     font-size: 14px;
     font-weight: 500;
     line-height: 1.6;
@@ -939,32 +930,32 @@
 
 .auth-page--registrazione .auth-card {
     display: block;
+    box-sizing: border-box;
 
     width: 100%;
     max-width: 460px;
 
     margin: 0 auto;
-    padding: 27px 32px 25px;
+    padding: 22px 32px 20px;
 
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.97);
 
-    border: 1px solid #eee5e1;
-    border-radius: 20px;
+    border: 1px solid #e5dbf7;
+    border-radius: 22px;
 
     box-shadow:
-        0 6px 18px rgba(40, 30, 20, .05),
-        0 15px 35px rgba(40, 30, 20, .025);
+        0 10px 30px rgba(81, 59, 151, 0.11);
 
     text-align: left;
 }
 
 
 /* ==========================================
-   CAMPI FORM
+   CAMPI DEL FORM
 ========================================== */
 
 .auth-page--registrazione .auth-field {
-    margin: 0 0 18px;
+    margin: 0 0 15px;
     padding: 0;
 
     background: transparent;
@@ -972,7 +963,10 @@
     border-radius: 0;
 }
 
-.registrazione-label-riga {
+
+/* LABEL CON EVENTUALE PULSANTE INFO */
+
+.auth-page--registrazione .registrazione-label-riga {
     display: flex;
     align-items: center;
     gap: 9px;
@@ -982,57 +976,70 @@
 
 .auth-page--registrazione .auth-field label {
     display: block;
+
     margin: 0;
 
-    color: #07505a;
+    color: #181337;
     font-size: 13px;
     font-weight: 700;
     line-height: 1.5;
 }
 
 
-/* INPUT */
+/* ==========================================
+   INPUT
+========================================== */
 
 .auth-page--registrazione .auth-field input:not([type="checkbox"]),
 .auth-page--registrazione .auth-field select,
 .auth-page--registrazione .auth-field textarea {
+    display: block;
+
+    box-sizing: border-box;
+
     width: 100%;
-    min-height: 45px;
+    min-height: 46px;
 
-    padding: 10px 12px;
+    padding: 11px 13px;
 
-    background: #fffaf8;
+    background: #ffffff;
 
-    border: 1px solid #e7dcd7;
-    border-radius: 10px;
+    border: 1px solid #ddd3f0;
+    border-radius: 11px;
 
-    color: #073943;
+    color: #181337;
     font-family: inherit;
     font-size: 13px;
 
     transition:
-        background-color .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
+
+/* FOCUS VIOLA */
 
 .auth-page--registrazione .auth-field input:focus,
 .auth-page--registrazione .auth-field select:focus,
 .auth-page--registrazione .auth-field textarea:focus {
     background: #ffffff;
 
-    border-color: #ff5954;
+    border-color: #7144ff;
     outline: none;
 
-    box-shadow: 0 0 0 3px rgba(255, 89, 84, .12);
+    box-shadow:
+        0 0 0 3px rgba(113, 68, 255, 0.13);
 }
 
-/* Checkbox, qualora presenti */
+
+/* CHECKBOX EVENTUALI */
 
 .auth-page--registrazione .auth-field input[type="checkbox"] {
     width: auto;
     min-height: auto;
-    accent-color: #ff5954;
+
+    accent-color: #7144ff;
 }
 
 
@@ -1049,28 +1056,40 @@
     padding-right: 52px !important;
 }
 
+
+/* OCCHIETTO */
+
 .auth-page--registrazione .password-occhio {
-    color: #90796e;
+    color: #777092;
 }
 
 .auth-page--registrazione .password-occhio:hover {
-    background: #fff0e9;
-    color: #ff5954;
+    background: #f2edff;
+    color: #7144ff;
+}
+
+.auth-page--registrazione .password-occhio:focus-visible {
+    outline: 2px solid #7144ff;
+    outline-offset: 2px;
 }
 
 
 /* ==========================================
-   PULSANTE INFO PASSWORD
+   INFORMAZIONI PASSWORD
 ========================================== */
 
-.registrazione-info {
+.auth-page--registrazione .registrazione-info {
     position: relative;
+
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
 }
 
-.registrazione-info summary {
+
+/* PULSANTE INFORMATIVO */
+
+.auth-page--registrazione .registrazione-info summary {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1079,10 +1098,11 @@
     height: 20px;
 
     background: #ffffff;
-    border: 1.5px solid #ff5954;
+
+    border: 1.5px solid #7144ff;
     border-radius: 50%;
 
-    color: #ff5954;
+    color: #7144ff;
 
     font-size: 12px;
     font-weight: 800;
@@ -1093,24 +1113,26 @@
     user-select: none;
 }
 
-.registrazione-info summary::-webkit-details-marker {
+.auth-page--registrazione .registrazione-info summary::-webkit-details-marker {
     display: none;
 }
 
-.registrazione-info summary:hover,
-.registrazione-info[open] summary {
-    background: #fff0ee;
+.auth-page--registrazione .registrazione-info summary:hover,
+.auth-page--registrazione .registrazione-info[open] summary {
+    background: #f2edff;
 }
 
-.registrazione-info summary:focus-visible {
-    outline: 2px solid #ff5954;
+.auth-page--registrazione .registrazione-info summary:focus-visible {
+    outline: 2px solid #7144ff;
     outline-offset: 3px;
 }
 
 
-/* RIQUADRO INFORMATIVO */
+/* ==========================================
+   RIQUADRO REQUISITI PASSWORD
+========================================== */
 
-.registrazione-info-contenuto {
+.auth-page--registrazione .registrazione-info-contenuto {
     position: absolute;
 
     z-index: 20;
@@ -1124,42 +1146,46 @@
 
     background: #ffffff;
 
-    border: 1px solid #eae1dc;
+    border: 1px solid #e5dbf7;
     border-radius: 12px;
 
     box-shadow:
-        0 5px 16px rgba(30, 30, 30, .08),
-        0 12px 30px rgba(30, 30, 30, .05);
+        0 7px 20px rgba(81, 59, 151, 0.12);
 
-    color: #527682;
+    color: #625c83;
+
     text-align: left;
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-.registrazione-info-contenuto strong {
+.auth-page--registrazione .registrazione-info-contenuto strong {
     display: block;
+
     margin-bottom: 8px;
 
-    color: #07505a;
+    color: #181337;
     font-size: 13px;
     font-weight: 800;
 }
 
-.registrazione-info-testo ul {
+
+/* CONTENUTO INFORMATIVO */
+
+.auth-page--registrazione .registrazione-info-testo ul {
     margin: 0;
     padding-left: 17px;
 }
 
-.registrazione-info-testo li {
+.auth-page--registrazione .registrazione-info-testo li {
     margin-bottom: 5px;
 }
 
-.registrazione-info-testo li::marker {
-    color: #ff5954;
+.auth-page--registrazione .registrazione-info-testo li::marker {
+    color: #7144ff;
 }
 
-.registrazione-info-testo p {
+.auth-page--registrazione .registrazione-info-testo p {
     margin: 0 0 6px;
 }
 
@@ -1169,10 +1195,11 @@
 ========================================== */
 
 .auth-page--registrazione .auth-help {
-    margin-top: 6px;
+    margin-top: 7px;
 
-    color: #8b817c;
+    color: #777092;
     font-size: 11px;
+    font-weight: 500;
     line-height: 1.5;
 }
 
@@ -1180,20 +1207,26 @@
     margin: 0;
 }
 
+.auth-page--registrazione .auth-help ul {
+    margin: 5px 0 0;
+    padding-left: 17px;
+}
+
 
 /* ==========================================
-   ERRORI
+   ERRORI DEL FORM
 ========================================== */
 
 .auth-page--registrazione .auth-errors {
     margin: 8px 0 12px;
     padding: 10px 12px;
 
-    background: #fff0ee;
-    border: 1px solid #ffd3cd;
+    background: #fff0f3;
+
+    border: 1px solid #ffcbd5;
     border-radius: 9px;
 
-    color: #b82929;
+    color: #ad2949;
     font-size: 12px;
     line-height: 1.5;
 }
@@ -1214,87 +1247,101 @@
     width: 100%;
     min-height: 47px;
 
-    margin: 23px 0 20px;
+    margin: 17px 0 16px;
     padding: 11px 20px;
 
-    background: #ff5954;
+    background: #7144ff;
     color: #ffffff;
 
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
 
+    font-family: inherit;
     font-size: 15px;
     font-weight: 800;
 
     cursor: pointer;
 
-    box-shadow: 0 5px 13px rgba(255, 89, 84, .14);
+    box-shadow:
+        0 6px 16px rgba(113, 68, 255, 0.20);
 
     transition:
-        background-color .2s ease,
-        transform .2s ease,
-        box-shadow .2s ease;
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .auth-page--registrazione .auth-button:hover {
-    background: #ed4e49;
+    background: #6035ec;
 
     transform: translateY(-2px);
 
-    box-shadow: 0 7px 15px rgba(255, 89, 84, .2);
+    box-shadow:
+        0 9px 20px rgba(113, 68, 255, 0.27);
+}
+
+.auth-page--registrazione .auth-button:focus-visible {
+    outline: 3px solid #ff5470;
+    outline-offset: 3px;
 }
 
 
 /* ==========================================
-   COLLEGAMENTI
+   COLLEGAMENTI INFERIORI
 ========================================== */
-
 .auth-page--registrazione .auth-footer {
-    padding-top: 18px;
+    padding-top: 13px;
 
-    border-top: 1px solid #f0e8e3;
+    border-top: 1px solid #eee7f5;
 
-    color: #66818a;
+    color: #625c83;
     font-size: 12px;
+    font-weight: 500;
     text-align: center;
 }
 
+
+/* ACCEDI */
+
 .auth-page--registrazione .auth-footer a {
-    color: #ff5954;
-    font-weight: 700;
+    color: #ef4566;
+    font-weight: 800;
     text-decoration: none;
 }
 
-.auth-page--registrazione .auth-footer a:hover {
-    text-decoration: underline;
-}
 
+/* TORNA ALLA HOME */
 .auth-page--registrazione .auth-back {
     display: block;
 
-    margin-top: 16px;
+    margin-top: 10px;
 
-    color: #ff5954;
+    color: #ef4566;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
 
-    text-decoration: none;
     text-align: center;
+    text-decoration: none;
 }
 
+
+/* HOVER COLLEGAMENTI */
+
+.auth-page--registrazione .auth-footer a:hover,
 .auth-page--registrazione .auth-back:hover {
+    color: #d52d55;
     text-decoration: underline;
 }
 
 
 /* ==========================================
-   RESPONSIVE
+   RESPONSIVE MOBILE
 ========================================== */
 
 @media (max-width: 600px) {
 
     .auth-page.auth-page--registrazione {
-        padding: 32px 16px 55px;
+        padding: 28px 16px 35px;
     }
 
     .auth-page--registrazione .registrazione-titolo h1 {
@@ -1303,27 +1350,37 @@
 
     .auth-page--registrazione .auth-intro {
         max-width: 340px;
-        font-size: 12px;
+        font-size: 13px;
+    }
+
+    .registrazione-intestazione {
+        margin-bottom: 25px;
     }
 
     .auth-page--registrazione .auth-card {
-        padding: 23px 20px;
+        padding: 24px 21px;
+        border-radius: 19px;
     }
 
-    .registrazione-info-contenuto {
+    .auth-page--registrazione .auth-field {
+        margin-bottom: 15px;
+    }
+
+    .auth-page--registrazione .auth-button {
+        min-height: 45px;
+    }
+
+    .auth-page--registrazione .registrazione-info-contenuto {
         left: -105px;
         width: 240px;
     }
 
-    .auth-page--registrazione::before {
-        right: -275px;
-    }
-
-    .auth-page--registrazione::after {
-        left: -245px;
-    }
-
 }
+
+
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -1336,60 +1393,58 @@
 
 
 /* ==========================================
-   CREAZIONE PROFILO - FUORIRETE
+   CREAZIONE PROFILO - DESIGN DEFINITIVO
+========================================== */
+
+
+/* ==========================================
+   SFONDO GENERALE
 ========================================== */
 
 .auth-page.auth-page--creazione-profilo {
     position: relative;
     isolation: isolate;
 
+    box-sizing: border-box;
+
     width: 100%;
     max-width: none;
-    min-height: 100vh;
+    min-height: 100dvh;
 
     margin: 0;
-    padding: 32px 24px 65px;
+    padding: 30px 24px 55px;
 
-    background: #fffaf8;
-    color: #07505a;
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, 0.50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, 0.37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+
+    color: #181337;
     text-align: center;
-    overflow: hidden;
 }
 
-/* DECORAZIONI DELLO SFONDO */
+/* ELIMINAZIONE VECCHIE DECORAZIONI */
 
 .auth-page--creazione-profilo::before,
 .auth-page--creazione-profilo::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.auth-page--creazione-profilo::before {
-    top: -145px;
-    right: -145px;
-    width: 350px;
-    height: 340px;
-
-    background: #dff3ef;
-    border-radius: 45% 25% 55% 65%;
-    transform: rotate(-32deg);
-
-    box-shadow: -45px 85px 0 -20px #ffdedb;
-}
-
-.auth-page--creazione-profilo::after {
-    bottom: -150px;
-    left: -145px;
-    width: 330px;
-    height: 290px;
-
-    background: #dff3ef;
-    border-radius: 45% 65% 35% 55%;
-    transform: rotate(22deg);
-
-    box-shadow: 35px 85px 0 -15px #ffd9d5;
+    content: none;
 }
 
 
@@ -1397,165 +1452,279 @@
    INTESTAZIONE
 ========================================== */
 
-.creazione-profilo-intestazione {
-    max-width: 720px;
-    margin: 0 auto 34px;
-}
-
-.creazione-profilo-titolo {
-    position: relative;
-    width: fit-content;
-    margin: 0 auto 19px;
-}
-
-.auth-page--creazione-profilo .creazione-profilo-titolo h1 {
-    position: relative;
-    margin: 0;
-
-    color: #07505a;
-    font-size: 38px;
-    font-weight: 800;
-    line-height: 1.3;
-    letter-spacing: -1px;
-}
-
-/* SOTTOLINEATURA */
-
-.creazione-profilo-titolo h1::after {
-    content: "";
-    position: absolute;
-
-    bottom: -7px;
-    left: 21%;
-    width: 58%;
-    height: 5px;
-
-    background: #ff5954;
-    border-radius: 50%;
-    transform: rotate(-1deg);
-}
-
-/* TRILLI */
-
-.creazione-profilo-trilli {
-    position: absolute;
-    top: -14px;
-    right: -34px;
-    width: 34px;
-    height: 38px;
-}
-
-.creazione-profilo-trilli span {
-    position: absolute;
-    display: block;
-
-    width: 4px;
-    height: 14px;
-
-    background: #ff5954;
-    border-radius: 10px;
-}
-
-.creazione-profilo-trilli span:nth-child(1) {
-    top: 0;
-    left: 8px;
-    transform: rotate(17deg);
-}
-
-.creazione-profilo-trilli span:nth-child(2) {
-    top: 10px;
-    left: 23px;
-    transform: rotate(48deg);
-}
-
-.creazione-profilo-trilli span:nth-child(3) {
-    top: 26px;
-    left: 27px;
-    height: 10px;
-    transform: rotate(70deg);
-}
-
-.auth-page--creazione-profilo .auth-intro {
-    max-width: 630px;
-    margin: 0 auto;
-    padding: 0;
-
-    background: transparent;
-    border: none;
-    border-radius: 0;
-
-    color: #527682;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.6;
-}
-
 
 /* ==========================================
-   CARD PRINCIPALE
+   INTESTAZIONE - CREAZIONE PROFILO
 ========================================== */
 
-.auth-page--creazione-profilo .creazione-profilo-form {
+.auth-page--creazione-profilo .creazione-profilo-intestazione {
+    box-sizing: border-box;
+
     width: 100%;
     max-width: 940px;
-    margin: 0 auto;
-}
 
-.auth-page--creazione-profilo .auth-card {
-    width: 100%;
-    margin: 0;
-    padding: 32px 36px 35px;
-
-    background: #ffffff;
-    border: 1px solid #eee5e1;
-    border-radius: 22px;
-
-    box-shadow:
-        0 6px 18px rgba(40, 30, 20, .045),
-        0 15px 35px rgba(40, 30, 20, .025);
+    margin: 0 auto 27px;
 
     text-align: left;
 }
 
 
 /* ==========================================
-   SEZIONI DEL FORM
+   PASSAGGIO 1 DI 2
 ========================================== */
 
-.auth-page--creazione-profilo .profilo-sezione {
-    min-width: 0;
-    margin-bottom: 33px;
+.auth-page--creazione-profilo .creazione-profilo-fase {
+    display: table;
+
+    width: fit-content;
+    margin: 0 0 17px;
+    padding: 7px 13px;
+
+    background: #eee5ff;
+    border: 1px solid #e2d4ff;
+    border-radius: 30px;
+
+    color: #6434df;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+    line-height: 1.4;
 }
 
-.auth-page--creazione-profilo .auth-card > .profilo-sezione:last-child {
+
+/* ==========================================
+   TITOLO
+========================================== */
+
+.auth-page--creazione-profilo .creazione-profilo-titolo {
+    position: relative;
+
+    width: fit-content;
+    max-width: 100%;
+
+    margin: 0 0 19px;
+}
+
+.auth-page--creazione-profilo
+.creazione-profilo-titolo h1 {
+    position: relative;
+
+    margin: 0;
+
+    color: #181337;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.9px;
+    line-height: 1.25;
+}
+
+
+/* ==========================================
+   SOTTOLINEATURA CORALLO
+========================================== */
+
+.auth-page--creazione-profilo
+.creazione-profilo-titolo h1::after {
+    content: "";
+    position: absolute;
+
+    bottom: -7px;
+    left: 0;
+
+    width: 60px;
+    height: 4px;
+
+    background: #ff6055;
+    border-radius: 4px;
+
+    transform: none;
+}
+
+
+/* ==========================================
+   TRILLI CORALLO
+========================================== */
+
+.auth-page--creazione-profilo .creazione-profilo-trilli {
+    position: absolute;
+
+    top: -10px;
+    right: -30px;
+
+    width: 30px;
+    height: 35px;
+
+    pointer-events: none;
+}
+
+.auth-page--creazione-profilo .creazione-profilo-trilli span {
+    position: absolute;
+    display: block;
+
+    width: 4px;
+    height: 13px;
+
+    background: #ff6055;
+    border-radius: 10px;
+}
+
+.auth-page--creazione-profilo
+.creazione-profilo-trilli span:nth-child(1) {
+    top: 0;
+    left: 6px;
+    transform: rotate(18deg);
+}
+
+.auth-page--creazione-profilo
+.creazione-profilo-trilli span:nth-child(2) {
+    top: 10px;
+    left: 20px;
+    transform: rotate(48deg);
+}
+
+.auth-page--creazione-profilo
+.creazione-profilo-trilli span:nth-child(3) {
+    top: 24px;
+    left: 24px;
+
+    height: 10px;
+    transform: rotate(70deg);
+}
+
+
+/* ==========================================
+   DESCRIZIONE
+========================================== */
+
+.auth-page--creazione-profilo .auth-intro {
+    max-width: 700px;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+
+    color: #625c83;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.65;
+
+    text-align: left;
+}
+
+
+/* ==========================================
+   CONTENITORE FORM
+========================================== */
+
+.auth-page--creazione-profilo
+.creazione-profilo-form {
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: 940px;
+    margin: 0 auto;
+}
+
+/* CARD PRINCIPALE */
+
+.auth-page--creazione-profilo .auth-card {
+    box-sizing: border-box;
+
+    width: 100%;
+    margin: 0;
+    padding: 24px 33px 30px;
+
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #e5dbf7;
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 30px rgba(81, 59, 151, 0.11);
+
+    text-align: left;
+}
+
+
+/* ==========================================
+   LEGENDA CAMPI OBBLIGATORI
+========================================== */
+
+.auth-page--creazione-profilo
+.profilo-legenda-obbligatori {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+
+    margin: 0 0 21px;
+
+    color: #625c83;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.auth-page--creazione-profilo
+.profilo-obbligatorio {
+    color: #ff5470;
+    font-weight: 800;
+}
+
+.auth-page--creazione-profilo
+.profilo-legenda-obbligatori
+.profilo-obbligatorio {
+    font-size: 16px;
+}
+
+
+/* ==========================================
+   SEZIONI FORM
+========================================== */
+
+.auth-page--creazione-profilo
+.profilo-sezione {
+    min-width: 0;
+    margin-bottom: 30px;
+}
+
+.auth-page--creazione-profilo
+.auth-card > .profilo-sezione:last-child {
     margin-bottom: 0;
 }
 
-/* INTESTAZIONE DELLE SEZIONI */
+/* TITOLI SEZIONI */
 
+.auth-page--creazione-profilo
 .profilo-sezione-titolo {
     display: flex;
     align-items: center;
     gap: 10px;
 
     position: relative;
+
     margin: 0 0 18px;
 
-    color: #07505a;
+    color: #181337;
     font-size: 15px;
     font-weight: 800;
     line-height: 1.3;
 }
 
+.auth-page--creazione-profilo
 .profilo-sezione-titolo::after {
     content: "";
     flex: 1;
     height: 1px;
 
     margin-left: 5px;
-    background: #efddd6;
+
+    background: #e5dbf7;
 }
 
+.auth-page--creazione-profilo
 .profilo-sezione-titolo > span:nth-child(2) {
     padding: 7px 12px 7px 0;
     white-space: nowrap;
@@ -1563,19 +1732,20 @@
 
 /* ICONCINE DELLE SEZIONI */
 
+.auth-page--creazione-profilo
 .profilo-sezione-icona {
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    width: 29px;
-    height: 29px;
-    flex: 0 0 29px;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
 
-    background: #fff0e9;
+    background: #f2eaff;
     border-radius: 9px;
 
-    color: #ff5954;
+    color: #7144ff;
     font-size: 19px;
     font-weight: 600;
 }
@@ -1585,8 +1755,9 @@
    GRIGLIE DEL LAYOUT
 ========================================== */
 
-/* Dati personali + fotografia */
+/* DATI PERSONALI E FOTO */
 
+.auth-page--creazione-profilo
 .profilo-griglia-iniziale {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 230px;
@@ -1594,10 +1765,14 @@
     align-items: start;
 }
 
+.auth-page--creazione-profilo
 .profilo-dati-personali {
     min-width: 0;
 }
 
+/* COLONNA FOTO */
+
+.auth-page--creazione-profilo
 .profilo-foto-colonna {
     min-width: 0;
     align-self: stretch;
@@ -1608,23 +1783,27 @@
     justify-content: center;
 
     padding-left: 28px;
-    border-left: 1px solid #efddd6;
+
+    border-left: 1px solid #e5dbf7;
 }
 
-/* Griglie a due colonne */
+/* GRIGLIE A DUE COLONNE */
 
-.auth-page--creazione-profilo .profilo-griglia-due {
+.auth-page--creazione-profilo
+.profilo-griglia-due {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
 }
 
-.auth-page--creazione-profilo .profilo-sezioni-affiancate {
+.auth-page--creazione-profilo
+.profilo-sezioni-affiancate {
     align-items: start;
     gap: 34px;
-    margin-bottom: 33px;
+    margin-bottom: 30px;
 }
 
+.auth-page--creazione-profilo
 .profilo-sezioni-affiancate > .profilo-sezione {
     margin-bottom: 0;
 }
@@ -1636,7 +1815,7 @@
 
 .auth-page--creazione-profilo .auth-field {
     min-width: 0;
-    margin: 0 0 20px;
+    margin: 0 0 19px;
     padding: 0;
 
     background: transparent;
@@ -1644,74 +1823,92 @@
     border-radius: 0;
 }
 
-.auth-page--creazione-profilo .auth-field:last-child {
+.auth-page--creazione-profilo
+.auth-field:last-child {
     margin-bottom: 0;
 }
 
-.auth-page--creazione-profilo .auth-field > label {
+/* LABEL */
+
+.auth-page--creazione-profilo
+.auth-field > label {
     display: block;
     margin: 0 0 8px;
 
-    color: #07505a;
+    color: #181337;
     font-size: 13px;
     font-weight: 700;
 }
 
-.profilo-obbligatorio {
-    color: #ff5954;
-}
+/* LABEL NASCOSTE MA ACCESSIBILI */
 
-/* Label accessibile ma nascosta:
-   il nome del campo è già nel titolo della sezione. */
-
-.auth-page--creazione-profilo .profilo-label-interno {
+.auth-page--creazione-profilo
+.profilo-label-interno {
     position: absolute;
+
     width: 1px;
     height: 1px;
     padding: 0;
     margin: -1px;
+
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
+
     white-space: nowrap;
     border: 0;
 }
 
+
 /* INPUT, SELECT, TEXTAREA */
 
-.auth-page--creazione-profilo .auth-field input:not([type="checkbox"]):not([type="file"]),
-.auth-page--creazione-profilo .auth-field select,
-.auth-page--creazione-profilo .auth-field textarea {
+.auth-page--creazione-profilo
+.auth-field input:not([type="checkbox"]):not([type="file"]),
+.auth-page--creazione-profilo
+.auth-field select,
+.auth-page--creazione-profilo
+.auth-field textarea {
     display: block;
+    box-sizing: border-box;
+
     width: 100%;
-    min-height: 45px;
+    min-height: 46px;
 
     padding: 11px 13px;
 
-    background: #fffaf8;
-    border: 1px solid #e5d9d2;
-    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #ddd3f0;
+    border-radius: 11px;
 
-    color: #073943;
+    color: #181337;
     font-family: inherit;
     font-size: 13px;
 
     transition:
-        background-color .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.auth-page--creazione-profilo .auth-field input:focus,
-.auth-page--creazione-profilo .auth-field select:focus,
-.auth-page--creazione-profilo .auth-field textarea:focus {
+/* FOCUS VIOLA */
+
+.auth-page--creazione-profilo
+.auth-field input:focus,
+.auth-page--creazione-profilo
+.auth-field select:focus,
+.auth-page--creazione-profilo
+.auth-field textarea:focus {
     background: #ffffff;
-    border-color: #ff5954;
+    border-color: #7144ff;
     outline: none;
 
-    box-shadow: 0 0 0 3px rgba(255, 89, 84, .12);
+    box-shadow:
+        0 0 0 3px rgba(113, 68, 255, 0.13);
 }
 
-.auth-page--creazione-profilo .auth-field textarea {
+/* DESCRIZIONE */
+
+.auth-page--creazione-profilo
+.auth-field textarea {
     min-height: 110px;
     resize: vertical;
     line-height: 1.6;
@@ -1722,7 +1919,8 @@
    FOTO DEL PROFILO
 ========================================== */
 
-.auth-page--creazione-profilo .gestione-immagine-creazione {
+.auth-page--creazione-profilo
+.gestione-immagine-creazione {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1733,7 +1931,10 @@
     padding: 0;
 }
 
-.auth-page--creazione-profilo .gestione-immagine-anteprima {
+/* ANTEPRIMA */
+
+.auth-page--creazione-profilo
+.gestione-immagine-anteprima {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1744,29 +1945,37 @@
 
     margin: 0;
 
-    background: #fff5f0;
-    border: 1px solid #eadbd3;
+    background: #f3eeff;
+    border: 1px solid #ddd3f0;
     border-radius: 16px;
 
     overflow: hidden;
 }
 
-.auth-page--creazione-profilo .gestione-immagine-anteprima img {
+.auth-page--creazione-profilo
+.gestione-immagine-anteprima img {
     display: block;
+
     width: 100%;
     height: 100%;
+
     object-fit: cover;
 }
 
-.auth-page--creazione-profilo .gestione-immagine-segnaposto {
+.auth-page--creazione-profilo
+.gestione-immagine-segnaposto {
     padding: 12px;
-    color: #927c71;
+
+    color: #777092;
     font-size: 12px;
     line-height: 1.5;
     text-align: center;
 }
 
-.auth-page--creazione-profilo .gestione-immagine-comandi {
+/* COMANDI FOTO */
+
+.auth-page--creazione-profilo
+.gestione-immagine-comandi {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1775,76 +1984,91 @@
     gap: 8px;
 }
 
-.auth-page--creazione-profilo .gestione-immagine-azioni {
+.auth-page--creazione-profilo
+.gestione-immagine-azioni {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+
     gap: 8px;
 }
 
-.auth-page--creazione-profilo .gestione-immagine-pulsante,
-.auth-page--creazione-profilo .gestione-immagine-rimuovi {
+/* SCEGLI E RIMUOVI FOTO */
+
+.auth-page--creazione-profilo
+.gestione-immagine-pulsante,
+.auth-page--creazione-profilo
+.gestione-immagine-rimuovi {
     min-height: 37px;
     padding: 8px 14px;
 
     background: #ffffff;
-    border: 1px solid #ffaaa3;
+    border: 1px solid #c5b3f5;
     border-radius: 10px;
 
-    color: #ff5954;
+    color: #7144ff;
+    font-family: inherit;
     font-size: 12px;
     font-weight: 700;
+
+    cursor: pointer;
 }
 
-.auth-page--creazione-profilo .gestione-immagine-pulsante:hover,
-.auth-page--creazione-profilo .gestione-immagine-rimuovi:hover {
-    background: #fff0e9;
-    border-color: #ff5954;
+.auth-page--creazione-profilo
+.gestione-immagine-pulsante:hover,
+.auth-page--creazione-profilo
+.gestione-immagine-rimuovi:hover {
+    background: #f2edff;
+    border-color: #7144ff;
 }
 
-.auth-page--creazione-profilo .gestione-immagine [hidden] {
+.auth-page--creazione-profilo
+.gestione-immagine [hidden] {
     display: none !important;
 }
 
 
 /* ==========================================
-   CHECKBOX LINGUE E COSA CERCHI
+   CHECKBOX - LINGUE E COSA CERCHI
 ========================================== */
 
-.auth-page--creazione-profilo .profilo-opzioni-field {
+.auth-page--creazione-profilo
+.profilo-opzioni-field {
     margin: 0;
 }
 
-/* Contenitore generato da Django */
-
-.auth-page--creazione-profilo .profilo-checkbox-grid > div {
+.auth-page--creazione-profilo
+.profilo-checkbox-grid > div {
     display: grid;
     gap: 11px 20px;
 }
 
-/* Lingue su due colonne */
+/* LINGUE SU DUE COLONNE */
 
-.auth-page--creazione-profilo .profilo-lingue > div {
+.auth-page--creazione-profilo
+.profilo-lingue > div {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/* Cosa cerchi su tre colonne */
+/* COSA CERCHI SU TRE COLONNE */
 
-.auth-page--creazione-profilo .profilo-cosa-cerchi > div {
+.auth-page--creazione-profilo
+.profilo-cosa-cerchi > div {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* Singole opzioni */
+/* SINGOLE OPZIONI */
 
-.auth-page--creazione-profilo .profilo-checkbox-grid label {
+.auth-page--creazione-profilo
+.profilo-checkbox-grid label {
     display: inline-flex;
     align-items: center;
     gap: 9px;
 
     margin: 0;
 
-    color: #334a50;
+    color: #302758;
     font-size: 13px;
     font-weight: 500;
     line-height: 1.5;
@@ -1852,42 +2076,257 @@
     cursor: pointer;
 }
 
-.auth-page--creazione-profilo .profilo-checkbox-grid input[type="checkbox"] {
+/* CHECKBOX VIOLA */
+
+.auth-page--creazione-profilo
+.profilo-checkbox-grid input[type="checkbox"] {
     width: 16px;
     height: 16px;
     min-width: 16px;
 
     margin: 0;
-    accent-color: #ff5954;
+
+    accent-color: #7144ff;
     cursor: pointer;
 }
 
+
+
+/* ==========================================
+   CREAZIONE PROFILO - DROPDOWN LINGUE
+========================================== */
+
+.auth-page--creazione-profilo .lingue-dropdown {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+/* PULSANTE PRINCIPALE */
+
+.auth-page--creazione-profilo .lingue-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 50px;
+    padding: 8px 16px;
+
+    background: #ffffff;
+    border: 1px solid #ddd3f0;
+    border-radius: 12px;
+
+    color: #181337;
+    font-family: inherit;
+    font-size: 13px;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.auth-page--creazione-profilo
+.lingue-dropdown-trigger:focus-visible {
+    outline: 3px solid rgba(113, 68, 255, 0.18);
+    border-color: #7144ff;
+}
+
+.auth-page--creazione-profilo
+.lingue-dropdown-trigger[aria-expanded="true"] {
+    border-color: #7144ff;
+}
+
+/* TAG DELLE LINGUE SELEZIONATE */
+
+.auth-page--creazione-profilo .lingue-dropdown-selezionate {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    min-width: 0;
+    flex: 1;
+}
+
+.auth-page--creazione-profilo .lingue-dropdown-tag {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 12px;
+
+    background: #f2eaff;
+    border-radius: 999px;
+
+    color: #5535a4;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.auth-page--creazione-profilo
+.lingue-dropdown-placeholder {
+    color: #777092;
+}
+
+/* FRECCIA */
+
+.auth-page--creazione-profilo .lingue-dropdown-freccia {
+    flex-shrink: 0;
+
+    color: #81769c;
+    font-size: 15px;
+
+    transition: transform 0.2s ease;
+}
+
+.auth-page--creazione-profilo
+.lingue-dropdown-trigger[aria-expanded="true"]
+.lingue-dropdown-freccia {
+    transform: rotate(180deg);
+}
+
+/* MENU DELLE OPZIONI */
+
+.auth-page--creazione-profilo .lingue-dropdown-opzioni {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 50;
+
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 240px;
+    padding: 12px;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+    border: 1px solid #ddd3f0;
+    border-radius: 12px;
+
+    box-shadow: 0 9px 24px rgba(81, 59, 151, 0.14);
+}
+
+.auth-page--creazione-profilo
+.lingue-dropdown-opzioni.lingue-js-chiuso {
+    display: none;
+}
+
+/* CHECKBOX IN DUE COLONNE */
+
+.auth-page--creazione-profilo
+.lingue-dropdown-opzioni > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px 10px;
+}
+
+.auth-page--creazione-profilo
+.lingue-dropdown-opzioni label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px;
+    margin: 0;
+
+    border-radius: 8px;
+
+    color: #302758;
+    font-size: 12px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.auth-page--creazione-profilo
+.lingue-dropdown-opzioni label:hover {
+    background: #f5f0ff;
+}
+
+.auth-page--creazione-profilo
+.lingue-dropdown-opzioni input[type="checkbox"] {
+    flex-shrink: 0;
+
+    width: 15px;
+    height: 15px;
+    margin: 0;
+
+    accent-color: #7144ff;
+}
+
+/* OPZIONI DISABILITATE AL LIMITE */
+
+.auth-page--creazione-profilo
+.lingue-dropdown-opzioni .lingue-disabilitata {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* CONTATORE */
+
+.auth-page--creazione-profilo .lingue-dropdown-aiuto {
+    margin: 8px 0 0;
+
+    color: #777092;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .auth-page--creazione-profilo
+    .lingue-dropdown-opzioni > div {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-page--creazione-profilo
+    .lingue-dropdown-tag {
+        padding: 5px 9px;
+        font-size: 11px;
+    }
+
+}
+
+.auth-page--creazione-profilo .profilo-foto-etichetta {
+    margin-bottom: 12px;
+    color: #181337;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+}
 
 /* ==========================================
    ERRORI
 ========================================== */
 
-.auth-page--creazione-profilo .auth-errors {
+.auth-page--creazione-profilo
+.auth-errors {
     margin-top: 8px;
     padding: 9px 12px;
 
-    background: #fff0ee;
-    border: 1px solid #ffd3cd;
+    background: #fff0f3;
+    border: 1px solid #ffcbd5;
     border-radius: 9px;
 
-    color: #b82929;
+    color: #ad2949;
     font-size: 12px;
     line-height: 1.5;
 }
 
-.auth-page--creazione-profilo .auth-errors ul {
+.auth-page--creazione-profilo
+.auth-errors ul {
     margin: 0;
     padding-left: 17px;
 }
 
 
 /* ==========================================
-   PULSANTI ESTERNI ALLA CARD
+   PULSANTI FUORI DALLA CARD
 ========================================== */
 
 .creazione-profilo-azioni,
@@ -1895,20 +2334,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     width: 100%;
 }
 
 .creazione-profilo-azioni {
-    margin-top: 28px;
+    margin-top: 25px;
 }
 
 .creazione-profilo-logout {
     margin-top: 12px;
 }
 
-/* Completa il profilo */
 
-.auth-page--creazione-profilo .creazione-profilo-azioni .auth-button {
+/* COMPLETA IL PROFILO */
+
+.auth-page--creazione-profilo
+.creazione-profilo-azioni .auth-button {
     width: 310px;
     max-width: 100%;
     min-height: 47px;
@@ -1916,30 +2358,41 @@
     margin: 0;
     padding: 11px 20px;
 
-    background: #ff5954;
+    background: #7144ff;
     color: #ffffff;
 
     border: none;
-    border-radius: 11px;
+    border-radius: 12px;
 
+    font-family: inherit;
     font-size: 15px;
     font-weight: 800;
 
-    box-shadow: 0 5px 13px rgba(255, 89, 84, .14);
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 16px rgba(113, 68, 255, 0.20);
 
     transition:
-        background-color .2s ease,
-        transform .2s ease;
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.auth-page--creazione-profilo .creazione-profilo-azioni .auth-button:hover {
-    background: #ed4e49;
+.auth-page--creazione-profilo
+.creazione-profilo-azioni .auth-button:hover {
+    background: #6035ec;
     transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 20px rgba(113, 68, 255, 0.27);
 }
 
-/* Esci */
 
-.auth-page--creazione-profilo .creazione-profilo-logout .auth-button-secondary {
+/* ESCI */
+
+.auth-page--creazione-profilo
+.creazione-profilo-logout .auth-button-secondary {
     width: 230px;
     max-width: 100%;
     min-height: 43px;
@@ -1947,47 +2400,73 @@
     margin: 0;
     padding: 10px 20px;
 
-    background: #8d807a;
-    color: #ffffff;
+    background: #ffffff;
+    color: #7144ff;
 
-    border: none;
-    border-radius: 11px;
+    border: 1px solid #c5b3f5;
+    border-radius: 12px;
 
+    font-family: inherit;
     font-size: 13px;
     font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.auth-page--creazione-profilo .creazione-profilo-logout .auth-button-secondary:hover {
-    background: #756a65;
+.auth-page--creazione-profilo
+.creazione-profilo-logout .auth-button-secondary:hover {
+    background: #f2edff;
+    border-color: #7144ff;
+}
+
+
+/* FOCUS ACCESSIBILE PULSANTI */
+
+.auth-page--creazione-profilo
+.auth-button:focus-visible,
+.auth-page--creazione-profilo
+.gestione-immagine-pulsante:focus-visible,
+.auth-page--creazione-profilo
+.gestione-immagine-rimuovi:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
 }
 
 
 /* ==========================================
-   RESPONSIVE - TABLET
+   RESPONSIVE TABLET
 ========================================== */
 
 @media (max-width: 800px) {
 
     .auth-page--creazione-profilo .auth-card {
-        padding: 27px 25px;
+        padding: 26px 25px;
     }
 
+    .auth-page--creazione-profilo
     .profilo-griglia-iniziale {
         grid-template-columns: minmax(0, 1fr) 180px;
         gap: 22px;
     }
 
+    .auth-page--creazione-profilo
     .profilo-foto-colonna {
         padding-left: 20px;
     }
 
-    .auth-page--creazione-profilo .gestione-immagine-anteprima {
+    .auth-page--creazione-profilo
+    .gestione-immagine-anteprima {
         width: 120px;
         height: 120px;
         flex-basis: 120px;
     }
 
-    .auth-page--creazione-profilo .profilo-sezioni-affiancate {
+    .auth-page--creazione-profilo
+    .profilo-sezioni-affiancate {
         gap: 22px;
     }
 
@@ -1995,16 +2474,17 @@
 
 
 /* ==========================================
-   RESPONSIVE - MOBILE
+   RESPONSIVE MOBILE
 ========================================== */
 
 @media (max-width: 600px) {
 
     .auth-page.auth-page--creazione-profilo {
-        padding: 30px 15px 50px;
+        padding: 28px 15px 45px;
     }
 
-    .auth-page--creazione-profilo .creazione-profilo-titolo h1 {
+    .auth-page--creazione-profilo
+    .creazione-profilo-titolo h1 {
         font-size: 29px;
         letter-spacing: -0.7px;
     }
@@ -2014,64 +2494,85 @@
     }
 
     .creazione-profilo-intestazione {
-        margin-bottom: 27px;
+        margin-bottom: 26px;
     }
 
     .auth-page--creazione-profilo .auth-card {
-        padding: 23px 19px;
-        border-radius: 17px;
+        padding: 22px 18px;
+        border-radius: 18px;
     }
 
+    .auth-page--creazione-profilo
+    .profilo-legenda-obbligatori {
+        margin-bottom: 21px;
+        font-size: 11px;
+    }
+
+    .auth-page--creazione-profilo
     .profilo-griglia-iniziale,
-    .auth-page--creazione-profilo .profilo-griglia-due {
+    .auth-page--creazione-profilo
+    .profilo-griglia-due {
         grid-template-columns: 1fr;
         gap: 19px;
     }
 
+    .auth-page--creazione-profilo
     .profilo-foto-colonna {
-        padding: 23px 0 0;
-        border-left: 0;
-        border-top: 1px solid #efddd6;
+        padding: 22px 0 0;
+
+        border-left: none;
+        border-top: 1px solid #e5dbf7;
     }
 
-    .auth-page--creazione-profilo .profilo-sezione,
-    .auth-page--creazione-profilo .profilo-sezioni-affiancate {
-        margin-bottom: 27px;
+    .auth-page--creazione-profilo
+    .profilo-sezione,
+    .auth-page--creazione-profilo
+    .profilo-sezioni-affiancate {
+        margin-bottom: 26px;
     }
 
-    .auth-page--creazione-profilo .profilo-sezioni-affiancate {
-        gap: 27px;
+    .auth-page--creazione-profilo
+    .profilo-sezioni-affiancate {
+        gap: 26px;
     }
 
-    .auth-page--creazione-profilo .profilo-cosa-cerchi > div {
+    .auth-page--creazione-profilo
+    .profilo-sezioni-affiancate > .profilo-sezione {
+        margin-bottom: 0;
+    }
+
+    .auth-page--creazione-profilo
+    .profilo-cosa-cerchi > div {
         grid-template-columns: 1fr;
     }
 
-    .auth-page--creazione-profilo .profilo-lingue > div {
+    .auth-page--creazione-profilo
+    .profilo-lingue > div {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .auth-page--creazione-profilo .profilo-sezione-titolo {
+    .auth-page--creazione-profilo
+    .profilo-sezione-titolo {
         font-size: 14px;
     }
 
     .creazione-profilo-azioni {
-        margin-top: 25px;
-    }
-
-    .auth-page--creazione-profilo::before {
-        right: -275px;
-    }
-
-    .auth-page--creazione-profilo::after {
-        left: -245px;
+        margin-top: 24px;
     }
 
 }
 
+
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
+
 @media (prefers-reduced-motion: reduce) {
 
-    .auth-page--creazione-profilo .auth-button {
+    .auth-page--creazione-profilo .auth-button,
+    .auth-page--creazione-profilo .auth-field input,
+    .auth-page--creazione-profilo .auth-field select,
+    .auth-page--creazione-profilo .auth-field textarea {
         transition: none;
     }
 

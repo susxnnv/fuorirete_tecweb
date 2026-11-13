@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/selezione_interessi.css' %}?v=6">
+<link rel="stylesheet" href="{% static 'css/selezione_interessi.css' %}?v=7">
 {% endblock %}
 
 {% block content %}
@@ -45,15 +45,26 @@
 
                 </div>
 
-            {% else %}
+                {% else %}
 
-                <span class="interessi-fase">
-                    PASSAGGIO 2 DI 2
-                </span>
+                    <span class="interessi-fase">
+                        PASSAGGIO 2 DI 2
+                    </span>
 
-                <div class="interessi-titolo-contenitore">
+                    <!-- COLLEGAMENTO AL PRIMO PASSAGGIO -->
 
-                    <h1>Scegli i tuoi interessi</h1>
+                    <a
+                        href="{% url 'creazione_profilo' %}"
+                        class="interessi-torna-profilo"
+                    >
+                        <span aria-hidden="true">←</span>
+                        Torna ai dati personali
+                    </a>
+
+                    <div class="interessi-titolo-contenitore">
+
+                        <h1>Scegli i tuoi interessi</h1>
+
 
                     <span class="interessi-titolo-trilli"
                           aria-hidden="true">
@@ -342,7 +353,7 @@
 
                     <p>
                         Scegli le passioni che ti rappresentano
-                        per trovare persone con cui condividerle.
+                        per trovare persone con cui condividerle!
                     </p>
 
                 </div>
@@ -372,7 +383,7 @@
 
                     {% else %}
 
-                        Conferma interessi →
+                        Conferma interessi
 
                     {% endif %}
 

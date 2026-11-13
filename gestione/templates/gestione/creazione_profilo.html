@@ -12,27 +12,32 @@
 <main class="auth-page auth-page--creazione-profilo">
 
     <!-- INTESTAZIONE -->
-
     <header class="creazione-profilo-intestazione">
 
+        <!-- INDICATORE DEL PASSAGGIO -->
+        <span class="creazione-profilo-fase">
+            PASSAGGIO 1 DI 2
+        </span>
+        
         <div class="creazione-profilo-titolo">
+
             <h1>Crea il tuo profilo</h1>
 
             <span class="creazione-profilo-trilli"
-                  aria-hidden="true">
+                aria-hidden="true">
                 <span></span>
                 <span></span>
                 <span></span>
             </span>
+
         </div>
 
         <p class="auth-intro">
             Completa il tuo profilo personale per iniziare
-            a scoprire persone e community su FuoriRete.
+            a scoprire persone e community su FuoriRete!
         </p>
 
     </header>
-
 
     <!-- FORM PRINCIPALE -->
 
@@ -47,6 +52,14 @@
         {% csrf_token %}
 
         <div class="auth-card">
+
+            <!-- LEGENDA CAMPI OBBLIGATORI -->
+
+            <div class="profilo-legenda-obbligatori">
+                <span class="profilo-obbligatorio"
+                    aria-hidden="true">*</span>
+                campo obbligatorio
+            </div>
 
             {% if form.non_field_errors %}
                 <div class="auth-errors" role="alert">
@@ -148,6 +161,13 @@
                     <!-- FOTO -->
 
                     <div class="profilo-foto-colonna">
+
+                        <div class="profilo-foto-etichetta">
+                            Foto del profilo
+                            {% if form.foto.field.required %}
+                                <span class="profilo-obbligatorio">*</span>
+                            {% endif %}
+                        </div>
 
                         <div class="gestione-immagine gestione-immagine-creazione">
 
@@ -288,23 +308,68 @@
 
                     <h2 class="profilo-sezione-titolo">
                         <span class="profilo-sezione-icona"
-                              aria-hidden="true">🌍</span>
-                        <span>Lingue parlate</span>
+                            aria-hidden="true">🌍</span>
+                        <span>
+                            Lingue parlate
+                            {% if form.lingue.field.required %}
+                                <span class="profilo-obbligatorio">*</span>
+                            {% endif %}
+                        </span>
                     </h2>
 
-                    <div class="auth-field profilo-opzioni-field">
+                    
+                    <!-- SELETTORE LINGUE -->
 
-                        <div class="profilo-checkbox-grid profilo-lingue">
+                    <div class="lingue-dropdown" id="lingue-dropdown">
+
+                        <button
+                            type="button"
+                            class="lingue-dropdown-trigger"
+                            id="lingue-dropdown-trigger"
+                            aria-expanded="false"
+                            aria-controls="lingue-dropdown-opzioni"
+                            aria-label="Seleziona le lingue parlate"
+                        >
+
+                            <span
+                                class="lingue-dropdown-selezionate"
+                                id="lingue-dropdown-selezionate"
+                            >
+                                Seleziona le lingue...
+                            </span>
+
+                            <span
+                                class="lingue-dropdown-freccia"
+                                aria-hidden="true"
+                            >
+                                ▾
+                            </span>
+
+                        </button>
+
+                        <div
+                            class="lingue-dropdown-opzioni lingue-js-chiuso"
+                            id="lingue-dropdown-opzioni"
+                        >
                             {{ form.lingue }}
                         </div>
 
-                        {% if form.lingue.errors %}
-                            <div class="auth-errors" role="alert">
-                                {{ form.lingue.errors }}
-                            </div>
-                        {% endif %}
-
                     </div>
+
+                    <p
+                        class="lingue-dropdown-aiuto"
+                        id="lingue-dropdown-aiuto"
+                        aria-live="polite"
+                    >
+                        0 di 4 lingue selezionate.
+                    </p>
+
+                    {% if form.lingue.errors %}
+                        <div class="auth-errors" role="alert">
+                            {{ form.lingue.errors }}
+                        </div>
+                    {% endif %}
+
 
                 </section>
 
@@ -351,9 +416,15 @@
 
                 <h2 class="profilo-sezione-titolo">
                     <span class="profilo-sezione-icona"
-                          aria-hidden="true">💕</span>
-                    <span>Cosa cerchi?</span>
+                        aria-hidden="true">💕</span>
+                    <span>
+                        Cosa cerchi?
+                        {% if form.cosa_cerca.field.required %}
+                            <span class="profilo-obbligatorio">*</span>
+                        {% endif %}
+                    </span>
                 </h2>
+
 
                 <div class="auth-field profilo-opzioni-field">
 
@@ -410,5 +481,134 @@
 </main>
 
 <script src="{% static 'js/gestione_immagini.js' %}?v=5" defer></script>
+
+
+<!-- GESTIONE MENU LINGUE -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const contenitore = document.getElementById('lingue-dropdown');
+    const trigger = document.getElementById('lingue-dropdown-trigger');
+    const opzioni = document.getElementById('lingue-dropdown-opzioni');
+    const selezionate = document.getElementById('lingue-dropdown-selezionate');
+    const aiuto = document.getElementById('lingue-dropdown-aiuto');
+
+    if (!contenitore || !trigger || !opzioni || !selezionate) {
+        return;
+    }
+
+    const checkbox = Array.from(
+        opzioni.querySelectorAll('input[type="checkbox"]')
+    );
+
+    const massimo = 4;
+
+    function nomeLingua(input) {
+        const label = input.closest('label');
+        return label ? label.textContent.trim() : input.value;
+    }
+
+    function impostaApertura(aperto) {
+        trigger.setAttribute('aria-expanded', String(aperto));
+        opzioni.classList.toggle('lingue-js-chiuso', !aperto);
+    }
+
+    function aggiornaSelezione() {
+
+        const attive = checkbox.filter(input => input.checked);
+
+        selezionate.replaceChildren();
+
+        if (attive.length === 0) {
+
+            const placeholder = document.createElement('span');
+            placeholder.className = 'lingue-dropdown-placeholder';
+            placeholder.textContent = 'Seleziona le lingue...';
+
+            selezionate.appendChild(placeholder);
+
+        } else {
+
+            attive.forEach(input => {
+
+                const tag = document.createElement('span');
+
+                tag.className = 'lingue-dropdown-tag';
+                tag.textContent = nomeLingua(input);
+
+                selezionate.appendChild(tag);
+
+            });
+
+        }
+
+        const limiteRaggiunto = attive.length >= massimo;
+
+        checkbox.forEach(input => {
+
+            const disabilita = limiteRaggiunto && !input.checked;
+            input.disabled = disabilita;
+
+            const label = input.closest('label');
+
+            if (label) {
+                label.classList.toggle(
+                    'lingue-disabilitata',
+                    disabilita
+                );
+            }
+
+        });
+
+        if (aiuto) {
+            aiuto.textContent =
+                attive.length + ' di ' + massimo +
+                ' lingue selezionate.';
+        }
+
+    }
+
+    impostaApertura(false);
+    aggiornaSelezione();
+
+    trigger.addEventListener('click', function () {
+
+        const aperto =
+            trigger.getAttribute('aria-expanded') === 'true';
+
+        impostaApertura(!aperto);
+
+    });
+
+    checkbox.forEach(input => {
+        input.addEventListener('change', aggiornaSelezione);
+    });
+
+    document.addEventListener('click', function (event) {
+
+        if (!contenitore.contains(event.target)) {
+            impostaApertura(false);
+        }
+
+    });
+
+    document.addEventListener('keydown', function (event) {
+
+        if (event.key === 'Escape') {
+
+            impostaApertura(false);
+
+            if (contenitore.contains(document.activeElement)) {
+                trigger.focus();
+            }
+
+        }
+
+    });
+
+});
+</script>
+
 
 {% endblock %}

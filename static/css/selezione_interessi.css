@@ -1,216 +1,518 @@
 
 /* ==========================================
-   FUORIRETE - BUBBLE CLOUD INTERESSI
+   FUORIRETE - SELEZIONE INTERESSI
+   DESIGN DEFINITIVO
 ========================================== */
 
-/* PAGINA */
+
+/* ==========================================
+   PAGINA E SFONDO
+========================================== */
+
+body:has(.interessi-pagina) {
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, 0.50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, 0.37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-attachment: fixed;
+}
 
 .interessi-pagina {
-    max-width: 1320px;
-    margin: 35px auto 70px;
-    padding: 0 24px;
-    color: #302823;
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: 1190px;
+
+    margin: 0 auto;
+    padding: 35px 24px 65px;
+
+    color: #181337;
     font-family: inherit;
 }
 
-/* INTESTAZIONE */
+.interessi-pagina *,
+.interessi-pagina *::before,
+.interessi-pagina *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   INTESTAZIONE
+========================================== */
+
+
+/* ==========================================
+   RITORNO AL PRIMO PASSAGGIO
+========================================== */
+
+.interessi-torna-profilo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    width: fit-content;
+    margin: 0 0 14px;
+
+    color: #ef4566;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.interessi-torna-profilo span {
+    font-size: 17px;
+    line-height: 1;
+}
+
+.interessi-torna-profilo:hover {
+    color: #c92b52;
+    text-decoration: underline;
+}
+
+.interessi-torna-profilo:focus-visible {
+    outline: 2px solid #7144ff;
+    outline-offset: 4px;
+    border-radius: 3px;
+}
+
+/* INDICATORE PASSAGGIO 1 DI 2 */
+
+.auth-page--creazione-profilo .creazione-profilo-fase {
+    display: table;
+
+    margin: 0 auto 14px;
+    padding: 7px 13px;
+
+    background: #eee5ff;
+    border: 1px solid #e2d4ff;
+    border-radius: 30px;
+
+    color: #6434df;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+    line-height: 1.4;
+}
+
 
 .interessi-intestazione {
-    text-align: left;
-    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+
+    align-items: center;
+    gap: 32px;
+
+    margin-bottom: 26px;
 }
+
+.interessi-intestazione-testo {
+    min-width: 0;
+}
+
+/* PASSAGGIO 2 DI 2 */
 
 .interessi-fase {
     display: inline-block;
+
     padding: 7px 13px;
+    margin-bottom: 14px;
+
+    background: #eee5ff;
+    border: 1px solid #e2d4ff;
     border-radius: 30px;
-    background: #fff0e9;
-    color: #fa5943;
+
+    color: #6434df;
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+}
+
+/* TITOLO */
+
+.interessi-titolo-contenitore {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
 }
 
 .interessi-intestazione h1 {
-    margin: 17px 0 12px;
+    position: relative;
+
+    margin: 0 0 16px;
+
+    color: #181337;
     font-size: 32px;
-    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -0.9px;
+    line-height: 1.25;
 }
+
+/* SOTTOLINEATURA CORALLO */
+
+.interessi-intestazione h1::after {
+    content: "";
+    position: absolute;
+
+    bottom: -7px;
+    left: 0;
+
+    width: 60px;
+    height: 4px;
+
+    background: #ff6055;
+    border-radius: 4px;
+}
+
+/* TRILLI DECORATIVI */
+
+.interessi-titolo-trilli {
+    position: absolute;
+
+    top: -10px;
+    right: -30px;
+
+    width: 30px;
+    height: 35px;
+
+    pointer-events: none;
+}
+
+.interessi-titolo-trilli span {
+    position: absolute;
+    display: block;
+
+    width: 4px;
+    height: 13px;
+
+    background: #ff6055;
+    border-radius: 10px;
+}
+
+.interessi-titolo-trilli span:nth-child(1) {
+    top: 0;
+    left: 6px;
+    transform: rotate(18deg);
+}
+
+.interessi-titolo-trilli span:nth-child(2) {
+    top: 10px;
+    left: 20px;
+    transform: rotate(48deg);
+}
+
+.interessi-titolo-trilli span:nth-child(3) {
+    top: 24px;
+    left: 24px;
+    height: 10px;
+    transform: rotate(70deg);
+}
+
+/* DESCRIZIONI */
 
 .interessi-intestazione p {
     max-width: 700px;
     margin: 0;
-    color: #8c7a70;
+
+    color: #625c83;
     font-size: 13px;
-    line-height: 1.8;
+    line-height: 1.65;
 }
 
 .interessi-intestazione .interessi-istruzioni {
     margin-top: 12px;
-    color: #fa5943;
-    font-weight: 600;
+
+    color: #ef4566;
+    font-weight: 700;
 }
 
-/* LAYOUT PRINCIPALE */
+
+/* ==========================================
+   RIQUADRO INFORMATIVO
+========================================== */
+
+.interessi-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+    padding: 16px 18px;
+
+    background: rgba(255, 255, 255, 0.78);
+
+    border: 1px solid #e3d7f7;
+    border-radius: 17px;
+
+    box-shadow:
+        0 5px 16px rgba(81, 59, 151, 0.06);
+}
+
+.interessi-info-icona {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 23px;
+
+    width: 23px;
+    height: 23px;
+
+    border: 1.5px solid #7144ff;
+    border-radius: 50%;
+
+    color: #7144ff;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.interessi-info p {
+    margin: 0;
+
+    color: #302758;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   LAYOUT PRINCIPALE
+========================================== */
 
 .cloud-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 290px;
-    gap: 28px;
-    align-items: stretch;
+
+    grid-template-columns: minmax(0, 1fr) 300px;
+
+    gap: 26px;
+    align-items: start;
 }
 
 .cloud-area {
-    min-width: 0;
-    min-height: 760px;
     position: relative;
     isolation: isolate;
+
+    min-width: 0;
+    min-height: 0;
 }
 
-/* DISPOSIZIONE ORGANICA DELLE BOLLE */
+
+/* ==========================================
+   GRIGLIA SFALSATA
+========================================== */
+
+/* ==========================================
+   GRIGLIA SFALSATA - BOLLE GRANDI
+========================================== */
 
 .cloud-griglia {
     display: grid;
+
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: 162px;
-    gap: 14px 8px;
+    grid-auto-rows: 158px;
+
     align-items: center;
     justify-items: center;
-    padding: 36px 18px;
+
+    gap: 8px 6px;
+    padding: 32px 8px 45px;
 }
 
 .cloud-cluster {
     position: relative;
+
     width: 136px;
     height: 136px;
     min-width: 0;
+
     z-index: 1;
+
     transition: opacity 0.2s ease;
 }
 
-/* PICCOLI SPOSTAMENTI PER EFFETTO CLOUD */
+/* COLONNE ALTERNATE A ZIG-ZAG */
 
 .cloud-cluster:nth-child(4n + 1) {
-    transform: translateY(12px);
+    transform: translateY(24px);
 }
 
 .cloud-cluster:nth-child(4n + 2) {
-    transform: translateY(-13px);
+    transform: translateY(-23px);
 }
 
 .cloud-cluster:nth-child(4n + 3) {
-    transform: translateY(8px);
+    transform: translateY(24px);
 }
 
 .cloud-cluster:nth-child(4n + 4) {
-    transform: translateY(-5px);
+    transform: translateY(-23px);
 }
 
-/* CERCHIO MACROCATEGORIA */
+
+/* ==========================================
+   BOLLE PRINCIPALI
+========================================== */
+
+/* ==========================================
+   BOLLE PRINCIPALI - COLORI DEFINITI
+========================================== */
 
 .cloud-macro {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: 8px;
 
     width: 100%;
     height: 100%;
     padding: 13px;
 
-    border: 1.5px solid #eadcd3;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #44342c;
+    background: #e9dcf8;
 
+    border: 2px solid #a48acb;
+    border-radius: 50%;
+
+    color: #181337;
     font: inherit;
     text-align: center;
+
+    box-shadow:
+        0 6px 16px rgba(48, 28, 95, 0.09);
+
     cursor: pointer;
 
-    box-shadow: 0 4px 15px rgba(80, 54, 40, 0.045);
-
     transition:
+        background-color 0.2s ease,
         border-color 0.2s ease,
-        background 0.2s ease,
         box-shadow 0.2s ease;
 }
 
-/* TONALITÀ PASTELLO ALTERNATE */
+/* ==========================================
+   PALETTE ALTERNATA
+========================================== */
+
+/* ROSA */
 
 .cloud-cluster:nth-child(6n + 1) .cloud-macro {
-    background: #fff5f0;
+    background: #f6d6e5;
+    border-color: #bc83a2;
 }
+
+/* LILLA */
 
 .cloud-cluster:nth-child(6n + 2) .cloud-macro {
-    background: #f5f1f9;
+    background: #e3d3f6;
+    border-color: #9877c5;
 }
+
+/* VERDE SALVIA */
 
 .cloud-cluster:nth-child(6n + 3) .cloud-macro {
-    background: #f4f7f1;
+    background: #d7e9dc;
+    border-color: #82a58b;
 }
+
+/* AZZURRO */
 
 .cloud-cluster:nth-child(6n + 4) .cloud-macro {
-    background: #fff8ee;
+    background: #d5e5f7;
+    border-color: #7f9fc9;
 }
+
+/* MENTA */
 
 .cloud-cluster:nth-child(6n + 5) .cloud-macro {
-    background: #f1f6fa;
+    background: #d0ebe7;
+    border-color: #78aaa6;
 }
+
+/* ROSA CORALLO */
 
 .cloud-cluster:nth-child(6n + 6) .cloud-macro {
-    background: #fff1f4;
+    background: #f8ddd9;
+    border-color: #c98e8b;
 }
 
-.cloud-macro:hover {
-    border-color: #fa5943;
-    box-shadow: 0 6px 19px rgba(250, 89, 67, 0.10);
-}
-
-.cloud-macro:focus-visible,
-.cloud-satellite input:focus-visible
-    + .cloud-satellite-contenuto {
-    outline: 3px solid #fa5943;
-    outline-offset: 4px;
-}
+/* ==========================================
+   CONTENUTO DELLE BOLLE
+========================================== */
 
 .cloud-macro-simbolo {
-    font-size: 23px;
+    font-size: 26px;
     line-height: 1;
-    color: #fa5943;
 }
 
 .cloud-macro-nome {
     font-size: 12px;
-    font-weight: 650;
+    font-weight: 750;
     line-height: 1.35;
     text-transform: none;
+    overflow-wrap: anywhere;
 }
+
+/* HOVER */
+
+.cloud-macro:hover {
+    border-color: #7144ff;
+
+    box-shadow:
+        0 8px 22px rgba(113, 68, 255, 0.19);
+}
+
+/* CHECK */
 
 .cloud-macro-check {
     display: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #fa5943;
-    font-size: 13px;
-    font-weight: 700;
+
     align-items: center;
     justify-content: center;
+
+    width: 20px;
+    height: 20px;
+
+    background: #ffffff;
+    border-radius: 50%;
+
+    color: #6035ec;
+    font-size: 13px;
+    font-weight: 800;
 }
+
+/* ==========================================
+   STATO DELLE CATEGORIE
+========================================== */
 
 /* MACROCATEGORIA SELEZIONATA */
 
-.cloud-cluster:has(.cloud-input-macro:checked) .cloud-macro {
-    background: #fa5943;
-    border-color: #fa5943;
-    color: #ffffff;
-}
-
 .cloud-cluster:has(.cloud-input-macro:checked)
-.cloud-macro-simbolo {
+.cloud-macro {
+    background: #7144ff;
+    border-color: #7144ff;
     color: #ffffff;
+
+    box-shadow:
+        0 7px 21px rgba(113, 68, 255, 0.22);
 }
 
 .cloud-cluster:has(.cloud-input-macro:checked)
@@ -218,12 +520,14 @@
     display: flex;
 }
 
-/* PRESENZA DI SOTTOINTERESSI SELEZIONATI */
+/* SOTTOINTERESSI SELEZIONATI */
 
 .cloud-cluster:has(.cloud-input-sotto:checked)
 .cloud-macro {
-    border-color: #fa5943;
-    box-shadow: 0 0 0 3px rgba(250, 89, 67, 0.10);
+    border: 2px solid #7144ff;
+
+    box-shadow:
+        0 0 0 3px rgba(113, 68, 255, 0.12);
 }
 
 /* CATEGORIA APERTA */
@@ -233,24 +537,31 @@
 }
 
 .cloud-cluster.is-open .cloud-macro {
-    border-color: #fa5943;
-    box-shadow: 0 8px 28px rgba(250, 89, 67, 0.15);
+    border-color: #7144ff;
+
+    box-shadow:
+        0 8px 24px rgba(113, 68, 255, 0.18);
 }
 
-/* ALTRE MACROCATEGORIE ATTENUATE */
+/* ALTRE CATEGORIE ATTENUATE */
 
 .cloud-griglia:has(.cloud-cluster.is-open)
 .cloud-cluster:not(.is-open) {
-    opacity: 0.28;
+    opacity: 0.22;
     pointer-events: none;
 }
 
-/* SATELLITI */
+
+/* ==========================================
+   SATELLITI - SOTTOINTERESSI
+========================================== */
 
 .cloud-satelliti {
     display: none;
+
     position: absolute;
     inset: 0;
+
     overflow: visible;
     pointer-events: none;
 }
@@ -261,77 +572,91 @@
 
 .cloud-satellite {
     position: absolute;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 94px;
-    height: 94px;
+    width: 88px;
+    height: 88px;
 
     transform: translate(-50%, -50%);
+
     z-index: 55;
+
     pointer-events: auto;
     cursor: pointer;
 }
 
 .cloud-satellite input {
     position: absolute;
+
     width: 1px;
     height: 1px;
+
     opacity: 0;
 }
 
 .cloud-satellite-contenuto {
-    position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: 4px;
 
     width: 100%;
     height: 100%;
     padding: 9px;
 
-    border-radius: 50%;
-    border: 1.5px solid #e9dcd3;
     background: #ffffff;
-    color: #786257;
+    border: 1.5px solid #dcd0f0;
+    border-radius: 50%;
 
+    color: #302758;
     text-align: center;
-    box-sizing: border-box;
-    box-shadow: 0 4px 15px rgba(50, 30, 20, 0.09);
+
+    box-shadow:
+        0 5px 16px rgba(81, 59, 151, 0.12);
 
     transition:
-        background 0.2s ease,
+        background-color 0.2s ease,
         border-color 0.2s ease,
         color 0.2s ease;
 }
 
 .cloud-satellite-nome {
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1.25;
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.3;
     overflow-wrap: anywhere;
 }
 
 .cloud-satellite-check {
     display: none;
+
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
 }
 
-.cloud-satellite:hover .cloud-satellite-contenuto {
-    border-color: #fa5943;
-    background: #fff3ed;
+/* HOVER SOTTOINTERESSE */
+
+.cloud-satellite:hover
+.cloud-satellite-contenuto {
+    background: #f2eaff;
+    border-color: #7144ff;
 }
+
+/* SOTTOINTERESSE SELEZIONATO */
 
 .cloud-satellite input:checked
 + .cloud-satellite-contenuto {
-    border-color: #fa5943;
-    background: #fa5943;
+    background: #7144ff;
+    border-color: #7144ff;
     color: #ffffff;
+
+    box-shadow:
+        0 7px 18px rgba(113, 68, 255, 0.22);
 }
 
 .cloud-satellite input:checked
@@ -340,7 +665,27 @@
     display: block;
 }
 
-/* RIEPILOGO LATERALE */
+/* ACCESSIBILITÀ */
+
+.cloud-macro:focus-visible,
+.cloud-satellite input:focus-visible
++ .cloud-satellite-contenuto {
+    outline: 3px solid #7144ff;
+    outline-offset: 4px;
+}
+
+/* ANIMAZIONI GESTITE DAL JAVASCRIPT */
+
+.cloud-cluster .cloud-satellite,
+.cloud-cluster.is-open .cloud-satellite {
+    opacity: 1;
+    animation: none;
+}
+
+
+/* ==========================================
+   SIDEBAR - RIEPILOGO
+========================================== */
 
 .interessi-riepilogo {
     position: sticky;
@@ -349,145 +694,198 @@
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
 
-    min-height: 570px;
-    padding: 24px;
+    gap: 17px;
 
-    border: 1px solid #eadfd8;
+    min-height: 490px;
+    padding: 23px;
+
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #e5dbf7;
     border-radius: 22px;
-    background: #ffffff;
-    box-shadow: 0 5px 25px rgba(55, 35, 25, 0.035);
+
+    box-shadow:
+        0 9px 28px rgba(81, 59, 151, 0.10);
 }
+
+/* INTESTAZIONE RIEPILOGO */
 
 .interessi-riepilogo-testa {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-    gap: 12px;
+    justify-content: space-between;
 
-    padding-bottom: 19px;
-    border-bottom: 1px solid #eee5df;
+    gap: 12px;
+    padding-bottom: 17px;
+
+    border-bottom: 1px solid #eee7f5;
 }
 
 .interessi-riepilogo-testa h2 {
     margin: 0 0 7px;
-    font-size: 19px;
+
+    color: #181337;
+    font-size: 18px;
+    font-weight: 800;
 }
 
 .interessi-riepilogo-testa p {
     margin: 0;
-    color: #9a8277;
+
+    color: #777092;
     font-size: 11px;
     line-height: 1.5;
 }
 
+/* CONTATORE */
+
 #interessi-contatore {
     flex-shrink: 0;
-    color: #fa5943;
+
+    color: #7144ff;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
 }
 
-/* BADGE SELEZIONATI */
+
+/* ==========================================
+   INTERESSI SELEZIONATI
+========================================== */
 
 .interessi-scelti {
     display: flex;
     align-content: flex-start;
     flex-wrap: wrap;
+
     gap: 8px;
-    min-height: 80px;
+
+    min-height: 65px;
 }
 
 .interessi-tag {
     display: inline-flex;
     align-items: center;
+
     gap: 7px;
+    padding: 8px 11px;
 
-    padding: 9px 11px;
-    border-radius: 24px;
-    background: #fff0e9;
-    color: #bf4b38;
+    background: #f2eaff;
+    border-radius: 999px;
 
+    color: #5535a4;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 650;
 }
 
 .interessi-tag button {
     padding: 0;
-    border: none;
+
     background: transparent;
+    border: none;
+
     color: inherit;
     font-size: 16px;
     line-height: 1;
+
     cursor: pointer;
 }
 
 .interessi-vuoto {
-    color: #a58e80;
+    color: #777092;
     font-size: 12px;
     line-height: 1.5;
 }
 
-/* TESTO DECORATIVO */
+
+/* ==========================================
+   NOTA DECORATIVA
+========================================== */
 
 .cloud-riepilogo-nota {
     margin-top: auto;
-    padding: 20px 12px;
+    padding: 10px 8px;
+
+    color: #625c83;
     text-align: center;
-    color: #9d8376;
 }
 
 .cloud-riepilogo-nota > span {
     display: block;
-    margin-bottom: 16px;
-    font-size: 34px;
-    color: #f5b9a9;
+
+    margin-bottom: 10px;
+
+    color: #ff7164;
+    font-size: 27px;
 }
 
 .cloud-riepilogo-nota p {
     margin: 0;
-    font-size: 12px;
-    line-height: 1.8;
+
+    font-size: 11px;
+    line-height: 1.7;
 }
 
-/* MESSAGGI DI VALIDAZIONE */
+
+/* ==========================================
+   ERRORI E VALIDAZIONE
+========================================== */
 
 .interessi-messaggio {
     min-height: 18px;
     margin: 0;
-    color: #c43636;
+
+    color: #bc294b;
     font-size: 12px;
 }
 
 .interessi-errori {
-    margin: 15px 0 25px;
+    margin: 12px 0 20px;
     padding: 12px;
-    border: 1px solid #f2bdb5;
+
+    background: #fff0f3;
+    border: 1px solid #ffcbd5;
     border-radius: 10px;
-    background: #fff1ee;
-    color: #b9392e;
+
+    color: #ad2949;
     font-size: 12px;
 }
 
-/* PULSANTE CONFERMA */
+
+/* ==========================================
+   PULSANTE CONFERMA
+========================================== */
 
 .interessi-conferma {
     display: block;
+
     width: 100%;
-    padding: 15px 12px;
+    min-height: 46px;
+    padding: 12px;
+
+    background: #7144ff;
     border: none;
-    border-radius: 13px;
-    background: #fa5943;
+    border-radius: 12px;
+
     color: #ffffff;
     font: inherit;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
+
+    box-shadow:
+        0 6px 16px rgba(113, 68, 255, 0.20);
+
     cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .interessi-conferma:hover {
-    background: #e64b36;
+    background: #6035ec;
+
+    box-shadow:
+        0 8px 20px rgba(113, 68, 255, 0.25);
 }
 
 .interessi-conferma:disabled {
@@ -495,14 +893,22 @@
     cursor: not-allowed;
 }
 
-/* INDIETRO COMMUNITY */
+.interessi-conferma:focus-visible {
+    outline: 3px solid #ff6055;
+    outline-offset: 3px;
+}
+
+
+/* EVENTUALE COLLEGAMENTO INDIETRO */
 
 .interessi-community-indietro {
     display: inline-block;
-    margin-bottom: 20px;
-    color: #fa5943;
+
+    margin-bottom: 18px;
+
+    color: #ef4566;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 650;
     text-decoration: none;
 }
 
@@ -510,78 +916,137 @@
     text-decoration: underline;
 }
 
-/* TABLET */
+
+/* ==========================================
+   RESPONSIVE TABLET
+========================================== */
+
+/* ==========================================
+   RESPONSIVE TABLET
+========================================== */
 
 @media (max-width: 1050px) {
 
     .cloud-layout {
-        grid-template-columns: minmax(0, 1fr) 260px;
-        gap: 15px;
+        grid-template-columns: minmax(0, 1fr) 270px;
+        gap: 16px;
     }
 
     .cloud-griglia {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-auto-rows: 155px;
-        padding: 35px 10px;
+        grid-auto-rows: 154px;
+
+        gap: 12px 5px;
+        padding: 38px 6px 48px;
     }
 
     .cloud-cluster {
-        width: 125px;
-        height: 125px;
+        width: 126px;
+        height: 126px;
+    }
+
+    .cloud-cluster:nth-child(n) {
+        transform: none;
+    }
+
+    .cloud-cluster:nth-child(3n + 1) {
+        transform: translateY(20px);
+    }
+
+    .cloud-cluster:nth-child(3n + 2) {
+        transform: translateY(-20px);
+    }
+
+    .cloud-cluster:nth-child(3n + 3) {
+        transform: translateY(20px);
     }
 
     .interessi-riepilogo {
-        padding: 18px;
+        padding: 19px;
     }
 }
 
-/* MOBILE */
+
+/* ==========================================
+   RESPONSIVE MOBILE
+========================================== */
 
 @media (max-width: 720px) {
 
     .interessi-pagina {
-        padding: 0 14px;
-        margin-top: 20px;
+        padding: 27px 16px 48px;
+    }
+
+    .interessi-intestazione {
+        grid-template-columns: 1fr;
+        gap: 21px;
+        margin-bottom: 22px;
     }
 
     .interessi-intestazione h1 {
-        font-size: 26px;
+        font-size: 27px;
+    }
+
+    .interessi-info {
+        padding: 14px;
     }
 
     .cloud-layout {
         display: flex;
         flex-direction: column;
+        gap: 20px;
     }
 
     .cloud-area {
-        min-height: auto;
+        width: 100%;
+        min-height: 0;
     }
 
     .cloud-griglia {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-auto-rows: 145px;
-        gap: 14px 5px;
-        padding: 25px 8px;
+        grid-auto-rows: 150px;
+
+        gap: 12px 5px;
+        padding: 30px 6px 40px;
     }
 
     .cloud-cluster {
-        width: 122px;
-        height: 122px;
+        width: 120px;
+        height: 120px;
+    }
+
+    .cloud-cluster:nth-child(n) {
+        transform: none;
+    }
+
+    .cloud-cluster:nth-child(2n + 1) {
+        transform: translateY(17px);
+    }
+
+    .cloud-cluster:nth-child(2n + 2) {
+        transform: translateY(-17px);
     }
 
     .cloud-macro-nome {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .cloud-satellite {
-        width: 94px;
-        height: 94px;
+        width: 78px;
+        height: 78px;
+    }
+
+    .cloud-satellite-nome {
+        font-size: 9px;
     }
 
     .interessi-riepilogo {
         position: static;
+
+        width: 100%;
         min-height: 0;
-        margin-top: 20px;
+        margin-top: 15px;
+        padding: 20px;
     }
 
     .cloud-riepilogo-nota {
@@ -591,135 +1056,16 @@
 
 
 /* ==========================================
-   SATELLITI - ANIMAZIONE GESTITA DA JAVASCRIPT
+   ACCESSIBILITÀ
 ========================================== */
 
-.cloud-cluster .cloud-satellite {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-    animation: none;
-}
+@media (prefers-reduced-motion: reduce) {
 
-.cloud-cluster.is-open .cloud-satellite {
-    opacity: 1;
-    animation: none;
-}
-
-/* ==========================================
-   RIQUADRO INFORMATIVO
-========================================== */
-
-.interessi-intestazione {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 360px;
-    gap: 34px;
-    align-items: start;
-}
-
-.interessi-info {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-
-    padding: 18px 20px;
-
-    background: #edf7f5;
-    border: 1px solid #cfe8e3;
-    border-radius: 18px;
-
-    box-sizing: border-box;
-}
-
-.interessi-info-icona {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 24px;
-    height: 24px;
-    flex: 0 0 24px;
-
-    margin-top: 1px;
-
-    border: 2px solid #0b6a74;
-    border-radius: 50%;
-
-    color: #0b6a74;
-    font-size: 14px;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.interessi-info p {
-    margin: 0;
-    color: #0b6a74;
-    font-size: 13px;
-    line-height: 1.6;
-    font-weight: 600;
-}
-
-@media (max-width: 900px) {
-    .interessi-intestazione {
-        grid-template-columns: 1fr;
+    .cloud-macro,
+    .cloud-cluster,
+    .cloud-satellite-contenuto,
+    .interessi-conferma {
+        transition: none;
     }
 
-    .interessi-info {
-        max-width: 100%;
-    }
-}
-
-/* ==========================================
-   DIFFERENZA VISIVA:
-   MACRO-CATEGORIE VS SOTTOINTERESSI
-========================================== */
-
-/* CERCHI PRINCIPALI / GENERALI */
-
-.cloud-macro {
-    background: #fff8f4;
-    border: 1px solid #eadfd9;
-    box-shadow: 0 5px 14px rgba(40, 30, 20, 0.04);
-}
-
-/* Quando selezionata la categoria generale */
-.cloud-cluster:has(.cloud-input-macro:checked) .cloud-macro {
-    background: #ff5a54;
-    border-color: #ff5a54;
-    color: #ffffff;
-}
-
-/* Quando è aperta ma non selezionata */
-.cloud-cluster.is-open .cloud-macro:not(:hover) {
-    border-color: #ffb8ac;
-    box-shadow: 0 8px 20px rgba(250, 89, 67, 0.10);
-}
-
-
-/* SOTTOCATEGORIE / SPECIFICI */
-
-.cloud-satellite-contenuto {
-    background: #ffffff;
-    border: 1px solid #e8ddd7;
-    color: #70584f;
-    box-shadow: 0 6px 16px rgba(40, 30, 20, 0.05);
-}
-
-/* Hover dei sottointeressi */
-.cloud-satellite:hover .cloud-satellite-contenuto {
-    background: #fff4ef;
-    border-color: #ffb3a6;
-    color: #5f4a42;
-}
-
-/* Sottointeresse selezionato */
-.cloud-satellite input:checked + .cloud-satellite-contenuto {
-    background: #0f6e79;
-    border-color: #0f6e79;
-    color: #ffffff;
-    box-shadow: 0 8px 20px rgba(15, 110, 121, 0.20);
-}
-
-/* Check dei sottointeressi selezionati */
-.cloud-satellite-check {
-    color: inherit;
 }

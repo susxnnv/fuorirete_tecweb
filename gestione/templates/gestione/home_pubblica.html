@@ -1,56 +1,43 @@
+
 {% extends 'base.html' %}
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home_pubblica.css' %}?v=2">
+<link rel="stylesheet" href="{% static 'css/home_pubblica.css' %}?v=3">
 {% endblock %}
 
 {% block content %}
 
 <div class="home-pubblica">
 
-    <!-- DECORAZIONI DELLO SFONDO -->
-    <div class="home-decorazione home-decorazione-alta"
-         aria-hidden="true"></div>
-
-    <div class="home-decorazione home-decorazione-bassa"
-         aria-hidden="true"></div>
-
     <div class="home-pubblica-contenuto">
 
-        <!-- PRESENTAZIONE DELLA PIATTAFORMA -->
+        <!-- PRESENTAZIONE -->
 
         <section class="presentazione">
 
+            <!-- LOGO -->
+
             <div class="home-logo">
 
-                <!-- CUORE -->
-                <svg class="home-logo-cuore"
-                     viewBox="0 0 64 64"
-                     fill="none"
-                     aria-hidden="true">
-
+                <svg
+                    class="home-logo-cuore"
+                    viewBox="0 0 64 64"
+                    fill="none"
+                    aria-hidden="true"
+                >
                     <path
-                        d="M32 55
-                           C27 50 7 34 7 20
-                           C7 10 14 6 22 6
-                           C27 6 30 9 32 13
-                           C34 9 37 6 42 6
-                           C50 6 57 10 57 20
-                           C57 34 37 50 32 55Z"
+                        d="M32 55 C27 50 7 34 7 20 C7 10 14 6 22 6 C27 6 30 9 32 13 C34 9 37 6 42 6 C50 6 57 10 57 20 C57 34 37 50 32 55Z"
                         stroke="currentColor"
                         stroke-width="6"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
-
                 </svg>
 
                 <h1>FuoriRete</h1>
 
-                <!-- TRILLI DEL LOGO -->
-                <span class="home-logo-trilli"
-                      aria-hidden="true">
+                <span class="home-logo-trilli" aria-hidden="true">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -58,16 +45,23 @@
 
             </div>
 
+
+            <!-- SOTTOTITOLO -->
+
             <p class="presentazione-testo">
                 Trova persone con i tuoi stessi interessi
-                e scopri nuove community
-                <span class="presentazione-esclamativo">!</span>
+                e scopri nuove community<span class="presentazione-esclamativo">!</span>
             </p>
+
+
+            <!-- ACCESSO E REGISTRAZIONE -->
 
             <div class="presentazione-azioni">
 
-                <a href="{% url 'login' %}"
-                   class="pulsante-principale">
+                <a
+                    href="{% url 'login' %}"
+                    class="pulsante-principale"
+                >
                     Accedi
                 </a>
 
@@ -93,20 +87,16 @@
 
                     <div class="community-titolo-contenitore">
 
-                        <!-- TRILLI -->
-                        <span class="community-titolo-trilli"
-                              aria-hidden="true">
+                        <span
+                            class="community-titolo-trilli"
+                            aria-hidden="true"
+                        >
                             <span></span>
                             <span></span>
                             <span></span>
                         </span>
 
-                        <h2>
-                            Scopri le
-                            <span class="community-titolo-sottolineato">
-                                community
-                            </span>
-                        </h2>
+                        <h2>Scopri le community</h2>
 
                     </div>
 
@@ -129,7 +119,7 @@
             </div>
 
 
-            <!-- CAROSELLO COMMUNITY -->
+            <!-- CAROSELLO -->
 
             <div class="community-contenitore">
 
@@ -158,8 +148,10 @@
 
                                 {% else %}
 
-                                    <span class="community-immagine-placeholder"
-                                          aria-hidden="true">
+                                    <span
+                                        class="community-immagine-placeholder"
+                                        aria-hidden="true"
+                                    >
                                         ♧
                                     </span>
 
@@ -199,6 +191,7 @@
                                     {{ gruppo.descrizione|truncatewords:18 }}
                                 </p>
 
+
                                 <!-- VALUTAZIONE -->
 
                                 <div class="community-card-valutazione">
@@ -232,12 +225,9 @@
 
                 {% else %}
 
-                    <!-- NESSUNA COMMUNITY -->
-
                     <div class="community-vuote">
 
-                        <div class="community-icona"
-                             aria-hidden="true">
+                        <div class="community-icona" aria-hidden="true">
                             ♧
                         </div>
 
@@ -259,6 +249,126 @@
     </div>
 
 </div>
+
+
+<!-- FOOTER PUBBLICO -->
+
+<footer class="home-pubblica-footer">
+
+    <div class="home-pubblica-footer-contenuto">
+
+        <!-- LOGO -->
+
+        <div class="home-pubblica-footer-logo">
+            <span aria-hidden="true">♡</span>
+            <strong>FuoriRete</strong>
+        </div>
+
+
+        <!-- SLOGAN -->
+
+        <p class="home-pubblica-footer-slogan">
+            Persone, passioni, community.
+        </p>
+
+
+        <!-- STATISTICHE GENERALI -->
+
+        <div class="home-pubblica-footer-statistiche">
+
+            <!-- PERSONE -->
+
+            <div class="home-pubblica-footer-statistica">
+
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle
+                        cx="12" cy="7" r="4"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+                    <path
+                        d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+                </svg>
+
+                <strong>{{ totale_utenti|default:"—" }}</strong>
+                <span>Persone</span>
+
+            </div>
+
+
+            <!-- COMMUNITY -->
+
+            <div class="home-pubblica-footer-statistica">
+
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+
+                    <rect
+                        x="3" y="5" width="18" height="16" rx="3"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M7 2v6M17 2v6M3 10h18"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M12 11.5l1.5 3 3.3.5-2.4 2.3.6 3.2-3-1.6-3 1.6.6-3.2-2.4-2.3 3.3-.5Z"
+                        fill="currentColor"
+                    />
+
+                </svg>
+
+                <strong>{{ totale_community|default:"—" }}</strong>
+                <span>Community</span>
+
+            </div>
+
+
+            <!-- EVENTI -->
+
+            <div class="home-pubblica-footer-statistica">
+
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+
+                    <rect
+                        x="3" y="5" width="18" height="16" rx="3"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M7 2v6M17 2v6M3 10h18"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <rect x="7" y="13" width="2.5" height="2.5" rx=".5" fill="currentColor"/>
+                    <rect x="11" y="13" width="2.5" height="2.5" rx=".5" fill="currentColor"/>
+                    <rect x="15" y="13" width="2.5" height="2.5" rx=".5" fill="currentColor"/>
+                    <rect x="7" y="17" width="2.5" height="2.5" rx=".5" fill="currentColor"/>
+                    <rect x="11" y="17" width="2.5" height="2.5" rx=".5" fill="currentColor"/>
+
+                </svg>
+
+                <strong>{{ totale_eventi|default:"—" }}</strong>
+                <span>Eventi totali</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
 
 
 <!-- APERTURA DEL DETTAGLIO COMMUNITY -->

@@ -17,7 +17,6 @@
         id="popup-match"
         class="match-overlay"
     >
-
         <section
             class="match-popup"
             role="dialog"
@@ -39,9 +38,9 @@
             </button>
 
 
-            <!-- ICONA -->
+            <!-- ICONA MATCH -->
 
-            <div class="match-icona">
+            <div class="match-icona" aria-hidden="true">
                 ♡
             </div>
 
@@ -52,27 +51,17 @@
                 È un Match!
             </h2>
 
-            <p id="match-descrizione" class="match-descrizione">
+
+            <!-- DESCRIZIONE -->
+
+            <p
+                id="match-descrizione"
+                class="match-descrizione"
+            >
                 Tu e
                 <strong>{{ match_recente.nome }}</strong>
                 vi siete messi Like a vicenda!
             </p>
-
-
-            <!-- MESSAGGIO -->
-
-            <div class="match-messaggio">
-
-                <span class="match-messaggio-icona">
-                    ♡
-                </span>
-
-                <p>
-                    Avete mostrato interesse reciproco.
-                    Adesso potete iniziare a conoscervi!
-                </p>
-
-            </div>
 
 
             <!-- AZIONI -->
@@ -83,22 +72,21 @@
                     href="{% url 'chat_privata' match_recente.profilo_id %}?origine=persone"
                     class="match-apri-chat"
                 >
-                    Apri la chat →
+                    Apri la chat
                 </a>
 
                 <a
                     href="{% url 'dettaglio_persona' match_recente.profilo_id %}?origine=persone"
                     class="match-continua"
                 >
-                    Visualizza profilo →
+                    Visualizza profilo
                 </a>
-
 
             </div>
 
         </section>
-
     </div>
+
 
     
 {% if match_recente %}
@@ -207,24 +195,9 @@ document.addEventListener('DOMContentLoaded', function () {
     <section class="persone-intestazione">
 
         <div class="persone-intestazione-testo">
-
         
         <h1>
             Persone
-
-            <svg
-                class="persone-titolo-sottolineatura"
-                viewBox="0 0 110 12"
-                fill="none"
-                aria-hidden="true"
-            >
-                <path
-                    d="M3 6 Q55 11 107 4"
-                    stroke="#007d83"
-                    stroke-width="6"
-                    stroke-linecap="round"
-                />
-            </svg>
 
             <svg
                 class="persone-titolo-tratti"
@@ -361,6 +334,50 @@ document.addEventListener('DOMContentLoaded', function () {
                             <span class="persone-tag-interesse">
 
                                 {% if interesse.padre %}
+                                    {% with categoria=interesse.padre.nome|lower %}
+                                        {% if categoria == 'animali' %}🐶
+                                        {% elif categoria == 'arte e creatività' %}🎨
+                                        {% elif categoria == 'cibo e gastronomia' %}🍔
+                                        {% elif categoria == 'cinema' %}🎬
+                                        {% elif categoria == 'eventi' %}🗓️
+                                        {% elif categoria == 'fitness e benessere' %}💪
+                                        {% elif categoria == 'giochi' %}🎮
+                                        {% elif categoria == 'moda e stile' %}👗
+                                        {% elif categoria == 'motori' %}🚗
+                                        {% elif categoria == 'musica' %}🎵
+                                        {% elif categoria == 'natura' %}🌱
+                                        {% elif categoria == 'scienza e conoscenza' %}📚
+                                        {% elif categoria == 'socialità' %}👥
+                                        {% elif categoria == 'sport' %}⚽
+                                        {% elif categoria == 'viaggi' %}✈️
+                                        {% elif categoria == 'volontariato' %}🤝
+                                        {% else %}✨
+                                        {% endif %}
+                                    {% endwith %}
+                                {% else %}
+                                    {% with categoria=interesse.nome|lower %}
+                                        {% if categoria == 'animali' %}🐶
+                                        {% elif categoria == 'arte e creatività' %}🎨
+                                        {% elif categoria == 'cibo e gastronomia' %}🍔
+                                        {% elif categoria == 'cinema' %}🎬
+                                        {% elif categoria == 'eventi' %}🗓️
+                                        {% elif categoria == 'fitness e benessere' %}💪
+                                        {% elif categoria == 'giochi' %}🎮
+                                        {% elif categoria == 'moda e stile' %}👗
+                                        {% elif categoria == 'motori' %}🚗
+                                        {% elif categoria == 'musica' %}🎵
+                                        {% elif categoria == 'natura' %}🌱
+                                        {% elif categoria == 'scienza e conoscenza' %}📚
+                                        {% elif categoria == 'socialità' %}👥
+                                        {% elif categoria == 'sport' %}⚽
+                                        {% elif categoria == 'viaggi' %}✈️
+                                        {% elif categoria == 'volontariato' %}🤝
+                                        {% else %}✨
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endif %}
+
+                                {% if interesse.padre %}
                                     {{ interesse.padre.nome|lower|capfirst }} ·
                                 {% endif %}
 
@@ -370,10 +387,10 @@ document.addEventListener('DOMContentLoaded', function () {
                                     {{ interesse.nome|lower|capfirst }}
                                 {% endif %}
 
-
                             </span>
 
                         {% empty %}
+
 
                             <span class="persone-testo-secondario">
                                 Nessun interesse.
@@ -859,19 +876,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 <h3 class="persone-filtri-titolo-interessi">
                     Interessi
-
-                    <svg
-                        viewBox="0 0 110 12"
-                        fill="none"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M3 6 Q55 11 107 4"
-                            stroke="#007d83"
-                            stroke-width="4"
-                            stroke-linecap="round"
-                        />
-                    </svg>
                 </h3>
 
                 <p class="filtro-interessi-descrizione">

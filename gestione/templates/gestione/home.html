@@ -10,15 +10,20 @@
     <section class="home-benvenuto">
 
         <p class="home-etichetta">
+
             <span class="home-tratti" aria-hidden="true">
                 <svg viewBox="0 0 42 42" fill="none">
-                    <path d="M12 4 L8 15 M27 9 L18 17 M36 25 L24 26"
-                          stroke="currentColor"
-                          stroke-width="5"
-                          stroke-linecap="round"/>
+                    <path
+                        d="M12 4 L8 15 M27 9 L18 17 M36 25 L24 26"
+                        stroke="currentColor"
+                        stroke-width="5"
+                        stroke-linecap="round"
+                    />
                 </svg>
             </span>
+
             Bentornata su FuoriRete
+
         </p>
 
         <h1>
@@ -42,45 +47,58 @@
 
         <!-- PERSONE -->
 
-        <a href="{% url 'persone' %}"
-           class="home-riquadro home-riquadro-persone">
+        <a
+            href="{% url 'persone' %}"
+            class="home-riquadro home-riquadro-persone"
+        >
 
-            <span class="home-icona" aria-hidden="true">
+            <span class="home-icona home-icona-persone" aria-hidden="true">
+
                 <svg viewBox="0 0 100 90" fill="none">
 
-                    <!-- Prima persona -->
-                    <circle cx="32" cy="30" r="13"
-                            stroke="#007d83"
+                    <circle cx="32" cy="29" r="13"
+                            stroke="#7855b9"
                             stroke-width="4"/>
 
-                    <path d="M9 76V67C9 53 19 46 32 46C45 46 55 53 55 67"
-                          stroke="#007d83"
-                          stroke-width="4"
-                          stroke-linecap="round"/>
+                    <path
+                        d="M9 76V67C9 53 19 46 32 46C45 46 55 53 55 67"
+                        stroke="#7855b9"
+                        stroke-width="4"
+                        stroke-linecap="round"
+                    />
 
-                    <!-- Seconda persona -->
-                    <circle cx="69" cy="30" r="13"
-                            stroke="#8cbfbe"
+                    <circle cx="69" cy="29" r="13"
+                            stroke="#7855b9"
                             stroke-width="4"/>
 
-                    <path d="M48 59C52 50 60 46 69 46C82 46 92 53 92 67V76"
-                          stroke="#8cbfbe"
-                          stroke-width="4"
-                          stroke-linecap="round"/>
+                    <path
+                        d="M48 59C52 50 60 46 69 46C82 46 92 53 92 67V76"
+                        stroke="#7855b9"
+                        stroke-width="4"
+                        stroke-linecap="round"
+                    />
 
-                    <!-- Cuore -->
-                    <path d="M50 80L35 65C26 56 39 44 50 56C61 44 74 56 65 65L50 80Z"
-                          fill="#fffdfc"
-                          stroke="#ff8071"
-                          stroke-width="4"
-                          stroke-linejoin="round"/>
+                    <path
+                        d="M50 80L35 65C26 56 39 44 50 56C61 44 74 56 65 65L50 80Z"
+                        fill="#fff6f7"
+                        stroke="#ff675d"
+                        stroke-width="4"
+                        stroke-linejoin="round"
+                    />
 
                 </svg>
+
             </span>
 
             <div class="home-riquadro-testo">
+
                 <h2>Persone</h2>
-                <p>Scopri profili compatibili con i tuoi interessi!</p>
+
+                <p>
+                    Scopri profili compatibili<br>
+                    con i tuoi interessi!
+                </p>
+
             </div>
 
         </a>
@@ -88,47 +106,209 @@
 
         <!-- COMMUNITY -->
 
-        <a href="{% url 'community' %}"
-           class="home-riquadro home-riquadro-community">
+        <div class="home-community-contenitore">
 
-            <span class="home-icona" aria-hidden="true">
-                <svg viewBox="0 0 100 90" fill="none">
-
-                    <!-- Calendario -->
-                    <rect x="17" y="17"
-                          width="66" height="63"
-                          rx="12"
-                          stroke="#007d83"
-                          stroke-width="4"/>
-
-                    <path d="M17 38H83"
-                          stroke="#007d83"
-                          stroke-width="4"/>
-
-                    <path d="M35 9V25M65 9V25"
-                          stroke="#8cbfbe"
-                          stroke-width="5"
-                          stroke-linecap="round"/>
-
-                    <!-- Stella -->
-                    <path d="M50 47L55 57L66 59L58 67L60 78L50 72L40 78L42 67L34 59L45 57Z"
-                          fill="#ffece8"
-                          stroke="#ff8071"
-                          stroke-width="3.5"
-                          stroke-linejoin="round"/>
-
-                </svg>
+            <span class="home-community-trilli" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
             </span>
 
-            <div class="home-riquadro-testo">
-                <h2>Community</h2>
-                <p>Trova gruppi, attività ed eventi vicino a te!</p>
-            </div>
+            <a
+                href="{% url 'community' %}"
+                class="home-riquadro home-riquadro-community"
+            >
 
-        </a>
+                <span class="home-icona home-icona-community" aria-hidden="true">
+
+                    <svg viewBox="0 0 100 90" fill="none">
+
+                        <rect
+                            x="17" y="17"
+                            width="66" height="63"
+                            rx="12"
+                            stroke="#9458c9"
+                            stroke-width="4"
+                        />
+
+                        <path
+                            d="M17 38H83"
+                            stroke="#9458c9"
+                            stroke-width="4"
+                        />
+
+                        <path
+                            d="M35 9V25M65 9V25"
+                            stroke="#9458c9"
+                            stroke-width="5"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M50 47L55 57L66 59L58 67L60 78L50 72L40 78L42 67L34 59L45 57Z"
+                            fill="#fff0f3"
+                            stroke="#ff675d"
+                            stroke-width="3.5"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </span>
+
+                <div class="home-riquadro-testo">
+
+                    <h2>Community</h2>
+
+                    <p>
+                        Trova gruppi, attività<br>
+                        ed eventi vicino a te!
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
 
     </section>
 
 </div>
+
+
+<!-- FOOTER GENERALE FUORIRETE -->
+
+<footer class="home-footer">
+
+    <div class="home-footer-contenuto">
+
+        <!-- LOGO -->
+
+        <div class="home-footer-logo">
+            <span aria-hidden="true">♡</span>
+            <strong>FuoriRete</strong>
+        </div>
+
+
+        <!-- SLOGAN -->
+
+        <p class="home-footer-slogan">
+            Persone, passioni, community.
+        </p>
+
+
+        <!-- STATISTICHE -->
+
+        <div class="home-footer-statistiche">
+
+            <div class="home-footer-statistica">
+
+                <!-- ICONA SINGOLA PERSONA -->
+
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+
+                    <circle
+                        cx="12"
+                        cy="7"
+                        r="4"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+                <strong>{{ totale_utenti }}</strong>
+                <span>Persone</span>
+
+            </div>
+
+            <!-- COMMUNITY -->
+
+            <div class="home-footer-statistica">
+
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+
+                    <rect
+                        x="3" y="5"
+                        width="18" height="16"
+                        rx="3"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M7 2v6M17 2v6M3 10h18"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M12 12.5l1.5 3 3.3.5-2.4 2.3.6 3.2-3-1.6-3 1.6.6-3.2-2.4-2.3 3.3-.5Z"
+                        fill="currentColor"
+                        transform="translate(0 -1.5)"
+                    />
+
+                </svg>
+
+                <strong>{{ totale_community }}</strong>
+                <span>Community</span>
+
+            </div>
+
+            <!-- EVENTI -->
+
+            <div class="home-footer-statistica">
+
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+
+                    <!-- Contorno calendario -->
+
+                    <rect
+                        x="3" y="5"
+                        width="18" height="16"
+                        rx="3"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <!-- Anelli superiori -->
+
+                    <path
+                        d="M7 2v6M17 2v6M3 10h18"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <!-- Giorni -->
+
+                    <rect x="7" y="13" width="2.5" height="2.5" rx="0.5" fill="currentColor"/>
+                    <rect x="11" y="13" width="2.5" height="2.5" rx="0.5" fill="currentColor"/>
+                    <rect x="15" y="13" width="2.5" height="2.5" rx="0.5" fill="currentColor"/>
+
+                    <rect x="7" y="17" width="2.5" height="2.5" rx="0.5" fill="currentColor"/>
+                    <rect x="11" y="17" width="2.5" height="2.5" rx="0.5" fill="currentColor"/>
+
+                </svg>
+
+                <strong>{{ totale_eventi }}</strong>
+                <span>Eventi da scoprire</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
 
 {% endblock %}

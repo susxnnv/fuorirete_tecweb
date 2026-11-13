@@ -188,6 +188,10 @@ def calcola_compatibilita_community(
 # HOME PUBBLICA
 # ==========================================
 
+# ==========================================
+# HOME PUBBLICA
+# ==========================================
+
 class HomePubblicaView(TemplateView):
 
     template_name = 'gestione/home_pubblica.html'
@@ -195,6 +199,10 @@ class HomePubblicaView(TemplateView):
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
+
+        # ======================================
+        # COMMUNITY PUBBLICHE
+        # ======================================
 
         community = list(
             recupera_community_con_valutazioni()
@@ -215,6 +223,30 @@ class HomePubblicaView(TemplateView):
         )
 
         context['community'] = community
+
+        # ======================================
+        # STATISTICHE GENERALI DI FUORIRETE
+        # ======================================
+
+        # Numero di utenti con un profilo creato.
+        context['totale_utenti'] = (
+            Profilo.objects.count()
+        )
+
+        # Numero di community complete,
+        # con almeno un interesse associato.
+        context['totale_community'] = (
+            Community.objects
+            .filter(interessi__isnull=False)
+            .distinct()
+            .count()
+        )
+
+        # Numero totale di eventi creati,
+        # compresi quelli già trascorsi.
+        context['totale_eventi'] = (
+            Evento.objects.count()
+        )
 
         return context
 
@@ -254,39 +286,77 @@ class RegistrazioneView(CreateView):
         return response
 
 # creazione profilo 
-class CreazioneProfiloView(LoginRequiredMixin, CreateView):
 
+# ==========================================
+# CREAZIONE PROFILO - PASSAGGIO 1 DI 2
+# ==========================================
+
+class CreazioneProfiloView(LoginRequiredMixin, UpdateView):
+
+    model = Profilo
     form_class = CreazioneProfiloForm
+
     template_name = 'gestione/creazione_profilo.html'
+
     success_url = reverse_lazy('selezione_interessi')
 
-    # controllo degli accessi
+    # ======================================
+    # CONTROLLO DEGLI ACCESSI
+    # ======================================
+
     def dispatch(self, request, *args, **kwargs):
 
-        # se l'utente non è autenticato --> reindirizzato alla pagina login
         if not request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
 
-        # uno user che ha già un profilo, non può crearne un altro --> redirect home 
+        # Se il profilo è già completo,
+        # non permettiamo di ripetere la creazione.
+
         if hasattr(request.user, 'profilo'):
 
-            if not request.user.profilo.interessi.exists():
-                return redirect('selezione_interessi')
+            if request.user.profilo.interessi.exists():
+                return redirect('home')
 
-            return redirect('home')
+        # Chi non ha ancora completato gli interessi
+        # può accedere al primo passaggio anche
+        # se il profilo è già stato creato.
 
         return super().dispatch(request, *args, **kwargs)
 
-    # se il form è valido
+    # ======================================
+    # RECUPERO DEL PROFILO
+    # ======================================
+
+    def get_object(self, queryset=None):
+
+        # Recuperiamo esclusivamente il profilo
+        # dell'utente autenticato, se esiste.
+
+        # Se non esiste, restituiamo None:
+        # il form consentirà di crearne uno nuovo.
+
+        return Profilo.objects.filter(
+            user=self.request.user
+        ).first()
+
+    # ======================================
+    # SALVATAGGIO DEL PROFILO
+    # ======================================
+
     def form_valid(self, form):
 
-        # il profilo viene associato all'utente autenticato
+        # L'utente associato al profilo
+        # è sempre quello autenticato.
+
         form.instance.user = self.request.user
 
-        # salvataggio del profilo e dei relativi interessi
+        # Se il profilo esiste già, UpdateView
+        # aggiorna la stessa istanza.
+        #
+        # Se non esiste, ne crea una nuova.
+
         with transaction.atomic():
             return super().form_valid(form)
-
 
 # Selezione degli interessi nella creazione del profilo
 class SelezioneInteressiView(LoginRequiredMixin, FormView):
@@ -398,8 +468,44 @@ class ProfiloRichiestoMixin(LoginRequiredMixin):
 # in questo caso tutte le classi sono protette dal mixin 
 # (possono accedere solo utenti con profilo + account)
 
+
+# ==========================================
+# HOME AUTENTICATA
+# ==========================================
+
 class HomeView(ProfiloRichiestoMixin, TemplateView):
+
     template_name = 'gestione/home.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        # ======================================
+        # STATISTICHE GENERALI DI FUORIRETE
+        # ======================================
+
+        # Utenti che hanno creato un profilo.
+        context['totale_utenti'] = (
+            Profilo.objects.count()
+        )
+
+        # Community pubblicate, con interessi
+        # già selezionati e quindi complete.
+        context['totale_community'] = (
+            Community.objects
+            .filter(interessi__isnull=False)
+            .distinct()
+            .count()
+        )
+
+        # Numero complessivo degli eventi creati,
+        # inclusi quelli già trascorsi.
+        context['totale_eventi'] = (
+            Evento.objects.count()
+        )
+
+        return context
 
 
 # COMMUNITY
