@@ -1807,3 +1807,671 @@ a.scoperta-community-card {
 }
 
 
+/* ==========================================
+   COMMUNITY - IDENTITÀ VISIVA DEFINITIVA
+   STILE FUORIRETE
+========================================== */
+
+
+/* ==========================================
+   1. SFONDO GENERALE
+========================================== */
+
+/*
+   Il gradiente viene applicato al BODY,
+   così copre tutta la larghezza della pagina
+   senza creare strisce laterali.
+
+   Non modifichiamo la larghezza dei
+   contenitori e delle card.
+*/
+
+html:has(.scoperta-community-pagina) {
+    background: #f0eaff;
+}
+
+body:has(.scoperta-community-pagina) {
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 60% 75% at 100% 25%,
+            rgba(118, 224, 237, 0.48),
+            transparent 85%
+        ),
+        radial-gradient(
+            ellipse 60% 70% at 0% 95%,
+            rgba(255, 153, 202, 0.38),
+            transparent 85%
+        ),
+        linear-gradient(
+            115deg,
+            #f0eaff 0%,
+            #f1edff 48%,
+            #e2f5fc 100%
+        );
+
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* I CONTENITORI NON DEVONO COPRIRE IL GRADIENTE */
+
+body:has(.scoperta-community-pagina)
+.area-contenuto {
+    background: transparent;
+}
+
+/* RIMUOVIAMO LE VECCHIE DECORAZIONI */
+
+.scoperta-community-pagina::before {
+    content: none;
+}
+
+
+/* ==========================================
+   2. COLORI GENERALI
+========================================== */
+
+.scoperta-community-pagina {
+    color: #181337;
+}
+
+
+/* ==========================================
+   3. INTESTAZIONE
+========================================== */
+
+/* TITOLO PRINCIPALE */
+
+.scoperta-community-intestazione
+.scoperta-community-titolo h1 {
+    color: #181337;
+}
+
+/* SOTTOLINEATURA CORALLO, DRITTA */
+
+.scoperta-community-titolo h1::after {
+    background: #ff6055;
+
+    border-radius: 4px;
+    transform: none;
+}
+
+/* TRILLI DECORATIVI */
+
+.scoperta-community-trilli span {
+    background: #ff6055;
+}
+
+/* DESCRIZIONE */
+
+.scoperta-community-intestazione
+.scoperta-community-presentazione > p {
+    color: #625c83;
+}
+
+
+/* ==========================================
+   4. PULSANTE CREA COMMUNITY
+========================================== */
+
+.scoperta-community-intestazione
+.scoperta-community-crea {
+    background: linear-gradient(
+        110deg,
+        #ff2878,
+        #ff6055
+    );
+
+    border-color: transparent;
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 15px rgba(255, 57, 105, 0.18);
+}
+
+.scoperta-community-intestazione
+.scoperta-community-crea:hover {
+    background: linear-gradient(
+        110deg,
+        #ed1768,
+        #f34d49
+    );
+
+    border-color: transparent;
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   5. PULSANTE FILTRI
+========================================== */
+
+.scoperta-community-intestazione
+.scoperta-community-apri-filtri {
+    background: linear-gradient(
+        110deg,
+        #ff2878,
+        #ff6055
+    );
+
+    border-color: transparent;
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 15px rgba(255, 57, 105, 0.22);
+}
+
+.scoperta-community-intestazione
+.scoperta-community-apri-filtri:hover {
+    background: linear-gradient(
+        110deg,
+        #ed1768,
+        #f34d49
+    );
+
+    border-color: transparent;
+    color: #ffffff;
+}
+
+.scoperta-community-apri-filtri
+.scoperta-community-puntino {
+    background: #ffffff;
+}
+
+
+/* ==========================================
+   6. BARRA DI RICERCA
+========================================== */
+
+.scoperta-community-form-ricerca {
+    background: #ffffff;
+
+    border-color: #e3d8f2;
+
+    box-shadow:
+        0 5px 16px rgba(66, 44, 124, 0.06);
+}
+
+/* CAMPO DI RICERCA */
+
+.scoperta-community-form-ricerca
+input[type="search"] {
+    color: #181337;
+}
+
+.scoperta-community-form-ricerca
+input[type="search"]::placeholder {
+    color: #9285a6;
+}
+
+.scoperta-community-form-ricerca
+input[type="search"]:focus-visible {
+    outline-color: #7144ff;
+}
+
+/* PULSANTE CERCA */
+
+.scoperta-community-form-ricerca
+.scoperta-community-cerca {
+    background: linear-gradient(
+        110deg,
+        #ff2878,
+        #ff6055
+    );
+
+    color: #ffffff;
+}
+
+.scoperta-community-form-ricerca
+.scoperta-community-cerca:hover {
+    background: linear-gradient(
+        110deg,
+        #ed1768,
+        #f34d49
+    );
+}
+
+
+/* ==========================================
+   7. INTESTAZIONE RISULTATI
+========================================== */
+
+.scoperta-community-risultati-testa h2 {
+    color: #181337;
+}
+
+.scoperta-community-risultati-testa p {
+    color: #71678c;
+}
+
+.scoperta-community-azzera-link {
+    color: #ef4566;
+}
+
+.scoperta-community-azzera-link:hover {
+    color: #c92b52;
+}
+
+
+/* ==========================================
+   8. CARD COMMUNITY
+========================================== */
+
+a.scoperta-community-card {
+    background: #ffffff;
+
+    border-color: #e3d8f2;
+    color: #181337;
+
+    box-shadow:
+        0 6px 18px rgba(70, 45, 137, 0.08);
+}
+
+/* HOVER */
+
+a.scoperta-community-card:hover {
+    border-color: #bc9cff;
+
+    box-shadow:
+        0 9px 23px rgba(70, 45, 137, 0.13);
+}
+
+/* FOCUS */
+
+a.scoperta-community-card:focus-visible {
+    outline-color: #7144ff;
+}
+
+/* SE NON È PRESENTE UNA FOTO */
+
+.scoperta-community-foto {
+    background: #f2eaff;
+    color: #7144ff;
+}
+
+
+/* ==========================================
+   9. TESTI DELLE CARD
+========================================== */
+
+/* NOME COMMUNITY */
+
+.scoperta-community-card-superiore h3 {
+    color: #181337;
+}
+
+/* CITTÀ */
+
+.scoperta-community-citta {
+    color: #625c83;
+}
+
+/* DESCRIZIONE */
+
+.scoperta-community-descrizione {
+    color: #393453;
+}
+
+/* MEDIA VALUTAZIONI */
+
+.scoperta-community-valutazione strong {
+    color: #ff5075;
+}
+
+/* NUMERO VALUTAZIONI */
+
+.scoperta-community-valutazione small {
+    color: #827794;
+}
+
+
+/* ==========================================
+   10. INTERESSI - PALETTE PASTELLO
+========================================== */
+
+/*
+   I tag hanno colori differenziati,
+   senza gradienti interni.
+
+   Le emoji sono inserite nel template HTML.
+*/
+
+.scoperta-community-tag {
+    display: inline-flex;
+    align-items: center;
+
+    background: #e2d3f3;
+    color: #38255f;
+}
+
+/* LILLA */
+
+.scoperta-community-tag:nth-child(5n + 1) {
+    background: #dfcff1;
+    color: #38235f;
+}
+
+/* AZZURRO */
+
+.scoperta-community-tag:nth-child(5n + 2) {
+    background: #d4ebef;
+    color: #145468;
+}
+
+/* VERDE SALVIA */
+
+.scoperta-community-tag:nth-child(5n + 3) {
+    background: #dce9d9;
+    color: #345b44;
+}
+
+/* ROSA */
+
+.scoperta-community-tag:nth-child(5n + 4) {
+    background: #f9dfe9;
+    color: #943c5a;
+}
+
+/* LILLA AZZURRATO */
+
+.scoperta-community-tag:nth-child(5n + 5) {
+    background: #dfe3fa;
+    color: #354681;
+}
+
+/* NESSUN INTERESSE */
+
+.scoperta-community-tag-vuoto {
+    color: #827794;
+}
+
+
+/* ==========================================
+   11. ORGANIZZATORE E STATO
+========================================== */
+
+.scoperta-community-card-inferiore {
+    border-top-color: #ece5f5;
+}
+
+/* NOME ORGANIZZATORE */
+
+.scoperta-community-organizzatore {
+    color: #71678c;
+}
+
+/* BADGE ORGANIZZATORE / MEMBRO */
+
+.scoperta-community-stato {
+    background: #f0e6ff;
+
+    border-color: #dfcff7;
+
+    color: #6434bb;
+}
+
+
+/* ==========================================
+   12. NESSUNA COMMUNITY TROVATA
+========================================== */
+
+.scoperta-community-vuoto {
+    background: #ffffff;
+    border-color: #e3d8f2;
+}
+
+.scoperta-community-vuoto h3 {
+    color: #181337;
+}
+
+.scoperta-community-vuoto p {
+    color: #625c83;
+}
+
+.scoperta-community-vuoto-icona {
+    background: #f0e6ff;
+    color: #7144ff;
+}
+
+.scoperta-community-vuoto a {
+    color: #ef4566;
+}
+
+
+/* ==========================================
+   13. POPUP FILTRI
+========================================== */
+
+/* SFONDO OSCURATO */
+
+.scoperta-community-overlay {
+    background: rgba(24, 19, 55, 0.48);
+}
+
+/* CONTENITORE POPUP */
+
+.scoperta-community-popup {
+    background: #ffffff;
+
+    border-color: #e3d8f2;
+
+    box-shadow:
+        0 20px 55px rgba(24, 19, 55, 0.18);
+}
+
+/* INTESTAZIONE POPUP */
+
+.scoperta-community-popup-testa {
+    background: #ffffff;
+    border-bottom-color: #eee6f6;
+}
+
+.scoperta-community-popup-testa
+#titolo-filtri-community {
+    color: #71678c;
+}
+
+/* PULSANTE CHIUSURA */
+
+.scoperta-community-popup-chiudi {
+    background: #f4edff;
+
+    border-color: #e4d7f5;
+
+    color: #181337;
+}
+
+.scoperta-community-popup-chiudi:hover {
+    background: #f9dfe9;
+
+    border-color: #f2acc1;
+
+    color: #ef4566;
+}
+
+
+/* ==========================================
+   14. SEZIONI DEI FILTRI
+========================================== */
+
+.scoperta-community-filtro-sezione h3 {
+    color: #181337;
+}
+
+.scoperta-community-filtro-sezione > p {
+    color: #71678c;
+}
+
+/* CAMPI INPUT */
+
+.scoperta-community-input {
+    background: #ffffff;
+
+    border-color: #e3d8f2;
+
+    color: #181337;
+}
+
+.scoperta-community-input:focus {
+    outline: none;
+
+    border-color: #7144ff;
+
+    box-shadow:
+        0 0 0 3px rgba(113, 68, 255, 0.12);
+}
+
+
+/* ==========================================
+   15. INTERESSI NEL POPUP
+========================================== */
+
+.scoperta-community-popup-form
+.scoperta-community-filtro-interessi-box {
+    background: #f8f3ff;
+    border-color: #e7dbf7;
+}
+
+/* TITOLO */
+
+.scoperta-community-filtro-interessi-box > h3 {
+    color: #181337;
+}
+
+/* SOTTOLINEATURA DRITTA */
+
+.scoperta-community-filtro-interessi-box > h3::after {
+    background: #ff6055;
+
+    border-radius: 4px;
+    transform: none;
+}
+
+/* DESCRIZIONE */
+
+.scoperta-community-filtro-interessi-box > p {
+    color: #71678c;
+}
+
+
+/* ==========================================
+   16. OPZIONI DEI FILTRI
+========================================== */
+
+.scoperta-community-opzione {
+    background: #ffffff;
+
+    border-color: #e3d8f2;
+
+    color: #302758;
+}
+
+/* HOVER */
+
+.scoperta-community-opzione:hover {
+    background: #f8f3ff;
+    border-color: #bd9dff;
+}
+
+/* CHECKBOX */
+
+.scoperta-community-opzione input {
+    accent-color: #7144ff;
+}
+
+/* OPZIONE SELEZIONATA */
+
+.scoperta-community-opzione:has(input:checked) {
+    background: #f1e9ff;
+
+    border-color: #7144ff;
+
+    color: #5535a4;
+}
+
+
+/* ==========================================
+   17. PULSANTI POPUP
+========================================== */
+
+/* AZZERA FILTRI */
+
+.scoperta-community-azzera {
+    background: #ffffff;
+
+    border-color: #7144ff;
+
+    color: #6035d5;
+}
+
+.scoperta-community-azzera:hover {
+    background: #f2eaff;
+}
+
+/* APPLICA FILTRI */
+
+.scoperta-community-applica {
+    background: linear-gradient(
+        110deg,
+        #ff2878,
+        #ff6055
+    );
+
+    border-color: transparent;
+
+    color: #ffffff;
+}
+
+.scoperta-community-applica:hover {
+    background: linear-gradient(
+        110deg,
+        #ed1768,
+        #f34d49
+    );
+}
+
+
+/* ==========================================
+   18. COMMUNITY DA COMPLETARE
+========================================== */
+
+.scoperta-community-bozze {
+    background: #ffffff;
+    border-color: #e3d8f2;
+}
+
+.scoperta-community-bozze h2 {
+    color: #181337;
+}
+
+.scoperta-community-bozze > p {
+    color: #71678c;
+}
+
+.scoperta-community-bozza {
+    border-top-color: #ece5f5;
+}
+
+.scoperta-community-bozza span {
+    color: #181337;
+}
+
+.scoperta-community-bozza a {
+    color: #ef4566;
+}
+
+
+/* ==========================================
+   19. FOCUS E ACCESSIBILITÀ
+========================================== */
+
+.scoperta-community-crea:focus-visible,
+.scoperta-community-apri-filtri:focus-visible,
+.scoperta-community-cerca:focus-visible,
+.scoperta-community-applica:focus-visible,
+.scoperta-community-azzera:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}

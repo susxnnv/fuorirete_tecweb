@@ -1,27 +1,56 @@
 
 {% extends 'gestione/base_autenticata.html' %}
+{% load static %}
+
+{% block title %}Anteprima profilo | FuoriRete{% endblock %}
 
 {% block area_content %}
 
-<div class="anteprima-pagina">
+<link rel="stylesheet" href="{% static 'css/area_autenticata.css' %}?v=15">
 
-    <!-- INTESTAZIONE -->
+<div class="anteprima-pagina anteprima-propria">
+
+
+    <!-- NAVIGAZIONE E INFORMAZIONI -->
 
     <section class="anteprima-intestazione">
 
-        <div>
-            <h1>Anteprima del tuo profilo</h1>
-
-            <p>
-                Ecco come gli altri utenti vedranno
-                le tue informazioni personali.
-            </p>
-        </div>
-
-        <a href="{% url 'profilo' %}"
-           class="anteprima-indietro">
+        <a
+            href="{% url 'profilo' %}"
+            class="anteprima-indietro"
+        >
             ← Torna al profilo
         </a>
+
+        <details class="anteprima-aiuto">
+
+            <summary
+                class="anteprima-aiuto-pulsante"
+                aria-label="Informazioni sull'anteprima del profilo"
+                title="Informazioni sull'anteprima"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 11v6"/>
+                    <path d="M12 7h.01"/>
+                </svg>
+            </summary>
+
+            <div class="anteprima-aiuto-testo">
+                Questa è l'anteprima del tuo profilo pubblico,
+                così come viene mostrato agli altri utenti.
+                Puoi modificare le informazioni dalla sezione Profilo.
+            </div>
+
+        </details>
 
     </section>
 
@@ -32,11 +61,15 @@
 
         <div class="anteprima-identita">
 
-            <img
-                src="{{ request.user.profilo.foto.url }}"
-                alt="Foto di {{ request.user.profilo.nome }}"
-                class="anteprima-foto"
-            >
+            {% if request.user.profilo.foto %}
+
+                <img
+                    src="{{ request.user.profilo.foto.url }}"
+                    alt="Foto di {{ request.user.profilo.nome }}"
+                    class="anteprima-foto"
+                >
+
+            {% endif %}
 
             <div class="anteprima-dati">
 
@@ -47,17 +80,15 @@
 
                 <p class="anteprima-meta">
 
-                    <span>
-                        📍 {{ request.user.profilo.citta }}
-                    </span>
+                    📍 {{ request.user.profilo.citta }}
 
                     {% if request.user.profilo.occupazione %}
-                        <span>
-                            · {{ request.user.profilo.get_occupazione_display }}
-                        </span>
+                        · {{ request.user.profilo.get_occupazione_display }}
                     {% endif %}
 
                 </p>
+
+                <!-- COSA CERCA -->
 
                 <div class="anteprima-cerca">
 
@@ -72,9 +103,9 @@
                             {% if scelta == 'AMICIZIE' %}
                                 Amicizie
                             {% elif scelta == 'COMPAGNO_STUDIO' %}
-                                Compagno di studio
+                                Compagni di studio
                             {% elif scelta == 'COINQUILINO' %}
-                                Coinquilino
+                                Coinquilini
                             {% else %}
                                 {{ scelta }}
                             {% endif %}
@@ -100,7 +131,7 @@
 
         <div class="anteprima-colonna-principale">
 
-            <!-- DESCRIZIONE -->
+            <!-- SU DI ME -->
 
             <section class="anteprima-riquadro">
 
@@ -134,6 +165,58 @@
                     {% for interesse in request.user.profilo.interessi.all %}
 
                         <span class="anteprima-tag">
+
+                            <!-- EMOJI DELLA CATEGORIA -->
+
+                            {% if interesse.padre %}
+                                {% with categoria=interesse.padre.nome|lower %}
+
+                                    {% if categoria == 'animali' %}🐶
+                                    {% elif categoria == 'arte e creatività' %}🎨
+                                    {% elif categoria == 'cibo e gastronomia' %}🍔
+                                    {% elif categoria == 'cinema' %}🎬
+                                    {% elif categoria == 'eventi' %}🗓️
+                                    {% elif categoria == 'fitness e benessere' %}💪
+                                    {% elif categoria == 'giochi' %}🎮
+                                    {% elif categoria == 'moda e stile' %}👗
+                                    {% elif categoria == 'motori' %}🚗
+                                    {% elif categoria == 'musica' %}🎵
+                                    {% elif categoria == 'natura' %}🌱
+                                    {% elif categoria == 'scienza e conoscenza' %}📚
+                                    {% elif categoria == 'socialità' %}👥
+                                    {% elif categoria == 'sport' %}⚽
+                                    {% elif categoria == 'viaggi' %}✈️
+                                    {% elif categoria == 'volontariato' %}🤝
+                                    {% else %}✨
+                                    {% endif %}
+
+                                {% endwith %}
+                            {% else %}
+                                {% with categoria=interesse.nome|lower %}
+
+                                    {% if categoria == 'animali' %}🐶
+                                    {% elif categoria == 'arte e creatività' %}🎨
+                                    {% elif categoria == 'cibo e gastronomia' %}🍔
+                                    {% elif categoria == 'cinema' %}🎬
+                                    {% elif categoria == 'eventi' %}🗓️
+                                    {% elif categoria == 'fitness e benessere' %}💪
+                                    {% elif categoria == 'giochi' %}🎮
+                                    {% elif categoria == 'moda e stile' %}👗
+                                    {% elif categoria == 'motori' %}🚗
+                                    {% elif categoria == 'musica' %}🎵
+                                    {% elif categoria == 'natura' %}🌱
+                                    {% elif categoria == 'scienza e conoscenza' %}📚
+                                    {% elif categoria == 'socialità' %}👥
+                                    {% elif categoria == 'sport' %}⚽
+                                    {% elif categoria == 'viaggi' %}✈️
+                                    {% elif categoria == 'volontariato' %}🤝
+                                    {% else %}✨
+                                    {% endif %}
+
+                                {% endwith %}
+                            {% endif %}
+
+                            <!-- NOME DELL'INTERESSE -->
 
                             {% if interesse.padre %}
                                 {{ interesse.padre.nome|lower|capfirst }} ·
@@ -174,9 +257,13 @@
 
                 <div class="anteprima-info">
 
+                    <!-- CITTÀ -->
+
                     <div class="anteprima-info-riga">
 
-                        <span class="anteprima-info-icona">📍</span>
+                        <span class="anteprima-info-icona" aria-hidden="true">
+                            📍
+                        </span>
 
                         <span>
                             {{ request.user.profilo.citta }}
@@ -184,9 +271,22 @@
 
                     </div>
 
+
+                    <!-- GENERE -->
+
                     <div class="anteprima-info-riga">
 
-                        <span class="anteprima-info-icona">◇</span>
+                        <span class="anteprima-info-icona" aria-hidden="true">
+
+                            {% if request.user.profilo.genere == 'DONNA' %}
+                                ♀
+                            {% elif request.user.profilo.genere == 'UOMO' %}
+                                ♂
+                            {% else %}
+                                ⚧
+                            {% endif %}
+
+                        </span>
 
                         <span>
                             {{ request.user.profilo.get_genere_display }}
@@ -194,11 +294,16 @@
 
                     </div>
 
+
+                    <!-- OCCUPAZIONE -->
+
                     {% if request.user.profilo.occupazione %}
 
                         <div class="anteprima-info-riga">
 
-                            <span class="anteprima-info-icona">♙</span>
+                            <span class="anteprima-info-icona" aria-hidden="true">
+                                💼
+                            </span>
 
                             <span>
                                 {{ request.user.profilo.get_occupazione_display }}
@@ -208,9 +313,14 @@
 
                     {% endif %}
 
+
+                    <!-- LINGUE -->
+
                     <div class="anteprima-info-riga">
 
-                        <span class="anteprima-info-icona">◎</span>
+                        <span class="anteprima-info-icona" aria-hidden="true">
+                            🌍
+                        </span>
 
                         <span>
                             {{ request.user.profilo.lingue|join:", " }}
@@ -219,30 +329,6 @@
                     </div>
 
                 </div>
-
-            </section>
-
-
-            <!-- PROFILO PERSONALE -->
-
-            <section class="anteprima-riquadro anteprima-nota">
-
-                <h2>Il tuo profilo pubblico</h2>
-
-                <p>
-                    Questa pagina mostra le informazioni
-                    del tuo profilo personale così come
-                    verranno presentate agli altri utenti.
-                </p>
-
-                <p>
-                    Puoi tornare alla sezione Profilo
-                    per gestire le tue informazioni.
-                </p>
-
-                <a href="{% url 'profilo' %}">
-                    Torna al profilo →
-                </a>
 
             </section>
 

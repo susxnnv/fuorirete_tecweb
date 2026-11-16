@@ -4,7 +4,7 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/community.css' %}?v=10">
+<link rel="stylesheet" href="{% static 'css/community.css' %}?v=11">
 <link rel="stylesheet" href="{% static 'css/filtro_interessi.css' %}?v=2">
 
 <div class="scoperta-community-pagina">
@@ -219,19 +219,60 @@
 
                             {% for interesse in gruppo.interessi.all %}
 
-                                <span class="scoperta-community-tag">
+                                {% with categoria=interesse.padre|default:interesse %}
 
-                                    {% if interesse.padre %}
-                                        {{ interesse.padre.nome|lower|capfirst }} ·
-                                    {% endif %}
+                                    <span class="scoperta-community-tag">
 
-                                    {% if interesse.padre_id %}
-                                        {{ interesse.nome }}
-                                    {% else %}
-                                        {{ interesse.nome|lower|capfirst }}
-                                    {% endif %}
+                                        <!-- EMOJI DELLA CATEGORIA -->
 
-                                </span>
+                                        {% with nome=categoria.nome|lower %}
+
+                                            {% if nome == 'animali' %}
+                                                🐶
+                                            {% elif nome == 'arte e creatività' %}
+                                                🎨
+                                            {% elif nome == 'cibo e gastronomia' %}
+                                                🍔
+                                            {% elif nome == 'cinema' %}
+                                                🎬
+                                            {% elif nome == 'eventi' %}
+                                                🗓️
+                                            {% elif nome == 'fitness e benessere' %}
+                                                💪
+                                            {% elif nome == 'giochi' %}
+                                                🎮
+                                            {% elif nome == 'moda e stile' %}
+                                                👗
+                                            {% elif nome == 'motori' %}
+                                                🚗
+                                            {% elif nome == 'musica' %}
+                                                🎵
+                                            {% elif nome == 'natura' %}
+                                                🌱
+                                            {% elif nome == 'scienza e conoscenza' %}
+                                                📚
+                                            {% elif nome == 'viaggi' %}
+                                                ✈️
+                                            {% endif %}
+
+                                        {% endwith %}
+
+
+                                        <!-- NOME DELL'INTERESSE -->
+
+                                        {% if interesse.padre %}
+                                            {{ interesse.padre.nome|lower|capfirst }} ·
+                                        {% endif %}
+
+                                        {% if interesse.padre_id %}
+                                            {{ interesse.nome }}
+                                        {% else %}
+                                            {{ interesse.nome|lower|capfirst }}
+                                        {% endif %}
+
+                                    </span>
+
+                                {% endwith %}
 
                             {% empty %}
 
@@ -242,7 +283,6 @@
                             {% endfor %}
 
                         </div>
-
 
                         <!-- ORGANIZZATORE E STATO -->
 

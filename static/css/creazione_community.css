@@ -195,3 +195,1374 @@
         width: 100%;
     }
 }
+
+
+/* ==========================================
+   MODIFICA COMMUNITY - STILE FUORIRETE
+   Stili esclusivi della pagina Modifica
+========================================== */
+
+/* SFONDO */
+
+body:has(.modifica-community-pagina) {
+    background-color: #f1edff;
+
+    background-image:
+        radial-gradient(
+            ellipse 60% 75% at 100% 25%,
+            rgba(111, 221, 232, .52),
+            transparent 85%
+        ),
+        radial-gradient(
+            ellipse 60% 75% at 0% 100%,
+            rgba(255, 143, 199, .38),
+            transparent 85%
+        ),
+        linear-gradient(
+            115deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* CONTENITORE ESTERNO */
+
+.area-contenuto:has(.modifica-community-pagina) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+}
+
+/* CONTENITORE PAGINA */
+
+.creazione-community-pagina.modifica-community-pagina {
+    box-sizing: border-box;
+
+    width: calc(100% - 40px);
+    max-width: 940px;
+
+    margin: 0 auto;
+    padding: 35px 0 65px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+}
+
+.modifica-community-pagina *,
+.modifica-community-pagina *::before,
+.modifica-community-pagina *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   NAVIGAZIONE
+========================================== */
+
+.modifica-community-pagina
+.creazione-community-indietro {
+    display: inline-block;
+
+    margin: 0 0 25px;
+
+    color: #ff506b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.modifica-community-pagina
+.creazione-community-indietro:hover {
+    color: #e52c62;
+    text-decoration: none;
+}
+
+/* ==========================================
+   INTESTAZIONE
+========================================== */
+
+.modifica-community-pagina
+.creazione-community-intestazione {
+    margin: 0 0 24px;
+    text-align: left;
+}
+
+.modifica-community-pagina
+.creazione-community-intestazione h1 {
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+
+    margin: 0 0 13px;
+    padding-bottom: 7px;
+
+    color: #181337;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -.9px;
+    line-height: 1.25;
+}
+
+/* SOTTOLINEATURA CORALLO */
+
+.modifica-community-pagina
+.creazione-community-intestazione h1::after {
+    content: "";
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 52px;
+    height: 3px;
+
+    background: #ff6055;
+    border-radius: 5px;
+}
+
+/* TRILLI */
+
+.modifica-community-trilli {
+    position: absolute;
+
+    top: -13px;
+    right: -39px;
+
+    display: block;
+    width: 34px;
+    height: 36px;
+
+    pointer-events: none;
+}
+
+.modifica-community-trilli i {
+    position: absolute;
+    display: block;
+
+    background: #ff6055;
+    border-radius: 4px;
+}
+
+.modifica-community-trilli i:nth-child(1) {
+    top: 2px;
+    left: 8px;
+    width: 4px;
+    height: 15px;
+    transform: rotate(22deg);
+}
+
+.modifica-community-trilli i:nth-child(2) {
+    top: 17px;
+    left: 20px;
+    width: 17px;
+    height: 4px;
+    transform: rotate(-34deg);
+}
+
+.modifica-community-trilli i:nth-child(3) {
+    top: 29px;
+    left: 22px;
+    width: 13px;
+    height: 4px;
+    transform: rotate(-12deg);
+}
+
+/* SOTTOTITOLO */
+
+.modifica-community-pagina
+.creazione-community-intestazione p {
+    margin: 0;
+    max-width: none;
+
+    color: #625b86;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.modifica-community-pagina
+.creazione-community-intestazione p strong {
+    color: #49416e;
+    font-weight: 800;
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+.modifica-community-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ==========================================
+   CARD INFORMAZIONI
+========================================== */
+
+.modifica-community-pagina
+.creazione-community-card {
+    width: 100%;
+
+    margin: 0;
+    padding: 25px 26px;
+
+    background: rgba(255, 255, 255, .96);
+
+    border: 1px solid rgba(222, 211, 248, .82);
+    border-radius: 22px;
+
+    box-shadow:
+        0 8px 22px rgba(87, 65, 151, .085);
+}
+
+/* TITOLI DELLE SEZIONI */
+
+.modifica-community-titolo-sezione {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin: 0 0 18px;
+
+    color: #181337;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+/* ICONE VIOLA */
+
+.modifica-community-icona-sezione {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+
+    border-radius: 10px;
+    background: #f0e8ff;
+
+    color: #7545f5;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* ==========================================
+   CAMPI
+========================================== */
+
+.modifica-community-pagina
+.creazione-community-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin-bottom: 19px;
+}
+
+.modifica-community-pagina
+.creazione-community-campo:last-child {
+    margin-bottom: 0;
+}
+
+/* ETICHETTE */
+
+.modifica-community-pagina
+.creazione-community-campo > label {
+    color: #181337;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* INPUT E TEXTAREA */
+
+.modifica-community-pagina
+.creazione-community-campo input[type="text"],
+.modifica-community-pagina
+.creazione-community-campo textarea {
+    display: block;
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+    border: 1px solid #dcd0ff;
+    border-radius: 11px;
+
+    color: #181337;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+
+    outline: none;
+    box-shadow: none;
+}
+
+.modifica-community-pagina
+.creazione-community-campo input[type="text"] {
+    min-height: 45px;
+}
+
+.modifica-community-pagina
+.creazione-community-campo textarea {
+    min-height: 100px;
+    line-height: 1.65;
+    resize: vertical;
+}
+
+/* FOCUS */
+
+.modifica-community-pagina
+.creazione-community-campo input[type="text"]:focus,
+.modifica-community-pagina
+.creazione-community-campo textarea:focus {
+    border-color: #7545f5;
+    box-shadow: 0 0 0 3px rgba(117, 69, 245, .10);
+}
+
+/* ==========================================
+   GESTIONE IMMAGINE
+========================================== */
+
+.modifica-community-pagina .gestione-immagine {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+
+    width: 100%;
+}
+
+/* ANTEPRIMA */
+
+.modifica-community-pagina
+.gestione-immagine-anteprima {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 125px;
+    height: 110px;
+    flex: 0 0 125px;
+
+    overflow: hidden;
+
+    border-radius: 13px;
+    background: #f0e8ff;
+}
+
+.modifica-community-pagina
+.gestione-immagine-anteprima img {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    border-radius: 13px;
+}
+
+.modifica-community-pagina
+.gestione-immagine-anteprima img[hidden] {
+    display: none;
+}
+
+.modifica-community-pagina
+.gestione-immagine-segnaposto {
+    color: #71678c;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.modifica-community-pagina
+.gestione-immagine-segnaposto[hidden] {
+    display: none;
+}
+
+/* COMANDI IMMAGINE */
+
+.modifica-community-pagina
+.gestione-immagine-comandi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 9px;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.modifica-community-pagina
+.gestione-immagine-azioni {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* PULSANTI */
+
+.modifica-community-pagina
+.gestione-immagine-pulsante,
+.modifica-community-pagina
+.gestione-immagine-rimuovi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 39px;
+    padding: 10px 15px;
+
+    border: 1px solid #dcd0ff;
+    border-radius: 11px;
+
+    background: #faf7ff;
+    color: #6236df;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.modifica-community-pagina
+.gestione-immagine-pulsante:hover,
+.modifica-community-pagina
+.gestione-immagine-rimuovi:hover {
+    background: #f0e8ff;
+    border-color: #bba1ff;
+}
+
+.modifica-community-pagina
+.gestione-immagine-rimuovi {
+    background: #ffffff;
+    color: #493365;
+}
+
+/* INPUT NASCOSTI */
+
+.modifica-community-pagina
+.gestione-immagine-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+/* MESSAGGIO RIMOZIONE */
+
+.modifica-community-pagina
+#stato-rimozione-community:not(:empty) {
+    display: block;
+
+    color: #a54a61;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* ==========================================
+   CARD INTERESSI
+========================================== */
+
+.modifica-community-pagina
+.modifica-interessi-collegamento {
+    width: 100%;
+
+    margin: 0;
+    padding: 23px 26px;
+
+    background: rgba(255, 255, 255, .96);
+    border: 1px solid rgba(222, 211, 248, .82);
+    border-radius: 22px;
+
+    box-shadow:
+        0 8px 22px rgba(87, 65, 151, .085);
+}
+
+.modifica-community-pagina
+.modifica-interessi-collegamento
+.modifica-community-titolo-sezione {
+    margin-bottom: 8px;
+}
+
+.modifica-community-pagina
+.modifica-interessi-collegamento p {
+    margin: 0 0 19px;
+
+    color: #625b86;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* MODIFICA INTERESSI */
+
+.modifica-community-pagina
+.modifica-interessi-pulsante {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+    padding: 11px 19px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        105deg,
+        #ff1684,
+        #ff6554
+    );
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+
+    box-shadow: 0 5px 13px rgba(255, 42, 122, .12);
+
+    transition: transform .2s ease;
+}
+
+.modifica-community-pagina
+.modifica-interessi-pulsante:hover {
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   AZIONI FINALI
+========================================== */
+
+.modifica-community-pagina
+.creazione-community-azioni {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+
+    margin: 3px 0 0;
+}
+
+/* ANNULLA */
+
+.modifica-community-pagina
+.creazione-community-annulla {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+    padding: 11px 19px;
+
+    border: 1px solid #dcd0ff;
+    border-radius: 11px;
+
+    background: #ffffff;
+    color: #493365;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.modifica-community-pagina
+.creazione-community-annulla:hover {
+    background: #f5efff;
+    color: #6236df;
+    text-decoration: none;
+}
+
+/* SALVA MODIFICHE */
+
+.modifica-community-pagina
+.creazione-community-conferma {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+    padding: 11px 21px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: linear-gradient(
+        105deg,
+        #ff1684,
+        #ff6554
+    );
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 13px rgba(255, 42, 122, .12);
+
+    transition: transform .2s ease;
+}
+
+.modifica-community-pagina
+.creazione-community-conferma:hover {
+    background: linear-gradient(
+        105deg,
+        #ed1378,
+        #ed554a
+    );
+
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
+
+.modifica-community-pagina a:focus-visible,
+.modifica-community-pagina button:focus-visible,
+.modifica-community-pagina
+.gestione-immagine-pulsante:focus-within {
+    outline: 3px solid #7545f5;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .creazione-community-pagina.modifica-community-pagina {
+        width: calc(100% - 30px);
+        padding: 25px 0 45px;
+    }
+
+    .modifica-community-pagina
+    .creazione-community-intestazione h1 {
+        font-size: 27px;
+    }
+
+    .modifica-community-pagina
+    .creazione-community-card,
+    .modifica-community-pagina
+    .modifica-interessi-collegamento {
+        padding: 20px;
+    }
+
+    .modifica-community-pagina
+    .gestione-immagine {
+        gap: 15px;
+    }
+
+    .modifica-community-pagina
+    .gestione-immagine-anteprima {
+        width: 105px;
+        height: 105px;
+        flex-basis: 105px;
+    }
+
+    .modifica-community-pagina
+    .creazione-community-azioni {
+        flex-direction: row;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .modifica-community-pagina
+    .creazione-community-conferma {
+        width: auto;
+    }
+}
+
+@media (max-width: 420px) {
+
+    .modifica-community-pagina
+    .creazione-community-intestazione h1 {
+        font-size: 24px;
+    }
+
+    .modifica-community-pagina
+    .gestione-immagine {
+        align-items: flex-start;
+    }
+
+    .modifica-community-pagina
+    .gestione-immagine-comandi {
+        flex-basis: 100%;
+    }
+
+    .modifica-community-pagina
+    .creazione-community-azioni {
+        gap: 9px;
+    }
+
+    .modifica-community-pagina
+    .creazione-community-annulla,
+    .modifica-community-pagina
+    .creazione-community-conferma {
+        padding: 11px 13px;
+        font-size: 11px;
+    }
+}
+
+
+/* ==========================================
+   CREAZIONE COMMUNITY - STILE FUORIRETE
+   Ispirato alla pagina Creazione profilo
+========================================== */
+
+/* SFONDO */
+
+body:has(.creazione-community-nuova) {
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, .50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, .37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* CONTENITORE ESTERNO */
+
+.area-contenuto:has(.creazione-community-nuova) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+}
+
+/* PAGINA */
+
+.creazione-community-pagina.creazione-community-nuova {
+    box-sizing: border-box;
+
+    width: calc(100% - 40px);
+    max-width: 940px;
+
+    margin: 0 auto;
+    padding: 35px 0 70px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+}
+
+.creazione-community-nuova *,
+.creazione-community-nuova *::before,
+.creazione-community-nuova *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   NAVIGAZIONE
+========================================== */
+
+.creazione-community-nuova
+.creazione-community-indietro {
+    display: inline-block;
+    margin: 0 0 25px;
+
+    color: #ff506b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.creazione-community-nuova
+.creazione-community-indietro:hover {
+    color: #e52c62;
+    text-decoration: none;
+}
+
+/* ==========================================
+   INTESTAZIONE
+========================================== */
+
+.creazione-community-nuova
+.creazione-community-intestazione {
+    margin: 0 0 30px;
+    text-align: left;
+}
+
+/* INDICATORE PASSAGGIO */
+
+.creazione-community-nuova
+.creazione-community-fase {
+    display: inline-block;
+
+    margin: 0 0 15px;
+    padding: 7px 13px;
+
+    border: 1px solid #e2d4ff;
+    border-radius: 30px;
+
+    background: #eee5ff;
+    color: #6434df;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+/* TITOLO */
+
+.creazione-community-titolo-contenitore {
+    position: relative;
+    width: fit-content;
+    max-width: calc(100% - 40px);
+}
+
+.creazione-community-nuova
+.creazione-community-intestazione h1 {
+    position: relative;
+
+    margin: 0 0 20px;
+
+    color: #181337;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -.9px;
+    line-height: 1.25;
+}
+
+/* LINEA CORALLO */
+
+.creazione-community-nuova
+.creazione-community-intestazione h1::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -9px;
+
+    width: 60px;
+    height: 4px;
+
+    border-radius: 4px;
+    background: #ff6055;
+}
+
+/* TRILLI CORALLO */
+
+.creazione-community-trilli {
+    position: absolute;
+    top: -12px;
+    right: -35px;
+
+    width: 30px;
+    height: 35px;
+
+    pointer-events: none;
+}
+
+.creazione-community-trilli span {
+    position: absolute;
+    display: block;
+
+    width: 4px;
+    height: 13px;
+
+    border-radius: 10px;
+    background: #ff6055;
+}
+
+.creazione-community-trilli span:nth-child(1) {
+    top: 0;
+    left: 6px;
+    transform: rotate(18deg);
+}
+
+.creazione-community-trilli span:nth-child(2) {
+    top: 10px;
+    left: 20px;
+    transform: rotate(48deg);
+}
+
+.creazione-community-trilli span:nth-child(3) {
+    top: 24px;
+    left: 24px;
+    height: 10px;
+    transform: rotate(70deg);
+}
+
+/* SOTTOTITOLO */
+
+.creazione-community-nuova
+.creazione-community-intestazione p {
+    margin: 0;
+    max-width: none;
+
+    color: #625c83;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.65;
+}
+
+/* ==========================================
+   FORM E CARD
+========================================== */
+
+.creazione-community-nuova
+.creazione-community-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.creazione-community-nuova
+.creazione-community-card {
+    width: 100%;
+    margin: 0;
+
+    padding: 35px 34px;
+
+    border: 1px solid #e5dbf7;
+    border-radius: 23px;
+
+    background: rgba(255, 255, 255, .97);
+
+    box-shadow:
+        0 9px 25px rgba(81, 59, 151, .09);
+}
+
+/* ==========================================
+   SEZIONI INTERNE
+========================================== */
+
+.creazione-community-nuova
+.creazione-community-sezione {
+    margin: 0 0 32px;
+}
+
+.creazione-community-nuova
+.creazione-community-sezione:last-child {
+    margin-bottom: 0;
+}
+
+/* TITOLI SEZIONI */
+
+.creazione-community-nuova
+.creazione-community-titolo-sezione {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 0 0 23px;
+
+    color: #181337;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+/* LINEA DIVISORIA */
+
+.creazione-community-nuova
+.creazione-community-titolo-sezione::after {
+    content: "";
+
+    height: 1px;
+    flex: 1;
+    min-width: 15px;
+
+    margin-left: 8px;
+    background: #e2d4ff;
+}
+
+/* ICONE SEZIONI */
+
+.creazione-community-nuova
+.creazione-community-icona-sezione {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 35px;
+    height: 35px;
+    flex: 0 0 35px;
+
+    border-radius: 10px;
+    background: #f0e8ff;
+
+    color: #7545f5;
+    font-size: 18px;
+}
+
+/* ==========================================
+   CAMPI
+========================================== */
+
+.creazione-community-nuova
+.creazione-community-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    margin-bottom: 23px;
+}
+
+.creazione-community-nuova
+.creazione-community-campo:last-child {
+    margin-bottom: 0;
+}
+
+/* LABEL */
+
+.creazione-community-nuova
+.creazione-community-campo > label {
+    color: #181337;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.creazione-community-obbligatorio {
+    color: #ff365d;
+    font-weight: 800;
+}
+
+/* INPUT E TEXTAREA */
+
+.creazione-community-nuova
+.creazione-community-campo input[type="text"],
+.creazione-community-nuova
+.creazione-community-campo textarea {
+    display: block;
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 1px solid #dcd0ff;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #181337;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+
+    outline: none;
+    box-shadow: none;
+}
+
+.creazione-community-nuova
+.creazione-community-campo input[type="text"] {
+    min-height: 47px;
+}
+
+.creazione-community-nuova
+.creazione-community-campo textarea {
+    min-height: 115px;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+/* FOCUS */
+
+.creazione-community-nuova
+.creazione-community-campo input[type="text"]:focus,
+.creazione-community-nuova
+.creazione-community-campo textarea:focus {
+    border-color: #7545f5;
+
+    box-shadow:
+        0 0 0 3px rgba(117, 69, 245, .10);
+}
+
+/* TESTI DI AIUTO */
+
+.creazione-community-nuova
+.creazione-community-aiuto {
+    color: #777092;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* ==========================================
+   IMMAGINE COMMUNITY
+========================================== */
+
+.creazione-community-nuova
+.gestione-immagine {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+
+    padding: 0;
+}
+
+/* ANTEPRIMA */
+
+.creazione-community-nuova
+.gestione-immagine-anteprima {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 140px;
+    height: 140px;
+    flex: 0 0 140px;
+
+    overflow: hidden;
+
+    background: #f3edff;
+    border: 1px solid #dcd0ff;
+    border-radius: 16px;
+}
+
+.creazione-community-nuova
+.gestione-immagine-anteprima img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.creazione-community-nuova
+.gestione-immagine-segnaposto {
+    padding: 12px;
+
+    color: #777092;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* COMANDI */
+
+.creazione-community-nuova
+.gestione-immagine-comandi {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 13px;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.creazione-community-nuova
+.gestione-immagine-descrizione {
+    color: #777092;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* PULSANTI IMMAGINE */
+
+.creazione-community-nuova
+.gestione-immagine-pulsante,
+.creazione-community-nuova
+.gestione-immagine-rimuovi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 39px;
+    padding: 10px 17px;
+
+    border: 1px solid #c9b4ff;
+    border-radius: 11px;
+
+    background: #ffffff;
+    color: #7144ff;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.creazione-community-nuova
+.gestione-immagine-pulsante:hover {
+    border-color: #7144ff;
+    background: #f4edff;
+}
+
+.creazione-community-nuova
+.gestione-immagine-rimuovi {
+    border-color: #ffc1cd;
+    color: #e52c62;
+}
+
+.creazione-community-nuova
+.gestione-immagine-rimuovi:hover {
+    background: #fff1f5;
+}
+
+/* ==========================================
+   PULSANTE FUORI DALLA CARD
+========================================== */
+
+.creazione-community-nuova
+.creazione-community-azioni {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 28px 0 0;
+}
+
+.creazione-community-nuova
+.creazione-community-conferma {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 340px;
+    min-height: 49px;
+
+    padding: 13px 24px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #7144ff;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 800;
+
+    box-shadow:
+        0 7px 17px rgba(113, 68, 255, .20);
+
+    cursor: pointer;
+
+    transition:
+        background-color .2s ease,
+        transform .2s ease;
+}
+
+.creazione-community-nuova
+.creazione-community-conferma:hover {
+    background: #6035ec;
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
+
+.creazione-community-nuova a:focus-visible,
+.creazione-community-nuova button:focus-visible,
+.creazione-community-nuova
+.gestione-immagine-pulsante:focus-within {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .creazione-community-pagina.creazione-community-nuova {
+        width: calc(100% - 30px);
+        padding: 25px 0 50px;
+    }
+
+    .creazione-community-nuova
+    .creazione-community-intestazione h1 {
+        font-size: 27px;
+    }
+
+    .creazione-community-nuova
+    .creazione-community-card {
+        padding: 25px 20px;
+    }
+
+    .creazione-community-nuova
+    .creazione-community-titolo-sezione {
+        font-size: 15px;
+        gap: 9px;
+    }
+
+    .creazione-community-nuova
+    .gestione-immagine {
+        gap: 16px;
+    }
+
+    .creazione-community-nuova
+    .gestione-immagine-anteprima {
+        width: 110px;
+        height: 110px;
+        flex-basis: 110px;
+    }
+
+    .creazione-community-nuova
+    .creazione-community-azioni {
+        margin-top: 23px;
+    }
+
+    .creazione-community-nuova
+    .creazione-community-conferma {
+        width: 100%;
+        max-width: 340px;
+    }
+}
+
+@media (max-width: 420px) {
+
+    .creazione-community-nuova
+    .creazione-community-intestazione h1 {
+        font-size: 24px;
+    }
+
+    .creazione-community-nuova
+    .gestione-immagine {
+        align-items: flex-start;
+    }
+
+    .creazione-community-nuova
+    .gestione-immagine-comandi {
+        flex-basis: 100%;
+    }
+
+    .creazione-community-nuova
+    .creazione-community-titolo-sezione {
+        font-size: 14px;
+    }
+}

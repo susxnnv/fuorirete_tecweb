@@ -6,7 +6,7 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}?v=13">
+<link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}?v=14">
 
 <div class="dettaglio-community-pagina">
 
@@ -31,6 +31,124 @@
         {% endif %}
 
     </div>
+
+
+    <!-- ========================================== -->
+    <!-- ACCESSI RAPIDI - ORGANIZZATORE             -->
+    <!-- ========================================== -->
+
+    <!-- ========================================== -->
+    <!-- ACCESSI RAPIDI COMMUNITY                  -->
+    <!-- ========================================== -->
+
+    {% if organizzatore or membro %}
+
+        <nav class="dettaglio-community-accessi-rapidi"
+            aria-label="Azioni della community">
+
+            <!-- CHAT DI GRUPPO -->
+
+            <a
+                href="{% url 'chat_gruppo' community.pk %}?origine={{ origine_community }}{% if anteprima_esterna %}&amp;anteprima=1{% endif %}"
+                class="dettaglio-community-accesso-chat"
+            >
+
+                <span class="dettaglio-community-accesso-icona"
+                    aria-hidden="true">
+
+                    <svg viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8A8.5 8.5 0 0 1 12.5 20a8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3H13a8.5 8.5 0 0 1 8 8v.5z"/>
+
+                    </svg>
+
+                </span>
+
+                <span class="dettaglio-community-accesso-testo">
+                    <strong>Chat di gruppo</strong>
+                    <small>Partecipa alla conversazione</small>
+                </span>
+
+            </a>
+
+            <!-- EVENTI -->
+
+            <a
+                href="{% url 'eventi_community' community.pk %}?origine={{ origine_community }}{% if anteprima_esterna %}&amp;anteprima=1{% endif %}"
+                class="dettaglio-community-accesso-eventi"
+            >
+
+                <span class="dettaglio-community-accesso-icona"
+                    aria-hidden="true">
+
+                    <svg viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <rect x="3" y="5"
+                            width="18" height="16" rx="2"/>
+
+                        <path d="M16 3v4M8 3v4M3 10h18"/>
+
+                    </svg>
+
+                </span>
+
+                <span class="dettaglio-community-accesso-testo">
+                    <strong>Eventi</strong>
+                    <small>Scopri le attività</small>
+                </span>
+
+            </a>
+
+            <!-- USCITA: SOLO MEMBRI REALI -->
+
+            {% if membro and not organizzatore and not anteprima_esterna %}
+
+                <button
+                    type="button"
+                    id="apri-uscita-community"
+                    class="dettaglio-community-accesso-esci"
+                >
+
+                    <span class="dettaglio-community-accesso-icona"
+                        aria-hidden="true">
+
+                        <svg viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                            <path d="M10 17l5-5-5-5"/>
+                            <path d="M15 12H3"/>
+                            <path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/>
+
+                        </svg>
+
+                    </span>
+
+                    <span class="dettaglio-community-accesso-testo">
+                        <strong>Esci dalla community</strong>
+                        <small>Lascia il gruppo</small>
+                    </span>
+
+                </button>
+
+            {% endif %}
+
+        </nav>
+
+    {% endif %}
 
 
     <!-- ========================================== -->
@@ -75,37 +193,179 @@
 
                 </div>
 
-                <div class="dettaglio-community-valutazione">
+                <!-- ========================================== -->
+                <!-- VALUTAZIONE NELLA PRESENTAZIONE             -->
+                <!-- ========================================== -->
 
-                    {% if numero_valutazioni %}
+                <div class="dettaglio-community-valutazione-colonna">
 
-                        <strong>
-                            ★ {{ media_valutazioni|floatformat:1 }}
-                        </strong>
+                    <!-- MEDIA GENERALE -->
 
-                        <small>
-                            {{ numero_valutazioni }} valutazioni
-                        </small>
+                    <div class="dettaglio-community-valutazione">
 
-                    {% else %}
+                        {% if numero_valutazioni %}
 
-                        <span class="dettaglio-community-senza-voti">
-                            Nessuna valutazione
-                        </span>
+                            <strong>
+                                ★ {{ media_valutazioni|floatformat:1 }}
+                            </strong>
+
+                            <small>
+                                {{ numero_valutazioni }} valutazioni
+                            </small>
+
+                        {% else %}
+
+                            <span class="dettaglio-community-senza-voti">
+                                Nessuna valutazione
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <!-- VALUTAZIONE IN ANTEPRIMA -->
+
+                    {% if anteprima_esterna %}
+
+                        <div class="dettaglio-community-valutazione-inline">
+
+                            <h2>Valuta la community</h2>
+
+                            <div class="dettaglio-community-valutazione-inline-form">
+
+                                <fieldset class="dettaglio-community-stelle"
+                                        disabled>
+
+                                    <legend class="dettaglio-community-sr-only">
+                                        Valutazione non disponibile in anteprima
+                                    </legend>
+
+                                    <div class="dettaglio-community-stelle-opzioni">
+
+                                        {% for valore in "12345" %}
+
+                                            <input
+                                                type="radio"
+                                                name="anteprima_voto"
+                                                id="anteprima-voto-{{ valore }}"
+                                                value="{{ valore }}"
+                                                disabled
+                                            >
+
+                                            <label for="anteprima-voto-{{ valore }}">
+                                                ★
+                                            </label>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                </fieldset>
+
+                                <button
+                                    type="button"
+                                    class="dettaglio-community-valutazione-inline-submit"
+                                    disabled
+                                >
+                                    Pubblica voto
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    <!-- VALUTAZIONE REALE DEL MEMBRO -->
+
+                    {% elif membro and not organizzatore %}
+
+                        <div class="dettaglio-community-valutazione-inline">
+
+                            {% if mia_valutazione %}
+
+                                <h2>La tua valutazione</h2>
+
+                            {% else %}
+
+                                <h2>Valuta la community</h2>
+
+                            {% endif %}
+
+                            <form
+                                method="post"
+                                action="{% url 'valuta_community' community.pk %}"
+                                class="dettaglio-community-valutazione-inline-form"
+                            >
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="origine"
+                                    value="{{ origine_community }}"
+                                >
+
+                                <fieldset class="dettaglio-community-stelle">
+
+                                    <legend class="dettaglio-community-sr-only">
+                                        Seleziona un voto da una a cinque stelle
+                                    </legend>
+
+                                    <div class="dettaglio-community-stelle-opzioni">
+
+                                        {% for valore in "12345" %}
+
+                                            <input
+                                                type="radio"
+                                                name="voto"
+                                                id="voto-community-{{ valore }}"
+                                                value="{{ valore }}"
+                                                {% if mia_valutazione.voto|stringformat:"s" == valore %}checked{% endif %}
+                                                required
+                                            >
+
+                                            <label
+                                                for="voto-community-{{ valore }}"
+                                                title="{{ valore }} stelle"
+                                            >
+                                                ★
+                                            </label>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                </fieldset>
+
+                                <button
+                                    type="submit"
+                                    class="dettaglio-community-valutazione-inline-submit"
+                                >
+
+                                    {% if mia_valutazione %}
+                                        Aggiorna voto
+                                    {% else %}
+                                        Pubblica voto
+                                    {% endif %}
+
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     {% endif %}
 
                 </div>
 
-            </div>
+                </div>
 
-            <p class="dettaglio-community-descrizione">
-                {{ community.descrizione|linebreaksbr }}
-            </p>
+                <p class="dettaglio-community-descrizione">
+                    {{ community.descrizione|linebreaksbr }}
+                </p>
 
-        </div>
+                </div>
 
-    </section>
+                </section>
 
 
     <!-- ========================================== -->
@@ -114,34 +374,60 @@
 
     <section class="dettaglio-community-riquadro">
 
-
         <h2 class="dettaglio-community-titolo-decorato">
-            <span class="dettaglio-community-trilli" aria-hidden="true">
+
+            <span class="dettaglio-community-trilli"
+                aria-hidden="true">
                 <span></span>
                 <span></span>
                 <span></span>
             </span>
-            Interessi della community
-        </h2>
 
+            Interessi della community
+
+        </h2>
 
         <div class="dettaglio-community-interessi">
 
             {% for interesse in community.interessi.all %}
 
-                <span class="dettaglio-community-tag">
+                {% with categoria=interesse.padre|default:interesse %}
 
-                    {% if interesse.padre %}
-                        {{ interesse.padre.nome|lower|capfirst }} ·
-                    {% endif %}
+                    <span class="dettaglio-community-tag">
 
-                    {% if interesse.padre_id %}
-                        {{ interesse.nome }}
-                    {% else %}
-                        {{ interesse.nome|lower|capfirst }}
-                    {% endif %}
+                        {% with nome=categoria.nome|lower %}
 
-                </span>
+                            {% if nome == 'animali' %}🐶
+                            {% elif nome == 'arte e creatività' %}🎨
+                            {% elif nome == 'cibo e gastronomia' %}🍔
+                            {% elif nome == 'cinema' %}🎬
+                            {% elif nome == 'eventi' %}🗓️
+                            {% elif nome == 'fitness e benessere' %}💪
+                            {% elif nome == 'giochi' %}🎮
+                            {% elif nome == 'moda e stile' %}👗
+                            {% elif nome == 'motori' %}🚗
+                            {% elif nome == 'musica' %}🎵
+                            {% elif nome == 'natura' %}🌱
+                            {% elif nome == 'scienza e conoscenza' %}📚
+                            {% elif nome == 'socialità' %}☕
+                            {% elif nome == 'viaggi' %}✈️
+                            {% endif %}
+
+                        {% endwith %}
+
+                        {% if interesse.padre %}
+                            {{ interesse.padre.nome|lower|capfirst }} ·
+                        {% endif %}
+
+                        {% if interesse.padre_id %}
+                            {{ interesse.nome }}
+                        {% else %}
+                            {{ interesse.nome|lower|capfirst }}
+                        {% endif %}
+
+                    </span>
+
+                {% endwith %}
 
             {% empty %}
 
@@ -155,71 +441,37 @@
 
     </section>
 
-
-    <!-- ========================================== -->
-    <!-- INFORMAZIONI                               -->
-    <!-- ========================================== -->
-
-    <section class="dettaglio-community-riquadro">
-
-        <h2 class="dettaglio-community-titolo-decorato">
-            <span class="dettaglio-community-trilli" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
-            </span>
-            Informazioni sulla community
-        </h2>
-
-        <div class="dettaglio-community-info">
-
-            <div class="dettaglio-community-info-riga">
-
-                <span>Organizzatore</span>
-
-                <strong>
-                    {{ community.organizzatore.nome }}
-                </strong>
-
-            </div>
-
-            <div class="dettaglio-community-info-riga">
-
-                <span>Partecipanti</span>
-
-                <strong>
-                    {{ numero_membri }}
-                    {% if numero_membri == 1 %}
-                        membro
-                    {% else %}
-                        membri
-                    {% endif %}
-                </strong>
-
-            </div>
-
-            <div class="dettaglio-community-info-riga">
-
-                <span>Creata il</span>
-
-                <strong>
-                    {{ community.data_creazione|date:"d/m/Y" }}
-                </strong>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
     <!-- ========================================== -->
     <!-- STATO E AZIONI DELL'UTENTE                 -->
     <!-- ========================================== -->
 
-    <section class="dettaglio-community-riquadro dettaglio-community-azioni">
+    <!-- ========================================== -->
+    <!-- MESSAGGI PER I MEMBRI DELLA COMMUNITY      -->
+    <!-- ========================================== -->
 
-        <!-- MESSAGGI DI CONFERMA -->
+    {% if membro and not organizzatore and not anteprima_esterna %}
+
+        {% if messages %}
+
+            <div class="dettaglio-community-messaggi">
+
+                {% for message in messages %}
+
+                    <p class="dettaglio-community-feedback"
+                    role="status">
+                        {{ message }}
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endif %}
+
+
+        <section class="dettaglio-community-riquadro dettaglio-community-azioni{% if anteprima_esterna or membro and not organizzatore %} dettaglio-community-azioni-membro-vuote{% endif %}">        <!-- MESSAGGI DI CONFERMA -->
 
         {% if messages %}
             {% for message in messages %}
@@ -275,87 +527,7 @@
         {% elif organizzatore %}
 
             <div class="dettaglio-community-organizzatore">
-
-                <!-- CARD PARTECIPAZIONE -->
-
-                <div class="dettaglio-community-organizzatore-partecipazione">
-
-                    <div class="dettaglio-community-organizzatore-presentazione">
-
-                        <span class="dettaglio-community-organizzatore-icona"
-                            aria-hidden="true">
-
-                            <svg viewBox="0 0 48 48"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round">
-
-                                <circle cx="24" cy="15" r="6"/>
-                                <path d="M12 38v-5a12 12 0 0 1 24 0v5"/>
-                                <circle cx="9" cy="22" r="4"/>
-                                <path d="M3 37v-4a8 8 0 0 1 7-8"/>
-                                <circle cx="39" cy="22" r="4"/>
-                                <path d="M45 37v-4a8 8 0 0 0-7-8"/>
-
-                            </svg>
-
-                        </span>
-
-                        <div class="dettaglio-community-organizzatore-testo">
-
-                            <h2>La tua community</h2>
-
-                            <p>
-                                Puoi partecipare alle attività,
-                                consultare la chat e gestire
-                                la tua community.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="dettaglio-community-organizzatore-partecipazione-azioni">
-
-                        <a
-                            href="{% url 'chat_gruppo' community.pk %}?origine={{ origine_community }}"
-                            class="dettaglio-community-pulsante dettaglio-community-organizzatore-chat"
-                        >
-                            <svg viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                aria-hidden="true">
-                                <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8A8.5 8.5 0 0 1 12.5 20a8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3H13a8.5 8.5 0 0 1 8 8v.5z"/>
-                            </svg>
-                            Apri chat di gruppo
-                        </a>
-
-                        <a
-                            href="{% url 'eventi_community' community.pk %}?origine={{ origine_community }}"
-                            class="dettaglio-community-organizzatore-eventi"
-                        >
-                            <svg viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                aria-hidden="true">
-                                <rect x="3" y="5" width="18" height="16" rx="2"/>
-                                <path d="M16 3v4M8 3v4M3 10h18"/>
-                            </svg>
-                            Visualizza eventi
-                        </a>
-
-                    </div>
-
-                </div>
-
+ 
                 <!-- CARD GESTIONE COMMUNITY -->
 
                 <div class="dettaglio-community-organizzatore-gestione">
@@ -379,10 +551,6 @@
                             <h2>Gestisci la tua community</h2>
 
                         </div>
-
-                        <span class="dettaglio-community-organizzatore-badge">
-                            Organizzatore
-                        </span>
 
                     </div>
 
@@ -413,7 +581,7 @@
                             </span>
 
                             <span class="dettaglio-community-organizzatore-azione-descrizione">
-                                Visualizza la pagina
+                                Visualizza l'anteprima della pagina
                             </span>
                         </a>
 
@@ -458,7 +626,7 @@
                             </span>
 
                             <span class="dettaglio-community-organizzatore-azione-descrizione">
-                                Accetta o rifiuta
+                                Decidi chi può partecipare
                             </span>
                         </a>
 
@@ -517,102 +685,6 @@
 
         <!-- MEMBRO -->
         {% elif membro %}
-
-            <div class="dettaglio-community-membro">
-
-                <!-- PRESENTAZIONE -->
-
-                <div class="dettaglio-community-membro-presentazione">
-
-                    <span class="dettaglio-community-membro-icona"
-                        aria-hidden="true">
-
-                        <svg viewBox="0 0 48 48"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
-
-                            <circle cx="24" cy="15" r="6"/>
-                            <path d="M12 38v-5a12 12 0 0 1 24 0v5"/>
-                            <circle cx="9" cy="22" r="4"/>
-                            <path d="M3 37v-4a8 8 0 0 1 7-8"/>
-                            <circle cx="39" cy="22" r="4"/>
-                            <path d="M45 37v-4a8 8 0 0 0-7-8"/>
-
-                        </svg>
-
-                    </span>
-
-                    <div class="dettaglio-community-membro-testo">
-
-                        <h2>Fai parte di questa community</h2>
-
-                        <p>
-                            Puoi partecipare alle attività,
-                            consultare la chat di gruppo
-                            e rimanere aggiornato sugli eventi.
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <!-- PULSANTI -->
-
-                <div class="dettaglio-community-membro-azioni">
-
-                    <!-- CHAT -->
-
-                    <a
-                        href="{% url 'chat_gruppo' community.pk %}?origine={{ origine_community }}"
-                        class="dettaglio-community-pulsante dettaglio-community-membro-chat"
-                    >
-                        <svg viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true">
-                            <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8A8.5 8.5 0 0 1 12.5 20a8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3H13a8.5 8.5 0 0 1 8 8v.5z"/>
-                        </svg>
-                        Apri chat di gruppo
-                    </a>
-
-                    <!-- EVENTI -->
-
-                    <a
-                        href="{% url 'eventi_community' community.pk %}?origine={{ origine_community }}"
-                        class="dettaglio-community-membro-eventi"
-                    >
-                        <svg viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true">
-                            <rect x="3" y="5" width="18" height="16" rx="2"/>
-                            <path d="M16 3v4M8 3v4M3 10h18"/>
-                        </svg>
-                        Visualizza eventi
-                    </a>
-
-                    <!-- USCITA -->
-
-                    <button
-                        type="button"
-                        id="apri-uscita-community"
-                        class="dettaglio-community-pulsante-secondario dettaglio-community-membro-esci"
-                    >
-                        Esci dalla community
-                    </button>
-
-                </div>
-
-            </div>
 
         <!-- RICHIESTA IN ATTESA -->
 
@@ -759,7 +831,7 @@
                         type="submit"
                         class="dettaglio-community-pulsante"
                     >
-                        Richiedi di partecipare →
+                        Richiedi di partecipare
                     </button>
 
                 </form>
@@ -773,225 +845,98 @@
 
 
     <!-- ========================================== -->
-    <!-- VALUTAZIONE COMMUNITY                      -->
+    <!-- INFORMAZIONI DELLA COMMUNITY - FOOTER      -->
     <!-- ========================================== -->
 
-    {% if anteprima_esterna %}
+    <footer
+        class="dettaglio-community-footer"
+        aria-label="Informazioni sulla community"
+    >
 
-        <!-- ANTEPRIMA: VALUTAZIONE DISABILITATA -->
+        <!-- ORGANIZZATORE -->
 
-        <section class="dettaglio-community-riquadro dettaglio-community-valuta">
+        <div class="dettaglio-community-footer-elemento">
 
-            <span class="dettaglio-community-valuta-etichetta">
-                VALUTA LA COMMUNITY
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <circle cx="12" cy="7" r="4"/>
+                <path d="M5 21v-2a7 7 0 0 1 14 0v2"/>
+            </svg>
+
+            <span>
+                Organizzatore
+                <strong>{{ community.organizzatore.nome }}</strong>
             </span>
 
-            <h2>Come valuteresti questa community?</h2>
-
-            <p>
-                I membri possono valutare la community
-                da 1 a 5 stelle.
-                La valutazione è disabilitata in anteprima.
-            </p>
-
-            <div class="dettaglio-community-valuta-form">
-
-                <fieldset class="dettaglio-community-stelle" disabled>
-
-                    <legend>
-                        Seleziona il tuo voto
-                    </legend>
-
-                    <div class="dettaglio-community-stelle-opzioni">
-
-                        {% for valore in "12345" %}
-
-                            <input
-                                type="radio"
-                                name="anteprima_voto"
-                                id="anteprima-voto-{{ valore }}"
-                                value="{{ valore }}"
-                                disabled
-                            >
-
-                            <label
-                                for="anteprima-voto-{{ valore }}"
-                            >
-                                ★
-                            </label>
-
-                        {% endfor %}
-
-                    </div>
-
-                </fieldset>
-
-                <button
-                    type="button"
-                    class="dettaglio-community-pulsante"
-                    disabled
-                >
-                    Pubblica valutazione →
-                </button>
-
-            </div>
-
-        </section>
+        </div>
 
 
-    {% elif membro and not organizzatore %}
+        <!-- NUMERO MEMBRI -->
 
-        <!-- VALUTAZIONE REALE DEL MEMBRO -->
+        <div class="dettaglio-community-footer-elemento">
 
-        <section class="dettaglio-community-riquadro dettaglio-community-valuta">
-
-            <!-- MESSAGGI RELATIVI ALLA VALUTAZIONE -->
-
-            {% if messages %}
-                {% for message in messages %}
-
-                    {% if 'valutazion' in message.message|lower %}
-
-                        <div class="dettaglio-community-valuta-feedback"
-                            role="status">
-                            {{ message }}
-                        </div>
-
-                    {% endif %}
-
-                {% endfor %}
-            {% endif %}
-    
-            {% if mia_valutazione %}
-
-                <span class="dettaglio-community-valuta-etichetta">
-                    LA TUA VALUTAZIONE
-                </span>
-
-                <h2>Modifica la tua valutazione</h2>
-
-                <p>
-                    Hai già valutato questa community.
-                    Puoi aggiornare il tuo voto quando vuoi,
-                    finché ne fai parte.
-                </p>
-
-            {% else %}
-
-                <span class="dettaglio-community-valuta-etichetta">
-                    VALUTA LA COMMUNITY
-                </span>
-
-                <h2>Come valuteresti questa community?</h2>
-
-                <p>
-                    La tua opinione contribuisce alla
-                    valutazione complessiva della community.
-                    Assegna un voto da 1 a 5 stelle.
-                </p>
-
-            {% endif %}
-
-
-            <form
-                method="post"
-                action="{% url 'valuta_community' community.pk %}"
-                class="dettaglio-community-valuta-form"
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
             >
+                <circle cx="9" cy="8" r="3"/>
+                <path d="M3 20v-2a6 6 0 0 1 12 0v2"/>
+                <circle cx="18" cy="9" r="2"/>
+                <path d="M17 15a5 5 0 0 1 4 5"/>
+            </svg>
 
-                {% csrf_token %}
+            <strong>
+                {{ numero_membri }}
 
-                <input
-                    type="hidden"
-                    name="origine"
-                    value="{{ origine_community }}"
-                >
+                {% if numero_membri == 1 %}
+                    membro
+                {% else %}
+                    membri
+                {% endif %}
+            </strong>
 
-                <fieldset class="dettaglio-community-stelle">
+        </div>
 
-                    <legend>
-                        Seleziona il tuo voto
-                    </legend>
 
-                    <div class="dettaglio-community-stelle-opzioni">
+        <!-- DATA CREAZIONE -->
 
-                        <input
-                            type="radio"
-                            name="voto"
-                            id="voto-community-1"
-                            value="1"
-                            {% if mia_valutazione.voto == 1 %}checked{% endif %}
-                            required
-                        >
-                        <label for="voto-community-1" title="1 stella">
-                            ★
-                        </label>
+        <div class="dettaglio-community-footer-elemento">
 
-                        <input
-                            type="radio"
-                            name="voto"
-                            id="voto-community-2"
-                            value="2"
-                            {% if mia_valutazione.voto == 2 %}checked{% endif %}
-                        >
-                        <label for="voto-community-2" title="2 stelle">
-                            ★
-                        </label>
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <rect x="3" y="5" width="18" height="16" rx="2"/>
+                <path d="M8 3v4M16 3v4M3 10h18"/>
+            </svg>
 
-                        <input
-                            type="radio"
-                            name="voto"
-                            id="voto-community-3"
-                            value="3"
-                            {% if mia_valutazione.voto == 3 %}checked{% endif %}
-                        >
-                        <label for="voto-community-3" title="3 stelle">
-                            ★
-                        </label>
+            <span>
+                Creata il
+                <strong>
+                    {{ community.data_creazione|date:"d/m/Y" }}
+                </strong>
+            </span>
 
-                        <input
-                            type="radio"
-                            name="voto"
-                            id="voto-community-4"
-                            value="4"
-                            {% if mia_valutazione.voto == 4 %}checked{% endif %}
-                        >
-                        <label for="voto-community-4" title="4 stelle">
-                            ★
-                        </label>
+        </div>
 
-                        <input
-                            type="radio"
-                            name="voto"
-                            id="voto-community-5"
-                            value="5"
-                            {% if mia_valutazione.voto == 5 %}checked{% endif %}
-                        >
-                        <label for="voto-community-5" title="5 stelle">
-                            ★
-                        </label>
-
-                    </div>
-
-                </fieldset>
-
-                <button
-                    type="submit"
-                    class="dettaglio-community-pulsante"
-                >
-                    {% if mia_valutazione %}
-                        Aggiorna valutazione →
-                    {% else %}
-                        Pubblica valutazione →
-                    {% endif %}
-                </button>
-
-            </form>
-
-        </section>
-
-    {% endif %}
-
+    </footer>
 
     <!-- ========================================== -->
     <!-- POPUP CONFERMA ELIMINAZIONE COMMUNITY      -->

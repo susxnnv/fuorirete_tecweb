@@ -2,13 +2,17 @@
 {% extends 'gestione/base_autenticata.html' %}
 {% load static %}
 
-{% block title %}Gestisci eventi | FuoriRete{% endblock %}
+{% block title %}
+    Gestisci eventi | FuoriRete
+{% endblock %}
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/eventi_community.css' %}">
+<link rel="stylesheet" href="{% static 'css/eventi_community.css' %}?v=3">
 
-<main class="eventi-pagina">
+<main class="eventi-pagina eventi-gestione-pagina">
+
+    <!-- NAVIGAZIONE -->
 
     <a
         href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}"
@@ -17,42 +21,61 @@
         ← Torna indietro
     </a>
 
-    <header class="eventi-intestazione">
+    <!-- INTESTAZIONE -->
 
-        <div>
-            <span class="eventi-etichetta">
-                GESTIONE COMMUNITY
-            </span>
+    <header class="eventi-intestazione eventi-gestione-intestazione">
 
-            <h1>Gestisci eventi</h1>
+        <div class="eventi-gestione-intestazione-testo">
+
+            <h1>
+                Gestisci eventi
+
+                <span class="eventi-decorazione" aria-hidden="true">
+                    <i></i><i></i><i></i>
+                </span>
+            </h1>
 
             <p>
                 Community:
                 <strong>{{ community.titolo }}</strong>
             </p>
+
         </div>
 
         <a
             href="{% url 'creazione_evento_community' community.pk %}?origine={{ request.GET.origine }}"
-            class="eventi-pulsante"
+            class="eventi-pulsante eventi-gestione-aggiungi"
         >
-            + Aggiungi evento
+            <span class="eventi-gestione-plus" aria-hidden="true">+</span>
+            Aggiungi evento
         </a>
 
     </header>
 
+    <!-- MESSAGGI -->
+
     {% if messages %}
+
         {% for message in messages %}
-            <p class="eventi-feedback">{{ message }}</p>
+
+            <p class="eventi-feedback" role="status">
+                {{ message }}
+            </p>
+
         {% endfor %}
+
     {% endif %}
 
 
-    <!-- EVENTI IN PROGRAMMA -->
+    <!-- ==========================================
+         EVENTI IN PROGRAMMA
+    ========================================== -->
 
-    <section class="eventi-sezione">
+    <section class="eventi-sezione" aria-labelledby="titolo-eventi-futuri">
 
-        <h2>Eventi in programma</h2>
+        <h2 id="titolo-eventi-futuri">
+            Eventi in programma
+        </h2>
 
         <div class="eventi-elenco">
 
@@ -62,48 +85,168 @@
 
                     <div class="eventi-card-contenuto">
 
-                        <div class="eventi-data">
-                            <strong>{{ evento.inizio|date:"d" }}</strong>
-                            <span>{{ evento.inizio|date:"M"|upper }}</span>
+                        <!-- FOTO COMMUNITY -->
+
+                        <div class="eventi-foto-contenitore">
+
+                            {% if community.immagine %}
+
+                                <img
+                                    src="{{ community.immagine.url }}"
+                                    alt="Immagine della community {{ community.titolo }}"
+                                    class="eventi-foto-community"
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <div
+                                    class="eventi-foto-placeholder"
+                                    aria-hidden="true"
+                                >
+                                    ♡
+                                </div>
+
+                            {% endif %}
+
                         </div>
+
+                        <!-- INFORMAZIONI EVENTO -->
 
                         <div class="eventi-card-info">
 
-                            <h3>{{ evento.titolo }}</h3>
+                            <div class="eventi-card-intestazione">
 
-                            <p>
-                                ⏱ {{ evento.inizio|date:"d/m/Y H:i" }}
-                                {% if evento.fine %}
-                                    – {{ evento.fine|date:"d/m/Y H:i" }}
-                                {% endif %}
-                            </p>
+                                <h3>{{ evento.titolo }}</h3>
 
-                            <p>⌖ {{ evento.luogo }}</p>
+                                <span class="eventi-stato eventi-stato-futuro">
+                                    In programma
+                                </span>
 
-                            <p>
-                                {% if evento.costo == 0 %}
-                                    Gratuito
-                                {% else %}
-                                    € {{ evento.costo|floatformat:2 }}
-                                {% endif %}
-                            </p>
+                            </div>
+
+                            <!-- DATA E ORARIO -->
+
+                            <div class="eventi-meta">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.9"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <rect x="3" y="5" width="18" height="16" rx="2"/>
+                                    <path d="M7 3v4M17 3v4M3 10h18"/>
+                                </svg>
+
+                                <span class="eventi-orario">
+
+                                    {{ evento.inizio|date:"d/m/Y" }}
+                                    ·
+                                    {{ evento.inizio|date:"H:i" }}
+
+                                    {% if evento.fine %}
+                                        –
+                                        {% if evento.inizio|date:"Y-m-d" != evento.fine|date:"Y-m-d" %}
+                                            {{ evento.fine|date:"d/m/Y" }}
+                                        {% endif %}
+                                        {{ evento.fine|date:"H:i" }}
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+                            <!-- LUOGO -->
+
+                            <div class="eventi-meta">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.9"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                                    <circle cx="12" cy="10" r="2.5"/>
+                                </svg>
+
+                                <span>{{ evento.luogo }}</span>
+
+                            </div>
+
+                            <!-- DESCRIZIONE -->
 
                             {% if evento.descrizione %}
+
                                 <p class="eventi-descrizione">
                                     {{ evento.descrizione|linebreaksbr }}
                                 </p>
+
                             {% endif %}
 
-                            {% if evento.cosa_portare %}
-                                <p class="eventi-portare">
-                                    <strong>Cosa portare:</strong>
-                                    {{ evento.cosa_portare|linebreaksbr }}
-                                </p>
-                            {% endif %}
+                            <!-- COSTO E COSA PORTARE -->
+
+                            <div class="eventi-dettagli">
+
+                                <div class="eventi-costo">
+
+                                    <span
+                                        class="eventi-costo-icona"
+                                        aria-hidden="true"
+                                    >
+                                        €
+                                    </span>
+
+                                    <strong>
+                                        {% if evento.costo == 0 %}
+                                            Gratuito
+                                        {% else %}
+                                            {{ evento.costo|floatformat:2 }} €
+                                        {% endif %}
+                                    </strong>
+
+                                </div>
+
+                                {% if evento.cosa_portare %}
+
+                                    <div class="eventi-portare">
+
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.9"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            aria-hidden="true"
+                                        >
+                                            <rect x="4" y="7" width="16" height="14" rx="2"/>
+                                            <path d="M9 9V6a3 3 0 0 1 6 0v3"/>
+                                        </svg>
+
+                                        <span>
+                                            <strong>Cosa portare:</strong>
+                                            {{ evento.cosa_portare|linebreaksbr }}
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
 
                         </div>
 
                     </div>
+
+                    <!-- AZIONI ORGANIZZATORE -->
 
                     <div class="eventi-card-azioni">
 
@@ -111,7 +254,22 @@
                             href="{% url 'modifica_evento_community' community.pk evento.pk %}?origine={{ request.GET.origine }}"
                             class="eventi-azione-secondaria"
                         >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.9"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4Z"/>
+                            </svg>
+
                             Modifica
+
                         </a>
 
                         <button
@@ -120,7 +278,24 @@
                             data-elimina-url="{% url 'elimina_evento_community' community.pk evento.pk %}?origine={{ request.GET.origine }}"
                             data-elimina-titolo="{{ evento.titolo }}"
                         >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.9"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M3 6h18"/>
+                                <path d="M8 6V4h8v2"/>
+                                <path d="M5 6l1 15h12l1-15"/>
+                                <path d="M10 10v7M14 10v7"/>
+                            </svg>
+
                             Elimina
+
                         </button>
 
                     </div>
@@ -140,11 +315,15 @@
     </section>
 
 
-    <!-- EVENTI PASSATI -->
+    <!-- ==========================================
+         EVENTI PASSATI
+    ========================================== -->
 
-    <section class="eventi-sezione">
+    <section class="eventi-sezione" aria-labelledby="titolo-eventi-passati">
 
-        <h2>Eventi passati</h2>
+        <h2 id="titolo-eventi-passati">
+            Eventi passati
+        </h2>
 
         <div class="eventi-elenco">
 
@@ -154,65 +333,217 @@
 
                     <div class="eventi-card-contenuto">
 
-                        <div class="eventi-data">
-                            <strong>{{ evento.inizio|date:"d" }}</strong>
-                            <span>{{ evento.inizio|date:"M"|upper }}</span>
+                        <!-- FOTO COMMUNITY -->
+
+                        <div class="eventi-foto-contenitore">
+
+                            {% if community.immagine %}
+
+                                <img
+                                    src="{{ community.immagine.url }}"
+                                    alt="Immagine della community {{ community.titolo }}"
+                                    class="eventi-foto-community"
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <div
+                                    class="eventi-foto-placeholder"
+                                    aria-hidden="true"
+                                >
+                                    ♡
+                                </div>
+
+                            {% endif %}
+
                         </div>
+
+                        <!-- INFORMAZIONI EVENTO -->
 
                         <div class="eventi-card-info">
 
-                            <h3>{{ evento.titolo }}</h3>
+                            <div class="eventi-card-intestazione">
 
-                            <p>
-                                ⏱ {{ evento.inizio|date:"d/m/Y H:i" }}
-                                {% if evento.fine %}
-                                    – {{ evento.fine|date:"d/m/Y H:i" }}
-                                {% endif %}
-                            </p>
+                                <h3>{{ evento.titolo }}</h3>
 
-                            <p>⌖ {{ evento.luogo }}</p>
+                                <span class="eventi-stato eventi-stato-passato">
+                                    Concluso
+                                </span>
 
-                            <p>
-                                {% if evento.costo == 0 %}
-                                    Gratuito
-                                {% else %}
-                                    € {{ evento.costo|floatformat:2 }}
-                                {% endif %}
-                            </p>
+                            </div>
+
+                            <!-- DATA E ORARIO -->
+
+                            <div class="eventi-meta">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.9"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <rect x="3" y="5" width="18" height="16" rx="2"/>
+                                    <path d="M7 3v4M17 3v4M3 10h18"/>
+                                </svg>
+
+                                <span class="eventi-orario">
+
+                                    {{ evento.inizio|date:"d/m/Y" }}
+                                    ·
+                                    {{ evento.inizio|date:"H:i" }}
+
+                                    {% if evento.fine %}
+                                        –
+                                        {% if evento.inizio|date:"Y-m-d" != evento.fine|date:"Y-m-d" %}
+                                            {{ evento.fine|date:"d/m/Y" }}
+                                        {% endif %}
+                                        {{ evento.fine|date:"H:i" }}
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+                            <!-- LUOGO -->
+
+                            <div class="eventi-meta">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.9"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                                    <circle cx="12" cy="10" r="2.5"/>
+                                </svg>
+
+                                <span>{{ evento.luogo }}</span>
+
+                            </div>
+
+                            <!-- DESCRIZIONE -->
 
                             {% if evento.descrizione %}
+
                                 <p class="eventi-descrizione">
                                     {{ evento.descrizione|linebreaksbr }}
                                 </p>
+
                             {% endif %}
 
-                            {% if evento.cosa_portare %}
-                                <p class="eventi-portare">
-                                    <strong>Cosa portare:</strong>
-                                    {{ evento.cosa_portare|linebreaksbr }}
-                                </p>
-                            {% endif %}
+                            <!-- COSTO E COSA PORTARE -->
+
+                            <div class="eventi-dettagli">
+
+                                <div class="eventi-costo">
+
+                                    <span
+                                        class="eventi-costo-icona"
+                                        aria-hidden="true"
+                                    >
+                                        €
+                                    </span>
+
+                                    <strong>
+                                        {% if evento.costo == 0 %}
+                                            Gratuito
+                                        {% else %}
+                                            {{ evento.costo|floatformat:2 }} €
+                                        {% endif %}
+                                    </strong>
+
+                                </div>
+
+                                {% if evento.cosa_portare %}
+
+                                    <div class="eventi-portare">
+
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.9"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            aria-hidden="true"
+                                        >
+                                            <rect x="4" y="7" width="16" height="14" rx="2"/>
+                                            <path d="M9 9V6a3 3 0 0 1 6 0v3"/>
+                                        </svg>
+
+                                        <span>
+                                            <strong>Cosa portare:</strong>
+                                            {{ evento.cosa_portare|linebreaksbr }}
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
 
                         </div>
 
                     </div>
 
+                    <!-- AZIONI ORGANIZZATORE -->
+
                     <div class="eventi-card-azioni">
 
                         <a
-                            href="{% url 'modifica_evento_community' community.pk evento.pk %}"
+                            href="{% url 'modifica_evento_community' community.pk evento.pk %}?origine={{ request.GET.origine }}"
                             class="eventi-azione-secondaria"
                         >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.9"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4Z"/>
+                            </svg>
+
                             Modifica
+
                         </a>
 
                         <button
                             type="button"
                             class="eventi-azione-elimina apri-elimina-evento"
-                            data-elimina-url="{% url 'elimina_evento_community' community.pk evento.pk %}"
+                            data-elimina-url="{% url 'elimina_evento_community' community.pk evento.pk %}?origine={{ request.GET.origine }}"
                             data-elimina-titolo="{{ evento.titolo }}"
                         >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.9"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M3 6h18"/>
+                                <path d="M8 6V4h8v2"/>
+                                <path d="M5 6l1 15h12l1-15"/>
+                                <path d="M10 10v7M14 10v7"/>
+                            </svg>
+
                             Elimina
+
                         </button>
 
                     </div>
@@ -234,13 +565,16 @@
 </main>
 
 
-<!-- POPUP ELIMINAZIONE -->
+<!-- ==========================================
+     POPUP ELIMINAZIONE
+========================================== -->
 
 <div
     id="elimina-evento-overlay"
     class="eventi-overlay"
     hidden
 >
+
     <section
         class="eventi-popup"
         role="dialog"
@@ -272,6 +606,7 @@
                 id="elimina-evento-form"
                 method="post"
             >
+
                 {% csrf_token %}
 
                 <button
@@ -286,8 +621,13 @@
         </div>
 
     </section>
+
 </div>
 
-<script src="{% static 'js/gestione_eventi.js' %}" defer></script>
+
+<script
+    src="{% static 'js/gestione_eventi.js' %}"
+    defer
+></script>
 
 {% endblock %}

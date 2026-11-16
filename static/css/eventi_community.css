@@ -3,64 +3,516 @@
    EVENTI COMMUNITY - FUORIRETE
 ========================================== */
 
-.eventi-pagina {
-    width: 100%;
-    max-width: 900px;
-    margin: 25px auto 65px;
-    color: #302823;
+/* ==========================================
+   SFONDO E LAYOUT
+========================================== */
+
+/* Lo sfondo deve coprire tutta la pagina */
+
+body:has(.eventi-pagina) {
+    background: linear-gradient(
+        115deg,
+        #f8d9f2 0%,
+        #f1eaff 31%,
+        #e5efff 66%,
+        #b8eef8 100%
+    );
+    background-attachment: fixed;
 }
 
+/* Il contenitore autenticato non deve limitare lo sfondo */
+
+body:has(.eventi-pagina) .area-contenuto {
+    width: 100%;
+    max-width: none;
+    min-height: calc(100vh - 75px);
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+    background: transparent;
+}
+
+/* Il contenuto resta centrato */
+
+.eventi-pagina {
+    width: calc(100% - 40px);
+    max-width: 1040px;
+
+    margin: 0 auto;
+    padding: 35px 0 80px;
+
+    box-sizing: border-box;
+
+    color: #17133e;
+}
+
+/* ==========================================
+   COLLEGAMENTO INDIETRO
+========================================== */
+
 .eventi-indietro {
-    display: inline-block;
-    margin-bottom: 23px;
-    color: #fa5943;
-    font-size: 12px;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 25px;
+
+    color: #ff584f;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
     text-decoration: none;
+
+    transition: color .2s ease;
 }
 
 .eventi-indietro:hover {
+    color: #e84643;
     text-decoration: underline;
 }
 
-/* INTESTAZIONE */
+
+/* ==========================================
+   INTESTAZIONE
+========================================== */
 
 .eventi-intestazione {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 29px;
+    margin-bottom: 39px;
 }
 
 .eventi-etichetta {
     display: block;
-    margin-bottom: 9px;
-    color: #fa5943;
-    font-size: 10px;
+
+    margin-bottom: 16px;
+
+    color: #ff584f;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: .65px;
+    line-height: 1.5;
     text-transform: uppercase;
 }
 
 .eventi-intestazione h1 {
-    margin: 0 0 10px;
-    font-size: 27px;
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 9px;
+
+    color: #17133e;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -.8px;
 }
 
 .eventi-intestazione p {
     margin: 0;
-    color: #90796e;
-    font-size: 12px;
+
+    color: #30275d;
+    font-size: 16px;
+    font-weight: 500;
     line-height: 1.6;
 }
 
-.eventi-intestazione strong {
-    color: #44342c;
+
+/* DECORAZIONE CORALLO DEL TITOLO */
+
+.eventi-decorazione {
+    position: relative;
+
+    display: inline-block;
+    flex: 0 0 26px;
+
+    width: 26px;
+    height: 26px;
+    margin-top: -8px;
 }
 
-/* PULSANTI */
+.eventi-decorazione i {
+    position: absolute;
+    display: block;
+
+    width: 4px;
+    height: 13px;
+
+    border-radius: 8px;
+    background: #ff6259;
+}
+
+.eventi-decorazione i:nth-child(1) {
+    top: 0;
+    left: 7px;
+    transform: rotate(20deg);
+}
+
+.eventi-decorazione i:nth-child(2) {
+    top: 9px;
+    left: 17px;
+    transform: rotate(48deg);
+}
+
+.eventi-decorazione i:nth-child(3) {
+    top: 20px;
+    left: 19px;
+    height: 9px;
+    transform: rotate(70deg);
+}
+
+
+/* ==========================================
+   SEZIONI EVENTI
+========================================== */
+
+.eventi-sezione {
+    margin-bottom: 35px;
+}
+
+.eventi-sezione > h2 {
+    position: relative;
+
+    width: fit-content;
+    margin: 0 0 20px;
+    padding-bottom: 9px;
+
+    color: #17133e;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -.4px;
+}
+
+/* Sottolineatura piccola e delicata */
+
+.eventi-sezione > h2::after {
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 38px;
+    height: 2px;
+
+    border-radius: 5px;
+    background: #ff6259;
+}
+
+.eventi-elenco {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* ==========================================
+   CARD EVENTO
+========================================== */
+
+.eventi-card {
+    padding: 22px 25px;
+
+    border: 1px solid rgba(190, 166, 235, .36);
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, .96);
+
+    box-shadow:
+        0 12px 25px rgba(106, 69, 181, .10);
+
+    transition:
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+.eventi-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 15px 30px rgba(106, 69, 181, .14);
+}
+
+.eventi-card-passato {
+    background: rgba(255, 255, 255, .94);
+}
+
+.eventi-card-contenuto {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+}
+
+
+/* ==========================================
+   RIQUADRO DATA
+========================================== */
+
+.eventi-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 105px;
+
+    width: 105px;
+    min-height: 115px;
+    box-sizing: border-box;
+
+    padding: 13px 10px;
+
+    border-radius: 22px;
+
+    background: linear-gradient(
+        145deg,
+        #fff0ed 0%,
+        #ffe3df 100%
+    );
+
+    color: #ff584f;
+    text-align: center;
+}
+
+.eventi-data strong {
+    font-size: 41px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.eventi-data span {
+    margin-top: 5px;
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================
+   CONTENUTO DELLA CARD
+========================================== */
+
+.eventi-card-info {
+    position: relative;
+
+    flex: 1;
+    min-width: 0;
+
+    padding-left: 22px;
+    border-left: 1px solid #d8c9fa;
+}
+
+.eventi-card-intestazione {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+
+    margin-bottom: 9px;
+}
+
+.eventi-card-info h3 {
+    margin: 0;
+
+    color: #17133e;
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.35;
+    letter-spacing: -.4px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ==========================================
+   STATO EVENTO
+========================================== */
+
+.eventi-stato {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    min-height: 32px;
+    box-sizing: border-box;
+
+    padding: 7px 15px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.eventi-stato-futuro {
+    background: #ffe8e3;
+    color: #ed5148;
+}
+
+.eventi-stato-passato {
+    background: #eeebf4;
+    color: #38305d;
+}
+
+
+/* ==========================================
+   DATA, ORARIO E LUOGO
+========================================== */
+
+.eventi-meta {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    margin-bottom: 5px;
+
+    color: #242044;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+.eventi-meta svg {
+    flex: 0 0 19px;
+
+    width: 19px;
+    height: 19px;
+
+    margin-top: 1px;
+
+    color: #ff405d;
+}
+
+.eventi-orario {
+    font-weight: 700;
+}
+
+
+/* ==========================================
+   DESCRIZIONE
+========================================== */
+
+.eventi-card-info .eventi-descrizione {
+    margin: 12px 0 13px;
+
+    color: #292448;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ==========================================
+   COSTO E COSA PORTARE
+========================================== */
+
+.eventi-dettagli {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 13px 22px;
+}
+
+.eventi-costo {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    max-width: 100%;
+    box-sizing: border-box;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    background: #fff0e5;
+    color: #17133e;
+
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.eventi-costo-icona {
+    color: #f58a27;
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.eventi-costo strong {
+    font-weight: 800;
+}
+
+.eventi-portare {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    min-width: 0;
+    max-width: 100%;
+
+    color: #292448;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+.eventi-portare svg {
+    flex: 0 0 19px;
+
+    width: 19px;
+    height: 19px;
+
+    margin-top: 1px;
+
+    color: #ff405d;
+}
+
+.eventi-portare strong {
+    color: #17133e;
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   NESSUN EVENTO
+========================================== */
+
+.eventi-vuoto {
+    margin: 0;
+    padding: 30px;
+
+    border: 1px solid rgba(190, 166, 235, .36);
+    border-radius: 19px;
+
+    background: #ffffff;
+
+    box-shadow: 0 8px 20px rgba(106, 69, 181, .06);
+
+    color: #655b83;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+
+/* ==========================================
+   PULSANTI ESISTENTI
+========================================== */
 
 .eventi-pulsante {
     display: inline-flex;
@@ -122,96 +574,6 @@
     background: #ffe9e2;
 }
 
-/* SEZIONI */
-
-.eventi-sezione {
-    margin-bottom: 33px;
-}
-
-.eventi-sezione > h2 {
-    margin: 0 0 15px;
-    font-size: 18px;
-}
-
-.eventi-elenco {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-}
-
-/* CARD EVENTO */
-
-.eventi-card {
-    padding: 22px;
-    border: 1px solid #eae2dc;
-    border-radius: 18px;
-    background: #ffffff;
-    box-shadow: 0 4px 12px rgba(40,30,20,.035);
-}
-
-.eventi-card-passato {
-    background: #fffcfa;
-}
-
-.eventi-card-contenuto {
-    display: flex;
-    align-items: flex-start;
-    gap: 17px;
-}
-
-.eventi-data {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 67px;
-    width: 67px;
-    min-height: 73px;
-    box-sizing: border-box;
-    padding: 8px;
-    border-radius: 12px;
-    background: #fff0e9;
-    color: #fa5943;
-}
-
-.eventi-data strong {
-    font-size: 25px;
-    line-height: 1.2;
-}
-
-.eventi-data span {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.eventi-card-info {
-    min-width: 0;
-    flex: 1;
-}
-
-.eventi-card-info h3 {
-    margin: 0 0 12px;
-    font-size: 17px;
-    overflow-wrap: anywhere;
-}
-
-.eventi-card-info > p {
-    margin: 0 0 7px;
-    color: #806d62;
-    font-size: 12px;
-    line-height: 1.65;
-}
-
-.eventi-card-info .eventi-descrizione {
-    margin-top: 14px;
-    color: #514037;
-}
-
-.eventi-card-info .eventi-portare {
-    margin-top: 10px;
-}
-
 .eventi-card-azioni {
     display: flex;
     gap: 9px;
@@ -222,16 +584,10 @@
     border-top: 1px solid #f0e8e3;
 }
 
-.eventi-vuoto {
-    margin: 0;
-    padding: 30px;
-    border: 1px solid #eae2dc;
-    border-radius: 17px;
-    background: #ffffff;
-    color: #90796e;
-    font-size: 12px;
-    text-align: center;
-}
+
+/* ==========================================
+   FEEDBACK ESISTENTI
+========================================== */
 
 .eventi-feedback {
     margin-bottom: 20px;
@@ -243,7 +599,10 @@
     font-size: 12px;
 }
 
-/* FORM */
+
+/* ==========================================
+   FORM ESISTENTI
+========================================== */
 
 .eventi-form-card {
     padding: 29px;
@@ -321,7 +680,10 @@
     border-top: 1px solid #f0e8e3;
 }
 
-/* POPUP ELIMINAZIONE */
+
+/* ==========================================
+   POPUP ELIMINAZIONE ESISTENTE
+========================================== */
 
 .eventi-overlay {
     position: fixed;
@@ -374,29 +736,169 @@
     margin: 0;
 }
 
-/* RESPONSIVE */
 
-@media (max-width: 600px) {
+/* ==========================================
+   RESPONSIVE - TABLET
+========================================== */
+
+@media (max-width: 850px) {
+
+    .eventi-pagina {
+        width: calc(100% - 36px);
+    }
 
     .eventi-intestazione h1 {
-        font-size: 23px;
+        font-size: 29px;
     }
 
     .eventi-card {
-        padding: 17px;
+        padding: 20px;
     }
 
     .eventi-card-contenuto {
+        gap: 17px;
+    }
+
+    .eventi-card-info {
+        padding-left: 17px;
+    }
+
+    .eventi-card-info h3 {
+        font-size: 19px;
+    }
+
+}
+
+
+/* ==========================================
+   RESPONSIVE - MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .eventi-pagina {
+        width: calc(100% - 30px);
+        padding: 25px 0 55px;
+    }
+
+    .eventi-indietro {
+        margin-bottom: 22px;
+    }
+
+    .eventi-intestazione {
+        margin-bottom: 32px;
+    }
+
+    .eventi-etichetta {
+        margin-bottom: 14px;
+        font-size: 10px;
+    }
+
+    .eventi-intestazione h1 {
+        font-size: 25px;
+        letter-spacing: -.5px;
+    }
+
+    .eventi-intestazione p {
+        font-size: 14px;
+    }
+
+    .eventi-decorazione {
+        transform: scale(.75);
+        transform-origin: top left;
+    }
+
+    .eventi-sezione {
+        margin-bottom: 29px;
+    }
+
+    .eventi-sezione > h2 {
+        font-size: 19px;
+    }
+
+    .eventi-card {
+        padding: 17px 15px;
+        border-radius: 19px;
+    }
+
+    .eventi-card-contenuto {
+        align-items: flex-start;
         gap: 12px;
     }
 
     .eventi-data {
-        flex-basis: 56px;
-        width: 56px;
+        flex-basis: 57px;
+        width: 57px;
+        min-height: 70px;
+        padding: 8px 5px;
+        border-radius: 13px;
     }
 
     .eventi-data strong {
-        font-size: 22px;
+        font-size: 25px;
+    }
+
+    .eventi-data span {
+        margin-top: 2px;
+        font-size: 11px;
+    }
+
+    .eventi-card-info {
+        padding-left: 12px;
+    }
+
+    .eventi-card-intestazione {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+        margin-bottom: 12px;
+    }
+
+    .eventi-card-info h3 {
+        font-size: 16px;
+    }
+
+    .eventi-stato {
+        min-height: 25px;
+        padding: 5px 10px;
+        font-size: 10px;
+    }
+
+    .eventi-meta {
+        gap: 7px;
+        font-size: 11px;
+    }
+
+    .eventi-meta svg {
+        flex-basis: 16px;
+        width: 16px;
+        height: 16px;
+    }
+
+    .eventi-card-info .eventi-descrizione {
+        margin: 11px 0;
+        font-size: 12px;
+    }
+
+    .eventi-dettagli {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .eventi-costo {
+        font-size: 12px;
+    }
+
+    .eventi-portare {
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .eventi-portare svg {
+        flex-basis: 16px;
+        width: 16px;
+        height: 16px;
     }
 
     .eventi-form-card {
@@ -405,5 +907,889 @@
 
     .eventi-card-azioni {
         justify-content: flex-start;
+    }
+
+}
+
+
+/* ==========================================
+   SCHERMI MOLTO PICCOLI
+========================================== */
+
+@media (max-width: 380px) {
+
+    .eventi-data {
+        flex-basis: 48px;
+        width: 48px;
+    }
+
+    .eventi-card-contenuto {
+        gap: 9px;
+    }
+
+    .eventi-card-info {
+        padding-left: 9px;
+    }
+
+    .eventi-card-info h3 {
+        font-size: 15px;
+    }
+
+}
+
+
+/* ==========================================
+   EVENTI - RIFINITURA GRAFICA
+========================================== */
+
+/* CONTENITORE E SPAZIATURE */
+
+.eventi-pagina {
+    max-width: 950px;
+}
+
+.eventi-intestazione {
+    margin-bottom: 32px;
+}
+
+.eventi-intestazione h1 {
+    font-size: 29px;
+}
+
+.eventi-intestazione p {
+    font-size: 14px;
+}
+
+.eventi-sezione {
+    margin-bottom: 30px;
+}
+
+.eventi-sezione > h2 {
+    margin-bottom: 17px;
+    font-size: 19px;
+}
+
+/* Sottolineatura leggermente più evidente */
+
+.eventi-sezione > h2::after {
+    width: 40px;
+    height: 3px;
+}
+
+
+/* CARD PIÙ COMPATTE */
+
+.eventi-card {
+    padding: 19px 22px;
+    border-radius: 20px;
+}
+
+.eventi-card-contenuto {
+    gap: 17px;
+}
+
+.eventi-card-info {
+    padding-left: 17px;
+}
+
+.eventi-card-intestazione {
+    margin-bottom: 8px;
+}
+
+.eventi-card-info h3 {
+    font-size: 18px;
+}
+
+.eventi-stato {
+    min-height: 27px;
+    padding: 5px 12px;
+    font-size: 11px;
+}
+
+
+/* INFORMAZIONI EVENTO */
+
+.eventi-meta {
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: 12px;
+}
+
+.eventi-meta svg {
+    flex-basis: 17px;
+    width: 17px;
+    height: 17px;
+}
+
+.eventi-card-info .eventi-descrizione {
+    margin: 10px 0 12px;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+
+/* COSTO E COSA PORTARE */
+
+.eventi-dettagli {
+    gap: 12px;
+}
+
+.eventi-costo {
+    padding: 5px 11px;
+    gap: 7px;
+    font-size: 12px;
+}
+
+.eventi-costo-icona {
+    font-size: 17px;
+}
+
+/* Separatore verticale come nel prototipo */
+
+.eventi-portare {
+    position: relative;
+    padding-left: 18px;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.eventi-portare::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1px;
+    bottom: 1px;
+    width: 1px;
+    background: #c8b3f3;
+}
+
+.eventi-portare svg {
+    flex-basis: 17px;
+    width: 17px;
+    height: 17px;
+}
+
+
+/* FOTO DELLA COMMUNITY */
+
+.eventi-foto-community {
+    flex: 0 0 125px;
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .eventi-pagina {
+        width: calc(100% - 30px);
+    }
+
+    .eventi-intestazione h1 {
+        font-size: 24px;
+    }
+
+    .eventi-sezione > h2 {
+        font-size: 18px;
+    }
+
+    .eventi-card {
+        padding: 15px;
+    }
+
+    .eventi-card-contenuto {
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .eventi-card-info {
+        padding-left: 10px;
+    }
+
+    .eventi-card-info h3 {
+        font-size: 16px;
+    }
+
+    .eventi-foto-community {
+        flex-basis: 65px;
+        width: 65px;
+        height: 65px;
+        border-radius: 11px;
+    }
+
+    .eventi-portare {
+        padding-left: 0;
+    }
+
+    .eventi-portare::before {
+        display: none;
+    }
+
+}
+
+
+/* ==========================================
+   FOTO COMMUNITY NELLE CARD EVENTO
+========================================== */
+
+.eventi-foto-contenitore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 125px;
+    width: 125px;
+    height: 125px;
+
+    overflow: hidden;
+    border-radius: 15px;
+
+    background: #f0eaff;
+}
+
+.eventi-foto-community {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.eventi-foto-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    color: #7953df;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .eventi-foto-contenitore {
+        flex-basis: 65px;
+        width: 65px;
+        height: 65px;
+        border-radius: 11px;
+    }
+
+    .eventi-foto-placeholder {
+        font-size: 24px;
+    }
+
+}
+
+
+/* ==========================================
+   GESTIONE EVENTI COMMUNITY - FUORIRETE
+   Stili esclusivi della pagina organizzatore
+========================================== */
+
+/* ==========================================
+   INTESTAZIONE
+========================================== */
+
+.eventi-gestione-pagina .eventi-gestione-intestazione {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 35px;
+}
+
+.eventi-gestione-intestazione-testo {
+    flex: 1;
+    min-width: 0;
+}
+
+/* TITOLO E SOTTOLINEATURA */
+
+.eventi-gestione-pagina .eventi-intestazione h1 {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: fit-content;
+    max-width: 100%;
+
+    margin: 0 0 18px;
+    padding-bottom: 7px;
+
+    color: #17133e;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -.8px;
+    line-height: 1.25;
+}
+
+.eventi-gestione-pagina .eventi-intestazione h1::after {
+    display: none;
+}
+
+/* NOME COMMUNITY */
+
+.eventi-gestione-pagina .eventi-intestazione p {
+    margin: 0;
+    color: #625c83;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.eventi-gestione-pagina .eventi-intestazione p strong {
+    color: #17133e;
+    font-weight: 800;
+}
+
+/* ==========================================
+   AGGIUNGI EVENTO
+========================================== */
+
+.eventi-gestione-pagina .eventi-gestione-aggiungi,
+.eventi-gestione-pagina .eventi-gestione-aggiungi:visited {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    flex-shrink: 0;
+    min-height: 49px;
+    padding: 11px 23px;
+
+    border: none;
+    border-radius: 15px;
+
+    background: linear-gradient(
+        105deg,
+        #ff1684 0%,
+        #ff6554 100%
+    );
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+
+    box-shadow: 0 7px 17px rgba(255, 42, 122, .19);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.eventi-gestione-pagina .eventi-gestione-aggiungi:hover {
+    transform: translateY(-2px);
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 10px 22px rgba(255, 42, 122, .24);
+}
+
+.eventi-gestione-plus {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+/* ==========================================
+   CARD E AZIONI ORGANIZZATORE
+========================================== */
+
+/* Le card riutilizzano tutti gli stili
+   della pagina Eventi della community. */
+
+.eventi-gestione-pagina .eventi-card {
+    overflow: hidden;
+}
+
+/* AZIONI IN FONDO ALLA CARD */
+
+
+/* ==========================================
+   GESTIONE EVENTI - CARD AZIONI LATERALI
+========================================== */
+
+/* CARD PRINCIPALE */
+
+.eventi-gestione-pagina .eventi-card {
+    position: relative;
+    display: block;
+
+    width: calc(100% - 225px);
+    box-sizing: border-box;
+
+    overflow: visible;
+}
+
+.eventi-gestione-pagina .eventi-card-contenuto {
+    width: 100%;
+    min-width: 0;
+}
+
+/* CONTENITORE AZIONI A DESTRA */
+
+.eventi-gestione-pagina .eventi-card-azioni {
+    position: absolute;
+
+    top: 0;
+    left: calc(100% + 17px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+
+    width: 208px;
+
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* STILE COMUNE DELLE DUE CARD */
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-secondaria,
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-elimina {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    column-gap: 12px;
+    row-gap: 4px;
+
+    width: 100%;
+    min-height: 91px;
+
+    padding: 18px;
+
+    border-radius: 20px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: left;
+    line-height: 1.4;
+
+    cursor: pointer;
+
+    box-shadow: 0 7px 17px rgba(73, 45, 142, .11);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+/* ICONE */
+
+.eventi-gestione-pagina .eventi-card-azioni svg {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+}
+
+/* SOTTOTITOLI */
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-secondaria::after {
+    content: "Aggiorna i dettagli";
+    display: block;
+    flex-basis: 100%;
+
+    padding-left: 40px;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-elimina::after {
+    content: "Elimina l'evento";
+    display: block;
+    flex-basis: 100%;
+
+    padding-left: 40px;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* CARD MODIFICA - VIOLA */
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-secondaria {
+    background: #f1eaff;
+    border: 1px solid #c9afff;
+    border-bottom: 2px solid #a777ff;
+
+    color: #6738e8;
+}
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-secondaria svg {
+    color: #6738e8;
+}
+
+/* CARD ELIMINA - CORALLO */
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-elimina {
+    background: linear-gradient(
+        110deg,
+        #ff2780,
+        #ff6056
+    );
+
+    border: 1px solid rgba(255,255,255,.8);
+
+    color: #ffffff;
+}
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-elimina svg {
+    color: #ffffff;
+}
+
+/* HOVER */
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-secondaria:hover,
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-elimina:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(73, 45, 142, .16);
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 850px) {
+
+    .eventi-gestione-pagina .eventi-card {
+        width: 100%;
+    }
+
+    .eventi-gestione-pagina .eventi-card-azioni {
+        position: static;
+
+        flex-direction: row;
+        width: 100%;
+
+        margin-top: 20px;
+        padding-top: 16px;
+
+        border-top: 1px solid #eae1f5;
+    }
+
+    .eventi-gestione-pagina
+    .eventi-card-azioni .eventi-azione-secondaria,
+
+    .eventi-gestione-pagina
+    .eventi-card-azioni .eventi-azione-elimina {
+        flex: 1;
+        min-width: 0;
+        min-height: 75px;
+        padding: 13px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .eventi-gestione-pagina .eventi-card-azioni {
+        flex-direction: column;
+    }
+
+    .eventi-gestione-pagina
+    .eventi-card-azioni .eventi-azione-secondaria,
+
+    .eventi-gestione-pagina
+    .eventi-card-azioni .eventi-azione-elimina {
+        width: 100%;
+    }
+}
+
+
+/* PULSANTI */
+
+.eventi-gestione-pagina .eventi-azione-secondaria,
+.eventi-gestione-pagina .eventi-azione-elimina {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 39px;
+    padding: 9px 15px;
+
+    border-radius: 12px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.3;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+/* ICONE */
+
+.eventi-gestione-pagina .eventi-card-azioni svg {
+    display: block;
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+}
+
+/* MODIFICA */
+
+.eventi-gestione-pagina .eventi-azione-secondaria {
+    border: 1px solid #d0baff;
+    background: #faf7ff;
+    color: #38216d;
+}
+
+.eventi-gestione-pagina .eventi-azione-secondaria svg {
+    color: #6236df;
+}
+
+.eventi-gestione-pagina .eventi-azione-secondaria:hover {
+    border-color: #aa89ff;
+    background: #f0eaff;
+    color: #6236df;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+/* ELIMINA */
+
+.eventi-gestione-pagina .eventi-azione-elimina {
+    border: 1px solid #ffc1cd;
+    background: #fff1f5;
+    color: #ff365d;
+}
+
+.eventi-gestione-pagina .eventi-azione-elimina svg {
+    color: #ff365d;
+}
+
+.eventi-gestione-pagina .eventi-azione-elimina:hover {
+    border-color: #ff8299;
+    background: #ffe4eb;
+    color: #e52c62;
+    transform: translateY(-1px);
+}
+
+/* ==========================================
+   MESSAGGI DI CONFERMA
+========================================== */
+
+.eventi-gestione-pagina .eventi-feedback {
+    margin-bottom: 20px;
+    padding: 13px 16px;
+
+    border: 1px solid #ded1ff;
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, .95);
+    color: #38216d;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ==========================================
+   POPUP ELIMINAZIONE
+========================================== */
+
+#elimina-evento-overlay {
+    background: rgba(24, 19, 55, .50);
+}
+
+#elimina-evento-overlay .eventi-popup {
+    max-width: 460px;
+    padding: 28px;
+
+    border: 1px solid #e5dbf7;
+    border-radius: 22px;
+
+    background: #ffffff;
+    box-shadow: 0 15px 45px rgba(35, 26, 70, .20);
+
+    color: #17133e;
+    font-family: "Manrope", Arial, sans-serif;
+}
+
+#elimina-evento-overlay .eventi-popup h2 {
+    margin: 0 0 13px;
+
+    color: #17133e;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+#elimina-evento-overlay .eventi-popup p {
+    color: #625c83;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+#elimina-evento-overlay .eventi-popup-azioni {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 11px;
+    flex-wrap: wrap;
+
+    margin-top: 25px;
+}
+
+#elimina-evento-overlay .eventi-azione-secondaria,
+#elimina-evento-overlay .eventi-azione-elimina {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+    padding: 11px 17px;
+
+    border-radius: 12px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#elimina-evento-overlay .eventi-azione-secondaria {
+    border: 1px solid #d0baff;
+    background: #faf7ff;
+    color: #38216d;
+}
+
+#elimina-evento-overlay .eventi-azione-secondaria:hover {
+    background: #f0eaff;
+    color: #6236df;
+}
+
+#elimina-evento-overlay .eventi-azione-elimina {
+    border: 1px solid transparent;
+    background: linear-gradient(105deg, #ff1684, #ff6554);
+    color: #ffffff;
+}
+
+#elimina-evento-overlay .eventi-azione-elimina:hover {
+    background: linear-gradient(105deg, #ed1378, #ed554a);
+}
+
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
+
+.eventi-gestione-pagina a:focus-visible,
+.eventi-gestione-pagina button:focus-visible,
+#elimina-evento-overlay button:focus-visible {
+    outline: 3px solid #7545f5;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .eventi-gestione-pagina .eventi-gestione-intestazione {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .eventi-gestione-pagina .eventi-intestazione h1 {
+        font-size: 26px;
+    }
+
+    .eventi-gestione-pagina .eventi-gestione-aggiungi {
+        min-height: 44px;
+        padding: 10px 17px;
+    }
+
+    .eventi-gestione-pagina .eventi-card-azioni {
+        justify-content: flex-end;
+    }
+
+    .eventi-gestione-pagina .eventi-azione-secondaria,
+    .eventi-gestione-pagina .eventi-azione-elimina {
+        font-size: 11px;
+    }
+
+    #elimina-evento-overlay .eventi-popup {
+        padding: 23px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .eventi-gestione-pagina .eventi-intestazione h1 {
+        font-size: 24px;
+    }
+
+    .eventi-gestione-pagina .eventi-card-azioni {
+        gap: 8px;
+    }
+
+    .eventi-gestione-pagina .eventi-azione-secondaria,
+    .eventi-gestione-pagina .eventi-azione-elimina {
+        padding: 9px 12px;
+    }
+}
+
+/* ==========================================
+   GESTIONE EVENTI - RESPONSIVE AZIONI
+========================================== */
+
+@media (max-width: 800px) {
+
+    .eventi-gestione-pagina .eventi-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .eventi-gestione-pagina .eventi-card-azioni {
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+
+@media (max-width: 420px) {
+
+    .eventi-gestione-pagina .eventi-card-azioni {
+        flex-wrap: wrap;
     }
 }

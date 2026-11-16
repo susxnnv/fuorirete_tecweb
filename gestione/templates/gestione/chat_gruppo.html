@@ -8,11 +8,12 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/chat_gruppo.css' %}">
+<link rel="stylesheet" href="{% static 'css/chat_gruppo.css' %}?v=2">
 
 <main class="chat-gruppo-pagina">
 
-    <!-- INDIETRO -->
+    <!-- COLLEGAMENTO INDIETRO -->
+
     {% if origine_community == 'notifiche' %}
 
         <a
@@ -33,6 +34,7 @@
 
     {% endif %}
 
+
     <!-- CONTENITORE CHAT -->
 
     <section class="chat-gruppo-contenitore">
@@ -41,15 +43,29 @@
 
         <header class="chat-gruppo-intestazione">
 
-            <div class="chat-gruppo-icona" aria-hidden="true">
-                ♧
+            <!-- FOTO DELLA COMMUNITY -->
+
+            <div class="chat-gruppo-foto">
+
+                {% if community.immagine %}
+
+                    <img
+                        src="{{ community.immagine.url }}"
+                        alt="Immagine della community {{ community.titolo }}"
+                    >
+
+                {% else %}
+
+                    <span aria-hidden="true">♡</span>
+
+                {% endif %}
+
             </div>
 
-            <div class="chat-gruppo-informazioni">
 
-                <span class="chat-gruppo-etichetta">
-                    CHAT DELLA COMMUNITY
-                </span>
+            <!-- INFORMAZIONI COMMUNITY -->
+
+            <div class="chat-gruppo-informazioni">
 
                 <h1>{{ community.titolo }}</h1>
 
@@ -60,15 +76,13 @@
                     {% else %}
                         membri
                     {% endif %}
-                    · {{ community.citta }}
                 </p>
 
             </div>
 
         </header>
 
-
-        <!-- MESSAGGI -->
+        <!-- AREA MESSAGGI -->
 
         <div
             class="chat-gruppo-messaggi"
@@ -78,6 +92,21 @@
 
             {% for messaggio in messaggi %}
 
+                <!-- DATA DELLA CONVERSAZIONE -->
+
+                {% ifchanged messaggio.data_ora|date:"Y-m-d" %}
+
+                    <div class="chat-gruppo-separatore-data">
+
+                        <span>
+                            {{ messaggio.data_ora|date:"j F" }}
+                        </span>
+
+                    </div>
+
+                {% endifchanged %}
+
+
                 {% if messaggio.autore_id == mio_profilo.pk %}
 
                     <!-- MESSAGGIO INVIATO -->
@@ -86,17 +115,20 @@
 
                         <div class="chat-gruppo-bolla">
 
-                            <span class="chat-gruppo-autore">
-                                Tu
-                            </span>
-
-                            <p>{{ messaggio.testo|linebreaksbr }}</p>
-
-                            <time datetime="{{ messaggio.data_ora|date:'c' }}">
-                                {{ messaggio.data_ora|date:"d/m/Y H:i" }}
-                            </time>
+                            <p>
+                                {{ messaggio.testo|linebreaksbr }}
+                            </p>
 
                         </div>
+
+                        <!-- ORARIO ESTERNO -->
+
+                        <time
+                            class="chat-gruppo-orario"
+                            datetime="{{ messaggio.data_ora|date:'c' }}"
+                        >
+                            {{ messaggio.data_ora|date:"H:i" }}
+                        </time>
 
                     </article>
 
@@ -105,6 +137,8 @@
                     <!-- MESSAGGIO RICEVUTO -->
 
                     <article class="chat-gruppo-messaggio chat-gruppo-altro">
+
+                        <!-- FOTO UTENTE -->
 
                         <div class="chat-gruppo-avatar">
 
@@ -117,22 +151,36 @@
 
                             {% else %}
 
-                                <span aria-hidden="true">♧</span>
+                                <span aria-hidden="true">♡</span>
 
                             {% endif %}
 
                         </div>
 
-                        <div class="chat-gruppo-bolla">
 
-                            <span class="chat-gruppo-autore">
-                                {{ messaggio.autore.nome }}
-                            </span>
+                        <!-- MESSAGGIO E ORARIO -->
 
-                            <p>{{ messaggio.testo|linebreaksbr }}</p>
+                        <div class="chat-gruppo-messaggio-contenuto">
 
-                            <time datetime="{{ messaggio.data_ora|date:'c' }}">
-                                {{ messaggio.data_ora|date:"d/m/Y H:i" }}
+                            <div class="chat-gruppo-bolla">
+
+                                <span class="chat-gruppo-autore">
+                                    {{ messaggio.autore.nome }}
+                                </span>
+
+                                <p>
+                                    {{ messaggio.testo|linebreaksbr }}
+                                </p>
+
+                            </div>
+
+                            <!-- ORARIO ESTERNO -->
+
+                            <time
+                                class="chat-gruppo-orario"
+                                datetime="{{ messaggio.data_ora|date:'c' }}"
+                            >
+                                {{ messaggio.data_ora|date:"H:i" }}
                             </time>
 
                         </div>
@@ -143,21 +191,36 @@
 
             {% empty %}
 
+                <!-- NESSUN MESSAGGIO -->
+
                 <div class="chat-gruppo-vuota">
 
-                    <span aria-hidden="true">♧</span>
+                    <span
+                        class="chat-gruppo-decorazione"
+                        aria-hidden="true"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
 
-                    <h2>La conversazione inizia qui!</h2>
+                    <h2>
+                        La conversazione inizia qui!
+                    </h2>
 
                     <p>
                         Non ci sono ancora messaggi.
 
                         {% if anteprima_membro %}
+
                             I membri possono utilizzare
                             questa chat per conoscersi.
+
                         {% else %}
+
                             Scrivi qualcosa per iniziare
                             a conoscere gli altri membri.
+
                         {% endif %}
                     </p>
 
@@ -168,15 +231,15 @@
         </div>
 
 
-        <!-- FORM INVIO / MODALITÀ ANTEPRIMA -->
+        <!-- FORM DI INVIO / ANTEPRIMA -->
 
         <div class="chat-gruppo-compositore">
 
             {% if anteprima_membro %}
 
-                <!-- ANTEPRIMA: SOLA LETTURA -->
+                <!-- MODALITÀ ANTEPRIMA: SOLA LETTURA -->
 
-                <p class="chat-gruppo-nota">
+                <p class="chat-gruppo-nota chat-gruppo-nota-anteprima">
                     Stai visualizzando la chat in modalità anteprima.
                     Puoi leggere i messaggi, ma non inviarne.
                 </p>
@@ -193,6 +256,7 @@
 
                 {% endif %}
 
+
                 <form method="post">
 
                     {% csrf_token %}
@@ -203,13 +267,6 @@
                         value="{{ origine_community }}"
                     >
 
-                    <label
-                        for="chat-gruppo-testo"
-                        class="chat-gruppo-label"
-                    >
-                        Scrivi un messaggio
-                    </label>
-
                     <div class="chat-gruppo-input-riga">
 
                         <textarea
@@ -217,7 +274,8 @@
                             name="testo"
                             maxlength="2000"
                             rows="2"
-                            placeholder="Scrivi alla community..."
+                            placeholder="Scrivi un messaggio..."
+                            aria-label="Scrivi un messaggio"
                             required
                         >{{ testo_inserito }}</textarea>
 
@@ -225,12 +283,13 @@
                             type="submit"
                             class="chat-gruppo-invia"
                         >
-                            Invia →
+                            Invia
                         </button>
 
                     </div>
 
                 </form>
+
 
                 <p class="chat-gruppo-nota">
                     La chat non è in tempo reale.

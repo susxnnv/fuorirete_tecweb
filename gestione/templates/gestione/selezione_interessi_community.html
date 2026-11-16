@@ -12,16 +12,16 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/selezione_interessi.css' %}?v=4">
+<link rel="stylesheet" href="{% static 'css/selezione_interessi.css' %}?v=5">
 
-<main class="interessi-pagina">
+<main class="interessi-pagina  interessi-community-pagina">
 
     <!-- COLLEGAMENTO INDIETRO DURANTE LA MODIFICA -->
 
     {% if modalita_modifica %}
 
         <a
-            href="{% url 'community_gestite' %}?origine={{ request.GET.origine }}"
+            href="{% url 'modifica_community' community.pk %}?origine={{ request.GET.origine|default:'community_gestite' }}"
             class="interessi-community-indietro"
         >
             ← Torna alla modifica della community
@@ -29,43 +29,83 @@
 
     {% endif %}
 
-
-    <!-- INTESTAZIONE -->
+    <!-- =====================================
+        INTESTAZIONE
+    ===================================== -->
 
     <header class="interessi-intestazione">
 
-        {% if modalita_modifica %}
+        <div class="interessi-intestazione-testo">
 
-            <span class="interessi-fase">
-                MODIFICA COMMUNITY
+            {% if modalita_modifica %}
+
+                <span class="interessi-fase">
+                    MODIFICA COMMUNITY
+                </span>
+
+                <div class="interessi-titolo-contenitore">
+
+                    <h1>Modifica gli interessi della community</h1>
+
+                    <span class="interessi-titolo-trilli"
+                        aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+
+                </div>
+
+            {% else %}
+
+                <span class="interessi-fase">
+                    PASSAGGIO 2 DI 2
+                </span>
+
+                <div class="interessi-titolo-contenitore">
+
+                    <h1>Scegli gli interessi della community</h1>
+
+                    <span class="interessi-titolo-trilli"
+                        aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+            <p class="interessi-descrizione">
+                Quali passioni uniranno i membri di
+                <strong>{{ community.titolo }}</strong>?
+            </p>
+
+            <p class="interessi-istruzioni">
+                Seleziona da 1 a 6 interessi.
+            </p>
+
+        </div>
+
+        <!-- RIQUADRO INFORMATIVO -->
+
+        <aside class="interessi-info">
+
+            <span class="interessi-info-icona"
+                aria-hidden="true">
+                i
             </span>
 
-            <h1>Modifica gli interessi della community</h1>
+            <p>
+                Apri una categoria per scoprire gli interessi
+                specifici oppure scegli direttamente
+                la categoria generale.
+            </p>
 
-        {% else %}
-
-            <span class="interessi-fase">
-                PASSAGGIO 2 DI 2
-            </span>
-
-            <h1>Scegli gli interessi della community</h1>
-
-        {% endif %}
-
-        <p>
-            Quali passioni uniranno i membri di
-            <strong>{{ community.titolo }}</strong>?
-            Apri una categoria per scoprire gli interessi
-            specifici oppure scegli direttamente
-            la categoria generale.
-        </p>
-
-        <p class="interessi-istruzioni">
-            Seleziona da 1 a 6 interessi.
-        </p>
+        </aside>
 
     </header>
-
 
     <!-- FORM SELEZIONE INTERESSI -->
 
@@ -123,13 +163,54 @@
                                 aria-expanded="false"
                                 aria-controls="satelliti-{{ categoria.pk }}"
                             >
+                                                            
+                            <!-- EMOJI DELLA CATEGORIA -->
 
-                                <span
-                                    class="cloud-macro-simbolo"
-                                    aria-hidden="true"
-                                >
-                                    ✦
-                                </span>
+                            <span class="cloud-macro-simbolo"
+                                aria-hidden="true">
+
+                                {% with nome=categoria.nome|lower %}
+
+                                    {% if nome == 'animali' %}
+                                        🐶
+                                    {% elif nome == 'arte e creatività' %}
+                                        🎨
+                                    {% elif nome == 'cibo e gastronomia' %}
+                                        🍔
+                                    {% elif nome == 'cinema' %}
+                                        🎬
+                                    {% elif nome == 'eventi' %}
+                                        🗓️
+                                    {% elif nome == 'fitness e benessere' %}
+                                        💪
+                                    {% elif nome == 'giochi' %}
+                                        🎮
+                                    {% elif nome == 'moda e stile' %}
+                                        👗
+                                    {% elif nome == 'motori' %}
+                                        🚗
+                                    {% elif nome == 'musica' %}
+                                        🎵
+                                    {% elif nome == 'natura' %}
+                                        🌱
+                                    {% elif nome == 'scienza e conoscenza' %}
+                                        📚
+                                    {% elif nome == 'socialità' %}
+                                        👥
+                                    {% elif nome == 'sport' %}
+                                        ⚽
+                                    {% elif nome == 'viaggi' %}
+                                        ✈️
+                                    {% elif nome == 'volontariato' %}
+                                        🤝
+                                    {% else %}
+                                        ✨
+                                    {% endif %}
+
+                                {% endwith %}
+
+                            </span>
+
 
                                 <span class="cloud-macro-nome">
                                     {{ categoria.nome|lower|capfirst }}
@@ -281,7 +362,6 @@
                     aria-live="polite"
                 ></p>
 
-
                 <!-- PULSANTE CONFERMA -->
 
                 <button
@@ -292,15 +372,16 @@
 
                     {% if modalita_modifica %}
 
-                        Salva modifiche →
+                        Salva modifiche
 
                     {% else %}
 
-                        Completa la community →
+                        Completa la community
 
                     {% endif %}
 
                 </button>
+
 
             </aside>
 

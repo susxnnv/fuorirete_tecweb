@@ -10,12 +10,12 @@
 
 <link
     rel="stylesheet"
-    href="{% static 'css/gestione_richieste_community.css' %}"
+    href="{% static 'css/gestione_richieste_community.css' %}?v=2"
 >
 
 <main class="richieste-community-pagina">
 
-    <!-- INDIETRO -->
+    <!-- NAVIGAZIONE -->
 
     <a
         href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}"
@@ -24,16 +24,24 @@
         ← Torna indietro
     </a>
 
-
     <!-- INTESTAZIONE -->
 
     <header class="richieste-community-intestazione">
 
-        <span class="richieste-community-etichetta">
-            GESTIONE COMMUNITY
-        </span>
+        <div class="richieste-community-titolo-contenitore">
 
-        <h1>Richieste di partecipazione</h1>
+            <h1>Richieste di partecipazione</h1>
+
+            <span
+                class="richieste-community-trilli"
+                aria-hidden="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
+        </div>
 
         <p>
             Community:
@@ -51,21 +59,22 @@
 
     </header>
 
-
     <!-- MESSAGGI -->
 
     {% if messages %}
 
         {% for message in messages %}
 
-            <div class="richieste-community-messaggio">
+            <div
+                class="richieste-community-messaggio"
+                role="status"
+            >
                 {{ message }}
             </div>
 
         {% endfor %}
 
     {% endif %}
-
 
     <!-- ELENCO RICHIESTE -->
 
@@ -85,12 +94,23 @@
 
                             <img
                                 src="{{ richiesta.utente.foto.url }}"
-                                alt=""
+                                alt="Foto di {{ richiesta.utente.nome }}"
                             >
 
                         {% else %}
 
-                            <span aria-hidden="true">♧</span>
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <circle cx="12" cy="8" r="4"/>
+                                <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+                            </svg>
 
                         {% endif %}
 
@@ -104,10 +124,6 @@
                             </a>
                         </h2>
 
-                        <p>
-                            {{ richiesta.utente.citta }}
-                        </p>
-
                         <small>
                             Richiesta inviata il
                             {{ richiesta.data_richiesta|date:"d/m/Y" }}
@@ -116,7 +132,6 @@
                     </div>
 
                 </div>
-
 
                 <!-- AZIONI ORGANIZZATORE -->
 
@@ -150,7 +165,6 @@
                         </button>
 
                     </form>
-
 
                     <!-- ACCETTA -->
 
@@ -187,9 +201,29 @@
 
         {% empty %}
 
+            <!-- NESSUNA RICHIESTA -->
+
             <div class="richieste-community-vuoto">
 
-                <span aria-hidden="true">♧</span>
+                <div
+                    class="richieste-community-vuoto-icona"
+                    aria-hidden="true"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="9" cy="8" r="3"/>
+                        <path d="M3 20v-2a6 6 0 0 1 12 0v2"/>
+                        <path d="M18 8v8M14 12h8"/>
+                    </svg>
+
+                </div>
 
                 <h2>Nessuna richiesta in attesa</h2>
 
@@ -198,10 +232,6 @@
                     di partecipazione da gestire
                     per questa community.
                 </p>
-
-                <a href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}">
-                    Torna alle Community gestite →
-                </a>
 
             </div>
 

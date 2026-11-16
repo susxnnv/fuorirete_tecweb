@@ -1168,58 +1168,95 @@ body:has(.dettaglio-community-pagina) {
    DETTAGLIO COMMUNITY - RICHIESTA IN ATTESA
 ========================================== */
 
-/* CARD PESCA */
+/* ==========================================
+   DETTAGLIO COMMUNITY - RICHIESTA IN ATTESA
+   STILE DEFINITIVO FUORIRETE
+========================================== */
 
-.dettaglio-community-azioni:has(.dettaglio-community-richiesta-attesa) {
+
+/* ==========================================
+   CARD PRINCIPALE
+========================================== */
+
+.dettaglio-community-azioni:has(
+    .dettaglio-community-richiesta-attesa
+) {
     padding: 20px 24px;
-    background: linear-gradient(110deg, #fff8f5, #ffebe5);
-    border: 3px solid #ffffff;
-    border-radius: 19px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5dcf3;
+    border-radius: 20px;
+
     box-shadow:
-        0 0 0 1px #eadfd9,
-        0 6px 18px rgba(40, 30, 20, .055);
+        0 7px 20px rgba(67, 44, 138, 0.09);
 }
 
-/* LAYOUT ORIZZONTALE */
+
+/* ==========================================
+   LAYOUT ORIZZONTALE
+========================================== */
 
 .dettaglio-community-richiesta-attesa {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
+
     gap: 24px;
+
     width: 100%;
     min-width: 0;
 }
 
-/* ICONA E TESTI */
+
+/* ==========================================
+   ICONA E TESTI
+========================================== */
 
 .dettaglio-community-attesa-presentazione {
     display: flex;
     align-items: center;
-    gap: 16px;
+
+    gap: 14px;
+
     flex: 1;
     min-width: 0;
 }
 
-/* OROLOGIO CORALLO */
+
+/* ==========================================
+   ICONA OROLOGIO
+========================================== */
 
 .dettaglio-community-attesa-icona {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
-    flex: 0 0 45px;
-    color: #ff5954;
+
+    width: 49px;
+    height: 49px;
+
+    flex: 0 0 49px;
+
+    background: #ffedf1;
+    color: #ff6055;
+
+    border-radius: 50%;
 }
 
 .dettaglio-community-attesa-icona svg {
     display: block;
-    width: 100%;
-    height: 100%;
+
+    width: 29px;
+    height: 29px;
 }
 
-/* TESTI */
+
+/* ==========================================
+   TESTI
+========================================== */
 
 .dettaglio-community-attesa-testo {
     min-width: 0;
@@ -1227,106 +1264,168 @@ body:has(.dettaglio-community-pagina) {
 
 .dettaglio-community-attesa-intestazione {
     display: flex;
+
     align-items: center;
     flex-wrap: wrap;
+
     gap: 10px;
-    margin-bottom: 7px;
+
+    margin-bottom: 5px;
 }
 
 .dettaglio-community-attesa-intestazione h2 {
     margin: 0;
-    color: #07505a;
+
+    color: #181337;
+
     font-size: 17px;
     font-weight: 800;
     line-height: 1.35;
 }
 
-/* BADGE IN ATTESA */
+
+/* ==========================================
+   BADGE IN ATTESA
+========================================== */
 
 .dettaglio-community-attesa-badge {
     display: inline-flex;
+
     align-items: center;
+    justify-content: center;
+
     padding: 5px 11px;
-    background: #fff0e9;
-    border: 1px solid #f0d0c5;
+
+    background: #fff0ec;
+
+    border: 1px solid #ffd2cb;
     border-radius: 20px;
-    color: #c4503d;
+
+    color: #d45b52;
+
     font-size: 11px;
     font-weight: 700;
     white-space: nowrap;
 }
 
-/* DESCRIZIONE */
+
+/* ==========================================
+   DESCRIZIONE
+========================================== */
 
 .dettaglio-community-attesa-testo p {
     margin: 0;
-    color: #365d66;
+
+    color: #625c83;
+
     font-size: 12px;
     font-weight: 500;
-    line-height: 1.6;
+    line-height: 1.55;
 }
 
-/* FORM */
+
+/* ==========================================
+   FORM ANNULLAMENTO
+========================================== */
 
 .dettaglio-community-richiesta-attesa form {
     margin: 0;
     flex-shrink: 0;
 }
 
-/* PULSANTE SECONDARIO */
+
+/* ==========================================
+   PULSANTE ANNULLA RICHIESTA
+========================================== */
 
 .dettaglio-community-richiesta-attesa
 .dettaglio-community-pulsante-secondario {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
     min-height: 43px;
+
     padding: 11px 20px;
+
     background: #ffffff;
-    border: 1px solid #eadbd3;
+
+    border: 1px solid #e3d8f2;
     border-radius: 23px;
-    color: #a15c50;
+
+    color: #6035d5;
+
     font-family: inherit;
     font-size: 12px;
     font-weight: 700;
+
     cursor: pointer;
-    transition: background-color .2s, border-color .2s;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
+
+
+/* HOVER */
 
 .dettaglio-community-richiesta-attesa
 .dettaglio-community-pulsante-secondario:hover {
-    background: #fff0e9;
-    border-color: #ff5954;
-    color: #c4503d;
+    background: #f4edff;
+
+    border-color: #bba1f7;
+
+    color: #512bbd;
 }
 
-/* RESPONSIVE */
+
+/* FOCUS */
+
+.dettaglio-community-richiesta-attesa
+.dettaglio-community-pulsante-secondario:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
 
 @media (max-width: 650px) {
 
-    .dettaglio-community-azioni:has(.dettaglio-community-richiesta-attesa) {
+    .dettaglio-community-azioni:has(
+        .dettaglio-community-richiesta-attesa
+    ) {
         padding: 19px;
     }
 
     .dettaglio-community-richiesta-attesa {
         flex-direction: column;
         align-items: stretch;
+
         gap: 19px;
     }
 
     .dettaglio-community-attesa-presentazione {
         align-items: flex-start;
-        gap: 12px;
-    }
 
-    .dettaglio-community-attesa-icona {
-        width: 37px;
-        height: 37px;
-        flex-basis: 37px;
+        gap: 12px;
     }
 
     .dettaglio-community-richiesta-attesa form {
         align-self: flex-start;
+        max-width: 100%;
     }
-}
 
+    .dettaglio-community-richiesta-attesa
+    .dettaglio-community-pulsante-secondario {
+        max-width: 100%;
+    }
+
+}
 
 /* ==========================================
    DETTAGLIO COMMUNITY - MEMBRO
@@ -2061,4 +2160,2582 @@ body:has(.dettaglio-community-pagina) {
 .dettaglio-community-azioni
 .dettaglio-community-organizzatore-gestione-descrizione {
     margin: 0 0 32px;
+}
+
+
+/* ==================================================
+   DETTAGLIO COMMUNITY - STILE DEFINITIVO FUORIRETE
+   PROTOTIPO APPROVATO
+================================================== */
+
+
+/* ==========================================
+   1. SFONDO GENERALE
+========================================== */
+
+body:has(.dettaglio-community-pagina) {
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 50% 70% at 100% 19%,
+            rgba(114, 222, 239, 0.53),
+            transparent 90%
+        ),
+        radial-gradient(
+            ellipse 52% 65% at 0% 100%,
+            rgba(255, 155, 215, 0.40),
+            transparent 88%
+        ),
+        linear-gradient(
+            110deg,
+            #f0eaff 0%,
+            #f0ebff 48%,
+            #ddf5ff 100%
+        );
+
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+body:has(.dettaglio-community-pagina)
+.area-contenuto {
+    background: transparent;
+}
+
+
+/* ==========================================
+   2. CONTENITORE
+========================================== */
+
+.dettaglio-community-pagina {
+    max-width: 860px;
+    margin: 20px auto 30px;
+    color: #181337;
+}
+
+
+/* COLLEGAMENTO INDIETRO */
+
+.dettaglio-community-navigazione {
+    margin-bottom: 12px;
+}
+
+.dettaglio-community-navigazione a {
+    color: #ff6055;
+}
+
+
+/* ==========================================
+   3. CARD GENERALI
+========================================== */
+
+.dettaglio-community-banner,
+.dettaglio-community-riquadro,
+.dettaglio-community-organizzatore-gestione,
+.dettaglio-community-organizzatore-partecipazione {
+    background: #ffffff;
+
+    border: 1px solid #e5dcf3;
+    border-radius: 20px;
+
+    box-shadow:
+        0 7px 20px rgba(67, 44, 138, 0.09);
+}
+
+
+/* ==========================================
+   4. BANNER PRINCIPALE
+========================================== */
+
+.dettaglio-community-banner {
+    margin-bottom: 10px;
+}
+
+
+/* COPERTINA PANORAMICA */
+
+.dettaglio-community-copertina {
+    height: 120px;
+
+    margin: 6px 6px 0;
+
+    border-radius: 15px;
+
+    background: #e8dcfa;
+    color: #7040e9;
+}
+
+
+/* IDENTITÀ COMMUNITY */
+
+.dettaglio-community-identita {
+    padding: 13px 24px 17px;
+}
+
+.dettaglio-community-titolo {
+    margin-bottom: 12px;
+}
+
+
+/* ETICHETTA */
+
+.dettaglio-community-etichetta {
+    margin-bottom: 5px;
+    color: #ff5364;
+}
+
+
+/* NOME COMMUNITY */
+
+.dettaglio-community-titolo h1 {
+    margin-bottom: 5px;
+
+    color: #181337;
+    font-size: 25px;
+}
+
+
+/* CITTÀ */
+
+.dettaglio-community-citta {
+    color: #575276;
+}
+
+
+/* DESCRIZIONE */
+
+.dettaglio-community-descrizione {
+    color: #252148;
+
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+
+/* VALUTAZIONE */
+
+.dettaglio-community-senza-voti {
+    background: #fff0ec;
+    color: #a98183;
+}
+
+.dettaglio-community-valutazione strong {
+    color: #ff5763;
+}
+
+
+/* ==========================================
+   5. SEZIONI PRINCIPALI
+========================================== */
+
+.dettaglio-community-riquadro {
+    padding: 15px 22px;
+    margin-bottom: 10px;
+}
+
+
+/* TITOLI */
+
+.dettaglio-community-riquadro h2,
+.dettaglio-community-riquadro
+.dettaglio-community-titolo-decorato {
+    color: #181337;
+
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+
+/* TRILLI CORALLO */
+
+.dettaglio-community-trilli span {
+    background: #ff6055;
+}
+
+
+/* ==========================================
+   6. INTERESSI
+========================================== */
+
+.dettaglio-community-interessi {
+    gap: 8px;
+}
+
+.dettaglio-community-tag {
+    padding: 7px 13px;
+
+    background: #e5d6f6;
+    color: #40235f;
+
+    line-height: 1.35;
+}
+
+
+/* LILLA */
+
+.dettaglio-community-tag:nth-child(5n + 1) {
+    background: #e5d6f6;
+    color: #432675;
+}
+
+
+/* AZZURRO */
+
+.dettaglio-community-tag:nth-child(5n + 2) {
+    background: #d9eff4;
+    color: #15566b;
+}
+
+
+/* VERDE SALVIA */
+
+.dettaglio-community-tag:nth-child(5n + 3) {
+    background: #dcecd9;
+    color: #315746;
+}
+
+
+/* ROSA */
+
+.dettaglio-community-tag:nth-child(5n + 4) {
+    background: #f9dfe8;
+    color: #913b59;
+}
+
+
+/* LILLA AZZURRATO */
+
+.dettaglio-community-tag:nth-child(5n + 5) {
+    background: #dce2fa;
+    color: #344b88;
+}
+
+
+/* ==========================================
+   7. CONTENITORE ORGANIZZATORE
+========================================== */
+
+/* NESSUNA CORNICE ESTERNA AGGIUNTIVA */
+
+.dettaglio-community-azioni:has(
+    .dettaglio-community-organizzatore
+) {
+    display: block;
+
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    overflow: visible;
+}
+
+.dettaglio-community-organizzatore {
+    gap: 10px;
+}
+
+
+/* ==========================================
+   8. LA TUA COMMUNITY
+========================================== */
+
+/* CARD BIANCA ORIZZONTALE */
+
+.dettaglio-community-organizzatore-partecipazione {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    padding: 15px 22px;
+}
+
+
+/* ICONA E TESTI */
+
+.dettaglio-community-organizzatore-presentazione {
+    flex: 1 1 310px;
+
+    gap: 13px;
+}
+
+
+/* CERCHIO ROSA DIETRO L'ICONA */
+
+.dettaglio-community-organizzatore-icona {
+    flex: 0 0 49px;
+
+    width: 49px;
+    height: 49px;
+
+    color: #ff6055;
+    background: #ffedf1;
+}
+
+.dettaglio-community-organizzatore-icona svg {
+    width: 29px;
+    height: 29px;
+}
+
+
+/* TITOLO */
+
+.dettaglio-community-organizzatore-testo h2 {
+    color: #181337;
+
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+
+/* DESCRIZIONE */
+
+.dettaglio-community-organizzatore-testo p {
+    color: #4f4b70;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   9. PULSANTI CHAT ED EVENTI
+========================================== */
+
+.dettaglio-community-organizzatore-partecipazione-azioni {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+}
+
+
+/* STILE COMUNE */
+
+.dettaglio-community-organizzatore-chat,
+.dettaglio-community-organizzatore-eventi {
+    min-height: 38px;
+
+    padding: 9px 14px;
+
+    border-radius: 11px;
+
+    font-size: 11px;
+}
+
+
+/* CHAT - CORALLO */
+
+.dettaglio-community-organizzatore-chat {
+    background: linear-gradient(
+        105deg,
+        #ff367b,
+        #ff6055
+    );
+
+    border: 1px solid transparent;
+    color: #ffffff;
+}
+
+.dettaglio-community-organizzatore-chat:hover {
+    background: linear-gradient(
+        105deg,
+        #ee2267,
+        #ef504c
+    );
+}
+
+
+/* EVENTI - VIOLA */
+
+.dettaglio-community-organizzatore-eventi {
+    background: #ffffff;
+
+    border: 1px solid #af8cff;
+
+    color: #5f35cb;
+}
+
+.dettaglio-community-organizzatore-eventi:hover {
+    background: #f5efff;
+
+    border-color: #7144ff;
+
+    color: #512db8;
+}
+
+
+/* ==========================================
+   10. GESTISCI LA TUA COMMUNITY
+========================================== */
+
+.dettaglio-community-organizzatore-gestione {
+    padding: 19px 22px 14px;
+}
+
+
+/* INTESTAZIONE */
+
+.dettaglio-community-organizzatore-gestione-testa {
+    margin-bottom: 4px;
+}
+
+.dettaglio-community-organizzatore-gestione-titolo h2 {
+    color: #181337;
+    font-size: 17px;
+}
+
+.dettaglio-community-organizzatore-gestione-titolo svg {
+    color: #ff6055;
+}
+
+
+/* DESCRIZIONE */
+
+.dettaglio-community-organizzatore-gestione-descrizione,
+.dettaglio-community-azioni
+.dettaglio-community-organizzatore-gestione-descrizione {
+    color: #66617f;
+
+    margin: 0 0 14px;
+
+    font-size: 11px;
+}
+
+
+/* ==========================================
+   11. GRIGLIA DI GESTIONE
+========================================== */
+
+.dettaglio-community-organizzatore-griglia {
+    gap: 9px;
+}
+
+
+/* SINGOLA AZIONE */
+
+.dettaglio-community-organizzatore-azione {
+    min-height: 62px;
+
+    padding: 10px 15px;
+    gap: 3px;
+
+    background: #f8f5ff;
+
+    border-color: #eee6fa;
+    border-radius: 12px;
+}
+
+.dettaglio-community-organizzatore-azione:hover {
+    background: #f1eaff;
+    border-color: #c9b4f5;
+}
+
+
+/* TITOLO */
+
+.dettaglio-community-organizzatore-azione-titolo {
+    color: #25204d;
+    font-size: 12px;
+}
+
+.dettaglio-community-organizzatore-azione-titolo svg {
+    color: #5c36c0;
+}
+
+
+/* DESCRIZIONE */
+
+.dettaglio-community-organizzatore-azione-descrizione {
+    color: #69617f;
+    font-size: 10px;
+}
+
+
+/* ==========================================
+   12. ELIMINA COMMUNITY
+========================================== */
+
+.dettaglio-community-organizzatore-eliminazione {
+    margin-top: 12px;
+    padding-top: 11px;
+
+    border-color: #eee6fa;
+}
+
+.dettaglio-community-organizzatore-eliminazione > span {
+    color: #ed5469;
+}
+
+
+/* PULSANTE */
+
+.dettaglio-community-organizzatore-elimina {
+    min-height: 34px;
+    padding: 7px 12px;
+
+    border-color: #ffb4b7;
+
+    color: #f04b5a;
+}
+
+.dettaglio-community-organizzatore-elimina:hover {
+    background: #fff0f1;
+    border-color: #f04b5a;
+}
+
+
+/* ==========================================
+   13. FOOTER INFORMAZIONI
+========================================== */
+
+.dettaglio-community-footer {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    align-items: center;
+
+    margin-top: 10px;
+    padding: 12px 16px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid #e5dcf3;
+    border-radius: 19px;
+
+    box-shadow:
+        0 5px 15px rgba(67, 44, 138, 0.07);
+}
+
+
+/* SINGOLA INFORMAZIONE */
+
+.dettaglio-community-footer-elemento {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    min-width: 0;
+
+    gap: 9px;
+    padding: 0 10px;
+
+    color: #29244e;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+
+/* SEPARATORI VERTICALI */
+
+.dettaglio-community-footer-elemento
++ .dettaglio-community-footer-elemento {
+    border-left: 1px solid #e5d9f5;
+}
+
+
+/* ICONE */
+
+.dettaglio-community-footer-elemento svg {
+    width: 18px;
+    height: 18px;
+
+    flex: 0 0 18px;
+
+    color: #6339d1;
+}
+
+
+/* TESTI IMPORTANTI */
+
+.dettaglio-community-footer-elemento strong {
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   14. COLORI DELLE ALTRE VISUALIZZAZIONI
+========================================== */
+
+/*
+   Manteniamo le condizioni esistenti
+   per membro, non membro e richieste.
+   Aggiorniamo soltanto la palette.
+*/
+
+.dettaglio-community-azioni h2,
+.dettaglio-community-membro-testo h2,
+.dettaglio-community-nonmembro-testo h2,
+.dettaglio-community-attesa-testo h2,
+.dettaglio-community-valuta > h2 {
+    color: #181337;
+}
+
+.dettaglio-community-azioni p,
+.dettaglio-community-valuta > p {
+    color: #625a7d;
+}
+
+
+/* PULSANTI */
+
+.dettaglio-community-pulsante {
+    background: #ff6055;
+    border-color: #ff6055;
+}
+
+.dettaglio-community-pulsante:hover {
+    background: #ef4d52;
+}
+
+
+/* BADGE */
+
+.dettaglio-community-stato {
+    background: #f0e6ff;
+    border-color: #e0cff8;
+    color: #5733ac;
+}
+
+
+/* VALUTAZIONE */
+
+.dettaglio-community-valuta-etichetta {
+    color: #ff5364;
+}
+
+
+/* POPUP */
+
+.dettaglio-community-popup h2 {
+    color: #181337;
+}
+
+.dettaglio-community-feedback {
+    background: #f1ebff;
+
+    border-color: #d8c6f7;
+
+    color: #422f7f;
+}
+
+
+/* ==========================================
+   15. RESPONSIVE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .dettaglio-community-organizzatore-partecipazione {
+        align-items: stretch;
+    }
+
+    .dettaglio-community-organizzatore-presentazione {
+        flex-basis: 100%;
+    }
+
+    .dettaglio-community-organizzatore-partecipazione-azioni {
+        width: 100%;
+    }
+
+    .dettaglio-community-footer {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+        padding: 13px;
+    }
+
+    .dettaglio-community-footer-elemento {
+        justify-content: flex-start;
+        padding: 0;
+    }
+
+    .dettaglio-community-footer-elemento
+    + .dettaglio-community-footer-elemento {
+        border-left: none;
+
+        border-top: 1px solid #e5d9f5;
+
+        padding-top: 10px;
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    .dettaglio-community-organizzatore-partecipazione-azioni {
+        flex-direction: column;
+    }
+
+    .dettaglio-community-organizzatore-chat,
+    .dettaglio-community-organizzatore-eventi {
+        width: 100%;
+    }
+
+    .dettaglio-community-copertina {
+        height: 105px;
+    }
+
+    .dettaglio-community-identita {
+        padding: 13px 18px 17px;
+    }
+
+}
+
+
+/* ==========================================
+   DETTAGLIO COMMUNITY - UTENTE NON MEMBRO
+   STILE DEFINITIVO FUORIRETE
+========================================== */
+
+
+/* ==========================================
+   RIQUADRO PRINCIPALE
+========================================== */
+
+.dettaglio-community-azioni:has(
+    .dettaglio-community-nonmembro
+) {
+    padding: 20px 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5dcf3;
+    border-radius: 20px;
+
+    box-shadow:
+        0 7px 20px rgba(67, 44, 138, 0.09);
+}
+
+
+/* ==========================================
+   DISPOSIZIONE ORIZZONTALE
+========================================== */
+
+.dettaglio-community-nonmembro {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+    width: 100%;
+}
+
+
+/* ==========================================
+   ICONA + TESTI
+========================================== */
+
+.dettaglio-community-nonmembro-presentazione {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+    min-width: 0;
+    flex: 1;
+}
+
+
+/* ==========================================
+   ICONA PERSONE
+========================================== */
+
+.dettaglio-community-nonmembro-icona {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 49px;
+    height: 49px;
+
+    flex: 0 0 49px;
+
+    background: #ffedf1;
+    color: #ff6055;
+
+    border-radius: 50%;
+}
+
+.dettaglio-community-nonmembro-icona svg {
+    display: block;
+
+    width: 29px;
+    height: 29px;
+}
+
+
+/* ==========================================
+   TESTI
+========================================== */
+
+.dettaglio-community-nonmembro-testo {
+    min-width: 0;
+}
+
+.dettaglio-community-nonmembro-testo h2 {
+    margin: 0 0 5px;
+
+    color: #181337;
+
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.dettaglio-community-nonmembro-testo p {
+    margin: 0;
+
+    color: #625c83;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+
+/* ==========================================
+   FORM DI PARTECIPAZIONE
+========================================== */
+
+.dettaglio-community-nonmembro form {
+    margin: 0;
+
+    flex-shrink: 0;
+}
+
+
+/* ==========================================
+   PULSANTE RICHIEDI DI PARTECIPARE
+========================================== */
+
+.dettaglio-community-nonmembro
+.dettaglio-community-pulsante {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 190px;
+    min-height: 43px;
+
+    padding: 11px 22px;
+
+    background: linear-gradient(
+        110deg,
+        #ff2878,
+        #ff6055
+    );
+
+    border: 1px solid transparent;
+    border-radius: 23px;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    box-shadow:
+        0 6px 15px rgba(255, 57, 105, 0.18);
+
+    cursor: pointer;
+
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* HOVER */
+
+.dettaglio-community-nonmembro
+.dettaglio-community-pulsante:hover {
+    background: linear-gradient(
+        110deg,
+        #ed1768,
+        #f34d49
+    );
+
+    border-color: transparent;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 18px rgba(255, 57, 105, 0.24);
+
+    transform: translateY(-2px);
+}
+
+
+/* FOCUS */
+
+.dettaglio-community-nonmembro
+.dettaglio-community-pulsante:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .dettaglio-community-azioni:has(
+        .dettaglio-community-nonmembro
+    ) {
+        padding: 19px;
+    }
+
+    .dettaglio-community-nonmembro {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 19px;
+    }
+
+    .dettaglio-community-nonmembro-presentazione {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .dettaglio-community-nonmembro form {
+        align-self: flex-start;
+        max-width: 100%;
+    }
+
+    .dettaglio-community-nonmembro
+    .dettaglio-community-pulsante {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+}
+
+
+/* ==========================================
+   ACCESSIBILITÀ - MOVIMENTO RIDOTTO
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .dettaglio-community-nonmembro
+    .dettaglio-community-pulsante {
+        transition: none;
+    }
+
+    .dettaglio-community-nonmembro
+    .dettaglio-community-pulsante:hover {
+        transform: none;
+    }
+
+}
+
+
+/* ==================================================
+   DETTAGLIO COMMUNITY - ACCESSI RAPIDI ORGANIZZATORE
+   PROTOTIPO DEFINITIVO FUORIRETE
+================================================== */
+
+
+/* ==========================================
+   1. CONTENITORE DELLA PAGINA
+========================================== */
+
+.dettaglio-community-pagina {
+    position: relative;
+}
+
+
+/* ==========================================
+   2. ACCESSI RAPIDI ESTERNI ALLE CARD
+========================================== */
+
+.dettaglio-community-accessi-rapidi {
+    position: absolute;
+
+    top: 42px;
+    left: calc(100% + 18px);
+
+    width: 215px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    z-index: 2;
+}
+
+
+/* ==========================================
+   3. STILE COMUNE CHAT ED EVENTI
+========================================== */
+
+.dettaglio-community-accesso-chat,
+.dettaglio-community-accesso-eventi {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 14px;
+
+    width: 100%;
+    min-height: 60px;
+
+    padding: 12px 17px;
+
+    box-sizing: border-box;
+
+    border-radius: 19px;
+    border: 1.5px solid #ffffff;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 7px 16px rgba(76, 45, 155, 0.14);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* ==========================================
+   4. CHAT DI GRUPPO
+========================================== */
+
+.dettaglio-community-accesso-chat {
+    background: linear-gradient(
+        110deg,
+        #ff367b 0%,
+        #ff6055 100%
+    );
+
+    color: #ffffff;
+}
+
+.dettaglio-community-accesso-chat:hover {
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 20px rgba(255, 65, 105, 0.23);
+}
+
+
+/* ==========================================
+   5. EVENTI
+========================================== */
+
+.dettaglio-community-accesso-eventi {
+    background: linear-gradient(
+        115deg,
+        #e9ddff 0%,
+        #f7f3ff 100%
+    );
+
+    border-color: #ffffff;
+
+    color: #6234dc;
+
+    box-shadow:
+        0 6px 15px rgba(110, 65, 221, 0.18),
+        0 2px 0 #b99cff;
+}
+
+.dettaglio-community-accesso-eventi:hover {
+    color: #5124ca;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 19px rgba(110, 65, 221, 0.23),
+        0 2px 0 #b99cff;
+}
+
+
+/* ==========================================
+   6. ICONE
+========================================== */
+
+.dettaglio-community-accesso-icona {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 43px;
+    height: 43px;
+
+    flex: 0 0 43px;
+}
+
+.dettaglio-community-accesso-icona svg {
+    display: block;
+
+    width: 32px;
+    height: 32px;
+
+    stroke: currentColor;
+}
+
+
+/* ==========================================
+   7. TESTI
+========================================== */
+
+.dettaglio-community-accesso-testo {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 4px;
+
+    min-width: 0;
+}
+
+.dettaglio-community-accesso-testo strong {
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.dettaglio-community-accesso-testo small {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+.dettaglio-community-accesso-chat
+.dettaglio-community-accesso-testo small {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.dettaglio-community-accesso-eventi
+.dettaglio-community-accesso-testo small {
+    color: #40317d;
+}
+
+
+/* ==========================================
+   8. FOCUS DA TASTIERA
+========================================== */
+
+.dettaglio-community-accesso-chat:focus-visible,
+.dettaglio-community-accesso-eventi:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 4px;
+}
+
+
+/* ==========================================
+   9. ORGANIZZATORE - CARD GESTIONE
+========================================== */
+
+/*
+   Eliminata la vecchia card "La tua community",
+   rimane soltanto la sezione di gestione.
+*/
+
+.dettaglio-community-azioni:has(
+    .dettaglio-community-organizzatore
+) {
+    display: block;
+
+    padding: 0;
+    margin-bottom: 10px;
+
+    background: transparent;
+
+    border: none;
+    box-shadow: none;
+
+    overflow: visible;
+}
+
+.dettaglio-community-organizzatore {
+    display: block;
+    width: 100%;
+}
+
+.dettaglio-community-organizzatore-gestione {
+    margin: 0;
+
+    padding: 19px 22px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5dcf3;
+    border-radius: 20px;
+
+    box-shadow:
+        0 7px 20px rgba(67, 44, 138, 0.09);
+}
+
+
+/* ==========================================
+   10. RESPONSIVE - SCHERMI INTERMEDI
+========================================== */
+
+/*
+   Su schermi più stretti non c'è abbastanza
+   spazio laterale per i pulsanti.
+
+   Li spostiamo nel normale flusso,
+   mantenendoli separati dalle card.
+*/
+
+@media (max-width: 1400px) {
+
+    .dettaglio-community-accessi-rapidi {
+        position: static;
+
+        width: 100%;
+
+        flex-direction: row;
+        justify-content: flex-end;
+
+        gap: 12px;
+
+        margin: 0 0 14px;
+    }
+
+    .dettaglio-community-accesso-chat,
+    .dettaglio-community-accesso-eventi {
+        width: auto;
+        min-width: 175px;
+    }
+
+}
+
+
+/* ==========================================
+   11. RESPONSIVE - MOBILE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .dettaglio-community-accessi-rapidi {
+        flex-direction: row;
+
+        justify-content: stretch;
+        align-items: stretch;
+
+        gap: 10px;
+    }
+
+    .dettaglio-community-accesso-chat,
+    .dettaglio-community-accesso-eventi {
+        flex: 1 1 0;
+
+        min-width: 0;
+        min-height: 62px;
+
+        padding: 10px;
+        gap: 8px;
+
+        border-radius: 15px;
+    }
+
+    .dettaglio-community-accesso-icona {
+        width: 30px;
+        height: 30px;
+
+        flex-basis: 30px;
+    }
+
+    .dettaglio-community-accesso-icona svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .dettaglio-community-accesso-testo strong {
+        font-size: 11px;
+    }
+
+    .dettaglio-community-accesso-testo small {
+        font-size: 10px;
+    }
+
+    .dettaglio-community-organizzatore-gestione {
+        padding: 18px;
+    }
+
+}
+
+
+@media (max-width: 380px) {
+
+    .dettaglio-community-accessi-rapidi {
+        flex-direction: column;
+    }
+
+    .dettaglio-community-accesso-chat,
+    .dettaglio-community-accesso-eventi {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================================
+   12. MOVIMENTO RIDOTTO
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .dettaglio-community-accesso-chat,
+    .dettaglio-community-accesso-eventi {
+        transition: none;
+    }
+
+    .dettaglio-community-accesso-chat:hover,
+    .dettaglio-community-accesso-eventi:hover {
+        transform: none;
+    }
+
+}
+
+
+/* ==================================================
+   DETTAGLIO COMMUNITY - VISUALIZZAZIONE MEMBRO
+   PROTOTIPO DEFINITIVO FUORIRETE
+================================================== */
+
+
+/* ==========================================
+   1. ELIMINAZIONE DELLA CARD MEMBRO
+========================================== */
+
+.dettaglio-community-azioni-membro-vuote {
+    display: none !important;
+}
+
+
+/* ==========================================
+   2. TERZO PULSANTE LATERALE - USCITA
+========================================== */
+
+.dettaglio-community-accesso-esci {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 14px;
+
+    width: 100%;
+    min-height: 60px;
+
+    padding: 12px 17px;
+
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        110deg,
+        #ffffff 0%,
+        #fff2f2 100%
+    );
+
+    border: 1.5px solid #ffffff;
+    border-radius: 19px;
+
+    color: #433a57;
+    text-align: left;
+    font-family: inherit;
+
+    box-shadow:
+        0 7px 16px rgba(76, 45, 155, 0.12);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* ICONA USCITA */
+
+.dettaglio-community-accesso-esci
+.dettaglio-community-accesso-icona {
+    color: #8c8294;
+}
+
+
+/* TESTO PRINCIPALE */
+
+.dettaglio-community-accesso-esci
+.dettaglio-community-accesso-testo strong {
+    color: #252047;
+}
+
+
+/* DESCRIZIONE */
+
+.dettaglio-community-accesso-esci
+.dettaglio-community-accesso-testo small {
+    color: #75677b;
+}
+
+
+/* HOVER */
+
+.dettaglio-community-accesso-esci:hover {
+    background: #fff0f0;
+
+    box-shadow:
+        0 9px 20px rgba(76, 45, 155, 0.17);
+
+    transform: translateY(-2px);
+}
+
+
+/* FOCUS */
+
+.dettaglio-community-accesso-esci:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 4px;
+}
+
+
+/* ==========================================
+   3. COLONNA VALUTAZIONE NEL BANNER
+========================================== */
+
+.dettaglio-community-valutazione-colonna {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    flex: 0 0 220px;
+
+    gap: 15px;
+
+    min-width: 0;
+}
+
+
+/* MEDIA DELLA COMMUNITY */
+
+.dettaglio-community-valutazione-colonna
+.dettaglio-community-valutazione {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 4px;
+}
+
+
+/* ==========================================
+   4. VALUTAZIONE PERSONALE
+========================================== */
+
+.dettaglio-community-valutazione-inline {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    width: 100%;
+
+    padding: 12px 0 0 16px;
+
+    border-left: 2px solid #d9c4ff;
+
+    box-sizing: border-box;
+}
+
+
+/* TITOLO */
+
+.dettaglio-community-valutazione-inline h2 {
+    margin: 0 0 10px;
+
+    color: #181337;
+
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+
+/* FORM */
+
+.dettaglio-community-valutazione-inline-form {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    width: 100%;
+    margin: 0;
+}
+
+
+/* FIELDSET */
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle {
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+}
+
+
+/* LEGEND ACCESSIBILE MA NON VISIBILE */
+
+.dettaglio-community-sr-only {
+    position: absolute !important;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* ==========================================
+   5. STELLE COMPATTE
+========================================== */
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle-opzioni {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+/* STELLE */
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle-opzioni label {
+    font-size: 25px;
+    line-height: 1;
+
+    color: #d5cbd2;
+
+    cursor: pointer;
+
+    transition:
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+/* HOVER */
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle-opzioni label:hover {
+    color: #ff908d;
+    transform: scale(1.12);
+}
+
+
+/* SELEZIONE DEL VOTO */
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle-opzioni:has(
+    #voto-community-1:checked
+) label:nth-of-type(-n+1),
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle-opzioni:has(
+    #voto-community-2:checked
+) label:nth-of-type(-n+2),
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle-opzioni:has(
+    #voto-community-3:checked
+) label:nth-of-type(-n+3),
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle-opzioni:has(
+    #voto-community-4:checked
+) label:nth-of-type(-n+4),
+
+.dettaglio-community-valutazione-inline
+.dettaglio-community-stelle-opzioni:has(
+    #voto-community-5:checked
+) label:nth-of-type(-n+5) {
+    color: #ff6055;
+}
+
+
+/* ==========================================
+   6. PULSANTE PUBBLICAZIONE
+========================================== */
+
+.dettaglio-community-valutazione-inline-submit {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 32px;
+    padding: 7px 14px;
+
+    background: linear-gradient(
+        110deg,
+        #ff367b,
+        #ff6055
+    );
+
+    border: none;
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px rgba(255, 75, 110, 0.14);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.dettaglio-community-valutazione-inline-submit:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 14px rgba(255, 75, 110, 0.22);
+}
+
+.dettaglio-community-valutazione-inline-submit:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+
+/* ==========================================
+   7. SPAZI DEL BANNER
+========================================== */
+
+.dettaglio-community-titolo:has(
+    .dettaglio-community-valutazione-inline
+) {
+    align-items: flex-start;
+    gap: 20px;
+
+    margin-bottom: 14px;
+}
+
+.dettaglio-community-banner:has(
+    .dettaglio-community-valutazione-inline
+)
+.dettaglio-community-identita {
+    padding-bottom: 18px;
+}
+
+
+/* ==========================================
+   8. RESPONSIVE - BANNER
+========================================== */
+
+@media (max-width: 700px) {
+
+    .dettaglio-community-titolo:has(
+        .dettaglio-community-valutazione-inline
+    ) {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 14px;
+    }
+
+    .dettaglio-community-valutazione-colonna:has(
+        .dettaglio-community-valutazione-inline
+    ) {
+        flex: 0 1 auto;
+
+        width: 100%;
+        max-width: 100%;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+    .dettaglio-community-valutazione-colonna:has(
+        .dettaglio-community-valutazione-inline
+    )
+    .dettaglio-community-valutazione {
+        align-items: flex-start;
+    }
+
+    .dettaglio-community-valutazione-inline {
+        padding: 0 0 0 14px;
+    }
+
+}
+
+
+/* ==========================================
+   9. RESPONSIVE - PULSANTI LATERALI
+========================================== */
+
+@media (max-width: 1400px) {
+
+    .dettaglio-community-accesso-esci {
+        width: auto;
+        min-width: 175px;
+    }
+
+}
+
+@media (max-width: 850px) {
+
+    .dettaglio-community-accessi-rapidi:has(
+        .dettaglio-community-accesso-esci
+    ) {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dettaglio-community-accesso-esci {
+        flex: 1 1 175px;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .dettaglio-community-accessi-rapidi:has(
+        .dettaglio-community-accesso-esci
+    ) {
+        flex-direction: column;
+    }
+
+    .dettaglio-community-accessi-rapidi
+    .dettaglio-community-accesso-esci {
+        width: 100%;
+        min-width: 0;
+
+        min-height: 62px;
+
+        padding: 10px;
+        gap: 8px;
+
+        border-radius: 15px;
+    }
+
+}
+
+
+/* ==========================================
+   10. ACCESSIBILITÀ
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .dettaglio-community-accesso-esci,
+    .dettaglio-community-valutazione-inline-submit,
+    .dettaglio-community-valutazione-inline
+    .dettaglio-community-stelle-opzioni label {
+        transition: none;
+    }
+
+    .dettaglio-community-accesso-esci:hover,
+    .dettaglio-community-valutazione-inline-submit:hover,
+    .dettaglio-community-valutazione-inline
+    .dettaglio-community-stelle-opzioni label:hover {
+        transform: none;
+    }
+
+}
+
+
+/* ==========================================
+   MESSAGGI DI CONFERMA - MEMBRO
+========================================== */
+
+.dettaglio-community-messaggi {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.dettaglio-community-messaggi
+.dettaglio-community-feedback {
+    margin: 0;
+    box-sizing: border-box;
+    background: #f4edff;
+    border: 1px solid #d8c6f7;
+    border-radius: 12px;
+    color: #422f7f;
+    padding: 12px 15px;
+    font-size: 12px;
+}
+
+/* ==================================================
+   DETTAGLIO COMMUNITY - VALUTAZIONE AFFIANCATA
+   ALLA DESCRIZIONE
+================================================== */
+
+@media (min-width: 701px) {
+
+    /* Layout a due colonne nel banner */
+
+    .dettaglio-community-identita:has(
+        .dettaglio-community-valutazione-inline
+    ) {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr) 220px;
+
+        column-gap: 28px;
+        row-gap: 10px;
+
+        align-items: start;
+    }
+
+
+    /* Consente di distribuire gli elementi
+       del titolo nelle colonne della griglia */
+
+    .dettaglio-community-titolo:has(
+        .dettaglio-community-valutazione-inline
+    ) {
+        display: contents;
+    }
+
+
+    /* Nome e città: colonna sinistra */
+
+    .dettaglio-community-titolo:has(
+        .dettaglio-community-valutazione-inline
+    ) > :first-child {
+        grid-column: 1;
+        grid-row: 1;
+
+        min-width: 0;
+    }
+
+
+    /* Descrizione: sotto nome e città */
+
+    .dettaglio-community-identita:has(
+        .dettaglio-community-valutazione-inline
+    ) > .dettaglio-community-descrizione {
+        grid-column: 1;
+        grid-row: 2;
+
+        align-self: start;
+
+        margin: 0;
+    }
+
+
+    /* Valutazione: colonna destra */
+
+    .dettaglio-community-valutazione-colonna:has(
+        .dettaglio-community-valutazione-inline
+    ) {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: stretch;
+        gap: 14px;
+    }
+
+
+    /* Media generale in alto a destra */
+
+    .dettaglio-community-valutazione-colonna
+    .dettaglio-community-valutazione {
+        align-items: flex-end;
+        text-align: right;
+    }
+
+
+    /* Valutazione personale */
+
+    .dettaglio-community-valutazione-inline {
+        width: 100%;
+        padding: 13px 0 0 15px;
+
+        border-left: 2px solid #d9c4ff;
+        box-sizing: border-box;
+    }
+
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .dettaglio-community-identita:has(
+        .dettaglio-community-valutazione-inline
+    ) {
+        display: flex;
+        flex-direction: column;
+
+        gap: 16px;
+    }
+
+    .dettaglio-community-titolo:has(
+        .dettaglio-community-valutazione-inline
+    ) {
+        display: contents;
+    }
+
+    .dettaglio-community-valutazione-colonna:has(
+        .dettaglio-community-valutazione-inline
+    ) {
+        width: 100%;
+    }
+
+}
+
+
+/* ==================================================
+   DETTAGLIO COMMUNITY - HOME PUBBLICA
+   STILE DEFINITIVO FUORIRETE
+================================================== */
+
+
+/* ==========================================
+   1. CONTENITORE PRINCIPALE
+========================================== */
+
+.dettaglio-community-pubblica {
+    position: relative;
+
+    width: 100%;
+    max-width: 920px;
+
+    margin: 20px auto 35px;
+    padding: 0 16px;
+
+    box-sizing: border-box;
+
+    color: #181337;
+}
+
+
+/* ==========================================
+   2. ACCESSO RAPIDO LATERALE
+========================================== */
+
+.dettaglio-community-pubblica-accesso {
+    position: absolute;
+
+    top: 42px;
+    left: calc(100% + 18px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    width: 215px;
+
+    gap: 13px;
+
+    z-index: 2;
+}
+
+
+/* ==========================================
+   3. PULSANTE ACCEDI
+========================================== */
+
+.dettaglio-community-pubblica-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    width: 100%;
+    min-height: 65px;
+
+    padding: 14px 18px;
+
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        110deg,
+        #ff367b 0%,
+        #ff6055 100%
+    );
+
+    border: 1.5px solid #ffffff;
+    border-radius: 19px;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    box-shadow:
+        0 7px 16px rgba(76, 45, 155, 0.14);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* HOVER */
+
+.dettaglio-community-pubblica-login:hover {
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 20px rgba(255, 65, 105, 0.23);
+}
+
+
+/* FOCUS */
+
+.dettaglio-community-pubblica-login:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 4px;
+}
+
+
+/* ==========================================
+   4. ICONA ACCEDI
+========================================== */
+
+.dettaglio-community-pubblica-login-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 31px;
+    height: 31px;
+
+    flex: 0 0 31px;
+}
+
+.dettaglio-community-pubblica-login-icona svg {
+    display: block;
+
+    width: 29px;
+    height: 29px;
+
+    stroke: currentColor;
+}
+
+
+/* ==========================================
+   5. TESTO ACCEDI
+========================================== */
+
+.dettaglio-community-pubblica-login-testo {
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+
+/* ==========================================
+   6. COLLEGAMENTO REGISTRAZIONE
+========================================== */
+
+.dettaglio-community-pubblica-registrazione {
+    margin: 0;
+
+    color: #383154;
+
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+
+/* LINK REGISTRATI */
+
+.dettaglio-community-pubblica-registrazione a {
+    color: #ff405b;
+
+    font-size: inherit;
+    font-weight: 800;
+
+    text-decoration: none;
+}
+
+.dettaglio-community-pubblica-registrazione a:hover {
+    color: #e82c4d;
+    text-decoration: underline;
+}
+
+.dettaglio-community-pubblica-registrazione a:focus-visible {
+    outline: 2px solid #7144ff;
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+
+/* ==========================================
+   7. BANNER COMMUNITY
+========================================== */
+
+.dettaglio-community-pubblica
+.dettaglio-community-banner {
+    margin-bottom: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5dcf3;
+    border-radius: 20px;
+
+    box-shadow:
+        0 7px 20px rgba(67, 44, 138, 0.09);
+}
+
+
+/* COPERTINA */
+
+.dettaglio-community-pubblica
+.dettaglio-community-copertina {
+    height: 120px;
+
+    margin: 6px 6px 0;
+
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+
+/* CONTENUTO */
+
+.dettaglio-community-pubblica
+.dettaglio-community-identita {
+    padding: 13px 24px 18px;
+}
+
+
+/* TITOLO */
+
+.dettaglio-community-pubblica
+.dettaglio-community-titolo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 12px;
+}
+
+.dettaglio-community-pubblica
+.dettaglio-community-titolo h1 {
+    color: #181337;
+
+    font-size: 25px;
+    font-weight: 800;
+}
+
+
+/* DESCRIZIONE */
+
+.dettaglio-community-pubblica
+.dettaglio-community-descrizione {
+    margin: 0;
+
+    color: #252148;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+
+/* ==========================================
+   8. INTERESSI
+========================================== */
+
+.dettaglio-community-pubblica
+.dettaglio-community-riquadro {
+    margin-bottom: 10px;
+
+    padding: 15px 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5dcf3;
+    border-radius: 20px;
+
+    box-shadow:
+        0 7px 20px rgba(67, 44, 138, 0.09);
+}
+
+
+/* TAG INTERESSI */
+
+.dettaglio-community-pubblica
+.dettaglio-community-tag {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+
+/* ==========================================
+   9. FOOTER COMPATTO
+========================================== */
+
+.dettaglio-community-pubblica
+.dettaglio-community-footer {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    align-items: center;
+
+    gap: 0;
+
+    margin-top: 10px;
+    padding: 13px 16px;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    border: 1px solid #e5dcf3;
+    border-radius: 19px;
+
+    box-shadow:
+        0 5px 15px rgba(67, 44, 138, 0.07);
+}
+
+
+/* SINGOLE INFORMAZIONI */
+
+.dettaglio-community-pubblica
+.dettaglio-community-footer-elemento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-width: 0;
+
+    padding: 0 10px;
+
+    color: #29244e;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* ICONE */
+
+.dettaglio-community-pubblica
+.dettaglio-community-footer-elemento svg {
+    width: 19px;
+    height: 19px;
+
+    flex: 0 0 19px;
+
+    color: #6339d1;
+}
+
+
+/* SEPARATORI */
+
+.dettaglio-community-pubblica
+.dettaglio-community-footer-elemento
++ .dettaglio-community-footer-elemento {
+    border-left: 1px solid #e5d9f5;
+}
+
+
+/* TESTO IN EVIDENZA */
+
+.dettaglio-community-pubblica
+.dettaglio-community-footer-elemento strong {
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==========================================
+   10. PROFILO INCOMPLETO
+========================================== */
+
+/*
+   Questa sezione compare soltanto quando
+   l'utente è autenticato ma non ha ancora
+   completato il profilo.
+*/
+
+.dettaglio-community-pubblica
+.dettaglio-community-profilo-incompleto {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 12px;
+
+    padding: 18px 22px;
+
+    background: #fff7f5;
+
+    border: 1px solid #f4d8da;
+    border-radius: 19px;
+}
+
+.dettaglio-community-pubblica
+.dettaglio-community-profilo-incompleto h2 {
+    margin: 0 0 6px;
+
+    color: #181337;
+    font-size: 16px;
+}
+
+.dettaglio-community-pubblica
+.dettaglio-community-profilo-incompleto p {
+    margin: 0;
+
+    color: #625a7d;
+    font-size: 12px;
+}
+
+.dettaglio-community-pubblica
+.dettaglio-community-profilo-incompleto
+.dettaglio-community-pulsante {
+    flex-shrink: 0;
+
+    background: linear-gradient(
+        110deg,
+        #ff367b,
+        #ff6055
+    );
+
+    border: none;
+    border-radius: 12px;
+
+    color: #ffffff;
+    text-decoration: none;
+}
+
+
+/* ==========================================
+   11. RESPONSIVE - SCHERMI INTERMEDI
+========================================== */
+
+/*
+   Su schermi meno larghi il pulsante
+   non deve uscire dall'area visibile.
+*/
+
+@media (max-width: 1400px) {
+
+    .dettaglio-community-pubblica-accesso {
+        position: static;
+
+        width: 100%;
+
+        flex-direction: column;
+        align-items: flex-end;
+
+        gap: 8px;
+
+        margin: 0 0 14px;
+    }
+
+    .dettaglio-community-pubblica-login {
+        width: 215px;
+    }
+
+    .dettaglio-community-pubblica-registrazione {
+        width: 215px;
+    }
+
+}
+
+
+/* ==========================================
+   12. RESPONSIVE - TABLET E MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .dettaglio-community-pubblica {
+        margin-top: 15px;
+    }
+
+    .dettaglio-community-pubblica-accesso {
+        align-items: stretch;
+        gap: 9px;
+    }
+
+    .dettaglio-community-pubblica-login {
+        width: 100%;
+        min-height: 56px;
+    }
+
+    .dettaglio-community-pubblica-registrazione {
+        width: 100%;
+    }
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-footer {
+        grid-template-columns: 1fr;
+
+        gap: 11px;
+        padding: 15px;
+    }
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-footer-elemento {
+        justify-content: flex-start;
+        padding: 0;
+    }
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-footer-elemento
+    + .dettaglio-community-footer-elemento {
+        border-left: none;
+        border-top: 1px solid #e5d9f5;
+
+        padding-top: 11px;
+    }
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-profilo-incompleto {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-profilo-incompleto
+    .dettaglio-community-pulsante {
+        align-self: flex-start;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-copertina {
+        height: 105px;
+    }
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-identita {
+        padding: 13px 18px 17px;
+    }
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-titolo {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .dettaglio-community-pubblica
+    .dettaglio-community-valutazione {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+}
+
+
+/* ==========================================
+   13. MOVIMENTO RIDOTTO
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .dettaglio-community-pubblica-login {
+        transition: none;
+    }
+
+    .dettaglio-community-pubblica-login:hover {
+        transform: none;
+    }
+
+}
+
+/* ==========================================
+   ANTEPRIMA COMMUNITY - VOTO DISABILITATO
+========================================== */
+
+.dettaglio-community-valutazione-inline-submit:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.dettaglio-community-valutazione-inline-submit:disabled:hover {
+    transform: none;
+    box-shadow: none;
 }

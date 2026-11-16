@@ -3,252 +3,551 @@
    GESTIONE RICHIESTE COMMUNITY - FUORIRETE
 ========================================== */
 
-.richieste-community-pagina {
-    width: 100%;
-    max-width: 860px;
-    margin: 25px auto 65px;
-    color: #302823;
+/* SFONDO */
+
+body:has(.richieste-community-pagina) {
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, .50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, .37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
+/* CONTENITORE ESTERNO */
+
+.area-contenuto:has(.richieste-community-pagina) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+}
+
+/* PAGINA */
+
+.richieste-community-pagina {
+    box-sizing: border-box;
+
+    width: calc(100% - 40px);
+    max-width: 1000px;
+
+    margin: 0 auto;
+    padding: 38px 0 75px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+}
+
+.richieste-community-pagina *,
+.richieste-community-pagina *::before,
+.richieste-community-pagina *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   NAVIGAZIONE
+========================================== */
 
 .richieste-community-indietro {
     display: inline-block;
-    margin-bottom: 24px;
-    color: #fa5943;
+
+    margin-bottom: 31px;
+
+    color: #ff506b;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
 }
 
 .richieste-community-indietro:hover {
-    text-decoration: underline;
+    color: #e52c62;
+    text-decoration: none;
 }
 
-/* INTESTAZIONE */
+/* ==========================================
+   INTESTAZIONE
+========================================== */
 
 .richieste-community-intestazione {
-    margin-bottom: 25px;
+    margin-bottom: 29px;
 }
 
-.richieste-community-etichetta {
+/* TITOLO */
+
+.richieste-community-titolo-contenitore {
+    position: relative;
     display: block;
-    margin-bottom: 9px;
-    color: #fa5943;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    width: fit-content;
+    max-width: calc(100% - 42px);
 }
 
 .richieste-community-intestazione h1 {
-    margin: 0 0 10px;
-    font-size: 27px;
+    position: relative;
+
+    margin: 0 0 20px;
+
+    color: #181337;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -.9px;
+    line-height: 1.25;
 }
 
+/* SOTTOLINEATURA DRITTA */
+
+.richieste-community-intestazione h1::after {
+    content: "";
+
+    position: absolute;
+    bottom: -9px;
+    left: 0;
+
+    width: 60px;
+    height: 4px;
+
+    background: #ff6055;
+    border-radius: 4px;
+}
+
+/* TRILLI CORALLO */
+
+.richieste-community-trilli {
+    position: absolute;
+
+    top: -12px;
+    right: -34px;
+
+    display: block;
+    width: 30px;
+    height: 35px;
+
+    pointer-events: none;
+}
+
+.richieste-community-trilli span {
+    position: absolute;
+    display: block;
+
+    width: 4px;
+    height: 13px;
+
+    background: #ff6055;
+    border-radius: 10px;
+}
+
+.richieste-community-trilli span:nth-child(1) {
+    top: 0;
+    left: 6px;
+    transform: rotate(18deg);
+}
+
+.richieste-community-trilli span:nth-child(2) {
+    top: 10px;
+    left: 20px;
+    transform: rotate(48deg);
+}
+
+.richieste-community-trilli span:nth-child(3) {
+    top: 24px;
+    left: 24px;
+    height: 10px;
+    transform: rotate(70deg);
+}
+
+/* NOME COMMUNITY */
+
 .richieste-community-intestazione p {
-    margin: 0 0 13px;
-    color: #90796e;
-    font-size: 13px;
+    margin: 0 0 21px;
+
+    color: #625c83;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 1.6;
 }
 
 .richieste-community-intestazione p strong {
-    color: #44342c;
+    color: #181337;
+    font-weight: 800;
 }
+
+/* CONTATORE */
 
 .richieste-community-contatore {
-    display: inline-block;
-    padding: 8px 12px;
-    border-radius: 20px;
-    background: #fff0e9;
-    color: #c4503d;
-    font-size: 11px;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+
+    padding: 10px 17px;
+
+    background: #ffebeb;
+    border-radius: 25px;
+
+    color: #ef4566;
+    font-size: 12px;
+    font-weight: 800;
 }
+
+/* ==========================================
+   MESSAGGI
+========================================== */
 
 .richieste-community-messaggio {
-    margin-bottom: 16px;
-    padding: 12px 15px;
-    border: 1px solid #f0d5c7;
-    border-radius: 11px;
-    background: #fff5ef;
-    color: #855d4e;
+    margin-bottom: 18px;
+    padding: 13px 16px;
+
+    border: 1px solid #e3d7f7;
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, .95);
+
+    color: #493365;
     font-size: 12px;
+    font-weight: 600;
 }
 
-/* ELENCO */
+/* ==========================================
+   ELENCO RICHIESTE
+========================================== */
 
 .richieste-community-elenco {
     display: flex;
     flex-direction: column;
-    gap: 13px;
+    gap: 16px;
 }
+
+/* CARD */
 
 .richieste-community-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding: 22px;
-    border: 1px solid #eae2dc;
-    border-radius: 18px;
-    background: #ffffff;
-    box-shadow: 0 4px 12px rgba(40, 30, 20, .035);
+    gap: 24px;
+
+    padding: 24px 27px;
+
+    border: 1px solid #dcd0ff;
+    border-radius: 23px;
+
+    background: rgba(255, 255, 255, .97);
+
+    box-shadow:
+        0 9px 24px rgba(81, 59, 151, .10);
 }
 
-/* RICHIEDENTE */
+/* ==========================================
+   DATI RICHIEDENTE
+========================================== */
 
 .richieste-community-dati {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 20px;
+
     flex: 1;
-    min-width: 200px;
+    min-width: 0;
 }
+
+/* AVATAR */
 
 .richieste-community-avatar {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0;
-    width: 65px;
-    height: 65px;
+
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+
     overflow: hidden;
     border-radius: 50%;
-    background: #fff0e9;
-    color: #fa5943;
-    font-size: 27px;
+
+    background: #f0e8ff;
+    color: #7545f5;
 }
 
 .richieste-community-avatar img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
+.richieste-community-avatar svg {
+    width: 38px;
+    height: 38px;
+}
+
+/* INFORMAZIONI */
 
 .richieste-community-persona {
     min-width: 0;
 }
 
 .richieste-community-persona h2 {
-    margin: 0 0 6px;
-    font-size: 16px;
+    margin: 0 0 9px;
+
+    color: #181337;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.3;
 }
 
 .richieste-community-persona h2 a {
-    color: #302823;
+    color: inherit;
     text-decoration: none;
 }
 
 .richieste-community-persona h2 a:hover {
-    color: #fa5943;
+    color: #7144ff;
+    text-decoration: none;
 }
 
-.richieste-community-persona p {
-    margin: 0 0 7px;
-    color: #90796e;
-    font-size: 12px;
-}
+/* DATA RICHIESTA */
 
 .richieste-community-persona small {
-    color: #a18b80;
-    font-size: 11px;
+    display: block;
+
+    color: #625c83;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
 }
 
-/* PULSANTI */
+/* ==========================================
+   AZIONI
+========================================== */
 
 .richieste-community-azioni {
     display: flex;
     align-items: center;
-    gap: 9px;
-    flex-wrap: wrap;
+    gap: 12px;
+    flex-shrink: 0;
 }
 
 .richieste-community-azioni form {
     margin: 0;
 }
 
+/* STILE COMUNE PULSANTI */
+
 .richieste-community-accetta,
 .richieste-community-rifiuta {
-    min-height: 39px;
-    padding: 10px 16px;
-    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 45px;
+    padding: 12px 22px;
+
+    border-radius: 13px;
+
     font-family: inherit;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
+
     cursor: pointer;
+
+    transition:
+        background-color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
 }
 
+/* ACCETTA */
+
 .richieste-community-accetta {
-    border: 1px solid #fa5943;
-    background: #fa5943;
+    border: 1px solid transparent;
+
+    background: linear-gradient(
+        105deg,
+        #ff1684,
+        #ff6554
+    );
+
     color: #ffffff;
+
+    box-shadow:
+        0 5px 13px rgba(255, 42, 122, .14);
 }
 
 .richieste-community-accetta:hover {
-    background: #e84b36;
+    transform: translateY(-2px);
+    color: #ffffff;
 }
 
+/* RIFIUTA */
+
 .richieste-community-rifiuta {
-    border: 1px solid #e6d9d0;
+    border: 1px solid #c9b4ff;
+
     background: #ffffff;
-    color: #806c62;
+    color: #38216d;
 }
 
 .richieste-community-rifiuta:hover {
-    border-color: #fa5943;
-    color: #fa5943;
+    background: #f4edff;
+    border-color: #a88aff;
+    color: #6236df;
+
+    transform: translateY(-2px);
 }
 
-/* STATO VUOTO */
+/* ==========================================
+   STATO VUOTO
+========================================== */
 
 .richieste-community-vuoto {
-    padding: 43px 24px;
-    border: 1px solid #eae2dc;
-    border-radius: 18px;
-    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 245px;
+    padding: 40px 24px;
+
+    border: 1px solid #e3d7f7;
+    border-radius: 23px;
+
+    background: rgba(255, 255, 255, .97);
+
+    box-shadow:
+        0 9px 24px rgba(81, 59, 151, .09);
+
     text-align: center;
 }
 
-.richieste-community-vuoto > span {
-    color: #fa5943;
-    font-size: 35px;
+/* ICONA PERSONE */
+
+.richieste-community-vuoto-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 57px;
+    height: 57px;
+
+    margin-bottom: 15px;
+
+    border-radius: 18px;
+    background: #f0e8ff;
+    color: #7144ff;
 }
 
+.richieste-community-vuoto-icona svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* TESTI */
+
 .richieste-community-vuoto h2 {
-    margin: 12px 0 9px;
-    font-size: 18px;
+    margin: 0 0 11px;
+
+    color: #181337;
+    font-size: 19px;
+    font-weight: 800;
 }
 
 .richieste-community-vuoto p {
-    max-width: 400px;
-    margin: 0 auto 17px;
-    color: #90796e;
-    font-size: 12px;
+    max-width: 430px;
+    margin: 0;
+
+    color: #625c83;
+    font-size: 13px;
+    font-weight: 500;
     line-height: 1.7;
 }
 
-.richieste-community-vuoto a {
-    color: #fa5943;
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: none;
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
+
+.richieste-community-pagina a:focus-visible,
+.richieste-community-pagina button:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
 }
 
-/* RESPONSIVE */
+/* ==========================================
+   RESPONSIVE
+========================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
+
+    .richieste-community-pagina {
+        width: calc(100% - 30px);
+        padding: 27px 0 50px;
+    }
+
+    .richieste-community-indietro {
+        margin-bottom: 25px;
+    }
 
     .richieste-community-intestazione h1 {
-        font-size: 23px;
+        font-size: 27px;
     }
 
     .richieste-community-card {
         flex-direction: column;
         align-items: stretch;
-        padding: 18px;
+
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .richieste-community-dati {
+        gap: 14px;
+    }
+
+    .richieste-community-avatar {
+        flex-basis: 65px;
+        width: 65px;
+        height: 65px;
+    }
+
+    .richieste-community-persona h2 {
+        font-size: 18px;
     }
 
     .richieste-community-azioni {
-        justify-content: flex-start;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .richieste-community-vuoto {
+        padding: 35px 20px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .richieste-community-intestazione h1 {
+        font-size: 24px;
+    }
+
+    .richieste-community-azioni {
+        gap: 8px;
+    }
+
+    .richieste-community-accetta,
+    .richieste-community-rifiuta {
+        padding: 11px 16px;
     }
 }

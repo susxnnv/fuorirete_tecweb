@@ -3,283 +3,643 @@
    COMMUNITY GESTITE - FUORIRETE
 ========================================== */
 
-.community-gestite-pagina {
-    width: 100%;
-    max-width: 860px;
-    margin: 25px auto 65px;
-    color: #302823;
+/* SFONDO */
+
+body:has(.community-gestite-pagina) {
+    background-color: #f1edff;
+    background-image:
+        radial-gradient(
+            ellipse 60% 75% at 100% 25%,
+            rgba(111, 221, 232, .52),
+            transparent 85%
+        ),
+        radial-gradient(
+            ellipse 60% 70% at 0% 100%,
+            rgba(255, 143, 199, .38),
+            transparent 85%
+        ),
+        linear-gradient(
+            115deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
+/* CONTENITORE ESTERNO */
+
+.area-contenuto:has(.community-gestite-pagina) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+}
+
+/* PAGINA */
+
+.community-gestite-pagina {
+    box-sizing: border-box;
+    width: calc(100% - 48px);
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 43px 0 75px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+}
+
+.community-gestite-pagina *,
+.community-gestite-pagina *::before,
+.community-gestite-pagina *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   NAVIGAZIONE
+========================================== */
 
 .community-gestite-indietro {
     display: inline-block;
-    margin-bottom: 23px;
-    color: #fa5943;
+    margin: 0 0 27px;
+
+    color: #ff506b;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
 }
 
 .community-gestite-indietro:hover {
-    text-decoration: underline;
+    color: #e52c62;
+    text-decoration: none;
 }
 
-/* INTESTAZIONE */
+/* ==========================================
+   INTESTAZIONE
+========================================== */
 
 .community-gestite-intestazione {
-    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    margin: 0 0 34px;
 }
 
-.community-gestite-etichetta {
+.community-gestite-intestazione-testo {
+    flex: 1;
+    min-width: 0;
+}
+
+/* TITOLO E ICONA */
+
+.community-gestite-titolo-riga {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.community-gestite-titolo-icona {
     display: block;
-    margin-bottom: 9px;
-    color: #fa5943;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+
+    color: #ff6055;
 }
 
 .community-gestite-intestazione h1 {
-    margin: 0 0 9px;
-    font-size: 27px;
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+
+    margin: 0 0 10px;
+
+    color: #181337;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
 }
 
 .community-gestite-intestazione p {
     margin: 0;
-    color: #90796e;
-    font-size: 13px;
+
+    color: #49416e;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 1.6;
 }
 
-.community-gestite-messaggio {
-    margin-bottom: 16px;
-    padding: 13px 16px;
-    border: 1px solid #f0d9ca;
-    border-radius: 11px;
-    background: #fff5ef;
-    color: #855d4e;
-    font-size: 12px;
+/* TRILLI DECORATIVI */
+
+.community-gestite-trilli {
+    position: absolute;
+    top: -15px;
+    right: -38px;
+
+    display: block;
+    width: 34px;
+    height: 35px;
+
+    pointer-events: none;
 }
 
-/* ELENCO */
+.community-gestite-trilli i {
+    position: absolute;
+    display: block;
+
+    background: #ff6055;
+    border-radius: 4px;
+}
+
+.community-gestite-trilli i:nth-child(1) {
+    top: 2px;
+    left: 8px;
+    width: 4px;
+    height: 15px;
+    transform: rotate(22deg);
+}
+
+.community-gestite-trilli i:nth-child(2) {
+    top: 17px;
+    left: 20px;
+    width: 17px;
+    height: 4px;
+    transform: rotate(-34deg);
+}
+
+.community-gestite-trilli i:nth-child(3) {
+    top: 29px;
+    left: 22px;
+    width: 13px;
+    height: 4px;
+    transform: rotate(-12deg);
+}
+
+/* CREA COMMUNITY */
+
+.community-gestite-crea,
+.community-gestite-crea:visited {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    flex-shrink: 0;
+    min-height: 52px;
+    padding: 12px 25px;
+
+    border: none;
+    border-radius: 19px;
+
+    background: linear-gradient(
+        105deg,
+        #ff1684 0%,
+        #ff6554 100%
+    );
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+
+    box-shadow: 0 9px 18px rgba(255, 42, 122, .19);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.community-gestite-crea-plus {
+    display: inline-block;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.community-gestite-crea:hover {
+    transform: translateY(-2px);
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 12px 22px rgba(255, 42, 122, .25);
+}
+
+.community-gestite-crea:focus-visible {
+    outline: 3px solid #7545f5;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   MESSAGGI
+========================================== */
+
+.community-gestite-messaggio {
+    margin-bottom: 17px;
+    padding: 13px 16px;
+
+    border: 1px solid #ded1ff;
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, .94);
+    color: #38216d;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* ==========================================
+   ELENCO COMMUNITY
+========================================== */
 
 .community-gestite-elenco {
     display: flex;
     flex-direction: column;
-    gap: 17px;
+    gap: 18px;
 }
+
+/* CARD */
 
 .community-gestite-card {
     display: flex;
+    align-items: stretch;
     gap: 0;
+
     overflow: hidden;
-    border: 1px solid #eae2dc;
-    border-radius: 19px;
-    background: #ffffff;
-    box-shadow: 0 4px 12px rgba(40, 30, 20, .035);
+
+    border: 1px solid rgba(222, 211, 248, .82);
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, .96);
+
+    box-shadow:
+        0 10px 25px rgba(101, 69, 160, .10);
 }
 
+/* IMMAGINE */
+
 .community-gestite-immagine {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 200px;
-    width: 200px;
-    min-height: 230px;
-    background: #fff0e9;
-    color: #fa5943;
-    font-size: 46px;
+
+    flex: 0 0 245px;
+    width: 245px;
+    min-height: 0;
+
     overflow: hidden;
+    padding: 6px;
+
+    background: transparent;
+    color: #7545f5;
+    font-size: 42px;
 }
 
 .community-gestite-immagine img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+
+    top: 6px;
+    left: 6px;
+
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+
+    min-height: 0;
+
     object-fit: cover;
+    border-radius: 19px;
 }
+
+/* CONTENUTO */
 
 .community-gestite-contenuto {
     display: flex;
     flex-direction: column;
     flex: 1;
     min-width: 0;
-    padding: 23px;
+
+    padding: 19px 22px 18px 15px;
 }
+
+/* TESTA CARD */
 
 .community-gestite-card-testa {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 15px;
+    gap: 12px;
 }
 
 .community-gestite-card h2 {
-    margin: 0 0 7px;
-    font-size: 19px;
+    margin: 0 0 6px;
+
+    color: #181337;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.6px;
+    line-height: 1.25;
+
     overflow-wrap: anywhere;
 }
+
+/* CITTÀ */
 
 .community-gestite-citta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
     margin: 0;
-    color: #fa5943;
-    font-size: 11px;
-    font-weight: 600;
+
+    color: #ff287d;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
 }
 
-.community-gestite-badge {
-    padding: 7px 11px;
-    border-radius: 20px;
-    background: #fff0e9;
-    color: #c4503d;
-    font-size: 10px;
-    font-weight: 700;
-    white-space: nowrap;
+.community-gestite-citta span {
+    font-size: 14px;
+    line-height: 1;
 }
+
+/* DESCRIZIONE */
 
 .community-gestite-descrizione {
-    margin: 15px 0;
-    color: #806c62;
+    margin: 12px 0 15px;
+
+    color: #292447;
     font-size: 12px;
+    font-weight: 600;
     line-height: 1.6;
+
     overflow-wrap: anywhere;
 }
 
-/* INTERESSI */
+
+/* ==========================================
+   INTERESSI
+========================================== */
 
 .community-gestite-interessi {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 7px;
-    margin-bottom: 19px;
+
+    margin-bottom: 15px;
 }
+
+/* TAG */
 
 .community-gestite-tag {
-    padding: 6px 10px;
-    border-radius: 17px;
-    background: #fff0e9;
-    color: #c4503d;
-    font-size: 10px;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    max-width: 100%;
+    padding: 8px 13px;
+
+    border-radius: 22px;
+
+    background: #eadcf5;
+    color: #493365;
+
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
 }
 
+/* AZZURRO */
+
+.community-gestite-tag:nth-child(5n + 2) {
+    background: #d9eef2;
+    color: #315b64;
+}
+
+/* VERDE SALVIA */
+
+.community-gestite-tag:nth-child(5n + 3) {
+    background: #deebdd;
+    color: #405c45;
+}
+
+/* ROSA PESCA */
+
+.community-gestite-tag:nth-child(5n + 4) {
+    background: #ffe0e2;
+    color: #ad4058;
+}
+
+/* ROSA ANTICO */
+
+.community-gestite-tag:nth-child(5n + 5) {
+    background: #f3d8e4;
+    color: #914460;
+}
+
+/* COMMUNITY INCOMPLETA */
+
 .community-gestite-bozza {
-    color: #b16c36;
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 12px;
+
+    border-radius: 18px;
+    background: #fff0dc;
+
+    color: #a86c26;
     font-size: 11px;
     font-weight: 700;
 }
 
-/* AZIONI */
+/* ==========================================
+   AZIONI
+========================================== */
 
 .community-gestite-azioni {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 9px;
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px solid #f0e8e2;
+    gap: 8px;
+
+    margin-top: 0;
+    padding-top: 14px;
+
+    border-top: 1px solid #eae1f5;
 }
+/* STILE COMUNE PULSANTI */
 
 .community-gestite-azione,
 .community-gestite-azione-principale,
-.community-gestite-elimina,
-.community-gestite-azione-disabilitata {
+.community-gestite-elimina {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 36px;
-    padding: 9px 13px;
-    box-sizing: border-box;
-    border-radius: 9px;
+    gap: 7px;
+
+    min-height: 41px;
+    padding: 9px 12px;
+
+    border-radius: 13px;
+
     font-family: inherit;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
+    line-height: 1.3;
+    text-align: center;
     text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        background-color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
 }
 
+/* ICONE SVG */
+
+.community-gestite-azione svg,
+.community-gestite-elimina svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* PULSANTI VIOLA */
+
 .community-gestite-azione {
-    border: 1px solid #e9ddd5;
-    background: white;
-    color: #806c62;
+    border: 1px solid #d0baff;
+    background: #faf7ff;
+
+    color: #38216d;
     cursor: pointer;
 }
 
-.community-gestite-azione:hover {
-    border-color: #fa5943;
-    color: #fa5943;
-    text-decoration: none;
+.community-gestite-azione svg {
+    color: #6236df;
 }
 
+.community-gestite-azione:hover {
+    border-color: #aa89ff;
+    background: #f0eaff;
+
+    color: #6236df;
+    text-decoration: none;
+
+    transform: translateY(-1px);
+}
+
+/* COMPLETA INTERESSI */
+
 .community-gestite-azione-principale {
-    border: 1px solid #fa5943;
-    background: #fa5943;
+    border: 1px solid #7545f5;
+    background: #7545f5;
     color: white;
 }
 
 .community-gestite-azione-principale:hover {
-    background: #e84b36;
+    background: #6236df;
     color: white;
+    text-decoration: none;
 }
 
-.community-gestite-azione-disabilitata {
-    border: 1px solid #eee5df;
-    background: #faf7f5;
-    color: #b6a59b;
-}
+/* ELIMINA */
 
 .community-gestite-elimina {
-    border: 1px solid #f2d2cf;
-    background: #fff7f6;
-    color: #bd4b43;
+    border: 1px solid #ffc1cd;
+    background: #fff1f5;
+    color: #ff365d;
+
     cursor: pointer;
 }
 
-.community-gestite-elimina:hover {
-    background: #ffebe8;
+.community-gestite-elimina svg {
+    color: #ff365d;
 }
 
-/* STATO VUOTO */
+.community-gestite-elimina:hover {
+    border-color: #ff8299;
+    background: #ffe4eb;
+
+    color: #e52c62;
+}
+
+/* ==========================================
+   STATO VUOTO
+========================================== */
 
 .community-gestite-vuoto {
-    padding: 43px 24px;
-    border: 1px solid #eae2dc;
-    border-radius: 19px;
-    background: white;
+    padding: 45px 25px;
+
+    border: 1px solid #e5dbf7;
+    border-radius: 27px;
+
+    background: rgba(255, 255, 255, .96);
+    box-shadow: 0 9px 22px rgba(88, 62, 158, .10);
+
     text-align: center;
 }
 
 .community-gestite-vuoto > span {
-    color: #fa5943;
-    font-size: 34px;
+    color: #7545f5;
+    font-size: 37px;
 }
 
 .community-gestite-vuoto h2 {
-    font-size: 18px;
+    margin: 12px 0;
+    color: #181337;
+    font-size: 20px;
+    font-weight: 800;
 }
 
 .community-gestite-vuoto p {
-    color: #90796e;
-    font-size: 12px;
+    margin: 0 0 18px;
+    color: #49416e;
+    font-size: 13px;
     line-height: 1.6;
 }
 
 .community-gestite-vuoto a {
-    color: #fa5943;
+    color: #ff287d;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     text-decoration: none;
 }
 
-/* POPUP ELIMINAZIONE */
+.community-gestite-vuoto a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================
+   POPUP ELIMINAZIONE
+========================================== */
 
 .community-gestite-overlay {
     position: fixed;
     inset: 0;
     z-index: 1500;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 20px;
-    background: rgba(30, 23, 20, .46);
+
+    background: rgba(24, 19, 55, .50);
 }
 
 .community-gestite-overlay[hidden] {
@@ -287,25 +647,36 @@
 }
 
 .community-gestite-popup {
+    box-sizing: border-box;
     width: 100%;
     max-width: 430px;
-    box-sizing: border-box;
+
     padding: 27px;
-    border: 1px solid #eae2dc;
-    border-radius: 19px;
-    background: white;
-    box-shadow: 0 15px 45px rgba(35, 26, 21, .18);
+
+    border: 1px solid #e5dbf7;
+    border-radius: 22px;
+
+    background: #ffffff;
+    box-shadow: 0 15px 45px rgba(35, 26, 70, .20);
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
 }
 
 .community-gestite-popup h2 {
     margin: 0 0 12px;
+
+    color: #181337;
     font-size: 19px;
+    font-weight: 800;
 }
 
 .community-gestite-popup p {
     margin: 0;
-    color: #90796e;
+
+    color: #49416e;
     font-size: 12px;
+    font-weight: 500;
     line-height: 1.7;
 }
 
@@ -315,6 +686,7 @@
     justify-content: flex-end;
     gap: 10px;
     flex-wrap: wrap;
+
     margin-top: 24px;
 }
 
@@ -323,25 +695,125 @@
 }
 
 .community-gestite-conferma-elimina {
-    min-height: 36px;
-    padding: 10px 14px;
+    min-height: 41px;
+    padding: 10px 15px;
+
     border: none;
-    border-radius: 9px;
-    background: #c94c42;
-    color: white;
+    border-radius: 13px;
+
+    background: #ff365d;
+    color: #ffffff;
+
     font-family: inherit;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
+
     cursor: pointer;
 }
 
 .community-gestite-conferma-elimina:hover {
-    background: #a83c34;
+    background: #e52c62;
 }
 
-/* RESPONSIVE */
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
 
-@media (max-width: 650px) {
+.community-gestite-pagina a:focus-visible,
+.community-gestite-pagina button:focus-visible,
+.community-gestite-popup button:focus-visible {
+    outline: 3px solid #7545f5;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+/* TABLET */
+
+@media (max-width: 1050px) {
+
+    .community-gestite-immagine {
+        flex-basis: 215px;
+        width: 215px;
+    }
+
+    .community-gestite-contenuto {
+        padding: 20px;
+    }
+
+    .community-gestite-card h2 {
+        font-size: 22px;
+    }
+
+    .community-gestite-azioni {
+        gap: 7px;
+    }
+
+    .community-gestite-azione,
+    .community-gestite-elimina {
+        padding: 9px 10px;
+        font-size: 10px;
+    }
+}
+
+/* TABLET PICCOLO */
+
+@media (max-width: 760px) {
+
+    .community-gestite-pagina {
+        width: calc(100% - 36px);
+        padding: 30px 0 55px;
+    }
+
+    .community-gestite-intestazione {
+        gap: 18px;
+    }
+
+    .community-gestite-intestazione h1 {
+        font-size: 28px;
+    }
+
+    .community-gestite-intestazione p {
+        font-size: 12px;
+    }
+
+    .community-gestite-titolo-icona {
+        width: 29px;
+        height: 29px;
+    }
+
+    .community-gestite-crea {
+        min-height: 44px;
+        padding: 10px 15px;
+        gap: 10px;
+        font-size: 11px;
+    }
+
+    .community-gestite-immagine {
+        flex-basis: 190px;
+        width: 190px;
+    }
+
+    .community-gestite-descrizione {
+        font-size: 12px;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .community-gestite-intestazione {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .community-gestite-crea {
+        align-self: flex-start;
+    }
 
     .community-gestite-card {
         flex-direction: column;
@@ -350,7 +822,18 @@
     .community-gestite-immagine {
         flex-basis: auto;
         width: 100%;
-        height: 175px;
+        height: 220px;
+        min-height: 0;
+        padding: 6px;
+    }
+
+    .community-gestite-immagine img {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
         min-height: 0;
     }
 
@@ -358,57 +841,39 @@
         padding: 19px;
     }
 
-    .community-gestite-card-testa {
-        flex-wrap: wrap;
-    }
-
-    .community-gestite-intestazione h1 {
+    .community-gestite-card h2 {
         font-size: 23px;
     }
+
+    .community-gestite-azioni {
+        gap: 8px;
+    }
+
+    .community-gestite-azione,
+    .community-gestite-elimina {
+        font-size: 11px;
+    }
 }
 
+/* SCHERMI MOLTO PICCOLI */
 
-/* ==========================================
-   COMMUNITY GESTITE - CREA COMMUNITY
-========================================== */
+@media (max-width: 400px) {
 
-.community-gestite-crea,
-.community-gestite-crea:visited {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    .community-gestite-intestazione h1 {
+        font-size: 24px;
+    }
 
-    flex-shrink: 0;
-    min-height: 40px;
-    padding: 11px 18px;
+    .community-gestite-titolo-riga {
+        gap: 10px;
+    }
 
-    background: #fa5943;
-    border: 1px solid #fa5943;
-    border-radius: 11px;
+    .community-gestite-trilli {
+        transform: scale(.75);
+        transform-origin: left center;
+    }
 
-    color: #ffffff;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: none;
-    white-space: nowrap;
-
-    transition: background-color .15s ease;
-}
-
-.community-gestite-crea:hover {
-    background: #e84b36;
-    border-color: #e84b36;
-    color: #ffffff;
-}
-
-.community-gestite-crea:focus-visible {
-    outline: 2px solid #fa5943;
-    outline-offset: 3px;
-}
-
-@media (max-width: 600px) {
-    .community-gestite-crea {
-        width: 100%;
+    .community-gestite-azione,
+    .community-gestite-elimina {
+        flex-grow: 1;
     }
 }

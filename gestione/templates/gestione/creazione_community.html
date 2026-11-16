@@ -10,12 +10,17 @@
 
 <link
     rel="stylesheet"
-    href="{% static 'css/creazione_community.css' %}"
+    href="{% static 'css/creazione_community.css' %}?v=3"
 >
 
-<link rel="stylesheet" href="{% static 'css/gestione_immagini.css' %}">
+<link
+    rel="stylesheet"
+    href="{% static 'css/gestione_immagini.css' %}"
+>
 
-<main class="creazione-community-pagina">
+<main class="creazione-community-pagina creazione-community-nuova">
+
+    <!-- NAVIGAZIONE -->
 
     {% if request.GET.origine == 'community_gestite' %}
 
@@ -37,90 +42,161 @@
 
     {% endif %}
 
+
+    <!-- INTESTAZIONE -->
+
     <header class="creazione-community-intestazione">
 
         <span class="creazione-community-fase">
             PASSAGGIO 1 DI 2
         </span>
 
-        <h1>Crea la tua community</h1>
+        <div class="creazione-community-titolo-contenitore">
+
+            <h1>Crea la tua community</h1>
+
+            <span
+                class="creazione-community-trilli"
+                aria-hidden="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
+        </div>
 
         <p>
             Dai vita a uno spazio in cui incontrare
-            persone con le tue stesse passioni.
+            persone con le tue stesse passioni!
         </p>
 
     </header>
 
-    <section class="creazione-community-card">
 
-        <form method="post" enctype="multipart/form-data" autocomplete="off">
+    <!-- FORM DI CREAZIONE -->
 
-            {% csrf_token %}
+    <form
+        method="post"
+        enctype="multipart/form-data"
+        autocomplete="off"
+        class="creazione-community-form"
+    >
 
-            <input
-                type="hidden"
-                name="origine"
-                value="{{ request.GET.origine }}"
-            >
+        {% csrf_token %}
 
-            {% if form.non_field_errors %}
-                <div class="creazione-community-errori">
-                    {{ form.non_field_errors }}
+        <input
+            type="hidden"
+            name="origine"
+            value="{{ request.GET.origine }}"
+        >
+
+        {% if form.non_field_errors %}
+
+            <div class="creazione-community-errori" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+
+        {% endif %}
+
+
+        <!-- CARD PRINCIPALE -->
+
+        <section class="creazione-community-card">
+
+            <!-- =====================================
+                 INFORMAZIONI DELLA COMMUNITY
+            ====================================== -->
+
+            <div class="creazione-community-sezione">
+
+                <h2 class="creazione-community-titolo-sezione">
+
+                    <span
+                        class="creazione-community-icona-sezione"
+                        aria-hidden="true"
+                    >
+                        👥
+                    </span>
+
+                    <span>Informazioni della community</span>
+
+                </h2>
+
+
+                <!-- NOME -->
+
+                <div class="creazione-community-campo">
+
+                    <label for="{{ form.titolo.id_for_label }}">
+                        Nome della community
+                        <span class="creazione-community-obbligatorio">*</span>
+                    </label>
+
+                    {{ form.titolo }}
+
+                    {% if form.titolo.errors %}
+
+                        <div class="creazione-community-errori" role="alert">
+                            {{ form.titolo.errors }}
+                        </div>
+
+                    {% endif %}
+
                 </div>
-            {% endif %}
 
-            <!-- TITOLO -->
 
-            <div class="creazione-community-campo">
+                <!-- DESCRIZIONE -->
 
-                <label for="{{ form.titolo.id_for_label }}">
-                    Nome della community
-                </label>
+                <div class="creazione-community-campo">
 
-                {{ form.titolo }}
+                    <label for="{{ form.descrizione.id_for_label }}">
+                        Descrizione
+                        <span class="creazione-community-obbligatorio">*</span>
+                    </label>
 
-                {% if form.titolo.errors %}
-                    <div class="creazione-community-errori">
-                        {{ form.titolo.errors }}
-                    </div>
-                {% endif %}
+                    {{ form.descrizione }}
 
-            </div>
+                    <span class="creazione-community-aiuto">
+                        Racconta che cosa farete insieme
+                        e a chi è dedicata la community.
+                    </span>
 
-            <!-- DESCRIZIONE -->
+                    {% if form.descrizione.errors %}
 
-            <div class="creazione-community-campo">
+                        <div class="creazione-community-errori" role="alert">
+                            {{ form.descrizione.errors }}
+                        </div>
 
-                <label for="{{ form.descrizione.id_for_label }}">
-                    Descrizione
-                </label>
+                    {% endif %}
 
-                {{ form.descrizione }}
-
-                <span class="creazione-community-aiuto">
-                    Racconta che cosa farete insieme
-                    e a chi è dedicata la community.
-                </span>
-
-                {% if form.descrizione.errors %}
-                    <div class="creazione-community-errori">
-                        {{ form.descrizione.errors }}
-                    </div>
-                {% endif %}
+                </div>
 
             </div>
 
-            <!-- IMMAGINE -->
-            <!-- IMMAGINE -->
 
-            <div class="creazione-community-campo">
+            <!-- =====================================
+                 IMMAGINE DELLA COMMUNITY
+            ====================================== -->
 
-                <label for="id_immagine">
-                    Immagine della community
-                </label>
+            <div class="creazione-community-sezione">
+
+                <h2 class="creazione-community-titolo-sezione">
+
+                    <span
+                        class="creazione-community-icona-sezione"
+                        aria-hidden="true"
+                    >
+                        🖼️
+                    </span>
+
+                    <span>Immagine della community</span>
+
+                </h2>
 
                 <div class="gestione-immagine gestione-immagine-creazione">
+
+                    <!-- ANTEPRIMA -->
 
                     <div class="gestione-immagine-anteprima">
 
@@ -139,10 +215,14 @@
 
                     </div>
 
+
+                    <!-- COMANDI -->
+
                     <div class="gestione-immagine-comandi">
 
                         <span class="gestione-immagine-descrizione">
-                            Facoltativa. Puoi scegliere un'immagine rappresentativa del gruppo.
+                            Facoltativa. Puoi scegliere un'immagine
+                            rappresentativa del gruppo.
                         </span>
 
                         <div class="gestione-immagine-azioni">
@@ -165,6 +245,8 @@
 
                         </div>
 
+                        <!-- INPUT FILE -->
+
                         <input
                             type="file"
                             name="immagine"
@@ -181,71 +263,88 @@
                 </div>
 
                 {% if form.immagine.errors %}
-                    <div class="creazione-community-errori">
+
+                    <div class="creazione-community-errori" role="alert">
                         {{ form.immagine.errors }}
                     </div>
-                {% endif %}
 
-            </div>
-
-                <span class="creazione-community-aiuto">
-                    Facoltativa. Puoi scegliere un'immagine
-                    rappresentativa del gruppo.
-                </span>
-
-                {% if form.immagine.errors %}
-                    <div class="creazione-community-errori">
-                        {{ form.immagine.errors }}
-                    </div>
                 {% endif %}
 
             </div>
 
 
-            <!-- CITTÀ -->
+            <!-- =====================================
+                 POSIZIONE DELLA COMMUNITY
+            ====================================== -->
 
-            <div class="creazione-community-campo">
+            <div class="creazione-community-sezione">
 
-                <label for="{{ form.citta.id_for_label }}">
-                    Città
-                </label>
+                <h2 class="creazione-community-titolo-sezione">
 
-                {{ form.citta }}
+                    <span
+                        class="creazione-community-icona-sezione"
+                        aria-hidden="true"
+                    >
+                        📍
+                    </span>
 
-                <span class="creazione-community-aiuto">
-                    Inserisci una città italiana valida.
-                </span>
+                    <span>Dove si trova</span>
 
-                {% if form.citta.errors %}
-                    <div class="creazione-community-errori">
-                        {{ form.citta.errors }}
-                    </div>
-                {% endif %}
+                </h2>
+
+                <div class="creazione-community-campo">
+
+                    <label for="{{ form.citta.id_for_label }}">
+                        Città
+                        <span class="creazione-community-obbligatorio">*</span>
+                    </label>
+
+                    {{ form.citta }}
+
+                    <span class="creazione-community-aiuto">
+                        Inserisci una città italiana valida.
+                    </span>
+
+                    {% if form.citta.errors %}
+
+                        <div class="creazione-community-errori" role="alert">
+                            {{ form.citta.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
 
             </div>
 
-            <!-- AZIONI -->
+        </section>
 
-            <div class="creazione-community-azioni">
 
-                <a href="{% url 'community' %}"
-                   class="creazione-community-annulla">
-                    Annulla
-                </a>
+        <!-- =====================================
+             PULSANTE FUORI DALLA CARD
+        ====================================== -->
 
-                <button type="submit"
-                        class="creazione-community-conferma">
-                    Continua: scegli interessi →
-                </button>
+        <div class="creazione-community-azioni">
 
-            </div>
+            <button
+                type="submit"
+                class="creazione-community-conferma"
+            >
+                Scegli gli interessi
+            </button>
 
-        </form>
+        </div>
 
-    </section>
+    </form>
 
 </main>
 
-<script src="{% static 'js/gestione_immagini.js' %}?v=5" defer></script>
+
+<!-- JAVASCRIPT IMMAGINE -->
+
+<script
+    src="{% static 'js/gestione_immagini.js' %}?v=5"
+    defer
+></script>
 
 {% endblock %}

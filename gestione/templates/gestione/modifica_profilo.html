@@ -2,32 +2,38 @@
 {% extends 'gestione/base_autenticata.html' %}
 {% load static %}
 
+{% block title %}Modifica profilo | FuoriRete{% endblock %}
+
 {% block area_content %}
 
 <link rel="stylesheet" href="{% static 'css/gestione_immagini.css' %}">
+<link rel="stylesheet" href="{% static 'css/area_autenticata.css' %}?v=1">
 
 <div class="modifica-profilo-pagina">
 
+    <!-- COLLEGAMENTO INDIETRO -->
+    <a href="{% url 'profilo' %}"
+       class="modifica-profilo-indietro">
+        ← Torna al profilo
+    </a>
+
     <!-- INTESTAZIONE -->
+    <header class="modifica-profilo-intestazione">
 
-    <section class="modifica-profilo-intestazione">
+        <h1>
+            Modifica profilo
 
-        <div>
-            <h1>Modifica profilo</h1>
+            <span class="modifica-profilo-trilli" aria-hidden="true">
+                <i></i><i></i><i></i>
+            </span>
+        </h1>
 
-            <p>
-                Aggiorna le tue informazioni personali
-                e personalizza il tuo profilo FuoriRete.
-            </p>
-        </div>
+        <p>
+            Aggiorna le tue informazioni personali
+            e personalizza il tuo profilo FuoriRete.
+        </p>
 
-        <a href="{% url 'profilo' %}"
-           class="modifica-profilo-indietro">
-            ← Torna al profilo
-        </a>
-
-    </section>
-
+    </header>
 
     <!-- FORM -->
 
@@ -45,12 +51,14 @@
             </div>
         {% endif %}
 
-
         <!-- INFORMAZIONI PERSONALI -->
 
         <section class="modifica-profilo-riquadro">
 
-            <h2>Informazioni personali</h2>
+            <h2 class="modifica-profilo-titolo-sezione">
+                <span class="modifica-profilo-icona-sezione" aria-hidden="true">♟</span>
+                Informazioni personali
+            </h2>
 
             <p class="modifica-profilo-sottotitolo">
                 Queste informazioni saranno visibili
@@ -63,35 +71,25 @@
 
                     {% if field.name == 'nome' or field.name == 'foto' or field.name == 'data_nascita' or field.name == 'genere' or field.name == 'citta' or field.name == 'occupazione' %}
 
-                        <div class="modifica-profilo-campo">
+                        <div class="modifica-profilo-campo {% if field.name == 'foto' %}modifica-profilo-campo-foto{% endif %}">
 
                             {% if field.name == 'foto' %}
 
-                                <label for="id_foto">
-                                    Foto del profilo
-                                </label>
-
                                 <div class="gestione-immagine">
-
-                                    <!-- FOTO ATTUALE -->
 
                                     <div class="gestione-immagine-anteprima">
 
-                                        <img
-                                            id="anteprima-foto"
-                                            src="{{ request.user.profilo.foto.url }}"
-                                            alt="Foto attuale del profilo"
-                                        >
+                                        {% if request.user.profilo.foto %}
+                                            <img
+                                                id="anteprima-foto"
+                                                src="{{ request.user.profilo.foto.url }}"
+                                                alt="Foto attuale del profilo"
+                                            >
+                                        {% endif %}
 
                                     </div>
 
-                                    <!-- MODIFICA FOTO -->
-
                                     <div class="gestione-immagine-comandi">
-
-                                        <span class="gestione-immagine-descrizione">
-                                            Foto attuale
-                                        </span>
 
                                         <label
                                             for="id_foto"
@@ -123,7 +121,6 @@
 
                             {% endif %}
 
-
                             {% if field.help_text %}
                                 <div class="modifica-profilo-aiuto">
                                     {{ field.help_text }}
@@ -141,35 +138,6 @@
                     {% endif %}
 
                 {% endfor %}
-
-            </div>
-
-        </section>
-
-
-        <!-- DESCRIZIONE -->
-
-        <section class="modifica-profilo-riquadro">
-
-            <h2>Su di me</h2>
-
-            <p class="modifica-profilo-sottotitolo">
-                Racconta qualcosa di te agli altri utenti.
-            </p>
-
-            <div class="modifica-profilo-campo">
-
-                <label for="{{ form.descrizione.id_for_label }}">
-                    {{ form.descrizione.label }}
-                </label>
-
-                {{ form.descrizione }}
-
-                {% if form.descrizione.errors %}
-                    <div class="modifica-profilo-errori">
-                        {{ form.descrizione.errors }}
-                    </div>
-                {% endif %}
 
             </div>
 
@@ -266,28 +234,25 @@
 
         </section>
 
-
         <!-- INTERESSI -->
 
         <section class="modifica-profilo-riquadro">
 
-            <h2>I tuoi interessi</h2>
+            <h2 class="modifica-profilo-titolo-sezione">
+                <span class="modifica-profilo-icona-sezione" aria-hidden="true">♥</span>
+                I tuoi interessi
+            </h2>
 
             <p class="modifica-profilo-sottotitolo">
-                Seleziona da 1 a 10 interessi.
+                Puoi selezionare da 1 a 6 interessi.
             </p>
 
-            <div class="modifica-profilo-scelte">
-
-                {{ form.interessi }}
-
-            </div>
-
-            {% if form.interessi.errors %}
-                <div class="modifica-profilo-errori">
-                    {{ form.interessi.errors }}
-                </div>
-            {% endif %}
+            <a
+                href="{% url 'modifica_interessi' %}"
+                class="modifica-interessi-pulsante"
+            >
+                Modifica interessi
+            </a>
 
         </section>
 
@@ -297,12 +262,14 @@
         <div class="modifica-profilo-azioni">
 
             <a href="{% url 'profilo' %}"
-               class="modifica-profilo-annulla">
+            class="modifica-profilo-annulla">
                 Annulla
             </a>
 
-            <button type="submit"
-                    class="modifica-profilo-salva">
+            <button
+                type="submit"
+                class="modifica-profilo-salva"
+            >
                 Salva modifiche
             </button>
 
@@ -310,25 +277,8 @@
 
     </form>
 
-    <!-- MODIFICA INTERESSI -->
-
-    <div class="modifica-interessi-collegamento">
-
-        <h2>I tuoi interessi</h2>
-
-        <p>
-            Vuoi aggiornare le tue passioni?
-            Puoi modificare gli interessi del tuo profilo.
-        </p>
-
-        <a href="{% url 'modifica_interessi' %}"
-           class="modifica-interessi-pulsante">
-            Modifica interessi →
-        </a>
-
-    </div>
-
 </div>
+
 
 <script src="{% static 'js/gestione_immagini.js' %}" defer></script>
 

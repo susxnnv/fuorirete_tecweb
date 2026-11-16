@@ -1069,3 +1069,41 @@ body:has(.interessi-pagina) {
     }
 
 }
+
+
+/* ==========================================
+   SELEZIONE INTERESSI COMMUNITY
+   ALLINEAMENTO AL LAYOUT DEL PROFILO
+========================================== */
+
+/* CONTENITORE DELL'AREA AUTENTICATA */
+
+.area-contenuto:has(.interessi-community-pagina) {
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+/* CONTENITORE DELLA PAGINA */
+
+.interessi-pagina.interessi-community-pagina {
+    width: 100%;
+    max-width: 1190px;
+
+    margin: 0 auto;
+    padding: 35px 24px 65px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 720px) {
+
+    .interessi-pagina.interessi-community-pagina {
+        padding: 27px 16px 48px;
+    }
+
+}

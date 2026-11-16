@@ -8,10 +8,12 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/creazione_community.css' %}">
+<link rel="stylesheet" href="{% static 'css/creazione_community.css' %}?v=2">
 <link rel="stylesheet" href="{% static 'css/gestione_immagini.css' %}">
 
-<main class="creazione-community-pagina">
+<main class="creazione-community-pagina modifica-community-pagina">
+
+    <!-- COLLEGAMENTO INDIETRO -->
 
     <a
         href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}"
@@ -20,13 +22,20 @@
         ← Torna indietro
     </a>
 
+    <!-- INTESTAZIONE -->
+
     <header class="creazione-community-intestazione">
 
-        <span class="creazione-community-fase">
-            GESTIONE COMMUNITY
-        </span>
+        <h1>
+            Modifica community
 
-        <h1>Modifica community</h1>
+            <span class="modifica-community-trilli"
+                  aria-hidden="true">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h1>
 
         <p>
             Aggiorna le informazioni di
@@ -35,24 +44,43 @@
 
     </header>
 
-    <section class="creazione-community-card">
+    <!-- FORM -->
 
-        <form method="post" enctype="multipart/form-data" autocomplete="off">
+    <form
+        method="post"
+        enctype="multipart/form-data"
+        autocomplete="off"
+        class="modifica-community-form"
+    >
 
-            {% csrf_token %}
+        {% csrf_token %}
 
-             <input
-                type="hidden"
-                name="origine"
-                value="{{ request.GET.origine }}"
-            >
+        <input
+            type="hidden"
+            name="origine"
+            value="{{ request.GET.origine }}"
+        >
 
-            {% if form.non_field_errors %}
-                <div class="creazione-community-errori">
-                    {{ form.non_field_errors }}
-                </div>
-            {% endif %}
+        {% if form.non_field_errors %}
+            <div class="creazione-community-errori">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
 
+        <!-- =====================================
+             INFORMAZIONI DELLA COMMUNITY
+        ====================================== -->
+
+        <section class="creazione-community-card">
+
+            <h2 class="modifica-community-titolo-sezione">
+
+                <span class="modifica-community-icona-sezione"
+                      aria-hidden="true">♧</span>
+
+                Informazioni della community
+
+            </h2>
 
             <!-- TITOLO -->
 
@@ -71,7 +99,6 @@
                 {% endif %}
 
             </div>
-
 
             <!-- DESCRIZIONE -->
 
@@ -132,13 +159,9 @@
 
                     </div>
 
-                    <!-- PULSANTI -->
+                    <!-- COMANDI -->
 
                     <div class="gestione-immagine-comandi">
-
-                        <span class="gestione-immagine-descrizione">
-                            Immagine della community
-                        </span>
 
                         <div class="gestione-immagine-azioni">
 
@@ -170,7 +193,7 @@
                             data-anteprima="anteprima-community"
                         >
 
-                        <!-- RIMOZIONE COMPATIBILE CON DJANGO -->
+                        <!-- RIMOZIONE IMMAGINE DJANGO -->
 
                         <input
                             type="checkbox"
@@ -197,8 +220,6 @@
 
             </div>
 
-
-
             <!-- CITTÀ -->
 
             <div class="creazione-community-campo">
@@ -217,55 +238,67 @@
 
             </div>
 
+        </section>
 
-            <!-- AZIONI -->
+        <!-- =====================================
+             INTERESSI DELLA COMMUNITY
+        ====================================== -->
 
-            <div class="creazione-community-azioni">
+        <section class="modifica-interessi-collegamento">
 
-                <a
-                    href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}"
-                    class="creazione-community-annulla"
-                >
-                    Annulla
-                </a>
+            <h2 class="modifica-community-titolo-sezione">
 
-                <button
-                    type="submit"
-                    class="creazione-community-conferma"
-                >
-                    Salva modifiche →
-                </button>
+                <span class="modifica-community-icona-sezione"
+                      aria-hidden="true">♥</span>
 
-            </div>
+                Interessi della community
 
-        </form>
-    
-    <!-- MODIFICA INTERESSI COMMUNITY -->
+            </h2>
 
-    <div class="modifica-interessi-collegamento">
+            <p>
+                Puoi modificare gli interessi di
+                <strong>{{ community.titolo }}</strong> 
+                !
+            </p>
 
-        <h2>Interessi della community</h2>
+            <a
+                href="{% url 'modifica_interessi_community' community.pk %}?origine={% if request.GET.origine == 'profilo' %}profilo{% elif request.GET.origine == 'community' %}community{% else %}community_gestite{% endif %}"
+                class="modifica-interessi-pulsante"
+            >
+                Modifica interessi
+            </a>
 
-        <p>
-            Vuoi aggiornare gli interessi di
-            {{ community.titolo }}?
-            Puoi modificarli separatamente
-            dalle informazioni principali.
-        </p>
+        </section>
 
-        <a
-            href="{% url 'modifica_interessi_community' community.pk %}?origine={% if request.GET.origine == 'profilo' %}profilo{% elif request.GET.origine == 'community' %}community{% else %}community_gestite{% endif %}"
-            class="modifica-interessi-pulsante"
-        >
-            Modifica interessi →
-        </a>
+        <!-- =====================================
+             AZIONI FINALI
+        ====================================== -->
 
-    </div>
+        <div class="creazione-community-azioni">
 
-    </section>
+            <a
+                href="{% if request.GET.origine == 'community' or request.GET.origine == 'profilo' %}{% url 'dettaglio_community' community.pk %}?origine={{ request.GET.origine }}{% else %}{% url 'community_gestite' %}{% endif %}"
+                class="creazione-community-annulla"
+            >
+                Annulla
+            </a>
+
+            <button
+                type="submit"
+                class="creazione-community-conferma"
+            >
+                Salva modifiche
+            </button>
+
+        </div>
+
+    </form>
 
 </main>
 
-<script src="{% static 'js/gestione_immagini.js' %}" defer></script>
+<script
+    src="{% static 'js/gestione_immagini.js' %}"
+    defer
+></script>
 
 {% endblock %}
