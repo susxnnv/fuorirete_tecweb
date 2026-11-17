@@ -1321,6 +1321,7 @@ body:has(.eventi-pagina) .area-contenuto {
 
 /* ==========================================
    GESTIONE EVENTI - CARD AZIONI LATERALI
+   Versione compatta
 ========================================== */
 
 /* CARD PRINCIPALE */
@@ -1329,9 +1330,8 @@ body:has(.eventi-pagina) .area-contenuto {
     position: relative;
     display: block;
 
-    width: calc(100% - 225px);
+    width: calc(100% - 270px);
     box-sizing: border-box;
-
     overflow: visible;
 }
 
@@ -1344,23 +1344,21 @@ body:has(.eventi-pagina) .area-contenuto {
 
 .eventi-gestione-pagina .eventi-card-azioni {
     position: absolute;
-
     top: 0;
-    left: calc(100% + 17px);
+    left: calc(100% + 16px);
 
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 14px;
+    gap: 10px;
 
-    width: 208px;
-
+    width: 254px;
     margin: 0;
     padding: 0;
     border: none;
 }
 
-/* STILE COMUNE DELLE DUE CARD */
+/* PULSANTI COMPATTI */
 
 .eventi-gestione-pagina
 .eventi-card-azioni .eventi-azione-secondaria,
@@ -1370,27 +1368,26 @@ body:has(.eventi-pagina) .area-contenuto {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    flex-wrap: wrap;
-
-    column-gap: 12px;
-    row-gap: 4px;
+    flex-wrap: nowrap;
+    gap: 8px;
 
     width: 100%;
-    min-height: 91px;
+    min-height: 53px;
+    padding: 10px 12px;
 
-    padding: 18px;
-
-    border-radius: 20px;
+    border-radius: 14px;
 
     font-family: inherit;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 800;
+    line-height: 1.3;
     text-align: left;
-    line-height: 1.4;
+    text-decoration: none;
+    white-space: nowrap;
 
     cursor: pointer;
 
-    box-shadow: 0 7px 17px rgba(73, 45, 142, .11);
+    box-shadow: 0 5px 14px rgba(73, 45, 142, .10);
 
     transition:
         transform .2s ease,
@@ -1400,65 +1397,61 @@ body:has(.eventi-pagina) .area-contenuto {
 /* ICONE */
 
 .eventi-gestione-pagina .eventi-card-azioni svg {
-    width: 28px;
-    height: 28px;
-    flex: 0 0 28px;
+    display: block;
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
 }
 
-/* SOTTOTITOLI */
+/* SOTTOTITOLO E SEPARATORE */
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-secondaria::after,
+
+.eventi-gestione-pagina
+.eventi-card-azioni .eventi-azione-elimina::after {
+    display: inline-flex;
+    align-items: center;
+
+    flex: 0 0 auto;
+    min-height: 23px;
+
+    margin-left: 3px;
+    padding: 0 0 0 10px;
+
+    border-left: 1px solid currentColor;
+
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.3;
+    opacity: .85;
+}
 
 .eventi-gestione-pagina
 .eventi-card-azioni .eventi-azione-secondaria::after {
     content: "Aggiorna i dettagli";
-    display: block;
-    flex-basis: 100%;
-
-    padding-left: 40px;
-
-    font-size: 11px;
-    font-weight: 500;
 }
 
 .eventi-gestione-pagina
 .eventi-card-azioni .eventi-azione-elimina::after {
     content: "Elimina l'evento";
-    display: block;
-    flex-basis: 100%;
-
-    padding-left: 40px;
-
-    font-size: 11px;
-    font-weight: 500;
 }
 
-/* CARD MODIFICA - VIOLA */
+/* CARD MODIFICA */
 
 .eventi-gestione-pagina
 .eventi-card-azioni .eventi-azione-secondaria {
     background: #f1eaff;
     border: 1px solid #c9afff;
-    border-bottom: 2px solid #a777ff;
-
     color: #6738e8;
 }
 
-.eventi-gestione-pagina
-.eventi-card-azioni .eventi-azione-secondaria svg {
-    color: #6738e8;
-}
-
-/* CARD ELIMINA - CORALLO */
+/* CARD ELIMINA */
 
 .eventi-gestione-pagina
 .eventi-card-azioni .eventi-azione-elimina {
-    background: linear-gradient(
-        110deg,
-        #ff2780,
-        #ff6056
-    );
-
-    border: 1px solid rgba(255,255,255,.8);
-
+    background: linear-gradient(110deg, #ff2780, #ff6056);
+    border: 1px solid rgba(255, 255, 255, .8);
     color: #ffffff;
 }
 
@@ -1474,13 +1467,11 @@ body:has(.eventi-pagina) .area-contenuto {
 
 .eventi-gestione-pagina
 .eventi-card-azioni .eventi-azione-elimina:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 22px rgba(73, 45, 142, .16);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(73, 45, 142, .15);
 }
 
-/* ==========================================
-   RESPONSIVE
-========================================== */
+/* RESPONSIVE */
 
 @media (max-width: 850px) {
 
@@ -1490,14 +1481,12 @@ body:has(.eventi-pagina) .area-contenuto {
 
     .eventi-gestione-pagina .eventi-card-azioni {
         position: static;
-
         flex-direction: row;
         width: 100%;
 
-        margin-top: 20px;
-        padding-top: 16px;
-
-        border-top: 1px solid #eae1f5;
+        margin-top: 16px;
+        padding-top: 0;
+        border: none;
     }
 
     .eventi-gestione-pagina
@@ -1507,12 +1496,10 @@ body:has(.eventi-pagina) .area-contenuto {
     .eventi-card-azioni .eventi-azione-elimina {
         flex: 1;
         min-width: 0;
-        min-height: 75px;
-        padding: 13px;
     }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 520px) {
 
     .eventi-gestione-pagina .eventi-card-azioni {
         flex-direction: column;
@@ -1769,27 +1756,436 @@ body:has(.eventi-pagina) .area-contenuto {
     }
 }
 
+
 /* ==========================================
-   GESTIONE EVENTI - RESPONSIVE AZIONI
+   FUORIRETE - CREAZIONE EVENTO
+   Stile coordinato con Creazione Community
 ========================================== */
 
-@media (max-width: 800px) {
+/* CONTENITORE */
 
-    .eventi-gestione-pagina .eventi-card {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .eventi-gestione-pagina .eventi-card-azioni {
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-    }
+.eventi-form-creazione {
+    width: calc(100% - 40px);
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 40px 0 75px;
+    color: #17133e;
 }
 
-@media (max-width: 420px) {
+/* LEGENDA CAMPI OBBLIGATORI */
 
-    .eventi-gestione-pagina .eventi-card-azioni {
-        flex-wrap: wrap;
+.eventi-form-creazione .eventi-form-legenda {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+
+    margin: 0 0 25px;
+
+    color: #625c83;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.eventi-form-creazione .eventi-form-legenda span {
+    color: #ff405d;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* ==========================================
+   NAVIGAZIONE E INTESTAZIONE
+========================================== */
+
+.eventi-form-creazione .eventi-indietro {
+    margin-bottom: 27px;
+    color: #ff584f;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.eventi-form-creazione .eventi-indietro:hover {
+    color: #e84643;
+    text-decoration: none;
+}
+
+.eventi-form-creazione .eventi-intestazione {
+    margin-bottom: 32px;
+}
+
+/* TITOLO */
+
+.eventi-form-creazione .eventi-intestazione h1 {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    width: fit-content;
+    max-width: 100%;
+
+    margin: 0 0 12px;
+    padding-bottom: 9px;
+
+    color: #17133e;
+    font-size: 33px;
+    font-weight: 800;
+    letter-spacing: -.8px;
+    line-height: 1.25;
+}
+
+/* SOTTOLINEATURA CORALLO */
+
+.eventi-form-creazione .eventi-intestazione h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 62px;
+    height: 3px;
+
+    border-radius: 4px;
+    background: #ff6259;
+}
+
+/* DESCRIZIONE INTRODUTTIVA */
+
+.eventi-form-creazione .eventi-intestazione p {
+    margin: 0;
+    color: #625c83;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+.eventi-form-creazione .eventi-intestazione p strong {
+    color: #17133e;
+    font-weight: 700;
+}
+
+/* ==========================================
+   CARD PRINCIPALE
+========================================== */
+
+.eventi-form-creazione .eventi-form-card {
+    padding: 35px 36px;
+
+    border: 1px solid #e6d9ff;
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, .97);
+
+    box-shadow: 0 10px 26px rgba(99, 66, 169, .07);
+}
+
+/* ==========================================
+   SEZIONI DEL FORM
+========================================== */
+
+.eventi-form-creazione .eventi-form-sezione {
+    margin-bottom: 34px;
+}
+
+.eventi-form-creazione .eventi-form-sezione-ultima {
+    margin-bottom: 0;
+}
+
+/* INTESTAZIONE SEZIONE */
+
+.eventi-form-creazione .eventi-form-sezione-titolo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 0 0 24px;
+
+    color: #17133e;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+/* LINEA ORIZZONTALE DOPO IL TITOLO */
+
+.eventi-form-creazione .eventi-form-sezione-titolo::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    margin-left: 10px;
+    background: #e5d7ff;
+}
+
+/* ICONA DELLA SEZIONE */
+
+.eventi-form-creazione .eventi-form-sezione-icona {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 38px;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+    background: #f0e8ff;
+
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* ==========================================
+   CAMPI DEL FORM
+========================================== */
+
+.eventi-form-creazione .eventi-form-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    min-width: 0;
+    margin-bottom: 23px;
+}
+
+.eventi-form-creazione .eventi-form-campo:last-child {
+    margin-bottom: 0;
+}
+
+/* LABEL */
+
+.eventi-form-creazione .eventi-form-campo label {
+    color: #17133e;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.eventi-form-creazione .eventi-obbligatorio {
+    color: #ff405d;
+    font-weight: 800;
+}
+
+/* INPUT, SELECT E TEXTAREA */
+
+.eventi-form-creazione .eventi-form-campo input,
+.eventi-form-creazione .eventi-form-campo select,
+.eventi-form-creazione .eventi-form-campo textarea {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    border: 1px solid #dfd0ff;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #17133e;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+/* ALTEZZA INPUT */
+
+.eventi-form-creazione .eventi-form-campo input,
+.eventi-form-creazione .eventi-form-campo select {
+    min-height: 48px;
+}
+
+/* PLACEHOLDER */
+
+.eventi-form-creazione .eventi-form-campo input::placeholder,
+.eventi-form-creazione .eventi-form-campo textarea::placeholder {
+    color: #998cae;
+    opacity: 1;
+}
+
+/* FOCUS */
+
+.eventi-form-creazione .eventi-form-campo input:focus,
+.eventi-form-creazione .eventi-form-campo select:focus,
+.eventi-form-creazione .eventi-form-campo textarea:focus {
+    border-color: #7545f5;
+    box-shadow: 0 0 0 3px rgba(117, 69, 245, .10);
+}
+
+/* DESCRIZIONE E COSA PORTARE */
+
+.eventi-form-creazione .eventi-form-campo textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.65;
+}
+
+/* TESTI DI AIUTO */
+
+.eventi-form-creazione .eventi-form-campo small {
+    display: block;
+
+    color: #81769e;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   DATA E ORARIO
+========================================== */
+
+.eventi-form-creazione .eventi-form-griglia {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.eventi-form-creazione .eventi-form-griglia .eventi-form-campo {
+    margin-bottom: 0;
+}
+
+/* ==========================================
+   ERRORI VALIDAZIONE
+========================================== */
+
+.eventi-form-creazione .eventi-errore {
+    margin-top: 4px;
+    padding: 10px 13px;
+
+    border: 1px solid #ffb6c2;
+    border-radius: 10px;
+
+    background: #fff1f4;
+    color: #bd3155;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.eventi-form-creazione .eventi-errore ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+/* ==========================================
+   PULSANTE CREA EVENTO
+   ESTERNO ALLA CARD
+========================================== */
+
+.eventi-form-creazione .eventi-form-azioni-creazione {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 28px;
+    padding: 0;
+
+    border: none;
+}
+
+/* PULSANTE VIOLA */
+
+.eventi-form-creazione .eventi-form-crea-pulsante {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 365px;
+    min-height: 49px;
+
+    padding: 13px 25px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #7040ff;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 19px rgba(112, 64, 255, .20);
+
+    transition:
+        background-color .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.eventi-form-creazione .eventi-form-crea-pulsante:hover {
+    background: #6030ed;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 11px 23px rgba(112, 64, 255, .25);
+}
+
+/* ACCESSIBILITÀ */
+
+.eventi-form-creazione .eventi-form-crea-pulsante:focus-visible {
+    outline: 3px solid #ff6259;
+    outline-offset: 4px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .eventi-form-creazione {
+        width: calc(100% - 30px);
+        padding: 27px 0 60px;
+    }
+
+    .eventi-form-creazione .eventi-intestazione h1 {
+        font-size: 26px;
+    }
+
+    .eventi-form-creazione .eventi-form-card {
+        padding: 24px 20px;
+        border-radius: 20px;
+    }
+
+    .eventi-form-creazione .eventi-form-sezione-titolo {
+        font-size: 15px;
+        gap: 9px;
+    }
+
+    .eventi-form-creazione .eventi-form-sezione-icona {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
+
+    .eventi-form-creazione .eventi-form-griglia {
+        grid-template-columns: 1fr;
+        gap: 21px;
+    }
+
+    .eventi-form-creazione .eventi-form-sezione {
+        margin-bottom: 28px;
+    }
+
+    .eventi-form-creazione .eventi-form-sezione-ultima {
+        margin-bottom: 0;
+    }
+
+    .eventi-form-creazione .eventi-form-crea-pulsante {
+        max-width: 100%;
     }
 }

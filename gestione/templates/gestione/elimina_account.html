@@ -1,123 +1,160 @@
 
 {% extends 'gestione/base_autenticata.html' %}
 
+{% block title %}
+    Elimina account | FuoriRete
+{% endblock %}
+
 {% block area_content %}
 
 <div class="elimina-account-pagina">
 
-    <!-- INTESTAZIONE -->
+    <div class="elimina-account-contenuto">
 
-    <section class="elimina-account-intestazione">
+        <!-- COLLEGAMENTO INDIETRO -->
 
-        <div>
-            <h1>Elimina account</h1>
+        <a
+            href="{% url 'profilo' %}"
+            class="elimina-account-indietro"
+        >
+            ← Torna al profilo
+        </a>
+
+
+        <!-- INTESTAZIONE -->
+
+        <header class="elimina-account-intestazione">
+
+            <div class="elimina-account-titolo-pagina">
+
+                <h1>Elimina account</h1>
+
+                <span class="elimina-account-trilli" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+
+            </div>
 
             <p>
                 Gestisci l'eliminazione definitiva
                 del tuo account FuoriRete.
             </p>
-        </div>
 
-        <a href="{% url 'profilo' %}"
-           class="elimina-account-indietro">
-            ← Torna al profilo
-        </a>
-
-    </section>
+        </header>
 
 
-    <!-- CONFERMA ELIMINAZIONE -->
+        <!-- CARD PRINCIPALE -->
 
-    <section class="elimina-account-riquadro">
+        <section class="elimina-account-riquadro">
 
-        <div class="elimina-account-titolo">
+            <!-- AVVERTIMENTO -->
 
-            <span class="elimina-account-icona">
-                !
-            </span>
+            <div class="elimina-account-titolo">
 
-            <div>
-                <h2>Sei sicura di voler eliminare il tuo account?</h2>
+                <span class="elimina-account-icona" aria-hidden="true">
+                    !
+                </span>
+
+                <h2>
+                    Sei sicura di voler eliminare il tuo account?
+                </h2>
 
                 <p>
                     Questa operazione è definitiva
                     e non può essere annullata.
                 </p>
+
             </div>
 
-        </div>
+
+            <!-- CONSEGUENZE -->
+
+            <div class="elimina-account-avviso">
+
+                <h3>Cosa succederà?</h3>
+
+                <p>
+                    Eliminando il tuo account perderai
+                    l'accesso a FuoriRete e non potrai
+                    più recuperarlo.
+                </p>
+
+                <p>
+                    Il tuo profilo e i dati associati
+                    verranno eliminati secondo le regole
+                    previste dal sistema.
+                </p>
+
+            </div>
 
 
-        <!-- AVVISO -->
+            <!-- ACCOUNT INTERESSATO -->
 
-        <div class="elimina-account-avviso">
+            <div class="elimina-account-identita">
 
-            <h3>Cosa succederà?</h3>
+                <span class="elimina-account-label">
+                    Account da eliminare
+                </span>
 
-            <p>
-                Eliminando il tuo account perderai
-                l'accesso a FuoriRete e non potrai
-                più recuperarlo.
-            </p>
+                <strong>
+                    {{ request.user.username }}
+                </strong>
 
-            <p>
-                Il tuo profilo e i dati associati
-                verranno eliminati secondo le regole
-                previste dal sistema.
-            </p>
-
-        </div>
+            </div>
 
 
-        <!-- ACCOUNT INTERESSATO -->
+            <!-- MESSAGGI -->
 
-        <div class="elimina-account-identita">
+            {% if messages %}
 
-            <span class="elimina-account-label">
-                Account da eliminare
-            </span>
+                {% for message in messages %}
 
-            <strong>
-                {{ request.user.username }}
-            </strong>
+                    <div
+                        class="elimina-account-messaggio"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
 
-        </div>
+                {% endfor %}
+
+            {% endif %}
 
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="elimina-account-messaggio"
-                     role="alert">
-                    {{ message }}
+            <!-- FORM ELIMINAZIONE -->
+
+            <form
+                method="post"
+                class="elimina-account-form"
+            >
+
+                {% csrf_token %}
+
+                <div class="elimina-account-azioni">
+
+                    <a
+                        href="{% url 'profilo' %}"
+                        class="elimina-account-annulla"
+                    >
+                        Annulla
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="elimina-account-conferma"
+                    >
+                        Elimina definitivamente il mio account
+                    </button>
+
                 </div>
-            {% endfor %}
-        {% endif %}
 
+            </form>
 
-        <!-- AZIONI -->
+        </section>
 
-        <form method="post"
-              class="elimina-account-form">
-
-            {% csrf_token %}
-
-            <div class="elimina-account-azioni">
-
-                <a href="{% url 'profilo' %}"
-                   class="elimina-account-annulla">
-                    Annulla
-                </a>
-
-                <button type="submit"
-                        class="elimina-account-conferma">
-                    Elimina definitivamente il mio account
-                </button>
-
-            </div>
-
-        </form>
-
-    </section>
+    </div>
 
 </div>
 

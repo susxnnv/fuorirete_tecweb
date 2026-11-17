@@ -6,7 +6,11 @@
 
 <div class="chat-pagina">
 
-    <div class="chat-navigazione">
+    <!-- ==================================
+         NAVIGAZIONE
+    ================================== -->
+
+    <nav class="chat-navigazione" aria-label="Torna alla pagina precedente">
 
         {% if request.GET.origine == 'notifiche' %}
 
@@ -22,9 +26,9 @@
 
         {% elif request.GET.origine == 'like_ricevuti' %}
 
-                <a href="{% url 'like_ricevuti' %}">
-                    ← Torna a Like ricevuti
-                </a>
+            <a href="{% url 'like_ricevuti' %}">
+                ← Torna a Like ricevuti
+            </a>
 
         {% else %}
 
@@ -34,18 +38,22 @@
 
         {% endif %}
 
-    </div>
+    </nav>
 
-    <section class="chat-contenitore">
 
-        <!-- ===================================
-             INTESTAZIONE
-        =================================== -->
+    <section class="chat-contenitore" aria-label="Chat con {{ altra_persona.nome }}">
+
+        <!-- ==================================
+             INTESTAZIONE DELLA CHAT
+        ================================== -->
 
         <header class="chat-intestazione">
 
+            <!-- FOTO E NOME CLICCABILI -->
+
             <a
-                href="{% url 'dettaglio_persona' altra_persona.pk %}?origine=chat{% if request.GET.origine == 'persone' %}&amp;ritorno=persone{% elif request.GET.origine == 'notifiche' %}&amp;ritorno=notifiche{% elif request.GET.origine == 'like_ricevuti' %}&amp;ritorno=like_ricevuti{% endif %}"                class="chat-profilo-link"
+                href="{% url 'dettaglio_persona' altra_persona.pk %}?origine=chat{% if request.GET.origine == 'persone' %}&amp;ritorno=persone{% elif request.GET.origine == 'notifiche' %}&amp;ritorno=notifiche{% elif request.GET.origine == 'like_ricevuti' %}&amp;ritorno=like_ricevuti{% endif %}"
+                class="chat-profilo-link"
                 aria-label="Visualizza il profilo di {{ altra_persona.nome }}"
             >
 
@@ -67,34 +75,25 @@
 
                 <span class="chat-profilo-dati">
 
-                    <strong>{{ altra_persona.nome }}</strong>
-
-                    <small>
-                        Visualizza profilo
-                    </small>
+                    <strong>
+                        {{ altra_persona.nome }}
+                    </strong>
 
                 </span>
 
             </a>
 
-            <a
-                href="{% url 'dettaglio_persona' altra_persona.pk %}?origine=chat{% if request.GET.origine == 'persone' %}&amp;ritorno=persone{% elif request.GET.origine == 'notifiche' %}&amp;ritorno=notifiche{% elif request.GET.origine == 'like_ricevuti' %}&amp;ritorno=like_ricevuti{% endif %}"
-                class="chat-profilo-freccia"
-                aria-label="Apri dettaglio persona"
-            >
-                →
-            </a>
-
         </header>
 
 
-        <!-- ===================================
+        <!-- ==================================
              CRONOLOGIA MESSAGGI
-        =================================== -->
+        ================================== -->
 
         <div
             class="chat-messaggi"
             id="chat-messaggi"
+            role="log"
             aria-label="Cronologia della conversazione"
         >
 
@@ -102,7 +101,7 @@
 
             {% for messaggio in messaggi %}
 
-                <!-- DATA ALL'INIZIO DI OGNI GIORNO -->
+                <!-- DATA DELLA CONVERSAZIONE -->
 
                 {% ifchanged messaggio.data_ora|date:"Y-m-d" %}
 
@@ -117,7 +116,7 @@
                 {% endifchanged %}
 
 
-                <!-- MESSAGGIO INVIATO O RICEVUTO -->
+                <!-- MESSAGGIO -->
 
                 <div
                     class="chat-riga-messaggio
@@ -147,18 +146,17 @@
 
             {% empty %}
 
+                <!-- CONVERSAZIONE NON ANCORA INIZIATA -->
+
                 <div class="chat-vuota">
 
-                    <div class="chat-vuota-icona">♡</div>
+                    <div class="chat-vuota-icona" aria-hidden="true">
+                        ♡
+                    </div>
 
                     <h2>
                         Inizia la conversazione!
                     </h2>
-
-                    <p>
-                        Tu e {{ altra_persona.nome }} avete
-                        un Match. Scrivi il primo messaggio!
-                    </p>
 
                 </div>
 
@@ -169,9 +167,9 @@
         </div>
 
 
-        <!-- ===================================
-             CAMPO INVIO MESSAGGI
-        =================================== -->
+        <!-- ==================================
+             INVIO MESSAGGI
+        ================================== -->
 
         <div class="chat-compositore">
 
@@ -192,13 +190,36 @@
 
                 {% csrf_token %}
 
+                <!-- CONSERVA LA PROVENIENZA -->
+
                 {% if request.GET.origine == 'notifiche' %}
-                    <input type="hidden" name="origine" value="notifiche">
+
+                    <input
+                        type="hidden"
+                        name="origine"
+                        value="notifiche"
+                    >
+
                 {% elif request.GET.origine == 'persone' %}
-                    <input type="hidden" name="origine" value="persone">
+
+                    <input
+                        type="hidden"
+                        name="origine"
+                        value="persone"
+                    >
+
                 {% elif request.GET.origine == 'like_ricevuti' %}
-                    <input type="hidden" name="origine" value="like_ricevuti">
+
+                    <input
+                        type="hidden"
+                        name="origine"
+                        value="like_ricevuti"
+                    >
+
                 {% endif %}
+
+
+                <!-- CAMPO TESTO -->
 
                 <label for="chat-input" class="chat-label">
                     Scrivi un messaggio
@@ -214,13 +235,31 @@
                     required
                 >{{ testo_inserito|default:'' }}</textarea>
 
+
+                <!-- PULSANTE INVIO -->
+
                 <button
                     type="submit"
                     class="chat-invia"
                     aria-label="Invia messaggio"
                     title="Invia messaggio"
                 >
-                    ➤
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="21"
+                        height="21"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M22 2 11 13"></path>
+                        <path d="m22 2-7 20-4-9-9-4Z"></path>
+                    </svg>
+
                 </button>
 
             </form>
@@ -236,9 +275,9 @@
 </div>
 
 
-<!-- =======================================
+<!-- ==================================
      JAVASCRIPT CHAT
-======================================= -->
+================================== -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -247,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('chat-input');
     const form = document.getElementById('chat-form');
 
-    // All'apertura mostriamo gli ultimi messaggi.
+    // Mostra gli ultimi messaggi all'apertura.
     if (contenitore) {
         contenitore.scrollTop = contenitore.scrollHeight;
     }
@@ -256,17 +295,27 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    // Altezza del campo adattabile al testo.
+    // Altezza automatica del campo di scrittura.
+    // La scrollbar compare solo oltre 120px.
     function aggiornaAltezza() {
+
         input.style.height = 'auto';
-        input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+
+        const altezza = Math.min(input.scrollHeight, 120);
+
+        input.style.height = altezza + 'px';
+
+        input.style.overflowY =
+            input.scrollHeight > 120 ? 'auto' : 'hidden';
     }
 
     input.addEventListener('input', aggiornaAltezza);
+
     aggiornaAltezza();
 
-    // Invio con Enter.
-    // Shift+Enter permette di andare a capo.
+
+    // Enter invia.
+    // Shift + Enter inserisce una nuova riga.
     input.addEventListener('keydown', function (event) {
 
         if (
@@ -285,7 +334,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    // Evitiamo l'invio di messaggi vuoti.
+
+    // Non permettere messaggi vuoti.
     form.addEventListener('submit', function (event) {
 
         if (!input.value.trim()) {

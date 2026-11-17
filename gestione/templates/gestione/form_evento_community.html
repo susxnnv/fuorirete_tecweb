@@ -13,11 +13,11 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/eventi_community.css' %}">
+<link rel="stylesheet" href="{% static 'css/eventi_community.css' %}?v=6">
 
-<main class="eventi-pagina eventi-form-pagina">
+<main class="eventi-pagina eventi-form-pagina eventi-form-creazione">
 
-    <!-- INDIETRO -->
+    <!-- NAVIGAZIONE -->
 
     <a
         href="{% url 'gestione_eventi_community' community.pk %}?origine={{ request.GET.origine }}"
@@ -26,110 +26,372 @@
         ← Torna a Gestisci eventi
     </a>
 
+
+    <!-- INTESTAZIONE -->
+
     <header class="eventi-intestazione">
 
-        <div>
-
-            <span class="eventi-etichetta">
-                GESTIONE COMMUNITY
-            </span>
+        <h1>
 
             {% if modalita_modifica %}
-                <h1>Modifica evento</h1>
+                Modifica evento
             {% else %}
-                <h1>Crea un evento</h1>
+                Crea un evento
             {% endif %}
 
-            <p>
-                Community:
-                <strong>{{ community.titolo }}</strong>
-            </p>
+            <span class="eventi-decorazione" aria-hidden="true">
+                <i></i><i></i><i></i>
+            </span>
 
-        </div>
+        </h1>
+
+        <p>
+
+            {% if modalita_modifica %}
+                Aggiorna le informazioni dell'evento della community
+            {% else %}
+                Organizza una nuova attività per la community
+            {% endif %}
+
+            <strong>{{ community.titolo }}</strong>!
+
+        </p>
 
     </header>
 
 
-    <section class="eventi-form-card">
+    <!-- FORM -->
 
-        <form method="post" novalidate autocomplete="off">
+    <form method="post" novalidate autocomplete="off">
 
-            {% csrf_token %}
+        {% csrf_token %}
 
-            <!-- PAGINA DI PROVENIENZA -->
+        <!-- PAGINA DI PROVENIENZA -->
 
-            <input
-                type="hidden"
-                name="origine"
-                value="{{ request.GET.origine }}"
-            >
+        <input
+            type="hidden"
+            name="origine"
+            value="{{ request.GET.origine }}"
+        >
 
-            {% if form.non_field_errors %}
+        <!-- ERRORI GENERALI -->
 
-                <div class="eventi-errore">
-                    {{ form.non_field_errors }}
-                </div>
+        {% if form.non_field_errors %}
 
-            {% endif %}
+            <div class="eventi-errore" role="alert">
+                {{ form.non_field_errors }}
+            </div>
 
-            {% for campo in form %}
+        {% endif %}
+
+
+        <!-- CARD PRINCIPALE -->
+
+        <section class="eventi-form-card">
+
+            <!-- LEGENDA CAMPI OBBLIGATORI -->
+
+            <p class="eventi-form-legenda">
+                <span aria-hidden="true">*</span>
+                campo obbligatorio
+            </p>
+
+
+            <!-- ==================================
+                 INFORMAZIONI DELL'EVENTO
+            ================================== -->
+
+            <div class="eventi-form-sezione">
+
+                <h2 class="eventi-form-sezione-titolo">
+
+                    <span class="eventi-form-sezione-icona" aria-hidden="true">
+                        📋
+                    </span>
+
+                    <span>Informazioni dell'evento</span>
+
+                </h2>
+
+
+                <!-- TITOLO -->
 
                 <div class="eventi-form-campo">
 
-                    <label for="{{ campo.id_for_label }}">
-                        {{ campo.label }}
-                        {% if campo.field.required %}
+                    <label for="{{ form.titolo.id_for_label }}">
+                        Titolo
+
+                        {% if form.titolo.field.required %}
                             <span class="eventi-obbligatorio">*</span>
                         {% endif %}
+
                     </label>
 
-                    {{ campo }}
+                    {{ form.titolo }}
 
-                    {% if campo.name == 'fine' %}
-                        <small>
-                            Facoltativa. Se inserita,
-                            deve essere successiva all'inizio.
-                        </small>
-                    {% elif campo.name == 'costo' %}
-                        <small>
-                            Inserisci 0 per un evento gratuito.
-                        </small>
-                    {% endif %}
+                    {% if form.titolo.errors %}
 
-                    {% if campo.errors %}
-                        <div class="eventi-errore">
-                            {{ campo.errors }}
+                        <div class="eventi-errore" role="alert">
+                            {{ form.titolo.errors }}
                         </div>
+
                     {% endif %}
 
                 </div>
 
-            {% endfor %}
 
-            <div class="eventi-form-azioni">
+                <!-- DESCRIZIONE -->
 
-                <a
-                    href="{% url 'gestione_eventi_community' community.pk %}?origine={{ request.GET.origine }}"
-                    class="eventi-azione-secondaria"
-                >
-                    Annulla
-                </a>
+                <div class="eventi-form-campo">
 
-                <button type="submit" class="eventi-pulsante">
+                    <label for="{{ form.descrizione.id_for_label }}">
+                        Descrizione
 
-                    {% if modalita_modifica %}
-                        Salva modifiche →
-                    {% else %}
-                        Crea evento →
+                        {% if form.descrizione.field.required %}
+                            <span class="eventi-obbligatorio">*</span>
+                        {% endif %}
+
+                    </label>
+
+                    {{ form.descrizione }}
+
+                    {% if form.descrizione.errors %}
+
+                        <div class="eventi-errore" role="alert">
+                            {{ form.descrizione.errors }}
+                        </div>
+
                     {% endif %}
 
-                </button>
+                </div>
 
             </div>
 
-        </form>
 
-    </section>
+            <!-- ==================================
+                 QUANDO SI SVOLGE
+            ================================== -->
+
+            <div class="eventi-form-sezione">
+
+                <h2 class="eventi-form-sezione-titolo">
+
+                    <span class="eventi-form-sezione-icona" aria-hidden="true">
+                        📅
+                    </span>
+
+                    <span>Quando si svolge</span>
+
+                </h2>
+
+                <div class="eventi-form-griglia">
+
+
+                    <!-- DATA INIZIO -->
+
+                    <div class="eventi-form-campo">
+
+                        <label for="{{ form.inizio.id_for_label }}">
+                            Data e ora di inizio
+
+                            {% if form.inizio.field.required %}
+                                <span class="eventi-obbligatorio">*</span>
+                            {% endif %}
+
+                        </label>
+
+                        {{ form.inizio }}
+
+                        {% if form.inizio.errors %}
+
+                            <div class="eventi-errore" role="alert">
+                                {{ form.inizio.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- DATA FINE -->
+
+                    <div class="eventi-form-campo">
+
+                        <label for="{{ form.fine.id_for_label }}">
+                            Data e ora di fine
+
+                            {% if form.fine.field.required %}
+                                <span class="eventi-obbligatorio">*</span>
+                            {% endif %}
+
+                        </label>
+
+                        {{ form.fine }}
+
+                        <small>
+                            Facoltativa. Se inserita, deve essere
+                            successiva all'inizio.
+                        </small>
+
+                        {% if form.fine.errors %}
+
+                            <div class="eventi-errore" role="alert">
+                                {{ form.fine.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 DOVE SI SVOLGE
+            ================================== -->
+
+            <div class="eventi-form-sezione">
+
+                <h2 class="eventi-form-sezione-titolo">
+
+                    <span class="eventi-form-sezione-icona" aria-hidden="true">
+                        📍
+                    </span>
+
+                    <span>Dove si svolge</span>
+
+                </h2>
+
+
+                <!-- LUOGO -->
+
+                <div class="eventi-form-campo">
+
+                    <label for="{{ form.luogo.id_for_label }}">
+                        Luogo
+
+                        {% if form.luogo.field.required %}
+                            <span class="eventi-obbligatorio">*</span>
+                        {% endif %}
+
+                    </label>
+
+                    {{ form.luogo }}
+
+                    {% if form.luogo.errors %}
+
+                        <div class="eventi-errore" role="alert">
+                            {{ form.luogo.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 DETTAGLI AGGIUNTIVI
+            ================================== -->
+
+            <div class="eventi-form-sezione eventi-form-sezione-ultima">
+
+                <h2 class="eventi-form-sezione-titolo">
+
+                    <span class="eventi-form-sezione-icona" aria-hidden="true">
+                        ✨
+                    </span>
+
+                    <span>Dettagli aggiuntivi</span>
+
+                </h2>
+
+
+                <!-- COSTO -->
+
+                <div class="eventi-form-campo">
+
+                    <label for="{{ form.costo.id_for_label }}">
+                        Costo (€)
+
+                        {% if form.costo.field.required %}
+                            <span class="eventi-obbligatorio">*</span>
+                        {% endif %}
+
+                    </label>
+
+                    {{ form.costo }}
+
+                    <small>
+                        Inserisci 0 per un evento gratuito.
+                    </small>
+
+                    {% if form.costo.errors %}
+
+                        <div class="eventi-errore" role="alert">
+                            {{ form.costo.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- COSA PORTARE -->
+
+                <div class="eventi-form-campo">
+
+                    <label for="{{ form.cosa_portare.id_for_label }}">
+                        Cosa portare
+
+                        {% if form.cosa_portare.field.required %}
+                            <span class="eventi-obbligatorio">*</span>
+                        {% endif %}
+
+                    </label>
+
+                    {{ form.cosa_portare }}
+
+                    {% if form.cosa_portare.errors %}
+
+                        <div class="eventi-errore" role="alert">
+                            {{ form.cosa_portare.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================
+             PULSANTE FUORI DALLA CARD
+        ================================== -->
+
+        <div class="eventi-form-azioni eventi-form-azioni-creazione">
+
+            <button
+                type="submit"
+                class="eventi-pulsante eventi-form-crea-pulsante"
+            >
+
+                {% if modalita_modifica %}
+                    Salva modifiche
+                {% else %}
+                    Crea evento
+                {% endif %}
+
+            </button>
+
+        </div>
+
+    </form>
 
 </main>
 

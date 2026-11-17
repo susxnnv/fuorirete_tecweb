@@ -1,3 +1,4 @@
+
 {% extends 'gestione/base_autenticata.html' %}
 {% load static %}
 
@@ -5,116 +6,164 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/area_autenticata.css' %}?v=15">
+<link rel="stylesheet" href="{% static 'css/area_autenticata.css' %}?v=17">
 
-<!-- ICONE SVG -->
+<!-- =====================================
+     ICONE SVG
+===================================== -->
 
+<svg class="profilo-sprite"
+     xmlns="http://www.w3.org/2000/svg"
+     aria-hidden="true"
+     focusable="false">
 
-<svg class="profilo-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <symbol id="pf-eye" viewBox="0 0 24 24">
         <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"/>
         <circle cx="12" cy="12" r="3"/>
     </symbol>
+
     <symbol id="pf-pencil" viewBox="0 0 24 24">
         <path d="m4 20 4.5-1 11-11a2.1 2.1 0 0 0-3-3l-11 11L4 20Z"/>
         <path d="m14.5 7.5 3 3"/>
     </symbol>
+
     <symbol id="pf-users" viewBox="0 0 24 24">
         <circle cx="9" cy="8" r="3"/>
         <path d="M2 20v-2a7 7 0 0 1 14 0v2H2Z"/>
         <path d="M17 5.4a3 3 0 0 1 0 5.8M18 13a6 6 0 0 1 4 5.7V20h-3"/>
     </symbol>
+
     <symbol id="pf-bell" viewBox="0 0 24 24">
         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>
     </symbol>
+
     <symbol id="pf-lock" viewBox="0 0 24 24">
         <rect x="4" y="10" width="16" height="11" rx="2"/>
         <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
     </symbol>
+
     <symbol id="pf-trash" viewBox="0 0 24 24">
         <path d="M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14M10 11v6M14 11v6"/>
     </symbol>
+
     <symbol id="pf-exit" viewBox="0 0 24 24">
         <path d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5M14 7l5 5-5 5M8 12h11"/>
     </symbol>
+
     <symbol id="pf-heart" viewBox="0 0 24 24">
         <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>
     </symbol>
+
     <symbol id="pf-chat" viewBox="0 0 24 24">
         <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a8.5 8.5 0 1 1 16.1-4Z"/>
     </symbol>
+
     <symbol id="pf-pin" viewBox="0 0 24 24">
         <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/>
         <circle cx="12" cy="10" r="2.5"/>
     </symbol>
+
 </svg>
 
 
+<!-- =====================================
+     PAGINA PROFILO
+===================================== -->
+
 <div class="profilo-pagina">
+
+    <!-- INTESTAZIONE -->
+
+    <header class="profilo-intestazione">
+
+        <h1>
+            Il mio profilo
+
+            <span class="profilo-trilli" aria-hidden="true">
+                <i></i><i></i><i></i>
+            </span>
+        </h1>
+
+        <p>
+            Gestisci le informazioni del tuo profilo,
+            i tuoi interessi, le community e le connessioni.
+        </p>
+
+    </header>
+
+
+    <!-- =====================================
+         FASCIA PERSONALE - LARGHEZZA PIENA
+    ===================================== -->
+
+    <section class="profilo-banner">
+
+        <div class="profilo-identita">
+
+            {% if request.user.profilo.foto %}
+                <img
+                    src="{{ request.user.profilo.foto.url }}"
+                    alt="Foto del profilo"
+                    class="profilo-foto"
+                >
+            {% endif %}
+
+            <div class="profilo-dati">
+
+                <h2>
+                    {{ request.user.profilo.nome }},
+                    {{ request.user.profilo.eta }}
+                </h2>
+
+                <p class="profilo-meta">
+
+                    <svg class="profilo-svg profilo-pin" aria-hidden="true">
+                        <use href="#pf-pin"></use>
+                    </svg>
+
+                    <span>{{ request.user.profilo.citta }}</span>
+
+                    {% if request.user.profilo.occupazione %}
+                        <span class="profilo-meta-punto" aria-hidden="true">·</span>
+                        <span>{{ request.user.profilo.get_occupazione_display }}</span>
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <a
+            href="{% url 'anteprima_profilo' %}"
+            class="profilo-anteprima-link"
+        >
+            <svg class="profilo-svg" aria-hidden="true">
+                <use href="#pf-eye"></use>
+            </svg>
+            Anteprima profilo
+        </a>
+
+    </section>
+
+
+    <!-- =====================================
+         LAYOUT A DUE COLONNE
+    ===================================== -->
 
     <div class="profilo-layout">
 
-        <!-- COLONNA PRINCIPALE -->
+        <!-- COLONNA SINISTRA -->
 
         <div class="profilo-colonna-main">
 
-            <!-- PRESENTAZIONE PERSONALE -->
-
-            <section class="profilo-banner">
-
-                <div class="profilo-identita">
-
-                    {% if request.user.profilo.foto %}
-                        <img
-                            src="{{ request.user.profilo.foto.url }}"
-                            alt="Foto del profilo"
-                            class="profilo-foto"
-                        >
-                    {% endif %}
-
-                    <div class="profilo-dati">
-
-                        <h1>
-                            {{ request.user.profilo.nome }},
-                            {{ request.user.profilo.eta }}
-                        </h1>
-
-                        <p class="profilo-meta">
-                            <svg class="profilo-svg profilo-pin" aria-hidden="true">
-                                <use href="#pf-pin"></use>
-                            </svg>
-                            {{ request.user.profilo.citta }}
-                        </p>
-
-                        {% if request.user.profilo.descrizione %}
-                            <p class="profilo-descrizione">
-                                {{ request.user.profilo.descrizione }}
-                            </p>
-                        {% endif %}
-
-                    </div>
-
-                </div>
-
-                <a
-                    href="{% url 'anteprima_profilo' %}"
-                    class="profilo-anteprima-link"
-                >
-                    <svg class="profilo-svg" aria-hidden="true">
-                        <use href="#pf-eye"></use>
-                    </svg>
-                    Anteprima profilo
-                </a>
-
-            </section>
-
-
-            <!-- I TUOI INTERESSI -->
+            <!-- INTERESSI -->
 
             <section class="profilo-interessi-panel">
 
                 <h2 class="profilo-interessi-titolo">
-                    I tuoi interessi
+                    Interessi
+
                     <span class="profilo-trilli" aria-hidden="true">
                         <i></i><i></i><i></i>
                     </span>
@@ -195,63 +244,46 @@
             </section>
 
 
-            <!-- CONNESSIONI -->
+            <!-- =====================================
+                 STATISTICHE
+            ===================================== -->
 
-            <section class="profilo-sezione-connessioni">
+            <section
+                class="profilo-statistiche"
+                aria-label="Statistiche del profilo"
+            >
 
-                <h2 class="profilo-sezione-titolo">
-                    Connessioni
-                </h2>
+                <div class="profilo-stat">
 
-                <div class="profilo-connessioni">
+                    <svg class="profilo-svg" aria-hidden="true">
+                        <use href="#pf-heart"></use>
+                    </svg>
 
-                    <a
-                        href="{% url 'match_chat' %}"
-                        class="profilo-connessione profilo-connessione-match"
-                    >
+                    <strong>{{ numero_match }}</strong>
+                    <span>Match</span>
 
-                        <span class="profilo-iconcina" aria-hidden="true">
-                            <svg class="profilo-svg">
-                                <use href="#pf-chat"></use>
-                            </svg>
-                        </span>
+                </div>
 
-                        <span class="profilo-connessione-testo">
-                            <strong>Match e chat</strong>
-                            <span>
-                                Chatta con i tuoi match
-                                e conosci nuove persone.
-                            </span>
-                        </span>
+                <div class="profilo-stat">
 
-                    </a>
+                    <svg class="profilo-svg" aria-hidden="true">
+                        <use href="#pf-users"></use>
+                    </svg>
 
-                    <a
-                        href="{% url 'like_ricevuti' %}"
-                        class="profilo-connessione profilo-connessione-like"
-                    >
+                    <strong>
+                        {{ request.user.profilo.community_partecipate.count }}
+                    </strong>
 
-                        <span class="profilo-iconcina" aria-hidden="true">
-                            <svg class="profilo-svg">
-                                <use href="#pf-heart"></use>
-                            </svg>
-                        </span>
-
-                        <span class="profilo-connessione-testo">
-                            <strong>Like ricevuti</strong>
-                            <span>
-                                Scopri chi ha mostrato
-                                interesse per te.
-                            </span>
-                        </span>
-
-                    </a>
+                    <span>Community</span>
 
                 </div>
 
             </section>
 
-            <!-- LE MIE COMMUNITY -->
+
+            <!-- =====================================
+                 LE MIE COMMUNITY
+            ===================================== -->
 
             <section class="profilo-sezione-community">
 
@@ -267,6 +299,8 @@
 
                 </div>
 
+                <!-- CAROSELLO SENZA FRECCE -->
+
                 <div class="profilo-community-scroll">
 
                     {% for gruppo in request.user.profilo.community_partecipate.all %}
@@ -276,8 +310,6 @@
                             class="profilo-community-card profilo-community-link"
                             aria-label="Visualizza la community {{ gruppo.titolo }}"
                         >
-
-                            <!-- FOTO COMMUNITY -->
 
                             {% if gruppo.immagine %}
 
@@ -301,7 +333,8 @@
 
                             {% endif %}
 
-                            <!-- TITOLO E INTERESSI -->
+
+                            <!-- TITOLO E INTERESSI COMMUNITY -->
 
                             <span class="profilo-community-info">
 
@@ -318,105 +351,77 @@
                                                 aria-hidden="true"
                                             >
 
-                                            {% with nome=interesse.nome|lower categoria=interesse.padre.nome|default:interesse.nome|lower %}
+                                                {% with nome=interesse.nome|lower categoria=interesse.padre.nome|default:interesse.nome|lower %}
 
-                                                {% if 'formula' in nome or 'motor' in nome or 'auto' in nome %}
-                                                    🏎️
+                                                    {% if 'formula' in nome or 'motor' in nome or 'auto' in nome %}
+                                                        🏎️
+                                                    {% elif 'trekking' in nome or 'escursion' in nome %}
+                                                        🥾
+                                                    {% elif 'montagna' in nome %}
+                                                        🏔️
+                                                    {% elif 'campegg' in nome %}
+                                                        🏕️
+                                                    {% elif 'mare' in nome or 'spiagg' in nome %}
+                                                        🌊
+                                                    {% elif 'viagg' in nome or 'turism' in nome %}
+                                                        ✈️
+                                                    {% elif 'natura' in nome or 'ambient' in nome %}
+                                                        🌿
+                                                    {% elif 'discotec' in nome or 'ball' in nome %}
+                                                        🪩
+                                                    {% elif 'rock' in nome %}
+                                                        🎸
+                                                    {% elif 'music' in nome %}
+                                                        🎵
+                                                    {% elif 'caff' in nome %}
+                                                        ☕
+                                                    {% elif 'libro' in nome or 'lettur' in nome %}
+                                                        📚
+                                                    {% elif 'padel' in nome or 'tennis' in nome %}
+                                                        🎾
+                                                    {% elif 'sport' in nome or 'fitness' in nome %}
+                                                        💪
+                                                    {% elif 'social' in nome or 'amiciz' in nome %}
+                                                        👥
+                                                    {% elif 'stud' in nome or 'scienz' in nome %}
+                                                        📖
+                                                    {% elif 'gioch' in nome or 'gaming' in nome %}
+                                                        🎮
+                                                    {% elif 'arte' in nome or 'creativ' in nome %}
+                                                        🎨
+                                                    {% elif 'cucin' in nome or 'gastronom' in nome %}
+                                                        🍳
+                                                    {% elif 'cinema' in nome or 'film' in nome %}
+                                                        🎬
+                                                    {% elif 'fotograf' in nome %}
+                                                        📷
+                                                    {% elif 'tecnolog' in nome or 'informat' in nome %}
+                                                        💻
+                                                    {% elif 'motor' in categoria %}
+                                                        🏎️
+                                                    {% elif 'viagg' in categoria %}
+                                                        ✈️
+                                                    {% elif 'natura' in categoria %}
+                                                        🌿
+                                                    {% elif 'music' in categoria %}
+                                                        🎵
+                                                    {% elif 'sport' in categoria %}
+                                                        🏅
+                                                    {% elif 'social' in categoria %}
+                                                        👥
+                                                    {% elif 'arte' in categoria %}
+                                                        🎨
+                                                    {% else %}
+                                                        ✨
+                                                    {% endif %}
 
-                                                {% elif 'trekking' in nome or 'escursion' in nome %}
-                                                    🥾
-
-                                                {% elif 'montagna' in nome %}
-                                                    🏔️
-
-                                                {% elif 'campegg' in nome %}
-                                                    🏕️
-
-                                                {% elif 'mare' in nome or 'spiagg' in nome %}
-                                                    🌊
-
-                                                {% elif 'viagg' in nome or 'turism' in nome %}
-                                                    ✈️
-
-                                                {% elif 'natura' in nome or 'ambient' in nome %}
-                                                    🌿
-
-                                                {% elif 'discotec' in nome or 'ball' in nome %}
-                                                    🪩
-
-                                                {% elif 'rock' in nome %}
-                                                    🎸
-
-                                                {% elif 'music' in nome %}
-                                                    🎵
-
-                                                {% elif 'caff' in nome %}
-                                                    ☕
-
-                                                {% elif 'libro' in nome or 'lettur' in nome %}
-                                                    📚
-
-                                                {% elif 'padel' in nome or 'tennis' in nome %}
-                                                    🎾
-
-                                                {% elif 'sport' in nome or 'fitness' in nome %}
-                                                    💪
-
-                                                {% elif 'social' in nome or 'amiciz' in nome %}
-                                                    👥
-
-                                                {% elif 'stud' in nome or 'scienz' in nome %}
-                                                    📖
-
-                                                {% elif 'gioch' in nome or 'gaming' in nome %}
-                                                    🎮
-
-                                                {% elif 'arte' in nome or 'creativ' in nome %}
-                                                    🎨
-
-                                                {% elif 'cucin' in nome or 'gastronom' in nome %}
-                                                    🍳
-
-                                                {% elif 'cinema' in nome or 'film' in nome %}
-                                                    🎬
-
-                                                {% elif 'fotograf' in nome %}
-                                                    📷
-
-                                                {% elif 'tecnolog' in nome or 'informat' in nome %}
-                                                    💻
-
-                                                {% elif 'motor' in categoria %}
-                                                    🏎️
-
-                                                {% elif 'viagg' in categoria %}
-                                                    ✈️
-
-                                                {% elif 'natura' in categoria %}
-                                                    🌿
-
-                                                {% elif 'music' in categoria %}
-                                                    🎵
-
-                                                {% elif 'sport' in categoria %}
-                                                    🏅
-
-                                                {% elif 'social' in categoria %}
-                                                    👥
-
-                                                {% elif 'arte' in categoria %}
-                                                    🎨
-
-                                                {% else %}
-                                                    ✨
-
-                                                {% endif %}
-
-                                            {% endwith %}
+                                                {% endwith %}
 
                                             </span>
 
-                                            <span>{{ interesse.nome|lower }}</span>
+                                            <span>
+                                                {{ interesse.nome|lower }}
+                                            </span>
 
                                         </span>
 
@@ -453,92 +458,137 @@
                 </div>
 
             </section>
-            
-            <!-- STATISTICHE IN FONDO -->
 
-            <section
-                class="profilo-statistiche"
-                aria-label="Statistiche del profilo"
-            >
 
-                <div class="profilo-stat">
+            <!-- =====================================
+                 CONNESSIONI
+            ===================================== -->
 
-                    <svg class="profilo-svg" aria-hidden="true">
-                        <use href="#pf-heart"></use>
-                    </svg>
+            <section class="profilo-sezione-connessioni">
 
-                    <span
-                        class="profilo-stat-separatore"
-                        aria-hidden="true"
-                    ></span>
+                <h2 class="profilo-sezione-titolo">
+                    Connessioni
+                </h2>
 
-                    <strong>{{ numero_match }}</strong>
+                <div class="profilo-connessioni">
 
-                    <span>Match</span>
+                    <!-- MATCH E CHAT -->
 
-                </div>
+                    <a
+                        href="{% url 'match_chat' %}"
+                        class="profilo-connessione profilo-connessione-match"
+                    >
 
-                <div class="profilo-stat">
+                        <span class="profilo-iconcina" aria-hidden="true">
+                            <svg class="profilo-svg">
+                                <use href="#pf-chat"></use>
+                            </svg>
+                        </span>
 
-                    <svg class="profilo-svg" aria-hidden="true">
-                        <use href="#pf-users"></use>
-                    </svg>
+                        <span class="profilo-connessione-testo">
 
-                    <span
-                        class="profilo-stat-separatore"
-                        aria-hidden="true"
-                    ></span>
+                            <strong>Match e chat</strong>
 
-                    <strong>
-                        {{ request.user.profilo.community_partecipate.count }}
-                    </strong>
+                            <span>
+                                Chatta con i tuoi match
+                                e conosci nuove persone.
+                            </span>
 
-                    <span>Community</span>
+                        </span>
+
+                    </a>
+
+
+                    <!-- LIKE RICEVUTI -->
+
+                    <a
+                        href="{% url 'like_ricevuti' %}"
+                        class="profilo-connessione profilo-connessione-like"
+                    >
+
+                        <span class="profilo-iconcina" aria-hidden="true">
+                            <svg class="profilo-svg">
+                                <use href="#pf-heart"></use>
+                            </svg>
+                        </span>
+
+                        <span class="profilo-connessione-testo">
+
+                            <strong>Like ricevuti</strong>
+
+                            <span>
+                                Scopri chi ha mostrato
+                                interesse per te.
+                            </span>
+
+                        </span>
+
+                    </a>
 
                 </div>
 
             </section>
 
         </div>
+        <!-- FINE COLONNA SINISTRA -->
 
 
-        <!-- COLONNA LATERALE -->
+        <!-- =====================================
+             COLONNA DESTRA
+        ===================================== -->
 
         <aside class="profilo-colonna-side">
 
+            <!-- IMPOSTAZIONI -->
+
             <section class="profilo-menu">
 
-                <h2>Profilo</h2>
+                <h2>Impostazioni</h2>
 
-                <a href="{% url 'modifica_profilo' %}" class="profilo-voce">
+                <a
+                    href="{% url 'modifica_profilo' %}"
+                    class="profilo-voce"
+                >
                     <svg class="profilo-svg" aria-hidden="true">
                         <use href="#pf-pencil"></use>
                     </svg>
                     <span>Modifica profilo</span>
                 </a>
 
-                <a href="{% url 'community_gestite' %}" class="profilo-voce">
+                <a
+                    href="{% url 'community_gestite' %}"
+                    class="profilo-voce"
+                >
                     <svg class="profilo-svg" aria-hidden="true">
                         <use href="#pf-users"></use>
                     </svg>
                     <span>Community gestite</span>
                 </a>
 
-                <a href="{% url 'notifiche' %}" class="profilo-voce">
+                <a
+                    href="{% url 'notifiche' %}"
+                    class="profilo-voce"
+                >
                     <svg class="profilo-svg" aria-hidden="true">
                         <use href="#pf-bell"></use>
                     </svg>
                     <span>Notifiche</span>
                 </a>
 
-                <a href="{% url 'cambia_password' %}" class="profilo-voce">
+                <a
+                    href="{% url 'cambia_password' %}"
+                    class="profilo-voce"
+                >
                     <svg class="profilo-svg" aria-hidden="true">
                         <use href="#pf-lock"></use>
                     </svg>
                     <span>Cambia password</span>
                 </a>
 
-                <a href="{% url 'elimina_account' %}" class="profilo-voce">
+                <a
+                    href="{% url 'elimina_account' %}"
+                    class="profilo-voce"
+                >
                     <svg class="profilo-svg" aria-hidden="true">
                         <use href="#pf-trash"></use>
                     </svg>
@@ -556,6 +606,7 @@
                         <svg class="profilo-svg" aria-hidden="true">
                             <use href="#pf-exit"></use>
                         </svg>
+
                         <span>Logout</span>
                     </button>
 
@@ -595,13 +646,18 @@
             </section>
 
         </aside>
+        <!-- FINE COLONNA DESTRA -->
 
     </div>
+    <!-- FINE LAYOUT -->
 
 </div>
+<!-- FINE PAGINA PROFILO -->
 
 
-<!-- FINESTRA CONFERMA LOGOUT -->
+<!-- =====================================
+     FINESTRA DI CONFERMA LOGOUT
+===================================== -->
 
 <div id="conferma-logout" class="logout-overlay" hidden>
 
@@ -641,9 +697,14 @@
                 class="logout-popup-form"
             >
                 {% csrf_token %}
-                <button type="submit" class="logout-popup-conferma">
+
+                <button
+                    type="submit"
+                    class="logout-popup-conferma"
+                >
                     Sì, esci
                 </button>
+
             </form>
 
         </div>
@@ -653,7 +714,9 @@
 </div>
 
 
-<!-- JAVASCRIPT LOGOUT -->
+<!-- =====================================
+     JAVASCRIPT LOGOUT
+===================================== -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -662,6 +725,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('conferma-logout');
     const popup = overlay.querySelector('.logout-popup');
     const pulsanteAnnulla = document.getElementById('annulla-logout');
+
+    if (!pulsanteApri || !overlay || !popup || !pulsanteAnnulla) {
+        return;
+    }
 
     let elementoPrecedente = null;
 

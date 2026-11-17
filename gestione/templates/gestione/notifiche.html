@@ -6,65 +6,52 @@
 
 {% block area_content %}
 
-<link rel="stylesheet" href="{% static 'css/notifiche.css' %}?v=2">
+<link rel="stylesheet" href="{% static 'css/notifiche.css' %}?v=3">
 
 <main class="notifiche-pagina">
 
     <!-- NAVIGAZIONE -->
 
-    <a
-        href="{% url 'profilo' %}"
-        class="notifiche-indietro"
-    >
+    <a href="{% url 'profilo' %}" class="notifiche-indietro">
         ← Torna al Profilo
     </a>
-
 
     <!-- INTESTAZIONE -->
 
     <header class="notifiche-intestazione">
 
-        <div>
-
-            <span class="notifiche-etichetta">
-                FUORIRETE · ATTIVITÀ
-            </span>
-
+        <div class="notifiche-titolo">
             <h1>Le tue notifiche</h1>
-
-            <p>
-                Tutti gli aggiornamenti relativi
-                alle tue attività su FuoriRete.
-            </p>
-
+            <span class="notifiche-trillo" aria-hidden="true"></span>
         </div>
 
         {% if numero_non_lette > 0 %}
-
             <span class="notifiche-contatore">
-                {{ numero_non_lette }}
-                da leggere
+                {{ numero_non_lette }} da leggere
             </span>
-
         {% endif %}
 
     </header>
 
-    <!-- ELENCO NOTIFICHE -->
+    <!-- MESSAGGI -->
 
-    <section class="notifiche-elenco">
-
-        {% if messages %}
+    {% if messages %}
+        <div class="notifiche-messaggi">
             {% for message in messages %}
                 <div class="notifiche-messaggio">
                     {{ message }}
                 </div>
             {% endfor %}
-        {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- ELENCO NOTIFICHE -->
+
+    <section class="notifiche-elenco">
 
         {% for notifica in notifiche %}
 
-            <article class="notifiche-elemento">
+            <article class="notifiche-elemento {% if not notifica.letta %}notifiche-elemento-non-letto{% endif %}">
 
                 <!-- APERTURA NOTIFICA -->
 
@@ -73,35 +60,63 @@
                     action="{% url 'apri_notifica' notifica.pk %}"
                     class="notifiche-form"
                 >
-
                     {% csrf_token %}
 
                     <button
                         type="submit"
-                        class="notifiche-card {% if not notifica.letta %}notifiche-non-letta{% endif %}"
+                        class="notifiche-card"
                         aria-label="{{ notifica.testo }}. Apri notifica"
                     >
 
-                        <!-- ICONA -->
+                        <!-- IMMAGINE DELLA NOTIFICA -->
 
-                        <span class="notifiche-icona" aria-hidden="true">
+                        <span class="notifiche-avatar" aria-hidden="true">
 
-                            {% if notifica.tipo == 'MESSAGGIO_PRIVATO' or notifica.tipo == 'MESSAGGIO_COMMUNITY' %}
-                                ✉
+                            {% if notifica.tipo == 'MATCH' or notifica.tipo == 'LIKE_RICEVUTO' or notifica.tipo == 'MESSAGGIO_PRIVATO' %}
 
-                            {% elif notifica.tipo == 'MATCH' or notifica.tipo == 'LIKE_RICEVUTO' %}
-                                ♥
+                                {% if notifica.profilo_collegato and notifica.profilo_collegato.foto %}
 
-                            {% elif notifica.tipo == 'NUOVO_EVENTO_COMMUNITY' or notifica.tipo == 'EVENTO_MODIFICATO' %}
-                                ▦
+                                    <img
+                                        src="{{ notifica.profilo_collegato.foto.url }}"
+                                        alt=""
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="8" r="4"/>
+                                        <path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"/>
+                                    </svg>
+
+                                {% endif %}
 
                             {% else %}
-                                ♧
+
+                                {% if notifica.community_collegata and notifica.community_collegata.immagine %}
+
+                                    <img
+                                        src="{{ notifica.community_collegata.immagine.url }}"
+                                        alt=""
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="9" cy="8" r="3"/>
+                                        <path d="M2 20v-2a7 7 0 0 1 14 0v2"/>
+                                        <path d="M16 5a3 3 0 0 1 0 6"/>
+                                        <path d="M18 14a6 6 0 0 1 4 6"/>
+                                    </svg>
+
+                                {% endif %}
+
                             {% endif %}
 
                         </span>
 
-                        <!-- TESTO -->
+                        <!-- TESTO E DATA -->
 
                         <span class="notifiche-contenuto">
 
@@ -115,6 +130,8 @@
 
                         </span>
 
+                        <!-- INDICATORE NON LETTA -->
+
                         {% if not notifica.letta %}
                             <span
                                 class="notifiche-punto"
@@ -122,17 +139,15 @@
                             ></span>
                         {% endif %}
 
-                        <span
-                            class="notifiche-freccia"
-                            aria-hidden="true"
-                        >
+                        <!-- FRECCIA -->
+
+                        <span class="notifiche-freccia" aria-hidden="true">
                             →
                         </span>
 
                     </button>
 
                 </form>
-
 
                 <!-- AZIONI RICHIESTA COMMUNITY -->
 
@@ -194,9 +209,16 @@
 
         {% empty %}
 
+            <!-- NESSUNA NOTIFICA -->
+
             <div class="notifiche-vuoto">
 
-                <span aria-hidden="true">♧</span>
+                <span class="notifiche-vuoto-icona" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                        <path d="M10 21h4"/>
+                    </svg>
+                </span>
 
                 <h2>Nessuna notifica</h2>
 
@@ -211,7 +233,6 @@
         {% endfor %}
 
     </section>
-
 
 </main>
 

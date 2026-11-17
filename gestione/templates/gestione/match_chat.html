@@ -7,7 +7,7 @@
     
     <!-- TORNA AL PROFILO -->
 
-    <a href="{% url 'profilo' %}" class="gestione-torna-profilo">
+    <a href="{% url 'profilo' %}" class="matchchat-indietro">
         ← Torna al Profilo
     </a>
 
@@ -18,11 +18,20 @@
 
     <header class="matchchat-intestazione">
 
-        <h1>Match e Chat</h1>
+        <div class="matchchat-titolo">
+
+            <h1>Match e Chat</h1>
+
+            <span class="matchchat-trilli" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
+        </div>
 
         <p>
-            Ritrova i tuoi Match e continua
-            le conversazioni iniziate.
+            Ritrova i tuoi Match e continua le conversazioni iniziate<span class="matchchat-esclamativo">!</span>
         </p>
 
     </header>
@@ -94,25 +103,7 @@
 
 
                         <!-- INTERESSI -->
-
-                        <span class="matchchat-match-interessi">
-
-                            {% for interesse in match.persona.interessi.all %}
-
-                                {% if forloop.counter <= 2 %}
-                                    {{ interesse.nome }}
-                                    {% if forloop.counter == 1 %} · {% endif %}
-                                {% endif %}
-
-                            {% empty %}
-
-                                Nessun interesse
-
-                            {% endfor %}
-
-                        </span>
-
-                        </a>
+                       </a>
 
                         <!-- APERTURA DIRETTA DELLA CHAT -->
 
@@ -121,7 +112,7 @@
                             class="matchchat-match-apri-chat"
                             aria-label="Apri la chat con {{ match.persona.nome }}"
                         >
-                            Apri chat →
+                            Apri chat
                         </a>
 
                     </div>
@@ -221,18 +212,6 @@
 
                     </span>
 
-                </a>
-
-
-                <!-- APERTURA DEL PROFILO -->
-
-                <a
-                    href="{% url 'dettaglio_persona' chat.persona.pk %}?origine=match_chat"
-                    class="matchchat-apri-profilo"
-                    aria-label="Visualizza il profilo di {{ chat.persona.nome }}"
-                    title="Visualizza profilo"
-                >
-                    ↗
                 </a>
 
             </div>

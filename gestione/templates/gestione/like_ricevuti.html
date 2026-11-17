@@ -5,180 +5,190 @@
 
 <div class="like-ricevuti-pagina">
 
-    
-    <!-- ===================================== -->
-    <!-- POPUP MATCH                           -->
-    <!-- ===================================== -->
+    <!-- =====================================
+         POPUP MATCH
+    ===================================== -->
 
     {% if match_recente %}
 
-    <div
-        id="popup-match"
-        class="match-overlay"
-    >
+        <div id="popup-match" class="match-overlay">
 
-        <section
-            class="match-popup"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="match-titolo"
-            aria-describedby="match-descrizione"
-            tabindex="-1"
-        >
-
-            <!-- CHIUSURA -->
-
-            <button
-                type="button"
-                id="chiudi-match"
-                class="match-chiudi"
-                aria-label="Chiudi popup Match"
+            <section
+                class="match-popup"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="match-titolo"
+                aria-describedby="match-descrizione"
+                tabindex="-1"
             >
-                ×
-            </button>
 
-            <!-- ICONA -->
+                <!-- CHIUSURA -->
 
-            <div class="match-icona">
-                ♡
-            </div>
+                <button
+                    type="button"
+                    id="chiudi-match"
+                    class="match-chiudi"
+                    aria-label="Chiudi popup Match"
+                >
+                    ×
+                </button>
 
-            <!-- TITOLO -->
+                <!-- ICONA -->
 
-            <h2 id="match-titolo">
-                È un Match!
-            </h2>
-
-            <p
-                id="match-descrizione"
-                class="match-descrizione"
-            >
-                Tu e
-                <strong>{{ match_recente.nome }}</strong>
-                vi siete messi Like a vicenda!
-            </p>
-
-            <!-- MESSAGGIO -->
-
-            <div class="match-messaggio">
-
-                <span class="match-messaggio-icona">
+                <div class="match-icona" aria-hidden="true">
                     ♡
-                </span>
+                </div>
 
-                <p>
-                    Avete mostrato interesse reciproco.
-                    Adesso potete iniziare a conoscervi!
+                <!-- TITOLO -->
+
+                <h2 id="match-titolo">
+                    È un Match!
+                </h2>
+
+                <!-- DESCRIZIONE -->
+
+                <p
+                    id="match-descrizione"
+                    class="match-descrizione"
+                >
+                    Tu e
+                    <strong>{{ match_recente.nome }}</strong>
+                    vi siete messi Like a vicenda!
                 </p>
 
-            </div>
+                <!-- AZIONI -->
 
-            <!-- AZIONI -->
+                <div class="match-azioni">
 
-            <div class="match-azioni">
+                    <a
+                        href="{% url 'chat_privata' match_recente.profilo_id %}?origine=like_ricevuti"
+                        class="match-apri-chat"
+                    >
+                        Apri la chat
+                    </a>
 
-                <a
-                    href="{% url 'chat_privata' match_recente.profilo_id %}?origine=like_ricevuti"
-                    class="match-apri-chat"
-                >
-                    Apri la chat →
-                </a>
+                    <a
+                        href="{% url 'dettaglio_persona' match_recente.profilo_id %}?origine=like_ricevuti"
+                        class="match-continua"
+                    >
+                        Visualizza profilo
+                    </a>
 
-                <a
-                    href="{% url 'dettaglio_persona' match_recente.profilo_id %}?origine=like_ricevuti"
-                    class="match-continua"
-                >
-                    Visualizza profilo →
-                </a>
+                </div>
 
-            </div>
+            </section>
 
-        </section>
+        </div>
 
-    </div>
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
+            const overlay = document.getElementById('popup-match');
+            const popup = overlay.querySelector('.match-popup');
 
-        const overlay = document.getElementById('popup-match');
-        const popup = overlay.querySelector('.match-popup');
+            const pulsanteChiudi =
+                document.getElementById('chiudi-match');
 
-        const pulsanteChiudi = document.getElementById('chiudi-match');
-        const pulsanteChat = popup.querySelector('.match-apri-chat');
-        const pulsanteProfilo = popup.querySelector('.match-continua');
+            const pulsanteChat =
+                popup.querySelector('.match-apri-chat');
 
-        document.body.classList.add('match-aperto');
+            const pulsanteProfilo =
+                popup.querySelector('.match-continua');
 
-        pulsanteChiudi.focus();
+            const elementoPrecedente = document.activeElement;
 
-        function chiudiMatch() {
+            document.body.classList.add('match-aperto');
 
-            overlay.hidden = true;
-            document.body.classList.remove('match-aperto');
-        }
+            pulsanteChiudi.focus();
 
-        pulsanteChiudi.addEventListener('click', chiudiMatch);
+            function chiudiMatch() {
 
-        overlay.addEventListener('click', function (event) {
+                overlay.hidden = true;
 
-            if (event.target === overlay) {
-                chiudiMatch();
-            }
-
-        });
-
-        document.addEventListener('keydown', function (event) {
-
-            if (overlay.hidden) return;
-
-            if (event.key === 'Escape') {
-
-                event.preventDefault();
-                chiudiMatch();
-                return;
-            }
-
-            if (event.key === 'Tab') {
-
-                const elementi = [
-                    pulsanteChiudi,
-                    pulsanteChat,
-                    pulsanteProfilo
-                ];
-
-                const primo = elementi[0];
-                const ultimo = elementi[elementi.length - 1];
+                document.body.classList.remove('match-aperto');
 
                 if (
-                    event.shiftKey &&
-                    document.activeElement === primo
+                    elementoPrecedente &&
+                    elementoPrecedente !== document.body
                 ) {
-                    event.preventDefault();
-                    ultimo.focus();
-
-                } else if (
-                    !event.shiftKey &&
-                    document.activeElement === ultimo
-                ) {
-                    event.preventDefault();
-                    primo.focus();
+                    elementoPrecedente.focus();
                 }
+
             }
 
-        });
+            pulsanteChiudi.addEventListener('click', chiudiMatch);
 
-    });
-    </script>
+            overlay.addEventListener('click', function (event) {
+
+                if (event.target === overlay) {
+                    chiudiMatch();
+                }
+
+            });
+
+            document.addEventListener('keydown', function (event) {
+
+                if (overlay.hidden) {
+                    return;
+                }
+
+                if (event.key === 'Escape') {
+
+                    event.preventDefault();
+
+                    chiudiMatch();
+
+                    return;
+                }
+
+                if (event.key === 'Tab') {
+
+                    const elementi = [
+                        pulsanteChiudi,
+                        pulsanteChat,
+                        pulsanteProfilo
+                    ];
+
+                    const primo = elementi[0];
+                    const ultimo = elementi[elementi.length - 1];
+
+                    if (
+                        event.shiftKey &&
+                        document.activeElement === primo
+                    ) {
+
+                        event.preventDefault();
+                        ultimo.focus();
+
+                    } else if (
+                        !event.shiftKey &&
+                        document.activeElement === ultimo
+                    ) {
+
+                        event.preventDefault();
+                        primo.focus();
+
+                    }
+
+                }
+
+            });
+
+        });
+        </script>
 
     {% endif %}
 
-    <!-- TORNA AL PROFILO -->
+
+    <!-- =====================================
+         TORNA INDIETRO
+    ===================================== -->
 
     {% if request.GET.origine == 'notifiche' %}
 
         <a
             href="{% url 'notifiche' %}"
-            class="gestione-torna-profilo"
+            class="like-ricevuti-indietro"
         >
             ← Torna alle Notifiche
         </a>
@@ -187,56 +197,86 @@
 
         <a
             href="{% url 'profilo' %}"
-            class="gestione-torna-profilo"
+            class="like-ricevuti-indietro"
         >
-            ← Torna al Profilo
+            ← Torna al profilo
         </a>
 
     {% endif %}
 
 
-    <!-- INTESTAZIONE -->
+    <!-- =====================================
+         INTESTAZIONE
+    ===================================== -->
 
     <header class="like-ricevuti-intestazione">
 
-        <h1>Like ricevuti</h1>
+        <div class="like-ricevuti-titolo-pagina">
+
+            <h1>Like ricevuti</h1>
+
+            <span
+                class="like-ricevuti-trilli"
+                aria-hidden="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
+        </div>
 
         <p>
             Scopri chi vorrebbe conoscerti e scegli
-            se ricambiare il Like.
+            se ricambiare il Like<span class="like-ricevuti-esclamativo">!</span>
         </p>
 
     </header>
 
 
-    <!-- ELENCO -->
+    <!-- =====================================
+         ELENCO LIKE RICEVUTI
+    ===================================== -->
 
-    <section class="like-ricevuti-contenitore">
+    <section
+        class="like-ricevuti-contenitore"
+        aria-label="Elenco dei Like ricevuti"
+    >
+
+        <!-- CONTATORE -->
 
         <div class="like-ricevuti-titolo">
 
-            <h2>In attesa di una risposta</h2>
-
-            <span>{{ like_ricevuti|length }}</span>
+            <span class="like-ricevuti-contatore">
+                {{ like_ricevuti|length }}
+            </span>
 
         </div>
 
+
         {% for like in like_ricevuti %}
+
+            <!-- =================================
+                 CARD PERSONA
+            ================================= -->
 
             <article class="like-ricevuti-scheda">
 
                 <!-- PROFILO CLICCABILE -->
 
                 <a
-                    href="{% url 'dettaglio_persona' like.mittente.pk %}?origine=like_ricevuti{% if request.GET.origine == 'notifiche' %}&amp;ritorno=notifiche{% endif %}"                    class="like-ricevuti-profilo"
+                    href="{% url 'dettaglio_persona' like.mittente.pk %}?origine=like_ricevuti{% if request.GET.origine == 'notifiche' %}&amp;ritorno=notifiche{% endif %}"
+                    class="like-ricevuti-profilo"
                     aria-label="Visualizza il profilo di {{ like.mittente.nome }}"
                 >
+
+                    <!-- FOTO -->
 
                     {% if like.mittente.foto %}
 
                         <img
                             src="{{ like.mittente.foto.url }}"
-                            alt=""
+                            alt="Foto di {{ like.mittente.nome }}"
                             class="like-ricevuti-foto"
                         >
 
@@ -248,9 +288,11 @@
 
                     {% endif %}
 
+                    <!-- INFORMAZIONI -->
+
                     <span class="like-ricevuti-informazioni">
 
-                        <strong>
+                        <strong class="like-ricevuti-nome">
                             {{ like.mittente.nome }},
                             {{ like.mittente.eta }}
                         </strong>
@@ -259,29 +301,6 @@
                             📍 {{ like.mittente.citta }}
                         </span>
 
-                        <span class="like-ricevuti-interessi">
-
-                            {% for interesse in like.mittente.interessi.all %}
-
-                                {% if forloop.counter <= 2 %}
-                                    {{ interesse.nome }}{% if forloop.counter == 1 and not forloop.last %} · {% endif %}
-                                {% endif %}
-
-                            {% empty %}
-
-                                Nessun interesse indicato
-
-                            {% endfor %}
-
-                        </span>
-
-                    </span>
-
-                    <span
-                        class="like-ricevuti-freccia"
-                        aria-hidden="true"
-                    >
-                        →
                     </span>
 
                 </a>
@@ -291,16 +310,21 @@
 
                 <div class="like-ricevuti-azioni">
 
-                    <!-- DISLIKE -->
+                    <!-- RIFIUTA -->
 
                     <form
                         method="post"
                         action="{% url 'rispondi_like_ricevuto' like.mittente.pk %}"
                     >
+
                         {% csrf_token %}
 
                         {% if request.GET.origine == 'notifiche' %}
-                            <input type="hidden" name="origine" value="notifiche">
+                            <input
+                                type="hidden"
+                                name="origine"
+                                value="notifiche"
+                            >
                         {% endif %}
 
                         <input
@@ -312,23 +336,42 @@
                         <button
                             type="submit"
                             class="like-ricevuti-rifiuta"
+                            aria-label="Rifiuta il Like di {{ like.mittente.nome }}"
                         >
-                            × Rifiuta
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.8"
+                                stroke-linecap="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M5 5L19 19M19 5L5 19"/>
+                            </svg>
+
+                            <span>Rifiuta</span>
+
                         </button>
 
                     </form>
 
 
-                    <!-- LIKE -->
+                    <!-- RICAMBIA -->
 
                     <form
                         method="post"
                         action="{% url 'rispondi_like_ricevuto' like.mittente.pk %}"
                     >
+
                         {% csrf_token %}
 
                         {% if request.GET.origine == 'notifiche' %}
-                            <input type="hidden" name="origine" value="notifiche">
+                            <input
+                                type="hidden"
+                                name="origine"
+                                value="notifiche"
+                            >
                         {% endif %}
 
                         <input
@@ -340,8 +383,19 @@
                         <button
                             type="submit"
                             class="like-ricevuti-ricambia"
+                            aria-label="Ricambia il Like di {{ like.mittente.nome }}"
                         >
-                            ♡ Ricambia
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"/>
+                            </svg>
+
+                            <span>Ricambia</span>
+
                         </button>
 
                     </form>
@@ -350,15 +404,25 @@
 
             </article>
 
+
         {% empty %}
+
+            <!-- =================================
+                 NESSUN LIKE
+            ================================= -->
 
             <div class="like-ricevuti-vuoto">
 
-                <span class="like-ricevuti-vuoto-icona">
+                <span
+                    class="like-ricevuti-vuoto-icona"
+                    aria-hidden="true"
+                >
                     ♡
                 </span>
 
-                <h3>Nessun Like in attesa</h3>
+                <h3>
+                    Nessun Like in attesa
+                </h3>
 
                 <p>
                     Non hai nuovi Like a cui rispondere.
