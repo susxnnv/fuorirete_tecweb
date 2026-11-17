@@ -31,12 +31,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'gestione.apps.GestioneConfig',
 ]
 
@@ -69,6 +73,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fuorirete.wsgi.application'
+ASGI_APPLICATION = 'fuorirete.asgi.application'
+
+# ==========================================
+# DJANGO CHANNELS - CHANNEL LAYER
+# ==========================================
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 
 # Database

@@ -10,7 +10,12 @@
 
 <link rel="stylesheet" href="{% static 'css/chat_gruppo.css' %}?v=2">
 
-<main class="chat-gruppo-pagina">
+<main
+    class="chat-gruppo-pagina"
+    data-community-id="{{ community.pk }}"
+    data-profilo-id="{{ mio_profilo.pk }}"
+    data-anteprima="{% if anteprima_membro %}1{% else %}0{% endif %}"
+>
 
     <!-- COLLEGAMENTO INDIETRO -->
 
@@ -111,7 +116,11 @@
 
                     <!-- MESSAGGIO INVIATO -->
 
-                    <article class="chat-gruppo-messaggio chat-gruppo-mio">
+                    <article
+                        class="chat-gruppo-messaggio chat-gruppo-mio"
+                        data-messaggio-id="{{ messaggio.pk }}"
+                        data-giorno="{{ messaggio.data_ora|date:'Y-m-d' }}"
+                    >
 
                         <div class="chat-gruppo-bolla">
 
@@ -136,7 +145,11 @@
 
                     <!-- MESSAGGIO RICEVUTO -->
 
-                    <article class="chat-gruppo-messaggio chat-gruppo-altro">
+                    <article
+                        class="chat-gruppo-messaggio chat-gruppo-altro"
+                        data-messaggio-id="{{ messaggio.pk }}"
+                        data-giorno="{{ messaggio.data_ora|date:'Y-m-d' }}"
+                    >
 
                         <!-- FOTO UTENTE -->
 
@@ -257,7 +270,7 @@
                 {% endif %}
 
 
-                <form method="post">
+                <form method="post" id="chat-gruppo-form">
 
                     {% csrf_token %}
 
@@ -291,10 +304,8 @@
                 </form>
 
 
-                <p class="chat-gruppo-nota">
-                    La chat non è in tempo reale.
-                    Aggiorna la pagina per visualizzare
-                    i nuovi messaggi.
+                <p class="chat-gruppo-nota" id="chat-gruppo-stato">
+                    Connessione alla chat in corso...
                 </p>
 
             {% endif %}
@@ -305,6 +316,5 @@
 
 </main>
 
-<script src="{% static 'js/chat_gruppo.js' %}" defer></script>
-
+<script src="{% static 'js/chat_gruppo.js' %}?v=5" defer></script>
 {% endblock %}
