@@ -941,7 +941,18 @@ class ModificaProfiloView(ProfiloRichiestoMixin, UpdateView):
     # Recupera esclusivamente il profilo dell'utente autenticato
     def get_object(self, queryset=None):
         return self.request.user.profilo
-    
+
+
+    def form_valid(self, form):
+
+        risposta = super().form_valid(form)
+
+        messages.success(
+            self.request,
+            'Profilo aggiornato correttamente!'
+        )
+
+        return risposta    
 
 # Modifica interessi dal profilo
 class ModificaInteressiView(ProfiloRichiestoMixin, FormView):
@@ -986,19 +997,36 @@ class ModificaInteressiView(ProfiloRichiestoMixin, FormView):
 
         profilo = self.request.user.profilo
 
-        # Sostituiamo la selezione precedente
-        # con quella appena confermata.
         with transaction.atomic():
+
             profilo.interessi.set(
                 form.cleaned_data['interessi']
             )
 
+        messages.success(
+            self.request,
+            'Interessi aggiornati correttamente!'
+        )
+
         return super().form_valid(form)
+
 
 # cambio password
 class CambiaPasswordView(ProfiloRichiestoMixin, PasswordChangeView):
+
     template_name = 'gestione/cambia_password.html'
     success_url = reverse_lazy('profilo')
+
+    def form_valid(self, form):
+
+        risposta = super().form_valid(form)
+
+        messages.success(
+            self.request,
+            'Password modificata correttamente!'
+        )
+
+        return risposta
 
 
 # eliminazione del proprio account
@@ -1895,8 +1923,15 @@ class AnnullaMatchView(ProfiloRichiestoMixin, View):
                 )
             ).delete()
 
-        # Manteniamo la pagina di provenienza
-        # dopo l'annullamento del Match.
+
+        # Conferma dell'annullamento del Match.
+
+        messages.success(
+            request,
+            'Match annullato correttamente!'
+        )
+
+        # Manteniamo la pagina di provenienza.
 
         if request.POST.get('origine') == 'notifiche':
             return redirect('notifiche')
@@ -2558,12 +2593,6 @@ class CommunityGestiteView(ProfiloRichiestoMixin, TemplateView):
 
         return context
 
-
-# ==========================================
-# MODIFICA COMMUNITY
-# ==========================================
-
-
 # ==========================================
 # MODIFICA COMMUNITY
 # ==========================================
@@ -2609,6 +2638,18 @@ class ModificaCommunityView(ProfiloRichiestoMixin, UpdateView):
             )
 
         return reverse('community_gestite')
+
+    def form_valid(self, form):
+
+        risposta = super().form_valid(form)
+
+        messages.success(
+            self.request,
+            'Community aggiornata correttamente!'
+        )
+
+        return risposta
+
 
 
 # ==========================================

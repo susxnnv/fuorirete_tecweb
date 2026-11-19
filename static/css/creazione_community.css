@@ -1566,3 +1566,15 @@ body:has(.creazione-community-nuova) {
         font-size: 14px;
     }
 }
+
+.creazione-community-legenda {
+    margin: 0 0 22px;
+    color: #e54861;
+    font-family: "Manrope", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.creazione-community-legenda span {
+    font-weight: 800;
+}

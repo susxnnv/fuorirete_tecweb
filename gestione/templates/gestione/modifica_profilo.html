@@ -35,6 +35,29 @@
 
     </header>
 
+
+    <!-- MESSAGGI DI CONFERMA -->
+
+    {% if messages %}
+
+        <div class="fuorirete-feedback-lista">
+
+            {% for message in messages %}
+
+                <p
+                    class="fuorirete-feedback {% if message.tags %}fuorirete-feedback-{{ message.tags }}{% endif %}"
+                    role="status"
+                >
+                    {{ message }}
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
     <!-- FORM -->
 
     <form method="post"

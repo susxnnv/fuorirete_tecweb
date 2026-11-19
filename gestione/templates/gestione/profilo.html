@@ -92,6 +92,29 @@
     </header>
 
 
+    <!-- MESSAGGI DI CONFERMA -->
+
+    {% if messages %}
+
+        <div class="fuorirete-feedback-lista">
+
+            {% for message in messages %}
+
+                <p
+                    class="fuorirete-feedback {% if message.tags %}fuorirete-feedback-{{ message.tags }}{% endif %}"
+                    role="status"
+                >
+                    {{ message }}
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+
     <!-- =====================================
          FASCIA PERSONALE - LARGHEZZA PIENA
     ===================================== -->
@@ -177,45 +200,27 @@
 
                             <span class="profilo-tag-emoji" aria-hidden="true">
 
-                                {% with categoria=interesse.padre.nome|default:interesse.nome|lower nome=interesse.nome|lower %}
+                            {% with categoria=interesse.padre.nome|default:interesse.nome|lower %}
 
-                                    {% if 'formula' in nome or 'motor' in categoria or 'auto' in nome or 'macchin' in nome %}
-                                        🏎️
-                                    {% elif 'mare' in nome or 'spiagg' in nome %}
-                                        🌊
-                                    {% elif 'natura' in categoria or 'ambient' in categoria %}
-                                        🌿
-                                    {% elif 'discotec' in nome or 'ball' in nome %}
-                                        🪩
-                                    {% elif 'rock' in nome or 'musica' in categoria %}
-                                        🎵
-                                    {% elif 'libro' in nome or 'lettur' in nome or 'libro' in categoria %}
-                                        📚
-                                    {% elif 'yoga' in nome or 'pilates' in nome %}
-                                        🧘
-                                    {% elif 'padel' in nome or 'tennis' in nome or 'sport' in categoria %}
-                                        🎾
-                                    {% elif 'arte' in categoria or 'creativ' in categoria %}
-                                        🎨
-                                    {% elif 'gioch' in categoria or 'gaming' in categoria %}
-                                        🎮
-                                    {% elif 'social' in categoria or 'amiciz' in categoria %}
-                                        👥
-                                    {% elif 'cinema' in categoria or 'film' in categoria %}
-                                        🎬
-                                    {% elif 'viagg' in categoria %}
-                                        ✈️
-                                    {% elif 'cucin' in categoria or 'cibo' in categoria %}
-                                        🍳
-                                    {% elif 'studio' in nome or 'scienz' in categoria %}
-                                        📖
-                                    {% elif 'caff' in nome %}
-                                        ☕
-                                    {% else %}
-                                        ✨
-                                    {% endif %}
+                                {% if categoria == 'animali' %}🐶
+                                {% elif categoria == 'arte e creatività' %}🎨
+                                {% elif categoria == 'cibo e gastronomia' %}🍔
+                                {% elif categoria == 'cinema' %}🎬
+                                {% elif categoria == 'eventi' %}🗓️
+                                {% elif categoria == 'fitness e benessere' %}💪
+                                {% elif categoria == 'giochi' %}🎮
+                                {% elif categoria == 'moda e stile' %}👗
+                                {% elif categoria == 'motori' %}🚗
+                                {% elif categoria == 'musica' %}🎵
+                                {% elif categoria == 'natura' %}🌱
+                                {% elif categoria == 'scienza e conoscenza' %}📚
+                                {% elif categoria == 'socialità' %}☕
+                                {% elif categoria == 'sport' %}🎾
+                                {% elif categoria == 'viaggi' %}✈️
+                                {% else %}✨
+                                {% endif %}
 
-                                {% endwith %}
+                            {% endwith %}
 
                             </span>
 
@@ -351,72 +356,27 @@
                                                 aria-hidden="true"
                                             >
 
-                                                {% with nome=interesse.nome|lower categoria=interesse.padre.nome|default:interesse.nome|lower %}
+                                            {% with categoria=interesse.padre.nome|default:interesse.nome|lower %}
 
-                                                    {% if 'formula' in nome or 'motor' in nome or 'auto' in nome %}
-                                                        🏎️
-                                                    {% elif 'trekking' in nome or 'escursion' in nome %}
-                                                        🥾
-                                                    {% elif 'montagna' in nome %}
-                                                        🏔️
-                                                    {% elif 'campegg' in nome %}
-                                                        🏕️
-                                                    {% elif 'mare' in nome or 'spiagg' in nome %}
-                                                        🌊
-                                                    {% elif 'viagg' in nome or 'turism' in nome %}
-                                                        ✈️
-                                                    {% elif 'natura' in nome or 'ambient' in nome %}
-                                                        🌿
-                                                    {% elif 'discotec' in nome or 'ball' in nome %}
-                                                        🪩
-                                                    {% elif 'rock' in nome %}
-                                                        🎸
-                                                    {% elif 'music' in nome %}
-                                                        🎵
-                                                    {% elif 'caff' in nome %}
-                                                        ☕
-                                                    {% elif 'libro' in nome or 'lettur' in nome %}
-                                                        📚
-                                                    {% elif 'padel' in nome or 'tennis' in nome %}
-                                                        🎾
-                                                    {% elif 'sport' in nome or 'fitness' in nome %}
-                                                        💪
-                                                    {% elif 'social' in nome or 'amiciz' in nome %}
-                                                        👥
-                                                    {% elif 'stud' in nome or 'scienz' in nome %}
-                                                        📖
-                                                    {% elif 'gioch' in nome or 'gaming' in nome %}
-                                                        🎮
-                                                    {% elif 'arte' in nome or 'creativ' in nome %}
-                                                        🎨
-                                                    {% elif 'cucin' in nome or 'gastronom' in nome %}
-                                                        🍳
-                                                    {% elif 'cinema' in nome or 'film' in nome %}
-                                                        🎬
-                                                    {% elif 'fotograf' in nome %}
-                                                        📷
-                                                    {% elif 'tecnolog' in nome or 'informat' in nome %}
-                                                        💻
-                                                    {% elif 'motor' in categoria %}
-                                                        🏎️
-                                                    {% elif 'viagg' in categoria %}
-                                                        ✈️
-                                                    {% elif 'natura' in categoria %}
-                                                        🌿
-                                                    {% elif 'music' in categoria %}
-                                                        🎵
-                                                    {% elif 'sport' in categoria %}
-                                                        🏅
-                                                    {% elif 'social' in categoria %}
-                                                        👥
-                                                    {% elif 'arte' in categoria %}
-                                                        🎨
-                                                    {% else %}
-                                                        ✨
-                                                    {% endif %}
+                                                {% if categoria == 'animali' %}🐶
+                                                {% elif categoria == 'arte e creatività' %}🎨
+                                                {% elif categoria == 'cibo e gastronomia' %}🍔
+                                                {% elif categoria == 'cinema' %}🎬
+                                                {% elif categoria == 'eventi' %}🗓️
+                                                {% elif categoria == 'fitness e benessere' %}💪
+                                                {% elif categoria == 'giochi' %}🎮
+                                                {% elif categoria == 'moda e stile' %}👗
+                                                {% elif categoria == 'motori' %}🚗
+                                                {% elif categoria == 'musica' %}🎵
+                                                {% elif categoria == 'natura' %}🌱
+                                                {% elif categoria == 'scienza e conoscenza' %}📚
+                                                {% elif categoria == 'socialità' %}☕
+                                                {% elif categoria == 'sport' %}🎾
+                                                {% elif categoria == 'viaggi' %}✈️
+                                                {% else %}✨
+                                                {% endif %}
 
-                                                {% endwith %}
-
+                                            {% endwith %}
                                             </span>
 
                                             <span>
