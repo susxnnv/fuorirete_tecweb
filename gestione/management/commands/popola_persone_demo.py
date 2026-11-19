@@ -11,7 +11,11 @@ from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
-from gestione.models import Profilo, Interesse
+from gestione.models import (
+    Profilo, Interesse, Community, Like, Dislike,
+    MessaggioPrivato, MessaggioCommunity,
+    RichiestaCommunity, ValutazioneCommunity, Notifica,
+)
 
 
 # ==================================================
@@ -641,6 +645,142 @@ def data_nascita_demo(eta):
     return date(oggi.year - eta, oggi.month, oggi.day)
 
 
+
+
+# ==================================================
+# SCENARIO PER LA PRESENTAZIONE ALL'ESAME
+# ==================================================
+
+def prepara_relazioni_esame(stdout):
+    if not settings.DEBUG:
+        raise CommandError("Scenario d'esame consentito solo in sviluppo (DEBUG=True).")
+
+    numeri = (2, 3, 4, 5, 6, 7, 11)
+    profili = {}
+
+    for numero in numeri:
+        username = f"demo_{numero:02d}"
+        try:
+            profili[numero] = Profilo.objects.get(user__username=username)
+        except Profilo.DoesNotExist as errore:
+            raise CommandError(
+                f"Manca il profilo {username}. Prima ripristina il dataset demo."
+            ) from errore
+
+    try:
+        club = Community.objects.get(titolo="Club del libro 📚")
+        padel = Community.objects.get(titolo="Padel Social Club 🎾")
+        study = Community.objects.get(titolo="Study Together ☕")
+        f1 = Community.objects.get(titolo="F1 Watching 🏎️")
+    except (Community.DoesNotExist, Community.MultipleObjectsReturned) as errore:
+        raise CommandError(
+            "Community demo mancanti o ambigue. Ripristina il dataset originale."
+        ) from errore
+
+    sara = profili[4]
+    marco = profili[2]
+    alice = profili[5]
+    gaia = profili[6]
+    alessandro = profili[7]
+    persona_richiesta = profili[3]
+    persona_like = profili[11]
+
+    if club.organizzatore_id != sara.pk:
+        raise CommandError("Sara non è l'organizzatrice del Club del libro.")
+    if not all([
+        padel.membri.filter(pk=sara.pk).exists(),
+        study.membri.filter(pk=sara.pk).exists(),
+        club.membri.filter(pk=sara.pk).exists(),
+    ]):
+        raise CommandError("Le appartenenze iniziali di Sara non corrispondono al dataset.")
+    if f1.membri.filter(pk=sara.pk).exists():
+        raise CommandError("Sara è già membro di F1 Watching: richiesta pendente non valida.")
+    if club.membri.filter(pk=persona_richiesta.pk).exists():
+        raise CommandError("La richiedente è già membro del Club del libro.")
+
+    with transaction.atomic():
+        for altro in (marco, alice):
+            for mittente, destinatario in ((sara, altro), (altro, sara)):
+                if Dislike.objects.filter(mittente=mittente, destinatario=destinatario).exists():
+                    raise CommandError("Un Dislike esistente impedisce il Match demo.")
+                Like.objects.get_or_create(mittente=mittente, destinatario=destinatario)
+
+        if Dislike.objects.filter(mittente=persona_like, destinatario=sara).exists():
+            raise CommandError("Dislike incompatibile con il Like in attesa.")
+        if Like.objects.filter(mittente=sara, destinatario=persona_like).exists():
+            raise CommandError("Il Like in attesa è già reciproco: ripristina prima i dati.")
+        Like.objects.get_or_create(mittente=persona_like, destinatario=sara)
+
+        if Dislike.objects.filter(mittente=sara, destinatario=gaia).exists():
+            raise CommandError("Dislike incompatibile con il Like in uscita.")
+        Like.objects.get_or_create(mittente=sara, destinatario=gaia)
+
+        if Like.objects.filter(mittente=sara, destinatario=alessandro).exists():
+            raise CommandError("Like incompatibile con il Dislike demo.")
+        Dislike.objects.get_or_create(mittente=sara, destinatario=alessandro)
+
+        conversazioni = (
+            (marco, sara, "Ciao Sara! Ci vediamo per studiare domani?"),
+            (sara, marco, "Volentieri! Possiamo trovarci in biblioteca alle 15."),
+            (marco, sara, "Perfetto, porto anche gli appunti!"),
+            (alice, sara, "Ehi Sara! Hai ascoltato il nuovo album?"),
+            (sara, alice, "Non ancora! Me lo consigli?"),
+        )
+        for mittente, destinatario, testo in conversazioni:
+            MessaggioPrivato.objects.get_or_create(
+                mittente=mittente, destinatario=destinatario, testo=testo
+            )
+
+        messaggi_gruppo = (
+            (club, sara, "Benvenuti nel Club del libro! Quale titolo scegliamo?"),
+            (club, alice, "Io propongo un romanzo breve, così possiamo discuterne insieme!"),
+            (study, marco, "Qualcuno viene a studiare in biblioteca venerdì?"),
+            (study, sara, "Io ci sono! Ci vediamo nel pomeriggio."),
+        )
+        for gruppo, autore, testo in messaggi_gruppo:
+            if not gruppo.membri.filter(pk=autore.pk).exists():
+                raise CommandError(f"{autore.nome} non è membro di {gruppo.titolo}.")
+            MessaggioCommunity.objects.get_or_create(
+                community=gruppo, autore=autore, testo=testo
+            )
+
+        RichiestaCommunity.objects.get_or_create(
+            utente=persona_richiesta, community=club,
+            defaults={"stato": "PENDING"},
+        )
+        RichiestaCommunity.objects.get_or_create(
+            utente=sara, community=f1,
+            defaults={"stato": "PENDING"},
+        )
+
+        ValutazioneCommunity.objects.get_or_create(
+            utente=sara, community=padel,
+            defaults={"voto": 5},
+        )
+
+        notifiche = (
+            (sara, "MATCH", "Hai un nuovo Match con Marco!", marco, None),
+            (sara, "MATCH", "Hai un nuovo Match con Alice!", alice, None),
+            (sara, "LIKE_RICEVUTO", "Hai ricevuto un Like!", persona_like, None),
+            (sara, "MESSAGGIO_PRIVATO", "Marco ti ha inviato un nuovo messaggio.", marco, None),
+            (sara, "MESSAGGIO_PRIVATO", "Alice ti ha inviato un nuovo messaggio.", alice, None),
+            (sara, "MESSAGGIO_COMMUNITY", "Nuovo messaggio nel Club del libro.", None, club),
+            (sara, "RICHIESTA_COMMUNITY", "Anna ha richiesto di partecipare al Club del libro.", persona_richiesta, club),
+            (f1.organizzatore, "RICHIESTA_COMMUNITY", "Sara ha richiesto di partecipare a F1 Watching.", sara, f1),
+        )
+        for destinatario, tipo, testo, profilo, gruppo in notifiche:
+            Notifica.objects.get_or_create(
+                destinatario=destinatario, tipo=tipo, testo=testo,
+                profilo_collegato=profilo, community_collegata=gruppo,
+                defaults={"letta": False},
+            )
+
+    stdout.write("\nSCENARIO ESAME PREPARATO: demo_04 (Sara)")
+    stdout.write("2 Match, 2 chat private, 1 Like ricevuto in attesa.")
+    stdout.write("2 chat Community, richiesta ricevuta e richiesta inviata.")
+    stdout.write("1 valutazione e notifiche dimostrative.")
+    stdout.write("Puoi rilanciare il comando senza duplicare le interazioni definite.")
+
 # ==================================================
 # MANAGEMENT COMMAND
 # ==================================================
@@ -651,12 +791,23 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
+            "--prepara-esame",
+            action="store_true",
+            help="Prepara interazioni per il profilo demo_04 senza duplicarle",
+        )
+        parser.add_argument(
             "--controlla",
             action="store_true",
             help="Controlla i dati senza creare account",
         )
 
     def handle(self, *args, **options):
+
+        if options["prepara_esame"]:
+            if options["controlla"]:
+                raise CommandError("Usa --prepara-esame senza --controlla.")
+            prepara_relazioni_esame(self.stdout)
+            return
 
         cartella_foto = (
             Path(settings.BASE_DIR)
