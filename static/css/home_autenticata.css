@@ -1,0 +1,658 @@
+/* =====================================
+   HOME AUTENTICATA - DESIGN DEFINITIVO
+===================================== */
+
+
+/* SFONDO */
+
+body:has(.home-pagina) {
+    background-color: #f1edff;
+
+    background-image:
+        radial-gradient(
+            ellipse 55% 70% at 100% 28%,
+            rgba(111, 221, 232, 0.52),
+            transparent 85%
+        ),
+        radial-gradient(
+            ellipse 55% 55% at 0% 100%,
+            rgba(255, 143, 199, 0.36),
+            transparent 85%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 46%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/* CONTENITORE GENERALE */
+
+.area-contenuto:has(.home-pagina) {
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 78px);
+
+    margin: 0;
+    padding: 0;
+}
+
+.home-pagina {
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+
+    padding: 51px 24px 48px;
+
+    color: #181337;
+}
+
+
+/* =====================================
+   BENVENUTO
+===================================== */
+
+.home-benvenuto {
+    margin: 0 0 30px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+
+/* ETICHETTA */
+
+.home-benvenuto .home-etichetta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 0 0 13px;
+
+    color: #ff6055;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.4;
+    text-transform: none;
+}
+
+.home-tratti {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+
+    color: #ff6055;
+}
+
+.home-tratti svg {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* SALUTO */
+
+.home-benvenuto h1 {
+    margin: 0 0 16px;
+
+    color: #181337;
+    font-size: 43px;
+    font-weight: 800;
+    letter-spacing: -1.3px;
+    line-height: 1.18;
+}
+
+
+/* FRASE PRINCIPALE */
+
+.home-frase-principale {
+    max-width: 900px;
+    margin: 0 0 5px;
+
+    color: #181337;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+}
+
+.home-esclamativo {
+    display: inline-block;
+    margin-left: 4px;
+
+    color: #ff6055;
+    font-weight: 900;
+
+    transform: rotate(12deg);
+}
+
+
+/* DESCRIZIONE */
+
+.home-benvenuto .home-frase-secondaria {
+    margin: 0;
+
+    color: #49416e;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+
+/* =====================================
+   CARD PRINCIPALI
+===================================== */
+
+.home-scelte {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+
+    margin: 0;
+}
+
+.home-community-contenitore {
+    position: relative;
+    min-width: 0;
+}
+
+
+/* CARD */
+
+.home-riquadro {
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 23px;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    min-height: 166px;
+    height: 100%;
+
+    padding: 24px 29px;
+
+    background: rgba(255, 255, 255, 0.91);
+    border: 1px solid rgba(237, 227, 255, 0.8);
+    border-radius: 32px;
+
+    color: #181337;
+    text-decoration: none;
+
+    box-shadow:
+        0 12px 28px rgba(101, 69, 160, 0.11);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* NESSUNA LINEA COLORATA SOPRA */
+
+.home-riquadro-persone,
+.home-riquadro-community {
+    border-top: 1px solid rgba(237, 227, 255, 0.8);
+}
+
+
+/* NESSUNA DECORAZIONE INTERNA */
+
+.home-riquadro::before,
+.home-riquadro::after {
+    content: none;
+}
+
+
+/* HOVER */
+
+.home-riquadro:hover {
+    transform: translateY(-3px);
+
+    background: #ffffff;
+    border-color: #d9c9f8;
+
+    color: #181337;
+    text-decoration: none;
+
+    box-shadow:
+        0 16px 34px rgba(101, 69, 160, 0.15);
+}
+
+.home-riquadro:focus-visible {
+    outline: 3px solid #7545f5;
+    outline-offset: 4px;
+}
+
+
+/* ICONA E SFONDO CIRCOLARE */
+
+.home-icona {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    width: 105px;
+    height: 105px;
+    flex: 0 0 105px;
+
+    border-radius: 35px;
+}
+
+.home-icona-persone {
+    background: #ffedf4;
+}
+
+.home-icona-community {
+    background: #f1eaff;
+}
+
+.home-icona svg {
+    display: block;
+    width: 72px;
+    height: 72px;
+}
+
+
+/* TESTI */
+
+.home-riquadro-testo {
+    min-width: 0;
+}
+
+.home-riquadro h2 {
+    margin: 0 0 9px;
+
+    color: #181337;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+}
+
+.home-riquadro p {
+    margin: 0;
+
+    color: #302758;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+
+/* =====================================
+   TRILLI ESTERNI COMMUNITY
+===================================== */
+
+.home-community-trilli {
+    position: absolute;
+
+    top: -40px;
+    right: -23px;
+    z-index: 2;
+
+    display: block;
+    width: 48px;
+    height: 45px;
+
+    pointer-events: none;
+}
+
+.home-community-trilli span {
+    position: absolute;
+    display: block;
+
+    background: #ff6055;
+    border-radius: 5px;
+}
+
+.home-community-trilli span:nth-child(1) {
+    top: 4px;
+    left: 11px;
+
+    width: 5px;
+    height: 19px;
+
+    transform: rotate(20deg);
+}
+
+.home-community-trilli span:nth-child(2) {
+    top: 20px;
+    left: 28px;
+
+    width: 23px;
+    height: 5px;
+
+    transform: rotate(-40deg);
+}
+
+.home-community-trilli span:nth-child(3) {
+    top: 35px;
+    left: 29px;
+
+    width: 18px;
+    height: 5px;
+
+    transform: rotate(-15deg);
+}
+
+
+/* =====================================
+   FOOTER - FASCIA ORIZZONTALE
+===================================== */
+
+.home-footer {
+    box-sizing: border-box;
+
+    width: 100%;
+    margin-top: auto;
+
+    padding: 30px 24px;
+
+    background: #7542a7;
+    border: none;
+
+    color: #ffffff;
+}
+
+.home-footer-contenuto {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+
+/* LOGO */
+
+.home-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+
+    color: #ffffff;
+}
+
+.home-footer-logo > span {
+    font-size: 38px;
+    line-height: 0.7;
+}
+
+.home-footer-logo strong {
+    font-size: 17px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+/* SLOGAN */
+
+.home-footer-slogan {
+    position: relative;
+
+    margin: 0;
+    padding: 0 23px;
+
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.home-footer-slogan::after {
+    content: "";
+    position: absolute;
+
+    bottom: -7px;
+    left: 50%;
+
+    width: 76px;
+    height: 4px;
+
+    background: #ff7164;
+    border-radius: 4px;
+
+    transform: translateX(-50%);
+}
+
+
+/* STATISTICHE */
+
+.home-footer-statistiche {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.home-footer-statistica {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-width: 0;
+    padding: 0 17px;
+
+    border-left: 1px solid rgba(255, 255, 255, 0.35);
+
+    white-space: nowrap;
+}
+
+.home-footer-statistica svg {
+    display: block;
+    width: 27px;
+    height: 27px;
+    flex-shrink: 0;
+
+    color: #ffffff;
+}
+
+.home-footer-statistica strong {
+    color: #ffffff;
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.home-footer-statistica span {
+    margin: 0;
+
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 1050px) {
+
+    .home-footer-contenuto {
+        gap: 12px;
+    }
+
+    .home-footer-slogan {
+        padding: 0 12px;
+        font-size: 12px;
+    }
+
+    .home-footer-statistica {
+        padding: 0 10px;
+    }
+
+    .home-footer-statistica svg {
+        width: 23px;
+        height: 23px;
+    }
+
+    .home-footer-statistica strong {
+        font-size: 19px;
+    }
+
+}
+
+
+@media (max-width: 760px) {
+
+    .area-contenuto:has(.home-pagina) {
+        min-height: calc(100dvh - 70px);
+    }
+
+    .home-pagina {
+        padding: 35px 20px 43px;
+    }
+
+    .home-benvenuto h1 {
+        font-size: 35px;
+    }
+
+    .home-frase-principale {
+        font-size: 19px;
+    }
+
+    .home-scelte {
+        gap: 15px;
+    }
+
+    .home-riquadro {
+        min-height: 155px;
+        padding: 19px;
+        gap: 13px;
+    }
+
+    .home-icona {
+        width: 72px;
+        height: 72px;
+        flex-basis: 72px;
+        border-radius: 25px;
+    }
+
+    .home-icona svg {
+        width: 53px;
+        height: 53px;
+    }
+
+    .home-riquadro h2 {
+        font-size: 21px;
+    }
+
+    .home-riquadro p {
+        font-size: 12px;
+    }
+
+    .home-footer-contenuto {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 16px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .home-scelte {
+        grid-template-columns: 1fr;
+        gap: 23px;
+    }
+
+    .home-riquadro {
+        min-height: 136px;
+    }
+
+    .home-community-trilli {
+        top: -19px;
+        right: -8px;
+
+        transform: scale(0.75);
+    }
+
+    .home-footer {
+        padding: 19px 12px;
+    }
+
+    .home-footer-contenuto {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .home-footer-slogan {
+        border-left: none;
+        padding: 0;
+    }
+
+    .home-footer-statistiche {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        row-gap: 13px;
+    }
+
+    .home-footer-statistica {
+        padding: 0 12px;
+    }
+
+    .home-footer-statistica:first-child {
+        border-left: none;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .home-benvenuto h1 {
+        font-size: 30px;
+    }
+
+    .home-frase-principale {
+        font-size: 18px;
+    }
+
+    .home-riquadro h2 {
+        font-size: 20px;
+    }
+
+    .home-riquadro p {
+        font-size: 12px;
+    }
+
+}
+
+

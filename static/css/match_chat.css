@@ -1,0 +1,671 @@
+/* ==========================================
+   MATCHCHAT - ELENCO CHAT E MATCH
+========================================== */
+
+/* ==========================================
+   MATCH E CHAT - DESIGN FUORIRETE
+========================================== */
+
+/* SFONDO */
+
+body:has(.matchchat-pagina) {
+    background-color: #f0eaff;
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, 0.50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, 0.37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* CONTENITORE GENERALE */
+
+.area-contenuto:has(.matchchat-pagina) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+}
+
+.matchchat-pagina {
+    box-sizing: border-box;
+    width: calc(100% - 40px);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 0 60px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+}
+
+.matchchat-pagina *,
+.matchchat-pagina *::before,
+.matchchat-pagina *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   TORNA AL PROFILO
+========================================== */
+
+.matchchat-pagina .matchchat-indietro {
+    display: inline-block;
+    margin: 0 0 20px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    color: #ff506b;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.matchchat-pagina .matchchat-indietro:hover {
+    background: transparent;
+    color: #e52c62;
+    text-decoration: none;
+}
+
+/* ==========================================
+   INTESTAZIONE
+========================================== */
+
+.matchchat-intestazione {
+    display: block;
+    margin: 0 0 24px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    text-align: left;
+}
+
+.matchchat-titolo {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 14px;
+}
+
+.matchchat-titolo h1 {
+    position: relative;
+    margin: 0;
+
+    color: #181337;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+}
+
+/* SOTTOLINEATURA CORTA E DRITTA */
+
+.matchchat-titolo h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+
+    width: 42px;
+    height: 4px;
+
+    background: #ff6055;
+    border-radius: 4px;
+}
+
+/* TRILLI DECORATIVI */
+
+.matchchat-trilli {
+    position: absolute;
+    top: -10px;
+    right: -35px;
+
+    width: 32px;
+    height: 35px;
+    pointer-events: none;
+}
+
+.matchchat-trilli span {
+    position: absolute;
+    display: block;
+
+    width: 4px;
+    height: 13px;
+
+    background: #ff6055;
+    border-radius: 10px;
+}
+
+.matchchat-trilli span:nth-child(1) {
+    top: 0;
+    left: 7px;
+    transform: rotate(18deg);
+}
+
+.matchchat-trilli span:nth-child(2) {
+    top: 10px;
+    left: 21px;
+    transform: rotate(48deg);
+}
+
+.matchchat-trilli span:nth-child(3) {
+    top: 25px;
+    left: 25px;
+    height: 10px;
+    transform: rotate(70deg);
+}
+
+/* DESCRIZIONE */
+
+.matchchat-intestazione p {
+    margin: 0;
+
+    color: #625c83;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+.matchchat-esclamativo {
+    display: inline-block;
+    margin-left: 3px;
+
+    color: #ff6055;
+    font-weight: 900;
+    transform: rotate(12deg);
+}
+
+/* ==========================================
+   SEZIONI MATCH E CHAT
+========================================== */
+
+.matchchat-sezione {
+    margin: 0 0 22px;
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #e5dbf7;
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 24px rgba(81, 59, 151, 0.09);
+}
+
+.matchchat-sezione-titolo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 16px 20px;
+    border-bottom: 1px solid #ece4f7;
+}
+
+.matchchat-sezione-titolo h2 {
+    margin: 0;
+
+    color: #181337;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    line-height: 1.3;
+}
+
+/* CONTATORI */
+
+.matchchat-sezione-titolo > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 30px;
+    height: 27px;
+    padding: 0 9px;
+
+    background: #ffedf4;
+    border-radius: 18px;
+
+    color: #ff3973;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* ==========================================
+   I TUOI MATCH
+========================================== */
+
+/* ELENCO ORIZZONTALE */
+
+.matchchat-match-lista {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+
+    padding: 18px 20px 20px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d8c5ee transparent;
+}
+
+/* CARD MATCH */
+
+.matchchat-match-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+
+    flex: 0 0 155px;
+    width: 155px;
+    min-width: 0;
+
+    padding: 16px 12px 15px;
+
+    background: #fff7fc;
+    border: 1px solid #f0e5f7;
+    border-radius: 19px;
+
+    color: #181337;
+    text-align: center;
+
+    box-shadow:
+        0 5px 15px rgba(87, 65, 151, 0.07);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.matchchat-match-card:hover {
+    transform: translateY(-3px);
+    border-color: #dabef4;
+
+    box-shadow:
+        0 9px 22px rgba(87, 65, 151, 0.13);
+}
+
+/* PROFILO CLICCABILE */
+
+.matchchat-match-profilo,
+.matchchat-match-profilo:visited {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+
+    color: #181337;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* FOTOGRAFIA */
+
+.matchchat-match-foto,
+.matchchat-match-foto-vuota {
+    width: 68px;
+    height: 68px;
+    flex: 0 0 68px;
+
+    border-radius: 50%;
+}
+
+.matchchat-match-foto {
+    display: block;
+    object-fit: cover;
+}
+
+.matchchat-match-foto-vuota {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #efe6ff;
+    color: #7144ff;
+
+    font-size: 24px;
+    font-weight: 800;
+}
+
+/* NOME */
+
+.matchchat-match-nome {
+    display: block;
+    width: 100%;
+
+    color: #181337;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.35;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.matchchat-match-profilo:hover
+.matchchat-match-nome {
+    color: #7144ff;
+}
+
+/* APRI CHAT */
+
+.matchchat-match-apri-chat,
+.matchchat-match-apri-chat:visited {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 39px;
+    padding: 9px 11px;
+
+    background: linear-gradient(
+        110deg,
+        #ff197a,
+        #ff5952
+    );
+
+    border: 1px solid transparent;
+    border-radius: 20px;
+
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+
+    box-shadow:
+        0 5px 12px rgba(255, 42, 108, 0.17);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.matchchat-match-apri-chat:hover {
+    background: linear-gradient(
+        110deg,
+        #ed126e,
+        #f34849
+    );
+
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 16px rgba(255, 42, 108, 0.23);
+}
+
+/* ==========================================
+   LE TUE CHAT
+========================================== */
+
+/* RIGA CONVERSAZIONE */
+
+.matchchat-riga {
+    display: flex;
+    align-items: stretch;
+
+    margin: 10px 14px;
+    padding: 0;
+
+    background: #fcfaff;
+    border: 1px solid #f0e9f8;
+    border-radius: 17px;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.matchchat-riga:hover {
+    background: #f7f1ff;
+    border-color: #e3d4fa;
+}
+
+/* COLLEGAMENTO CONVERSAZIONE */
+
+.matchchat-riga-principale {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    flex: 1;
+    min-width: 0;
+    min-height: 68px;
+
+    padding: 11px 14px;
+
+    color: #181337;
+    text-decoration: none;
+}
+
+/* FOTO */
+
+.matchchat-foto,
+.matchchat-foto-vuota {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+
+    border-radius: 50%;
+}
+
+.matchchat-foto {
+    display: block;
+    object-fit: cover;
+}
+
+.matchchat-foto-vuota {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #efe6ff;
+    color: #7144ff;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* INFORMAZIONI */
+
+.matchchat-informazioni {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.matchchat-riga-superiore {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.matchchat-riga-superiore strong {
+    min-width: 0;
+
+    color: #181337;
+    font-size: 13px;
+    font-weight: 800;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.matchchat-riga-superiore time {
+    flex-shrink: 0;
+
+    color: #89809e;
+    font-size: 9px;
+    font-weight: 500;
+}
+
+.matchchat-anteprima {
+    display: block;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #77718d;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.matchchat-riga-principale:hover
+.matchchat-riga-superiore strong {
+    color: #7144ff;
+}
+
+/* ==========================================
+   STATI VUOTI
+========================================== */
+
+.matchchat-stato-vuoto {
+    padding: 24px 20px;
+
+    color: #77718d;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.55;
+    text-align: center;
+}
+
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
+
+.matchchat-pagina a:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .matchchat-pagina {
+        width: calc(100% - 26px);
+        padding: 22px 0 44px;
+    }
+
+    .matchchat-titolo h1 {
+        font-size: 24px;
+    }
+
+    .matchchat-intestazione p {
+        font-size: 11px;
+    }
+
+    .matchchat-sezione {
+        border-radius: 18px;
+        margin-bottom: 16px;
+    }
+
+    .matchchat-sezione-titolo {
+        padding: 14px;
+    }
+
+    .matchchat-sezione-titolo h2 {
+        font-size: 16px;
+    }
+
+    .matchchat-match-lista {
+        padding: 15px 14px;
+        gap: 10px;
+    }
+
+    .matchchat-match-card {
+        flex-basis: 135px;
+        width: 135px;
+        padding: 13px 11px;
+    }
+
+    .matchchat-match-foto,
+    .matchchat-match-foto-vuota {
+        width: 60px;
+        height: 60px;
+        flex-basis: 60px;
+    }
+
+    .matchchat-riga {
+        margin: 8px 10px;
+    }
+
+    .matchchat-riga-principale {
+        padding: 11px;
+        gap: 9px;
+    }
+
+    .matchchat-foto,
+    .matchchat-foto-vuota {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .matchchat-riga-superiore {
+        flex-wrap: wrap;
+        gap: 4px 10px;
+    }
+
+    .matchchat-riga-superiore time {
+        font-size: 8px;
+    }
+}
+
+/* RIDUZIONE ANIMAZIONI */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .matchchat-match-card,
+    .matchchat-match-apri-chat,
+    .matchchat-riga {
+        transition: none;
+    }
+
+    .matchchat-match-card:hover,
+    .matchchat-match-apri-chat:hover {
+        transform: none;
+    }
+}
+
+

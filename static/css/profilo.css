@@ -1,0 +1,1300 @@
+/* =====================================
+   PROFILO - DESIGN FUORIRETE
+===================================== */
+
+
+/* ==========================================
+   MIO PROFILO - DESIGN DEFINITIVO
+========================================== */
+
+/* SFONDO */
+
+body:has(.profilo-pagina) {
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 60% 75% at 100% 25%,
+            rgba(111, 221, 232, .50),
+            transparent 85%
+        ),
+        radial-gradient(
+            ellipse 60% 75% at 0% 100%,
+            rgba(255, 143, 199, .38),
+            transparent 85%
+        ),
+        linear-gradient(
+            115deg,
+            #f0eaff,
+            #f2edff 48%,
+            #e3f6fc
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/* ==========================================
+   CONTENITORE
+========================================== */
+
+.area-contenuto:has(.profilo-pagina) {
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.profilo-pagina {
+    width: calc(100% - 40px);
+    max-width: 1010px;
+    margin: 0 auto;
+    padding: 27px 0 48px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.profilo-pagina *,
+.profilo-pagina *::before,
+.profilo-pagina *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   ICONE SVG
+========================================== */
+
+.profilo-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.profilo-svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+/* ==========================================
+   INTESTAZIONE PAGINA
+========================================== */
+
+.profilo-intestazione {
+    margin: 0 0 20px;
+}
+
+.profilo-intestazione h1 {
+    position: relative;
+    display: table;
+
+    margin: 0 0 6px;
+
+    color: #181337;
+    font-size: 31px;
+    font-weight: 800;
+    letter-spacing: -.8px;
+    line-height: 1.2;
+}
+
+.profilo-intestazione p {
+    margin: 0;
+
+    color: #51486f;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   TRILLI CORALLO
+========================================== */
+
+.profilo-trilli {
+    position: absolute;
+    top: -10px;
+    right: -33px;
+
+    display: block;
+    width: 30px;
+    height: 32px;
+
+    pointer-events: none;
+}
+
+.profilo-trilli i {
+    position: absolute;
+    display: block;
+
+    background: #ff6055;
+    border-radius: 4px;
+}
+
+.profilo-trilli i:nth-child(1) {
+    top: 2px;
+    left: 7px;
+    width: 4px;
+    height: 13px;
+    transform: rotate(22deg);
+}
+
+.profilo-trilli i:nth-child(2) {
+    top: 15px;
+    left: 18px;
+    width: 15px;
+    height: 4px;
+    transform: rotate(-34deg);
+}
+
+.profilo-trilli i:nth-child(3) {
+    top: 27px;
+    left: 18px;
+    width: 12px;
+    height: 4px;
+    transform: rotate(-12deg);
+}
+
+
+/* ==========================================
+   ASPETTO GENERALE CARD
+========================================== */
+
+.profilo-banner,
+.profilo-interessi-panel,
+.profilo-menu,
+.profilo-completamento,
+.profilo-community-card,
+.profilo-connessione,
+.profilo-statistiche,
+.profilo-community-vuota {
+    background: rgba(255, 255, 255, .96);
+    border: 1px solid rgba(222, 211, 248, .82);
+    border-radius: 18px;
+
+    box-shadow:
+        0 6px 18px rgba(87, 65, 151, .075);
+}
+
+
+/* ==========================================
+   FASCIA PROFILO
+========================================== */
+
+.profilo-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    min-height: 118px;
+
+    padding: 13px 18px;
+    margin-bottom: 15px;
+    gap: 20px;
+}
+
+.profilo-identita {
+    display: flex;
+    align-items: center;
+
+    flex: 1;
+    min-width: 0;
+    gap: 16px;
+}
+
+.profilo-foto {
+    display: block;
+
+    width: 92px;
+    height: 92px;
+    flex: 0 0 92px;
+
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.profilo-dati {
+    min-width: 0;
+}
+
+.profilo-dati h2 {
+    margin: 0 0 9px;
+
+    color: #181337;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -.6px;
+    line-height: 1.2;
+}
+
+.profilo-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 5px;
+    margin: 0;
+
+    color: #51486f;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.profilo-pin {
+    width: 15px;
+    height: 15px;
+    color: #ff287d;
+}
+
+.profilo-meta-punto {
+    color: #ff506b;
+    font-weight: 800;
+}
+
+
+/* PULSANTE ANTEPRIMA */
+
+.profilo-anteprima-link,
+.profilo-pagina .profilo-anteprima-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+    flex-shrink: 0;
+
+    padding: 9px 14px;
+
+    border: 1px solid #e4d8ee;
+    border-radius: 24px;
+
+    background: #fffdfc;
+    color: #073943;
+
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+    text-decoration: none;
+
+    box-shadow:
+        0 3px 9px rgba(69, 38, 118, .06);
+}
+
+.profilo-anteprima-link .profilo-svg {
+    width: 16px;
+    height: 16px;
+    color: #7545f5;
+}
+
+.profilo-pagina .profilo-anteprima-link:hover {
+    border-color: #b8a0f7;
+    color: #6236df;
+}
+
+
+/* ==========================================
+   LAYOUT A DUE COLONNE
+========================================== */
+
+.profilo-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 2.65fr)
+        minmax(230px, 1fr);
+
+    gap: 15px;
+    align-items: start;
+}
+
+.profilo-colonna-main,
+.profilo-colonna-side {
+    display: flex;
+    flex-direction: column;
+
+    gap: 13px;
+    min-width: 0;
+}
+
+
+/* ==========================================
+   INTERESSI
+========================================== */
+
+.profilo-interessi-panel {
+    padding: 15px 18px;
+}
+
+.profilo-interessi-panel h2 {
+    position: relative;
+    display: table;
+
+    margin: 0 0 12px;
+
+    color: #181337;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.profilo-interessi-panel .profilo-trilli {
+    transform: scale(.8);
+    transform-origin: center left;
+}
+
+.profilo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.profilo-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    max-width: 100%;
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #f0e6ff;
+    color: #38216d;
+
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.profilo-tag:nth-child(3n) {
+    background: #ffe5f1;
+    color: #a52a63;
+}
+
+.profilo-tag:nth-child(4n) {
+    background: #eee8ff;
+    color: #4b2fa1;
+}
+
+.profilo-tag-emoji {
+    font-size: 13px;
+    line-height: 1;
+}
+
+.profilo-vuoto-testo {
+    margin: 0;
+    color: #71678c;
+    font-size: 11px;
+}
+
+
+/* ==========================================
+   STATISTICHE
+========================================== */
+
+.profilo-statistiche {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+
+    padding: 10px 12px;
+    border-radius: 17px;
+}
+
+.profilo-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+    min-width: 0;
+}
+
+.profilo-stat + .profilo-stat {
+    border-left: 1px solid #d5bff8;
+}
+
+.profilo-stat .profilo-svg {
+    width: 21px;
+    height: 21px;
+    color: #7545f5;
+}
+
+.profilo-stat:first-child .profilo-svg {
+    color: #ff287d;
+}
+
+.profilo-stat strong {
+    color: #181337;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.profilo-stat > span:last-child {
+    color: #181337;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* ==========================================
+   TITOLI DELLE SEZIONI
+========================================== */
+
+.profilo-sezione-titolo {
+    position: relative;
+    width: fit-content;
+
+    margin: 0 0 11px;
+    padding-bottom: 7px;
+
+    color: #181337;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -.35px;
+    line-height: 1.25;
+}
+
+.profilo-sezione-titolo::after {
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 38px;
+    height: 3px;
+
+    border-radius: 3px;
+    background: #ff5470;
+}
+
+
+/* ==========================================
+   LE MIE COMMUNITY
+========================================== */
+
+.profilo-titolo-riga {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.profilo-titolo-riga a {
+    color: #ff287d;
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.profilo-titolo-riga a:hover {
+    text-decoration: underline;
+}
+
+
+/* CAROSELLO ORIZZONTALE SENZA FRECCE */
+
+.profilo-community-scroll {
+    display: flex;
+    align-items: stretch;
+
+    gap: 10px;
+    padding: 2px 0 8px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-inline: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d8c5ee transparent;
+}
+
+.profilo-community-scroll::-webkit-scrollbar {
+    height: 5px;
+}
+
+.profilo-community-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.profilo-community-scroll::-webkit-scrollbar-thumb {
+    background: #d8c5ee;
+    border-radius: 10px;
+}
+
+
+/* CARD COMMUNITY */
+
+.profilo-community-card.profilo-community-link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    flex: 0 0 calc((100% - 20px) / 3);
+    min-width: 0;
+    min-height: 0;
+    gap: 5px;
+
+    padding: 8px;
+
+    color: #181337;
+    text-decoration: none;
+
+    scroll-snap-align: start;
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.profilo-community-card.profilo-community-link:hover {
+    border-color: #ff829a;
+    box-shadow: 0 8px 18px rgba(87, 65, 151, .12);
+}
+
+
+/* IMMAGINE */
+
+.profilo-community-foto {
+    display: block;
+
+    width: 100%;
+    height: 65px;
+    flex: 0 0 65px;
+
+    border-radius: 9px;
+    object-fit: cover;
+}
+
+.profilo-community-foto-vuota {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f0e6ff;
+    color: #7545f5;
+}
+
+
+/* INFORMAZIONI COMMUNITY */
+
+.profilo-community-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+    width: 100%;
+    min-width: 0;
+}
+
+.profilo-community-info strong {
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.profilo-community-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 4px;
+    min-width: 0;
+}
+
+.profilo-community-chip {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 4px;
+    max-width: 100%;
+
+    padding: 4px 6px;
+    border-radius: 20px;
+
+    background: #efe5fc;
+    color: #49336a;
+
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.profilo-community-chip:nth-child(2n) {
+    background: #e0f1f6;
+    color: #28566c;
+}
+
+.profilo-community-chip-emoji {
+    font-size: 10px;
+    line-height: 1;
+}
+
+
+/* NESSUNA COMMUNITY */
+
+.profilo-community-vuota {
+    width: 100%;
+    padding: 15px;
+}
+
+.profilo-community-vuota p {
+    margin: 0 0 8px;
+    font-size: 11px;
+}
+
+.profilo-community-vuota a {
+    color: #ff287d;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   CONNESSIONI
+========================================== */
+
+.profilo-connessioni {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.profilo-connessione {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+    min-height: 69px;
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    background: rgba(255, 249, 255, .90);
+    color: #181337;
+    text-decoration: none;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.profilo-connessione:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 19px rgba(87, 65, 151, .14);
+}
+
+.profilo-iconcina {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+
+    border-radius: 50%;
+    background: #ffe4f0;
+    color: #ff287d;
+}
+
+.profilo-iconcina .profilo-svg {
+    width: 25px;
+    height: 25px;
+    stroke-width: 1.7;
+}
+
+.profilo-connessione-like .profilo-iconcina {
+    background: #efe6ff;
+    color: #7545f5;
+}
+
+.profilo-connessione-testo {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+    min-width: 0;
+}
+
+.profilo-connessione-testo strong {
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.profilo-connessione-testo span {
+    color: #40365c;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+
+/* ==========================================
+   IMPOSTAZIONI
+========================================== */
+
+.profilo-menu,
+.profilo-completamento {
+    padding: 16px;
+}
+
+.profilo-menu h2 {
+    position: relative;
+    width: fit-content;
+
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+
+    color: #181337;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.profilo-menu h2::after {
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 40px;
+    height: 3px;
+
+    border-radius: 3px;
+    background: #ff5470;
+}
+
+.profilo-voce,
+.profilo-logout button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 100%;
+    min-height: 40px;
+    gap: 10px;
+
+    padding: 9px 3px;
+
+    border: 0;
+    border-bottom: 1px solid #eae1f5;
+
+    background: transparent;
+    color: #181337;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+}
+
+.profilo-voce .profilo-svg,
+.profilo-logout .profilo-svg {
+    width: 18px;
+    height: 18px;
+    color: #1453c9;
+}
+
+.profilo-voce:hover {
+    color: #6236df;
+}
+
+
+/* LOGOUT */
+
+.profilo-logout {
+    margin-top: 0;
+}
+
+.profilo-logout button {
+    border-bottom: 0;
+
+    color: #ff287d;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.profilo-logout button:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================
+   COMPLETAMENTO PROFILO
+========================================== */
+
+.profilo-completamento h2 {
+    margin: 0 0 12px;
+
+    color: #181337;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.profilo-esclamativo {
+    display: inline-block;
+    margin-left: 1px;
+
+    color: #ff287d;
+    transform: rotate(13deg);
+}
+
+.profilo-completamento p {
+    margin: 0 0 10px;
+
+    color: #49416e;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.profilo-barra {
+    width: 100%;
+    height: 9px;
+
+    overflow: hidden;
+    border-radius: 20px;
+    background: #eee4fa;
+}
+
+.profilo-barra span {
+    display: block;
+
+    height: 100%;
+    border-radius: inherit;
+
+    background:
+        linear-gradient(100deg, #ff5e75, #ff1684);
+}
+
+.profilo-completamento small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #ff287d;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* ==========================================
+   RESPONSIVE TABLET
+========================================== */
+
+@media (max-width: 900px) {
+
+    .profilo-layout {
+        grid-template-columns:
+            minmax(0, 2fr)
+            minmax(210px, 1fr);
+
+        gap: 12px;
+    }
+
+    .profilo-community-card.profilo-community-link {
+        flex-basis: calc((100% - 10px) / 2);
+    }
+
+}
+
+
+/* ==========================================
+   RESPONSIVE MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .area-contenuto:has(.profilo-pagina) {
+        min-height: calc(100dvh - 64px);
+    }
+
+    .profilo-pagina {
+        padding-top: 22px;
+    }
+
+    .profilo-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .profilo-colonna-side {
+        margin-top: 4px;
+    }
+
+    .profilo-banner {
+        flex-wrap: wrap;
+    }
+
+    .profilo-anteprima-link {
+        margin-left: auto;
+    }
+
+}
+
+
+/* ==========================================
+   RESPONSIVE SCHERMI PICCOLI
+========================================== */
+
+@media (max-width: 480px) {
+
+    .profilo-pagina {
+        width: calc(100% - 28px);
+    }
+
+    .profilo-intestazione h1 {
+        font-size: 27px;
+    }
+
+    .profilo-intestazione p {
+        font-size: 11px;
+    }
+
+    .profilo-banner {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .profilo-identita {
+        gap: 11px;
+    }
+
+    .profilo-foto {
+        width: 73px;
+        height: 73px;
+        flex-basis: 73px;
+    }
+
+    .profilo-dati h2 {
+        font-size: 20px;
+    }
+
+    .profilo-meta {
+        font-size: 10px;
+    }
+
+    .profilo-community-card.profilo-community-link {
+        flex-basis: 72%;
+    }
+
+    .profilo-connessioni {
+        grid-template-columns: 1fr;
+    }
+
+    .profilo-stat {
+        gap: 6px;
+    }
+
+    .profilo-stat strong {
+        font-size: 16px;
+    }
+
+}
+
+
+/* ==========================================
+   CONFERMA LOGOUT - DESIGN FUORIRETE
+========================================== */
+
+/* SFONDO OSCURATO */
+
+.logout-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(24, 19, 55, 0.48);
+    backdrop-filter: blur(4px);
+}
+
+/* NASCONDI POPUP */
+
+.logout-overlay[hidden] {
+    display: none;
+}
+
+body.logout-aperto {
+    overflow: hidden;
+}
+
+/* ==========================================
+   FINESTRA CENTRALE
+========================================== */
+
+.logout-popup {
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: 460px;
+
+    padding: 32px 30px;
+
+    background: #ffffff;
+    border: 1px solid #e5dbf7;
+    border-radius: 22px;
+
+    box-shadow:
+        0 18px 50px rgba(81, 59, 151, 0.20);
+
+    text-align: center;
+    color: #181337;
+}
+
+/* ==========================================
+   ICONA LOGOUT
+========================================== */
+
+.logout-popup-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 20px;
+
+    background: #f2eaff;
+    border-radius: 50%;
+
+    color: #7144ff;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+/* ==========================================
+   TITOLO
+========================================== */
+
+.logout-popup h2 {
+    margin: 0 0 13px;
+
+    color: #181337;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.3;
+}
+
+/* ==========================================
+   DESCRIZIONE
+========================================== */
+
+.logout-popup p {
+    max-width: 370px;
+    margin: 0 auto 28px;
+
+    color: #625c83;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.7;
+}
+
+/* ==========================================
+   PULSANTI
+========================================== */
+
+.logout-popup-azioni {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logout-popup-form {
+    flex: 1;
+    margin: 0;
+}
+
+.logout-popup-annulla,
+.logout-popup-conferma {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 16px;
+
+    border-radius: 12px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* ANNULLA */
+
+.logout-popup-annulla {
+    flex: 1;
+
+    background: #ffffff;
+    border: 1px solid #d8c5fa;
+
+    color: #7144ff;
+}
+
+.logout-popup-annulla:hover {
+    background: #f2edff;
+    border-color: #7144ff;
+}
+
+/* SÌ, ESCI */
+
+.logout-popup-conferma {
+    background: linear-gradient(
+        110deg,
+        #ff197a,
+        #ff5952
+    );
+
+    border: 1px solid transparent;
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 16px rgba(255, 42, 108, 0.17);
+}
+
+.logout-popup-conferma:hover {
+    background: linear-gradient(
+        110deg,
+        #ed126e,
+        #f34849
+    );
+
+    transform: translateY(-2px);
+}
+
+/* ACCESSIBILITÀ */
+
+.logout-popup button:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 520px) {
+
+    .logout-popup {
+        padding: 26px 20px;
+        border-radius: 19px;
+    }
+
+    .logout-popup h2 {
+        font-size: 19px;
+    }
+
+    .logout-popup p {
+        font-size: 12px;
+    }
+
+    .logout-popup-azioni {
+        gap: 9px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .logout-popup button {
+        transition: none;
+    }
+
+    .logout-popup-conferma:hover {
+        transform: none;
+    }
+}
+
+
+/* PROFILO - ICONA MATCH E CHAT CLICCABILE */
+
+.profilo-iconcina-link,
+.profilo-iconcina-link:visited {
+    color: #fa5943;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profilo-iconcina-link:hover {
+    color: #e84b36;
+    text-decoration: none;
+}
+
+.profilo-iconcina-link:focus-visible {
+    outline: 2px solid #fa5943;
+    outline-offset: 3px;
+}
+
+
+/* =====================================
+   COMMUNITY CLICCABILI NEL PROFILO
+===================================== */
+
+.profilo-community-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profilo-community-link:hover {
+    border-color: #fa5943;
+    background-color: #fffaf7;
+}
+
+.profilo-community-link:focus-visible {
+    outline: 2px solid #fa5943;
+    outline-offset: 3px;
+}
+
+.profilo-community-link h3,
+.profilo-community-link p {
+    color: inherit;
+}
+
+

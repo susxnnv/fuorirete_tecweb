@@ -1,0 +1,1823 @@
+/* ==========================================
+   PERSONE - SCOPERTA PROFILI
+========================================== */
+
+/* Sfondo */
+
+
+body:has(.persone-pagina) {
+    background-color: #f3efff;
+
+    background-image:
+        radial-gradient(
+            ellipse 55% 70% at 100% 28%,
+            rgba(111, 221, 232, 0.52),
+            transparent 85%
+        ),
+        radial-gradient(
+            ellipse 55% 55% at 0% 100%,
+            rgba(255, 143, 199, 0.36),
+            transparent 85%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 46%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+.area-contenuto:has(.persone-pagina) {
+    max-width: 1020px;
+    padding: 23px 28px 45px;
+}
+
+.persone-pagina {
+    width: 100%;
+    max-width: 940px;
+    margin: 0 auto;
+    color: #181337;
+}
+
+/* Intestazione */
+
+.persone-intestazione {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 19px;
+}
+
+.persone-intestazione-testo {
+    min-width: 0;
+}
+
+.persone-intestazione h1 {
+    position: relative;
+    display: table;
+
+    margin: 0 0 9px;
+    color: #181337;
+
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
+}
+
+.persone-titolo-sottolineatura {
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+
+    width: 65px;
+    height: 9px;
+
+    pointer-events: none;
+}
+
+.persone-titolo-tratti {
+    position: absolute;
+    top: -7px;
+    right: -31px;
+
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+}
+
+.persone-intestazione p {
+    margin: 0;
+    color: #59557c;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Pulsante Filtri */
+
+.persone-pulsante-filtri {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    min-height: 38px;
+    padding: 8px 18px;
+
+    background: linear-gradient(110deg, #ff197a, #ff5254);
+    border: 1px solid transparent;
+    border-radius: 24px;
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    box-shadow: 0 7px 15px rgba(255, 43, 110, 0.26);
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.persone-pulsante-filtri:hover {
+    background: linear-gradient(110deg, #eb126c, #f3444b);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+/* Scheda persona */
+
+.persone-scheda {
+    display: grid;
+    grid-template-columns: 36% minmax(0, 1fr);
+
+    width: 100%;
+    max-width: 7600px;
+    min-height: 0;
+    margin: 0 auto;
+
+    background: #fffdfc;
+    border: 1px solid #eee3df;
+    border-radius: 20px;
+
+    overflow: hidden;
+    cursor: pointer;
+
+    box-shadow:
+        9px 11px 0 rgba(113, 76, 224, 0.10),
+        0 14px 28px rgba(91, 59, 169, 0.12);
+
+    transition:
+    transform 0.32s cubic-bezier(0.4, 0, 0.7, 1),
+    opacity 0.32s ease,
+    box-shadow 0.2s ease;
+}
+
+.persone-scheda:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        9px 13px 0 rgba(113, 76, 224, 0.12),
+        0 18px 34px rgba(91, 59, 169, 0.16);
+}
+
+/* Uscita della scheda dopo Like o Dislike */
+
+/* Uscita verso destra: LIKE */
+.persone-scheda.persone-scheda-like,
+.persone-scheda.persone-scheda-like:hover {
+    transform: translateX(110vw) rotate(8deg);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Uscita verso sinistra: DISLIKE */
+.persone-scheda.persone-scheda-dislike,
+.persone-scheda.persone-scheda-dislike:hover {
+    transform: translateX(-110vw) rotate(-8deg);
+    opacity: 0;
+    pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .persone-scheda {
+        transition: none;
+    }
+}
+
+.persone-scheda:focus-visible {
+    outline: 2px solid #007d83;
+    outline-offset: 4px;
+}
+
+/* Fotografia */
+
+.persone-scheda-foto {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+
+    margin: 10px 0 10px 10px;
+    border-radius: 18px;
+
+    background: #f0e8e3;
+    overflow: hidden;
+}
+
+.persone-scheda-foto img {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+.persone-foto-assente {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    padding: 18px;
+
+    color: #657078;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Testi e informazioni */
+
+.persone-scheda-contenuto {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    min-width: 0;
+    padding: 18px 17px;
+}
+
+.persone-scheda-identita h2 {
+    margin: 0 0 4px;
+
+    color: #073943;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -.7px;
+}
+
+.persone-scheda-meta {
+    margin: 0;
+
+    color: #526971;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.persone-scheda-descrizione {
+    min-height: 0;
+}
+
+.persone-scheda-descrizione p {
+    margin: 0;
+
+    color: #173741;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.persone-testo-secondario {
+    color: #66777b;
+    font-size: 12px;
+}
+
+/* Titoli delle sezioni */
+
+.persone-scheda-sezione h3 {
+    margin: 0 0 5px;
+
+    color: #073943;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+/* Interessi e cosa cerca */
+
+.persone-scheda-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.persone-scheda-sezione:has(.persone-tag-interesse)
+.persone-scheda-tags {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+}
+
+
+.persone-tag-interesse {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+
+    min-width: 0;
+    padding: 8px 11px;
+
+    background: #d8c8ed;
+    color: #34244f;
+    border-radius: 22px;
+
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+
+.persone-tag-interesse:nth-child(4n + 2) {
+    background: #b8dce4;
+    color: #234c5a;
+}
+
+.persone-tag-interesse:nth-child(4n + 3) {
+    background: #cbdcca;
+    color: #344e3a;
+}
+
+.persone-tag-interesse:nth-child(4n + 4) {
+    background: #c3ccef;
+    color: #34416c;
+}
+
+
+.persone-tag-cerca {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 11px;
+
+    background: #bcd6f3;
+    color: #24486c;
+    border-radius: 22px;
+
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.persone-tag-cerca:nth-child(even) {
+    background: #d8c8f5;
+    color: #493579;
+}
+
+
+/* Like e Dislike */
+
+.persone-scheda-azioni {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.persone-form-valutazione {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+.persone-pulsante-dislike,
+.persone-pulsante-like {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    width: 100%;
+    min-height: 38px;
+    padding: 7px 11px;
+
+    border-radius: 24px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.2;
+
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+
+.persone-pulsante-dislike {
+    background: #f5f1ff;
+    border: 1.5px solid #7144ff;
+    color: #542cce;
+}
+
+.persone-pulsante-dislike:hover {
+    background: #ebe2ff;
+    border-color: #6035ef;
+    color: #4824ba;
+}
+
+
+.persone-pulsante-like {
+    background: linear-gradient(110deg, #ff197a, #ff5952);
+    border: 1.5px solid transparent;
+    color: #ffffff;
+
+    box-shadow: 0 5px 12px rgba(255, 42, 108, 0.20);
+}
+
+.persone-pulsante-like:hover {
+    background: linear-gradient(110deg, #ed126e, #f34849);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+
+.persone-pulsante-dislike svg,
+.persone-pulsante-like svg {
+    display: block;
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+}
+
+.persone-scheda-azioni button:disabled {
+    cursor: not-allowed;
+    opacity: .6;
+}
+
+/* Nessun profilo disponibile */
+
+.persone-nessun-profilo {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 35px 25px;
+
+    background: #fffdfc;
+    border: 1px solid #eee3df;
+    border-radius: 25px;
+
+    text-align: center;
+}
+
+.persone-nessun-profilo h2 {
+    margin: 0 0 10px;
+    color: #073943;
+    font-size: 21px;
+}
+
+.persone-nessun-profilo p {
+    color: #526971;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Responsive */
+
+@media (max-width: 760px) {
+    .area-contenuto:has(.persone-pagina) {
+        padding: 24px 15px 60px;
+    }
+
+    .persone-intestazione h1 {
+        font-size: 36px;
+    }
+
+    .persone-titolo-tratti {
+        width: 34px;
+        height: 34px;
+        right: -31px;
+    }
+
+    .persone-scheda {
+        max-width: 480px;
+        grid-template-columns: 1fr;
+    }
+
+    
+    .persone-scheda-foto {
+        position: relative;
+        min-width: 0;
+        min-height: 0;
+
+        margin: 8px 0 8px 8px;
+        border-radius: 14px;
+
+        background: #f0e8e3;
+        overflow: hidden;
+    }
+
+
+    .persone-scheda-contenuto {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 520px) {
+    .persone-intestazione {
+        gap: 12px;
+    }
+
+    .persone-intestazione h1 {
+        font-size: 32px;
+    }
+
+    .persone-intestazione p {
+        font-size: 12px;
+    }
+
+    .persone-pulsante-filtri {
+        min-height: 39px;
+        padding: 9px 13px;
+        font-size: 12px;
+    }
+
+    .persone-scheda-foto {
+        height: 260px;
+        min-height: 260px;
+    }
+
+    .persone-pulsante-dislike,
+    .persone-pulsante-like {
+        padding: 8px;
+        font-size: 11px;
+    }
+}
+
+/* AGGIUNTA DI FILTRI */
+
+/* ==========================================
+   PERSONE - POPUP FILTRI RIGIDI
+========================================== */
+
+/* ==========================================
+   PERSONE - FILTRI
+========================================== */
+
+/* Indicatore filtri attivi */
+
+.persone-pulsante-filtri:not(:disabled) {
+    position: relative;
+    cursor: pointer;
+}
+
+.persone-filtri-indicatore {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-left: 6px;
+
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+/* Finestra modale */
+
+.persone-filtri-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background: rgba(20, 38, 43, .43);
+    backdrop-filter: blur(4px);
+}
+
+.persone-filtri-overlay[hidden] {
+    display: none;
+}
+
+body.persone-filtri-aperti {
+    overflow: hidden;
+}
+
+
+.persone-filtri-popup {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 720px;
+    max-height: min(88vh, 760px);
+
+    background: #ffffff;
+    border: 1px solid #e8dafa;
+    border-radius: 22px;
+
+    box-shadow:
+        0 22px 55px rgba(39, 24, 85, 0.20);
+
+    color: #181337;
+    overflow: hidden;
+}
+
+
+/* Intestazione */
+
+
+.persone-filtri-testata {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 16px 22px 12px;
+    flex-shrink: 0;
+}
+
+
+.persone-filtri-testata h2 {
+    position: relative;
+    display: table;
+
+    margin: 0 0 5px;
+
+    color: #073943;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -.6px;
+}
+
+/* Lineette soltanto sul titolo Filtri */
+
+.persone-filtri-testata h2::before {
+    content: "";
+    position: absolute;
+
+    top: -5px;
+    right: -15px;
+
+    width: 5px;
+    height: 15px;
+
+    background: #ff6554;
+    border-radius: 5px;
+    transform: rotate(22deg);
+}
+
+.persone-filtri-testata h2::after {
+    content: "";
+    position: absolute;
+
+    top: 6px;
+    right: -32px;
+
+    width: 18px;
+    height: 5px;
+
+    background: #ff6554;
+    border-radius: 5px;
+    transform: rotate(-30deg);
+}
+
+.persone-filtri-testata p {
+    margin: 0;
+    color: #77718d;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.persone-filtri-chiudi {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+
+    background: #ffffff;
+    border: 1px solid #e8dafa;
+    border-radius: 50%;
+
+    color: #21183e;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.persone-filtri-chiudi:hover {
+    background: #f4edff;
+}
+
+/* Form */
+
+
+.persone-filtri-form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+
+    min-height: 0;
+    overflow-y: auto;
+
+    padding: 6px 22px 20px;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d9cdea transparent;
+}
+
+
+/* Etichette */
+
+.persone-filtro-sezione h3,
+.persone-filtro-etichetta,
+.persone-filtro-campo label,
+#etichetta-fascia-eta {
+    display: block;
+
+    margin: 0 0 7px;
+    color: #21183e;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.persone-filtro-riga-titolo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 13px;
+}
+
+.persone-filtro-riga-titolo strong {
+    color: #ff6554;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.persone-filtro-limiti {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 8px;
+    color: #657078;
+    font-size: 12px;
+}
+
+/* Città, occupazione, lingue */
+
+.persone-filtri-griglia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
+}
+
+.persone-filtro-campo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+}
+
+.persone-filtro-campo input,
+.persone-filtro-campo select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 39px;
+    box-sizing: border-box;
+
+    padding: 8px 11px;
+
+    background: #ffffff;
+    border: 1px solid #e3d8eb;
+    border-radius: 10px;
+
+    color:  #21183e;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.persone-filtro-campo input:focus,
+.persone-filtro-campo select:focus {
+    outline: 2px solid #7545f522;
+    border-color: #7545f5;
+}
+
+/* Checkbox */
+
+.persone-filtro-opzioni,
+.persone-filtro-interessi {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+.persone-filtro-opzione {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    min-height: 35px;
+    padding: 7px 11px;
+
+    background: #fff9fa;
+    border: 1px solid #eedfe8;
+    border-radius: 11px;
+
+    color: #30264d;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+
+.persone-filtro-opzione:hover {
+    background: #fff0f5;
+    border-color: #efb9d0;
+}
+
+.persone-filtro-opzione:has(input:checked) {
+    background: #ffe8f0;
+    border-color: #f47ba6;
+    color: #8b2854;
+}
+
+
+.persone-filtro-opzione input[type="checkbox"] {
+    margin: 0;
+    flex-shrink: 0;
+    accent-color: #ff3973;
+}
+
+.persone-filtro-interessi {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+/* Sezione interessi */
+
+
+.persone-filtri-form
+> .persone-filtro-sezione:has(.filtro-interessi-descrizione) {
+    padding: 17px 17px 18px;
+
+    background: #fff0f3;
+    border: 1px solid #f5dce7;
+    border-radius: 17px;
+}
+
+
+.filtro-interessi-descrizione {
+    margin: 0 0 12px;
+    color: #73647d;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+.persone-filtro-sezione h3.persone-filtri-titolo-interessi {
+    position: relative;
+    display: table;
+
+    margin: 0 0 20px;
+
+    color: #181337;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.4px;
+}
+
+.persone-filtro-sezione h3.persone-filtri-titolo-interessi::after {
+    content: "";
+    position: absolute;
+
+    left: 0;
+    bottom: -7px;
+
+    width: 55px;
+    height: 4px;
+
+    background: #ff5470;
+    border-radius: 3px;
+}
+
+/* Azioni finali */
+
+.persone-filtri-azioni {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding-top: 14px;
+    border-top: 1px solid #eadfec;
+}
+
+.persone-filtri-azzera,
+.persone-filtri-applica,
+.persone-azzera-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 9px 17px;
+    border-radius: 25px;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.persone-filtri-azzera,
+.persone-azzera-link {
+    background: #ffffff;
+    border: 1.5px solid #7545f5;
+    color: #542cce;
+}
+
+.persone-filtri-azzera:hover,
+.persone-azzera-link:hover {
+    background: #f3edff;
+}
+
+.persone-filtri-applica {
+    background: linear-gradient(110deg, #ff197a, #ff5952);
+    border: 1px solid transparent;
+    color: #ffffff;
+    box-shadow: 0 5px 12px rgba(255, 42, 108, 0.17);
+}
+
+.persone-filtri-applica:hover {
+    background: linear-gradient(110deg, #ed126e, #f34849);
+}
+
+
+/* Responsive */
+
+@media (max-width: 650px) {
+    .persone-filtri-popup {
+        max-height: 92vh;
+    }
+
+    .persone-filtri-griglia {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 420px) {
+    .persone-filtri-overlay {
+        padding: 10px;
+    }
+
+    .persone-filtri-testata {
+        padding: 15px 16px 11px;
+        align-items: center;
+    }
+
+    .persone-filtri-form {
+        padding: 6px 16px 17px;
+    }
+}
+
+
+/* ==========================================
+   FILTRI PERSONE - CAMPI MULTIPLI
+========================================== */
+
+.persone-filtro-etichetta {
+    display: block;
+    margin-bottom: 9px;
+
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #073943;
+}
+.persone-filtro-gruppo-multiplo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    max-height: 170px;
+    overflow-y: auto;
+
+    padding-right: 4px;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d0c5be transparent;
+}
+
+.persone-filtro-gruppo-multiplo .persone-filtro-opzione {
+    min-height: 34px;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.persone-filtro-gruppo-multiplo .persone-filtro-opzione span {
+    line-height: 1.3;
+}
+
+
+/* ==========================================
+   CORREZIONE CHECKBOX FILTRI PERSONE
+========================================== */
+
+/* Checkbox dimensioni corrette */
+
+.persone-filtri-popup
+.persone-filtro-gruppo-multiplo
+input[type="checkbox"] {
+
+    appearance: auto;
+
+    display: inline-block;
+
+    width: 14px;
+    height: 14px;
+
+    min-width: 14px;
+    min-height: 14px;
+
+    max-width: 14px;
+    max-height: 14px;
+
+    padding: 0;
+    margin: 0;
+
+    flex: 0 0 14px;
+
+    accent-color: #fa5943;
+
+    vertical-align: middle;
+}
+
+/* Etichetta con checkbox a sinistra */
+
+.persone-filtri-popup
+.persone-filtro-gruppo-multiplo
+.persone-filtro-opzione {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 9px;
+
+    width: 100%;
+    min-height: 34px;
+
+    padding: 8px 11px;
+
+    border: 1px solid #ebe2dc;
+    border-radius: 19px;
+
+    background: #faf8f6;
+
+    box-sizing: border-box;
+}
+
+/* Testo accanto alla checkbox */
+
+.persone-filtri-popup
+.persone-filtro-gruppo-multiplo
+.persone-filtro-opzione span {
+
+    display: inline;
+    flex: 1;
+
+    font-size: 11px;
+    line-height: 1.4;
+
+    color: #63554d;
+}
+
+/* Opzione selezionata */
+
+.persone-filtri-popup
+.persone-filtro-gruppo-multiplo
+.persone-filtro-opzione:has(input:checked) {
+
+    background: #fff0e9;
+    border-color: #fa5943;
+}
+
+
+/* ==========================================
+   FILTRI PERSONE - MULTISELECT RICERCABILE
+========================================== */
+
+/* CONTENITORE DEL MENU */
+
+.persone-filtri-popup .persone-multiselect {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+/* CAMPO CLICCABILE */
+
+.persone-filtri-popup .persone-multiselect-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    width: 100%;
+    min-width: 0;
+    height: 39px;
+    box-sizing: border-box;
+
+    padding: 8px 11px;
+
+    background: #ffffff;
+    border: 1px solid #e3d8eb;
+    border-radius: 10px;
+
+    color: #21183e;
+    font-family: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+    list-style: none;
+}
+
+.persone-multiselect-trigger::-webkit-details-marker {
+    display: none;
+}
+
+.persone-multiselect-trigger::marker {
+    content: "";
+}
+
+.persone-filtri-popup
+.persone-multiselect[open]
+.persone-multiselect-trigger {
+    border-color: #7545f5;
+    border-radius: 9px 9px 0 0;
+}
+
+.persone-multiselect-testo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.persone-multiselect-freccia {
+    flex-shrink: 0;
+    color: #806c62;
+    font-size: 13px;
+}
+
+/* PANNELLO DEL MENU APERTO */
+
+.persone-filtri-popup .persone-multiselect-menu {
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+    padding: 9px;
+
+    background: #ffffff;
+    border: 1px solid #e8ddd6;
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+
+    box-shadow: 0 5px 12px rgba(40, 30, 20, 0.06);
+}
+
+/* CAMPO RICERCA */
+
+.persone-filtri-popup
+.persone-multiselect
+input.persone-multiselect-ricerca {
+    display: block;
+
+    width: 100%;
+    height: 33px;
+    min-height: 33px;
+    padding: 7px 9px;
+
+    background: #ffffff;
+    border: 1px solid #e8ddd6;
+    border-radius: 7px;
+
+    font-size: 11px;
+    color: #38312e;
+    box-sizing: border-box;
+}
+
+.persone-filtri-popup
+.persone-multiselect
+input.persone-multiselect-ricerca:focus {
+    outline: 2px solid #fa594322;
+    border-color: #fa5943;
+}
+
+/* LISTA SCORREVOLE */
+
+.persone-filtri-popup .persone-multiselect-opzioni {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    max-height: 160px;
+    overflow-y: auto;
+
+    margin-top: 8px;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d0c5be transparent;
+}
+
+/* OPZIONI */
+
+.persone-filtri-popup
+.persone-multiselect-opzioni
+.persone-filtro-opzione {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+
+    width: 100%;
+    min-height: 32px;
+    padding: 7px 9px;
+
+    border: 1px solid #ebe2dc;
+    border-radius: 9px;
+
+    background: #faf8f6;
+    box-sizing: border-box;
+
+    cursor: pointer;
+}
+
+.persone-filtri-popup
+.persone-multiselect-opzioni
+.persone-filtro-opzione[hidden] {
+    display: none;
+}
+
+/* CHECKBOX PICCOLE */
+
+.persone-filtri-popup
+.persone-multiselect-opzioni
+input[type="checkbox"] {
+    appearance: auto;
+
+    display: inline-block;
+
+    width: 14px;
+    height: 14px;
+
+    min-width: 14px;
+    min-height: 14px;
+
+    max-width: 14px;
+    max-height: 14px;
+
+    margin: 0;
+    padding: 0;
+
+    flex: 0 0 14px;
+    accent-color: #fa5943;
+}
+
+/* TESTI DELLE OPZIONI */
+
+.persone-filtri-popup
+.persone-multiselect-opzioni
+.persone-filtro-opzione span {
+    flex: 1;
+    min-width: 0;
+
+    color: #63554d;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+/* SELEZIONE ATTIVA */
+
+.persone-filtri-popup
+.persone-multiselect-opzioni
+.persone-filtro-opzione:has(input:checked) {
+    background: #fff0e9;
+    border-color: #fa5943;
+}
+
+/* RICERCA SENZA RISULTATI */
+
+.persone-multiselect-vuoto {
+    margin: 9px 0 2px;
+
+    color: #90796e;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   PERSONE - COLLEGAMENTO DETTAGLIO PROFILO
+========================================== */
+
+.persone-link-dettaglio {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+
+    padding: 8px 12px;
+
+    background: #fff0e9;
+    border: 1px solid #f5e0d7;
+    border-radius: 20px;
+
+    color: #f65b45;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: background-color 0.15s;
+}
+
+.persone-link-dettaglio:hover {
+    background: #ffe5da;
+    color: #dc4935;
+}
+
+/* MESSAGGIO MATCH TEMPORANEO */
+
+.persone-match-avviso {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    margin-bottom: 15px;
+    padding: 16px 19px;
+
+    background: #ffffff;
+    border: 1px solid #f3c5b9;
+    border-radius: 17px;
+
+    color: #38312e;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.persone-match-avviso strong {
+    color: #fa5943;
+    font-size: 15px;
+}
+
+
+/* ==========================================
+   POPUP MATCH - FUORIRETE
+========================================== */
+
+/* ==========================================
+   POPUP MATCH - NUOVO DESIGN FUORIRETE
+========================================== */
+
+
+/* OVERLAY */
+
+.match-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(24, 19, 55, 0.45);
+    backdrop-filter: blur(6px);
+}
+
+.match-overlay[hidden] {
+    display: none;
+}
+
+body.match-aperto {
+    overflow: hidden;
+}
+
+
+/* FINESTRA */
+
+.match-popup {
+    position: relative;
+
+    width: 100%;
+    max-width: 410px;
+    padding: 34px 28px 28px;
+
+    background: #ffffff;
+    border: 1px solid #e5d8fa;
+    border-radius: 24px;
+
+    box-shadow:
+        0 22px 55px rgba(49, 30, 105, 0.22);
+
+    color: #181337;
+    text-align: center;
+}
+
+
+/* CHIUSURA */
+
+.match-chiudi {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 33px;
+    height: 33px;
+
+    background: #ffffff;
+    border: 1px solid #e5d8fa;
+    border-radius: 50%;
+
+    color: #181337;
+    font-family: inherit;
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.match-chiudi:hover {
+    background: #f5efff;
+    border-color: #c9b5fa;
+}
+
+.match-chiudi:focus-visible {
+    outline: 2px solid #7144ff;
+    outline-offset: 3px;
+}
+
+
+/* CUORE */
+
+.match-icona {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 69px;
+    height: 69px;
+
+    margin: 0 auto 18px;
+
+    background: #ffe4eb;
+    border-radius: 50%;
+
+    color: #ff3973;
+    font-size: 43px;
+    line-height: 1;
+}
+
+
+/* TRATTI DECORATIVI */
+
+.match-icona::before {
+    content: "";
+    position: absolute;
+
+    top: -5px;
+    right: -10px;
+
+    width: 4px;
+    height: 13px;
+
+    background: #ff5470;
+    border-radius: 5px;
+
+    transform: rotate(22deg);
+}
+
+.match-icona::after {
+    content: "";
+    position: absolute;
+
+    top: 7px;
+    right: -22px;
+
+    width: 15px;
+    height: 4px;
+
+    background: #ff5470;
+    border-radius: 5px;
+
+    transform: rotate(-30deg);
+}
+
+
+/* TITOLO */
+
+.match-popup h2 {
+    margin: 0 0 10px;
+
+    color: #181337;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+    line-height: 1.25;
+}
+
+
+/* DESCRIZIONE */
+
+.match-descrizione {
+    margin: 0 auto 25px;
+    max-width: 330px;
+
+    color: #625c83;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.65;
+}
+
+.match-descrizione strong {
+    color: #181337;
+    font-weight: 800;
+}
+
+
+/* AZIONI */
+
+.match-azioni {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.match-apri-chat,
+.match-continua {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 15px;
+
+    border-radius: 24px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.3;
+
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* APRI CHAT */
+
+.match-apri-chat,
+.match-apri-chat:visited {
+    background: linear-gradient(
+        110deg,
+        #ff197a,
+        #ff5952
+    );
+
+    border: 1px solid transparent;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 12px rgba(255, 42, 108, 0.20);
+}
+
+.match-apri-chat:hover {
+    background: linear-gradient(
+        110deg,
+        #ed126e,
+        #f34849
+    );
+
+    border-color: transparent;
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 15px rgba(255, 42, 108, 0.25);
+}
+
+
+/* VISUALIZZA PROFILO */
+
+.match-continua,
+.match-continua:visited {
+    background: #f5f1ff;
+    border: 1.5px solid #7144ff;
+
+    color: #542cce;
+}
+
+.match-continua:hover {
+    background: #ebe2ff;
+    border-color: #6035ef;
+
+    color: #4824ba;
+}
+
+.match-apri-chat:focus-visible,
+.match-continua:focus-visible {
+    outline: 2px solid #7144ff;
+    outline-offset: 3px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 520px) {
+
+    .match-overlay {
+        padding: 15px;
+    }
+
+    .match-popup {
+        padding: 33px 21px 23px;
+        border-radius: 21px;
+    }
+
+    .match-popup h2 {
+        font-size: 25px;
+    }
+
+    .match-descrizione {
+        font-size: 12px;
+    }
+
+    .match-apri-chat,
+    .match-continua {
+        min-height: 43px;
+    }
+
+}
+
+
+/* ==========================================
+   FILTRO ETA - BARRA UNICA CON DUE CURSORI
+========================================== */
+
+.persone-eta-doppio-slider {
+    position: relative;
+    width: 100%;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+}
+
+/* Traccia di sfondo */
+
+.persone-eta-traccia {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 5px;
+    background: #eadfeb;
+    border-radius: 10px;
+}
+
+/* Intervallo selezionato */
+
+.persone-eta-intervallo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 5px;
+    background: linear-gradient(90deg, #ff3973, #ff5952);
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+/* Due range sovrapposti */
+
+.persone-eta-doppio-slider input[type="range"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 26px;
+    margin: 0;
+    padding: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: transparent;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+/* Cursori Chrome, Edge e Safari */
+
+.persone-eta-doppio-slider
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 17px;
+    height: 17px;
+
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+
+    background: #ff3973;
+    box-shadow: 0 1px 5px #00000020;
+
+    pointer-events: auto;
+    cursor: grab;
+}
+
+.persone-eta-doppio-slider
+input[type="range"]::-webkit-slider-thumb:active {
+    cursor: grabbing;
+}
+
+/* Cursori Firefox */
+
+.persone-eta-doppio-slider
+input[type="range"]::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
+
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+
+    background: #ff3973;
+    box-shadow: 0 1px 5px #00000020;
+
+    pointer-events: auto;
+    cursor: grab;
+}
+
+/* Focus da tastiera */
+
+.persone-eta-doppio-slider
+input[type="range"]:focus-visible {
+    outline: none;
+}
+
+.persone-eta-doppio-slider
+input[type="range"]:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid #7545f5;
+    outline-offset: 3px;
+}
+
+.persone-eta-doppio-slider
+input[type="range"]:focus-visible::-moz-range-thumb {
+    outline: 2px solid #7545f5;
+    outline-offset: 3px;
+}
+
+/* Testo della fascia */
+
+.persone-filtro-riga-titolo
+#etichetta-fascia-eta {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.persone-eta-valori {
+    color:  #ff3973;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+

@@ -1,11 +1,13 @@
 
-{% extends 'gestione/base_autenticata.html' %}
+{% extends 'base_autenticata.html' %}
+{% load static %}
 
 {% block title %}
     Elimina account | FuoriRete
 {% endblock %}
 
 {% block area_content %}
+<link rel="stylesheet" href="{% static 'css/elimina_account.css' %}?v=21">
 
 <div class="elimina-account-pagina">
 

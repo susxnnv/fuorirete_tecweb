@@ -1,0 +1,1119 @@
+/* ==========================================
+   DETTAGLIO PERSONA
+========================================== */
+
+/* SFONDO DETTAGLIO PERSONA */
+
+body:has(.anteprima-pagina) {
+    background-color: #f1edff;
+
+    background-image:
+        radial-gradient(
+            ellipse 65% 75% at 100% 24%,
+            rgba(115, 225, 237, 0.52),
+            transparent 80%
+        ),
+        radial-gradient(
+            ellipse 65% 75% at 0% 95%,
+            rgba(255, 156, 204, 0.42),
+            transparent 80%
+        ),
+        linear-gradient(
+            115deg,
+            #f0e9ff 0%,
+            #f0edff 48%,
+            #e1f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/* CONTENITORE */
+
+.area-contenuto:has(.anteprima-pagina) {
+    max-width: 980px;
+    padding: 26px 24px 60px;
+}
+
+.anteprima-pagina {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+
+    color: #181337;
+}
+
+
+/* NAVIGAZIONE */
+
+.anteprima-intestazione {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    min-height: 0;
+    margin: 0 0 3px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.anteprima-intestazione > div {
+    display: none;
+}
+
+.anteprima-indietro {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 0;
+    min-height: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    color: #ff506b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.anteprima-indietro:hover {
+    background: transparent;
+    border: none;
+    color: #e52c62;
+    text-decoration: none;
+}
+
+.anteprima-indietro:focus-visible {
+    outline: 2px solid #7545f5;
+    outline-offset: 4px;
+    border-radius: 3px;
+}
+
+
+/* CARD */
+
+.anteprima-banner,
+.anteprima-riquadro {
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #e5dbf7;
+    border-radius: 19px;
+
+    box-shadow:
+        0 9px 22px rgba(88, 62, 158, 0.12);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.anteprima-banner:hover,
+.anteprima-riquadro:hover {
+    border-color: #e9c5e2;
+
+    box-shadow:
+        0 10px 25px rgba(88, 62, 158, 0.13);
+}
+
+
+/* BANNER PERSONALE */
+
+.anteprima-banner {
+    padding: 20px 23px;
+}
+
+.anteprima-identita {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.anteprima-foto {
+    width: 115px;
+    height: 115px;
+    flex-shrink: 0;
+
+    object-fit: cover;
+    border-radius: 13px;
+}
+
+.anteprima-dati {
+    min-width: 0;
+}
+
+.anteprima-dati h2 {
+    position: relative;
+    display: table;
+
+    margin: 0 0 9px;
+
+    color: #181337;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+}
+
+
+/* TRATTI DECORATIVI */
+
+.anteprima-dati h2::before {
+    content: "";
+    position: absolute;
+
+    top: -6px;
+    right: -16px;
+
+    width: 4px;
+    height: 13px;
+
+    background: #ff5470;
+    border-radius: 5px;
+    transform: rotate(22deg);
+}
+
+.anteprima-dati h2::after {
+    content: "";
+    position: absolute;
+
+    top: 5px;
+    right: -30px;
+
+    width: 14px;
+    height: 4px;
+
+    background: #ff5470;
+    border-radius: 5px;
+    transform: rotate(-30deg);
+}
+
+
+/* META */
+
+.anteprima-meta {
+    margin: 0 0 12px;
+
+    color: #625c83;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+
+/* COSA CERCA */
+
+.anteprima-cerca {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+}
+
+.anteprima-cerca-label {
+    color: #211b48;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* COSA CERCA - COLORI PIENI */
+
+/* COSA CERCA */
+
+.anteprima-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 8px 13px;
+
+    background: #ffe2e5;
+    color: #b63e56;
+
+    border-radius: 22px;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.anteprima-cerca .anteprima-tag:nth-of-type(even) {
+    background: #f8d6de;
+    color: #a63353;
+}
+
+
+/* LAYOUT DUE COLONNE */
+
+.anteprima-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.85fr)
+        minmax(230px, 0.85fr);
+
+    gap: 15px;
+    align-items: start;
+}
+
+.anteprima-colonna-principale,
+.anteprima-colonna-laterale {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 0;
+}
+
+.anteprima-riquadro {
+    padding: 23px 24px;
+}
+
+
+/* TITOLI DELLE SEZIONI */
+
+.anteprima-riquadro h2 {
+    position: relative;
+    display: table;
+
+    margin: 0 0 22px;
+
+    color: #181337;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.3;
+}
+
+
+/* SOTTOLINEATURE CORALLO */
+
+.anteprima-riquadro h2::after {
+    content: "";
+    position: absolute;
+
+    left: 0;
+    bottom: -6px;
+
+    width: 42px;
+    height: 3px;
+
+    background: #ff5470;
+    border-radius: 3px;
+}
+
+
+/* DESCRIZIONE */
+
+.anteprima-descrizione {
+    margin: 0;
+
+    color: #292447;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.75;
+
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.anteprima-testo-vuoto {
+    margin: 0;
+
+    color: #77718d;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* INTERESSI */
+
+/* INTERESSI - COLORI PIENI */
+
+.anteprima-interessi .anteprima-tag {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+    min-height: 38px;
+    padding: 9px 12px;
+
+    background: #eadcf5;
+    color: #493365;
+
+    border-radius: 22px;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+/* AZZURRO */
+.anteprima-interessi .anteprima-tag:nth-child(5n + 2) {
+    background: #d9eef2;
+    color: #315b64;
+}
+
+/* VERDE SALVIA */
+.anteprima-interessi .anteprima-tag:nth-child(5n + 3) {
+    background: #deebdd;
+    color: #405c45;
+}
+
+/* ROSA PESCA */
+.anteprima-interessi .anteprima-tag:nth-child(5n + 4) {
+    background: #ffe0e2;
+    color: #ad4058;
+}
+
+/* ROSA ANTICO */
+.anteprima-interessi .anteprima-tag:nth-child(5n + 5) {
+    background: #f3d8e4;
+    color: #914460;
+}
+
+/* INFORMAZIONI LATERALI */
+
+.anteprima-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.anteprima-info-riga {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-height: 47px;
+    padding: 9px 0;
+
+    border-bottom: 1px solid #e9e3f1;
+
+    color: #211b48;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.anteprima-info-riga:last-child {
+    border-bottom: none;
+}
+
+.anteprima-info-icona {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 23px;
+    flex-shrink: 0;
+
+    color: #7545f5;
+    font-size: 18px;
+}
+
+.anteprima-interessi {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 760px) {
+
+    .area-contenuto:has(.anteprima-pagina) {
+        padding: 22px 15px 50px;
+    }
+
+    .anteprima-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .anteprima-foto {
+        width: 105px;
+        height: 105px;
+    }
+
+}
+
+@media (max-width: 520px) {
+
+    .anteprima-identita {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .anteprima-dati h2 {
+        font-size: 24px;
+    }
+
+    .anteprima-interessi {
+        grid-template-columns: 1fr;
+    }
+
+    .anteprima-banner,
+    .anteprima-riquadro {
+        padding: 17px;
+    }
+
+}
+
+
+/* Collegamento anteprima */
+
+.profilo-anteprima-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 15px;
+    border: 1px solid #ded2cb;
+    border-radius: 25px;
+
+    background: #fffdfc;
+    color: #073943;
+
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.profilo-anteprima-link:hover {
+    border-color: #007d83;
+    color: #007d83;
+}
+
+/* Azioni disponibili per i match */
+
+.anteprima-azioni-extra {
+    padding: 0;
+}
+
+.anteprima-azioni-extra .dettaglio-azioni-match {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+}
+
+.anteprima-azioni-extra .dettaglio-apri-chat,
+.anteprima-azioni-extra .dettaglio-annulla-match {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 45px;
+    margin: 0;
+
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.anteprima-azioni-extra .dettaglio-apri-chat {
+    background: #ff6554;
+    color: #ffffff;
+    border-color: #ff6554;
+}
+
+.anteprima-azioni-extra .dettaglio-annulla-match {
+    background: #fffdfc;
+    color: #073943;
+    border-color: #007d83;
+}
+
+
+/* DETTAGLIO PERSONA - APRI CHAT */
+
+.dettaglio-apri-chat {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 12px;
+    padding: 10px 16px;
+
+    background: #fa5943;
+    border: 1px solid #fa5943;
+    border-radius: 11px;
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.dettaglio-apri-chat:hover {
+    background: #e84b36;
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   MATCHCHAT - MATCH ORIZZONTALI
+========================================== */
+
+
+/* ==========================================
+   DETTAGLIO PERSONA - ANNULLA MATCH
+========================================== */
+
+.dettaglio-azioni-match {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+    margin-top: 14px;
+}
+
+.dettaglio-azioni-match .dettaglio-apri-chat {
+    margin-top: 0;
+}
+
+.dettaglio-annulla-match {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 39px;
+    padding: 10px 14px;
+
+    background: #ffffff;
+    border: 1px solid #e9b8aa;
+    border-radius: 11px;
+
+    color: #c4513e;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.dettaglio-annulla-match:hover {
+    background: #fff0e9;
+    border-color: #fa5943;
+}
+
+
+/* Pulsante Annulla Match nel banner del dettaglio persona */
+
+.anteprima-dati .dettaglio-azioni-match {
+    margin-top: 15px;
+}
+
+.anteprima-dati .dettaglio-annulla-match {
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.anteprima-dati .dettaglio-annulla-match:focus-visible {
+    outline: 2px solid #fa5943;
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .anteprima-dati .dettaglio-annulla-match {
+        transition: none;
+    }
+}
+
+
+/* ==========================================
+   POPUP ANNULLA MATCH - STILE FUORIRETE
+========================================== */
+
+/* SFONDO OSCURATO */
+
+.annulla-match-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(24, 19, 55, 0.48);
+    backdrop-filter: blur(4px);
+}
+
+.annulla-match-overlay[hidden] {
+    display: none;
+}
+
+body.annulla-match-aperto {
+    overflow: hidden;
+}
+
+
+/* FINESTRA CENTRALE */
+
+.annulla-match-popup {
+    position: relative;
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: 575px;
+    padding: 40px 38px;
+
+    background: #ffffff;
+    border: 1px solid #e5dbf7;
+    border-radius: 27px;
+
+    box-shadow: 0 18px 50px rgba(81, 59, 151, 0.20);
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+    text-align: center;
+}
+
+
+/* PULSANTE CHIUSURA X */
+
+.annulla-match-chiudi {
+    position: absolute;
+    top: 17px;
+    right: 19px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+
+    color: #8176a1;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.annulla-match-chiudi:hover {
+    background: #f2edff;
+    color: #7144ff;
+}
+
+
+/* ICONA CENTRALE */
+
+.annulla-match-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 62px;
+    height: 62px;
+
+    margin: 0 auto 23px;
+
+    background: #f1eaff;
+    border-radius: 50%;
+
+    color: #7144ff;
+    font-size: 33px;
+    font-weight: 700;
+}
+
+
+/* TITOLO */
+
+.annulla-match-popup h2 {
+    margin: 0 0 15px;
+
+    color: #181337;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    line-height: 1.3;
+}
+
+
+/* DESCRIZIONE */
+
+.annulla-match-descrizione {
+    max-width: 460px;
+    margin: 0 auto 30px;
+
+    color: #625c83;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.8;
+}
+
+.annulla-match-descrizione strong {
+    color: #181337;
+    font-weight: 800;
+}
+
+
+/* PULSANTI AFFIANCATI */
+
+.annulla-match-azioni {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 15px;
+
+    width: 100%;
+}
+
+.annulla-match-form {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+
+/* STILE CONDIVISO */
+
+.annulla-match-mantieni,
+.annulla-match-conferma {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    flex: 1;
+
+    width: 100%;
+    min-height: 55px;
+    padding: 12px 15px;
+
+    border-radius: 16px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.3;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* MANTIENI MATCH */
+
+.annulla-match-mantieni {
+    background: #ffffff;
+    border: 1px solid #d8c5fa;
+    color: #7144ff;
+}
+
+.annulla-match-mantieni:hover {
+    background: #f2edff;
+    border-color: #7144ff;
+}
+
+
+/* SI, ANNULLA MATCH */
+
+.annulla-match-conferma {
+    background: linear-gradient(110deg, #ff197a, #ff5952);
+    border: 1px solid transparent;
+    color: #ffffff;
+
+    box-shadow: 0 6px 16px rgba(255, 42, 108, 0.17);
+}
+
+.annulla-match-conferma:hover {
+    background: linear-gradient(110deg, #ed126e, #f34849);
+    transform: translateY(-2px);
+    box-shadow: 0 9px 20px rgba(255, 42, 108, 0.24);
+}
+
+
+/* ACCESSIBILITA */
+
+.annulla-match-popup button:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 520px) {
+
+    .annulla-match-popup {
+        max-width: 100%;
+        padding: 34px 20px 28px;
+        border-radius: 22px;
+    }
+
+    .annulla-match-popup h2 {
+        font-size: 21px;
+    }
+
+    .annulla-match-descrizione {
+        font-size: 12px;
+    }
+
+    .annulla-match-azioni {
+        gap: 10px;
+    }
+
+    .annulla-match-mantieni,
+    .annulla-match-conferma {
+        min-height: 49px;
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .annulla-match-mantieni,
+    .annulla-match-conferma {
+        transition: none;
+    }
+
+    .annulla-match-conferma:hover {
+        transform: none;
+    }
+}
+
+
+
+/* ==========================================
+   DETTAGLIO PERSONA - CARD ANNULLA MATCH
+========================================== */
+
+.dettaglio-annulla-match-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+
+    width: 100%;
+    min-height: 95px;
+    padding: 20px 27px;
+
+    background: linear-gradient(
+        110deg,
+        #ff3682,
+        #ff5952
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+
+    color: #ffffff;
+    font-family: "Manrope", Arial, sans-serif;
+    text-align: left;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 19px rgba(255, 55, 110, 0.17);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+/* Icona */
+
+.dettaglio-annulla-match-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+
+    color: #ffffff;
+}
+
+.dettaglio-annulla-match-icona svg {
+    display: block;
+    width: 38px;
+    height: 38px;
+}
+
+/* Testi */
+
+.dettaglio-annulla-match-testo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.dettaglio-annulla-match-testo strong {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.dettaglio-annulla-match-testo > span {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Hover */
+
+.dettaglio-annulla-match-card:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.04);
+    box-shadow: 0 11px 23px rgba(255, 55, 110, 0.23);
+}
+
+/* Focus tastiera */
+
+.dettaglio-annulla-match-card:focus-visible {
+    outline: 3px solid #7545f5;
+    outline-offset: 3px;
+}
+
+/* Responsive */
+
+@media (max-width: 520px) {
+    .dettaglio-annulla-match-card {
+        min-height: 86px;
+        padding: 17px 20px;
+        gap: 15px;
+    }
+
+    .dettaglio-annulla-match-icona {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+    }
+
+    .dettaglio-annulla-match-icona svg {
+        width: 33px;
+        height: 33px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dettaglio-annulla-match-card {
+        transition: none;
+    }
+
+    .dettaglio-annulla-match-card:hover {
+        transform: none;
+    }
+}
+
+
+/* ==========================================
+   DETTAGLIO PERSONA - CARD ANNULLA MATCH
+   CORREZIONE STILE
+========================================== */
+
+.anteprima-colonna-laterale .dettaglio-annulla-match-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 90px;
+    padding: 18px 22px;
+
+    background: linear-gradient(110deg, #ff3682, #ff5952);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+
+    color: #ffffff;
+    font-family: "Manrope", Arial, sans-serif;
+    text-align: left;
+    cursor: pointer;
+
+    box-shadow: 0 8px 19px rgba(255, 55, 110, 0.17);
+}
+
+.anteprima-colonna-laterale .dettaglio-annulla-match-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 43px;
+
+    width: 43px;
+    height: 43px;
+}
+
+.anteprima-colonna-laterale .dettaglio-annulla-match-icona svg {
+    display: block;
+    width: 38px;
+    height: 38px;
+    max-width: 38px;
+    max-height: 38px;
+
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 1.8;
+}
+
+.anteprima-colonna-laterale .dettaglio-annulla-match-testo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 0;
+}
+
+.anteprima-colonna-laterale .dettaglio-annulla-match-testo strong {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.anteprima-colonna-laterale .dettaglio-annulla-match-testo > span {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.anteprima-colonna-laterale .dettaglio-annulla-match-card:hover {
+    filter: brightness(1.04);
+    box-shadow: 0 11px 23px rgba(255, 55, 110, 0.23);
+}
+
+.anteprima-colonna-laterale .dettaglio-annulla-match-card:focus-visible {
+    outline: 3px solid #7545f5;
+    outline-offset: 3px;
+}
+
+

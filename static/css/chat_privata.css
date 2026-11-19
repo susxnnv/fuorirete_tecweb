@@ -1,0 +1,694 @@
+/* ==========================================
+   FUORIRETE - CHAT PRIVATA
+   DESIGN AGGIORNATO
+========================================== */
+
+/* ==========================================
+   SFONDO
+========================================== */
+
+body:has(.chat-pagina) {
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, 0.50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, 0.37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* ==========================================
+   CONTENITORE GENERALE
+========================================== */
+
+.area-contenuto:has(.chat-pagina) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+}
+
+.chat-pagina {
+    box-sizing: border-box;
+
+    width: calc(100% - 40px);
+    max-width: 900px;
+
+    margin: 0 auto;
+    padding: 28px 0 45px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+}
+
+.chat-pagina *,
+.chat-pagina *::before,
+.chat-pagina *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   COLLEGAMENTO INDIETRO
+========================================== */
+
+.chat-navigazione {
+    margin: 0 0 19px;
+    padding: 0;
+}
+
+.chat-navigazione a,
+.chat-navigazione a:visited {
+    display: inline-block;
+
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+
+    color: #ff506b;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.chat-navigazione a:hover {
+    color: #e52c62;
+    text-decoration: none;
+}
+
+/* ==========================================
+   CARD PRINCIPALE CHAT
+========================================== */
+
+.chat-contenitore {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: min(70vh, 620px);
+    min-height: 400px;
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #e5dbf7;
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 24px rgba(81, 59, 151, 0.09);
+}
+
+/* ==========================================
+   INTESTAZIONE
+========================================== */
+
+.chat-intestazione {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 12px;
+    flex-shrink: 0;
+
+    min-height: 70px;
+    padding: 12px 20px;
+
+    background: #ffffff;
+    border-bottom: 1px solid #ece4f7;
+}
+
+/* PROFILO CLICCABILE */
+
+.chat-profilo-link,
+.chat-profilo-link:visited {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 0;
+
+    color: #181337;
+    text-decoration: none;
+}
+
+/* FOTO */
+
+.chat-foto,
+.chat-foto-placeholder {
+    width: 45px;
+    height: 45px;
+    flex: 0 0 45px;
+
+    border-radius: 50%;
+}
+
+.chat-foto {
+    display: block;
+    object-fit: cover;
+}
+
+.chat-foto-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #efe6ff;
+    color: #7144ff;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+/* NOME PERSONA */
+
+.chat-profilo-dati {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+}
+
+.chat-profilo-dati strong {
+    display: block;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #181337;
+    font-size: 15px;
+    font-weight: 800;
+
+    transition: color 0.2s ease;
+}
+
+.chat-profilo-link:hover
+.chat-profilo-dati strong {
+    color: #7144ff;
+}
+
+/* ==========================================
+   AREA MESSAGGI
+========================================== */
+
+.chat-messaggi {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+
+    flex: 1;
+    min-height: 0;
+
+    padding: 21px 24px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #fcfaff;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d8c5ee transparent;
+}
+
+/* ==========================================
+   SEPARATORI DATA
+========================================== */
+
+.chat-separatore-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 9px 0 6px;
+}
+
+.chat-separatore-data span {
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    background: #f0e9f8;
+    border-radius: 20px;
+
+    color: #77718d;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* ==========================================
+   MESSAGGI
+========================================== */
+
+.chat-riga-messaggio {
+    display: flex;
+    width: 100%;
+}
+
+/* MESSAGGI PROPRI A DESTRA */
+
+.chat-riga-mia {
+    justify-content: flex-end;
+}
+
+/* MESSAGGI RICEVUTI A SINISTRA */
+
+.chat-riga-altra {
+    justify-content: flex-start;
+}
+
+/* BOLLA GENERALE */
+
+.chat-bolla {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    width: fit-content;
+    max-width: 72%;
+
+    padding: 10px 14px 8px;
+
+    border-radius: 16px;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* MESSAGGI RICEVUTI */
+
+.chat-riga-altra .chat-bolla {
+    background: #ffffff;
+    border: 1px solid #e5dbf7;
+    border-bottom-left-radius: 5px;
+
+    color: #181337;
+
+    box-shadow:
+        0 2px 7px rgba(81, 59, 151, 0.04);
+}
+
+/* MESSAGGI INVIATI */
+
+.chat-riga-mia .chat-bolla {
+    background: linear-gradient(
+        110deg,
+        #ff197a,
+        #ff5952
+    );
+
+    border: 1px solid transparent;
+    border-bottom-right-radius: 5px;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 3px 9px rgba(255, 42, 108, 0.13);
+}
+
+/* TESTO */
+
+.chat-testo {
+    margin: 0;
+
+    color: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+    white-space: normal;
+}
+
+/* ORARIO */
+
+.chat-orario {
+    align-self: flex-end;
+
+    color: #89809e;
+    font-size: 9px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.chat-riga-altra .chat-orario {
+    color: #89809e;
+}
+
+.chat-riga-mia .chat-orario {
+    color: rgba(255, 255, 255, 0.86);
+}
+
+/* ==========================================
+   CONVERSAZIONE VUOTA
+========================================== */
+
+.chat-vuota {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
+    flex: 1;
+    min-height: 0;
+
+    padding: 30px 16px;
+
+    text-align: center;
+}
+
+/* CUORE DECORATIVO */
+
+.chat-vuota-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    background: #ffedf4;
+    border-radius: 50%;
+
+    color: #ff3973;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* TITOLO */
+
+.chat-vuota h2 {
+    margin: 0;
+
+    color: #181337;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    line-height: 1.4;
+}
+
+/* ==========================================
+   COMPOSITORE MESSAGGI
+========================================== */
+
+.chat-compositore {
+    flex-shrink: 0;
+
+    padding: 13px 18px 12px;
+
+    background: #ffffff;
+    border-top: 1px solid #ece4f7;
+}
+
+/* FORM */
+
+.chat-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+
+    width: 100%;
+    margin: 0;
+}
+
+/* ETICHETTA ACCESSIBILE */
+
+.chat-label {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+    padding: 0;
+
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* ==========================================
+   CAMPO DI SCRITTURA
+========================================== */
+
+.chat-pagina textarea.chat-input {
+    display: block;
+    flex: 1;
+
+    width: 100%;
+    min-width: 0;
+
+    height: 43px;
+    min-height: 43px;
+    max-height: 120px;
+
+    margin: 0;
+    padding: 11px 14px;
+
+    background: #faf7ff;
+    border: 1px solid #e5dbf7;
+    border-radius: 13px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+
+    outline: none;
+    resize: none;
+    overflow-y: hidden;
+
+    scrollbar-width: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* ELIMINA LE FRECCETTE E LA SCROLLBAR
+   VISIBILI NEL CAMPO TESTO */
+
+.chat-pagina textarea.chat-input::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* PLACEHOLDER */
+
+.chat-pagina textarea.chat-input::placeholder {
+    color: #9387a5;
+    opacity: 1;
+}
+
+/* FOCUS */
+
+.chat-pagina textarea.chat-input:focus {
+    background: #ffffff;
+    border-color: #7144ff;
+
+    box-shadow:
+        0 0 0 3px rgba(113, 68, 255, 0.10);
+}
+
+/* ==========================================
+   PULSANTE INVIO
+========================================== */
+
+.chat-pagina .chat-invia {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 43px;
+    height: 43px;
+    flex: 0 0 43px;
+
+    margin: 0;
+    padding: 0;
+
+    background: linear-gradient(
+        110deg,
+        #ff197a,
+        #ff5952
+    );
+
+    border: 1px solid transparent;
+    border-radius: 13px;
+
+    color: #ffffff;
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 11px rgba(255, 42, 108, 0.18);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.chat-pagina .chat-invia svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+.chat-pagina .chat-invia:hover {
+    background: linear-gradient(
+        110deg,
+        #ed126e,
+        #f34849
+    );
+
+    color: #ffffff;
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 14px rgba(255, 42, 108, 0.24);
+}
+
+/* ==========================================
+   LIMITE CARATTERI
+========================================== */
+
+.chat-limite {
+    display: block;
+
+    margin-top: 7px;
+    padding-left: 3px;
+
+    color: #9387a5;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+/* ==========================================
+   ERRORI
+========================================== */
+
+.chat-errore {
+    margin: 0 0 10px;
+    padding: 10px 12px;
+
+    background: #fff0f3;
+    border: 1px solid #ffcbd5;
+    border-radius: 10px;
+
+    color: #ad2949;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* ==========================================
+   ACCESSIBILITÀ
+========================================== */
+
+.chat-pagina a:focus-visible,
+.chat-pagina button:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 650px) {
+
+    .area-contenuto:has(.chat-pagina) {
+        min-height: calc(100dvh - 64px);
+    }
+
+    .chat-pagina {
+        width: calc(100% - 26px);
+        padding: 22px 0 35px;
+    }
+
+    .chat-navigazione {
+        margin-bottom: 15px;
+    }
+
+    .chat-contenitore {
+        height: min(72dvh, 620px);
+        min-height: 380px;
+        border-radius: 18px;
+    }
+
+    .chat-intestazione {
+        min-height: 62px;
+        padding: 10px 14px;
+    }
+
+    .chat-foto,
+    .chat-foto-placeholder {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .chat-profilo-dati strong {
+        font-size: 14px;
+    }
+
+    .chat-messaggi {
+        padding: 15px 13px;
+        gap: 9px;
+    }
+
+    .chat-bolla {
+        max-width: 88%;
+    }
+
+    .chat-compositore {
+        padding: 11px 12px;
+    }
+
+    .chat-form {
+        gap: 8px;
+    }
+
+    .chat-pagina textarea.chat-input {
+        font-size: 12px;
+    }
+
+}
+
+/* ==========================================
+   RIDUZIONE ANIMAZIONI
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .chat-profilo-dati strong,
+    .chat-pagina textarea.chat-input,
+    .chat-pagina .chat-invia {
+        transition: none;
+    }
+
+    .chat-pagina .chat-invia:hover {
+        transform: none;
+    }
+}
+
+

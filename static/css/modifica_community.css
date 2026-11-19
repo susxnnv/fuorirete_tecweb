@@ -1,0 +1,44 @@
+/* ==========================================
+   COLLEGAMENTO MODIFICA INTERESSI
+========================================== */
+
+.modifica-interessi-collegamento {
+    margin-top: 22px;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e9dfd8;
+    border-radius: 16px;
+}
+
+.modifica-interessi-collegamento h2 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: #302823;
+}
+
+.modifica-interessi-collegamento p {
+    margin: 0 0 17px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #928077;
+}
+
+.modifica-interessi-pulsante,
+.modifica-interessi-pulsante:visited {
+    display: inline-block;
+    padding: 11px 17px;
+    background: #fa5943;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.modifica-interessi-pulsante:hover {
+    background: #e94b37;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+

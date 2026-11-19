@@ -1,0 +1,520 @@
+/* ==========================================
+   ELIMINA ACCOUNT - DESIGN FUORIRETE
+========================================== */
+
+/* SFONDO */
+
+body:has(.elimina-account-pagina) {
+    background-color: #f0eaff;
+
+    background-image:
+        radial-gradient(
+            ellipse 62% 75% at 100% 26%,
+            rgba(111, 221, 232, 0.50),
+            transparent 82%
+        ),
+        radial-gradient(
+            ellipse 60% 65% at 0% 95%,
+            rgba(255, 143, 199, 0.37),
+            transparent 83%
+        ),
+        linear-gradient(
+            120deg,
+            #f0eaff 0%,
+            #f2edff 48%,
+            #e3f6fc 100%
+        );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/* CONTENITORE AREA AUTENTICATA */
+
+.area-contenuto:has(.elimina-account-pagina) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+}
+
+
+/* PAGINA */
+
+.elimina-account-pagina {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 48px 24px 75px;
+
+    color: #181337;
+    font-family: "Manrope", Arial, sans-serif;
+}
+
+.elimina-account-pagina *,
+.elimina-account-pagina *::before,
+.elimina-account-pagina *::after {
+    box-sizing: border-box;
+}
+
+.elimina-account-contenuto {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+
+/* ==========================================
+   COLLEGAMENTO INDIETRO
+========================================== */
+
+.elimina-account-indietro {
+    display: inline-block;
+    margin: 0 0 25px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+
+    color: #ff506b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.elimina-account-indietro:hover {
+    color: #e52c62;
+    text-decoration: none;
+}
+
+
+/* ==========================================
+   INTESTAZIONE
+========================================== */
+
+.elimina-account-intestazione {
+    display: block;
+    margin: 0 0 27px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    text-align: left;
+}
+
+
+/* TITOLO */
+
+.elimina-account-titolo-pagina {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 18px;
+}
+
+.elimina-account-titolo-pagina h1 {
+    position: relative;
+    margin: 0;
+
+    color: #181337;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.9px;
+    line-height: 1.25;
+}
+
+
+/* SOTTOLINEATURA CORTA E DRITTA */
+
+.elimina-account-titolo-pagina h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+
+    width: 52px;
+    height: 4px;
+
+    background: #ff6055;
+    border-radius: 4px;
+}
+
+
+/* TRILLI CORALLO */
+
+.elimina-account-trilli {
+    position: absolute;
+    top: -10px;
+    right: -35px;
+
+    width: 32px;
+    height: 35px;
+
+    pointer-events: none;
+}
+
+.elimina-account-trilli span {
+    position: absolute;
+    display: block;
+
+    width: 4px;
+    height: 13px;
+
+    background: #ff6055;
+    border-radius: 10px;
+}
+
+.elimina-account-trilli span:nth-child(1) {
+    top: 0;
+    left: 7px;
+    transform: rotate(18deg);
+}
+
+.elimina-account-trilli span:nth-child(2) {
+    top: 10px;
+    left: 21px;
+    transform: rotate(48deg);
+}
+
+.elimina-account-trilli span:nth-child(3) {
+    top: 25px;
+    left: 25px;
+    height: 10px;
+    transform: rotate(70deg);
+}
+
+
+/* SOTTOTITOLO */
+
+.elimina-account-intestazione p {
+    margin: 0;
+
+    color: #625c83;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   CARD PRINCIPALE
+========================================== */
+
+.elimina-account-riquadro {
+    width: 100%;
+    padding: 32px 30px 28px;
+
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #e5dbf7;
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 30px rgba(81, 59, 151, 0.11);
+}
+
+
+/* ==========================================
+   AVVERTIMENTO
+========================================== */
+
+.elimina-account-titolo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+
+    margin: 0 0 25px;
+    text-align: center;
+}
+
+
+/* ICONA */
+
+.elimina-account-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+
+    margin: 0 0 17px;
+
+    background: #fff0f3;
+    border-radius: 50%;
+
+    color: #ff506b;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+
+/* TESTI */
+
+.elimina-account-titolo h2 {
+    margin: 0 0 10px;
+
+    color: #181337;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.35;
+}
+
+.elimina-account-titolo p {
+    margin: 0;
+
+    color: #625c83;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.65;
+}
+
+
+/* ==========================================
+   RIQUADRO INFORMATIVO
+========================================== */
+
+.elimina-account-avviso {
+    margin: 0 0 20px;
+    padding: 19px 21px;
+
+    background: #f8f5ff;
+    border: 1px solid #e5dbf7;
+    border-radius: 14px;
+}
+
+.elimina-account-avviso h3 {
+    margin: 0 0 12px;
+
+    color: #181337;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.elimina-account-avviso p {
+    margin: 0 0 10px;
+
+    color: #625c83;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.7;
+}
+
+.elimina-account-avviso p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ==========================================
+   ACCOUNT DA ELIMINARE
+========================================== */
+
+.elimina-account-identita {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 16px 0;
+
+    border-bottom: 1px solid #e9e1f5;
+}
+
+.elimina-account-label {
+    color: #77718d;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.elimina-account-identita strong {
+    color: #181337;
+    font-size: 13px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==========================================
+   MESSAGGI
+========================================== */
+
+.elimina-account-messaggio {
+    margin-top: 16px;
+    padding: 12px 15px;
+
+    background: #fff0f3;
+    border: 1px solid #ffcbd5;
+    border-radius: 11px;
+
+    color: #ad2949;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   PULSANTI FINALI
+========================================== */
+
+.elimina-account-azioni {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+
+/* STILE CONDIVISO */
+
+.elimina-account-annulla,
+.elimina-account-conferma {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+    padding: 11px 18px;
+
+    border-radius: 11px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* ANNULLA */
+
+.elimina-account-annulla {
+    background: #ffffff;
+    border: 1px solid #d8c5fa;
+    color: #7144ff;
+}
+
+.elimina-account-annulla:hover {
+    background: #f2edff;
+    border-color: #7144ff;
+    color: #7144ff;
+}
+
+
+/* ELIMINA DEFINITIVAMENTE */
+
+.elimina-account-conferma {
+    background: linear-gradient(
+        110deg,
+        #ff197a,
+        #ff5952
+    );
+
+    border: 1px solid transparent;
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 16px rgba(255, 42, 108, 0.17);
+}
+
+.elimina-account-conferma:hover {
+    background: linear-gradient(
+        110deg,
+        #ed126e,
+        #f34849
+    );
+
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+
+/* ACCESSIBILITÀ */
+
+.elimina-account-conferma:focus-visible,
+.elimina-account-annulla:focus-visible,
+.elimina-account-indietro:focus-visible {
+    outline: 3px solid #7144ff;
+    outline-offset: 3px;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .elimina-account-pagina {
+        padding: 30px 16px 55px;
+    }
+
+    .elimina-account-titolo-pagina h1 {
+        font-size: 28px;
+    }
+
+    .elimina-account-riquadro {
+        padding: 25px 20px;
+        border-radius: 19px;
+    }
+
+    .elimina-account-titolo h2 {
+        font-size: 18px;
+    }
+
+    .elimina-account-avviso {
+        padding: 17px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .elimina-account-identita {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .elimina-account-azioni {
+        flex-direction: column-reverse;
+    }
+
+    .elimina-account-annulla,
+    .elimina-account-conferma {
+        width: 100%;
+    }
+}
+
+
+/* RIDUZIONE ANIMAZIONI */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .elimina-account-conferma,
+    .elimina-account-annulla {
+        transition: none;
+    }
+
+    .elimina-account-conferma:hover {
+        transform: none;
+    }
+}
+

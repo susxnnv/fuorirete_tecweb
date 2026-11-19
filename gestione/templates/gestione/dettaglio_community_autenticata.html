@@ -1,11 +1,11 @@
 
-{% extends 'gestione/base_autenticata.html' %}
+{% extends 'base_autenticata.html' %}
 {% load static %}
 
 {% block title %}{{ community.titolo }} | FuoriRete{% endblock %}
 
 {% block area_content %}
-
+<link rel="stylesheet" href="{% static 'css/conferme_community.css' %}?v=21">
 <link rel="stylesheet" href="{% static 'css/dettaglio_community.css' %}?v=14">
 
 <div class="dettaglio-community-pagina">

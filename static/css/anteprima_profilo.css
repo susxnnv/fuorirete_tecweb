@@ -1,0 +1,134 @@
+/* ==========================================
+   ANTEPRIMA DEL PROPRIO PROFILO
+   INFORMAZIONI COMPATTE
+========================================== */
+
+/* Intestazione con ritorno e icona informativa */
+
+.anteprima-pagina.anteprima-propria .anteprima-intestazione {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+    position: relative;
+}
+
+.anteprima-propria .anteprima-aiuto {
+    position: relative;
+    margin-left: auto;
+}
+
+.anteprima-propria .anteprima-aiuto-pulsante {
+    list-style: none;
+    appearance: none;
+}
+
+.anteprima-propria .anteprima-aiuto-pulsante::-webkit-details-marker {
+    display: none;
+}
+
+.anteprima-propria .anteprima-aiuto-pulsante::marker {
+    content: "";
+}
+/* Contenitore informativo */
+
+.anteprima-propria .anteprima-aiuto {
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Pulsante informativo */
+
+.anteprima-propria .anteprima-aiuto-pulsante {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 29px;
+    height: 29px;
+
+    border: 1px solid #d8cbfa;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.9);
+    color: #7144ff;
+
+    cursor: pointer;
+    list-style: none;
+
+    transition:
+        background-color .2s ease,
+        border-color .2s ease;
+}
+
+.anteprima-propria .anteprima-aiuto-pulsante::-webkit-details-marker {
+    display: none;
+}
+
+.anteprima-propria .anteprima-aiuto-pulsante::marker {
+    content: "";
+}
+
+.anteprima-propria .anteprima-aiuto-pulsante svg {
+    width: 15px;
+    height: 15px;
+}
+
+.anteprima-propria .anteprima-aiuto-pulsante:hover,
+.anteprima-propria .anteprima-aiuto[open] .anteprima-aiuto-pulsante {
+    background: #f1eaff;
+    border-color: #bca4fc;
+}
+
+.anteprima-propria .anteprima-aiuto-pulsante:focus-visible {
+    outline: 2px solid #7144ff;
+    outline-offset: 3px;
+}
+
+/* Testo mostrato cliccando sull'icona */
+
+.anteprima-propria .anteprima-aiuto-testo {
+    position: absolute;
+    top: calc(100% + 9px);
+    right: 0;
+    z-index: 20;
+
+    box-sizing: border-box;
+    width: 245px;
+    max-width: calc(100vw - 35px);
+
+    padding: 12px 14px;
+
+    border: 1px solid #e5dbf7;
+    border-radius: 13px;
+
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(75,49,133,.14);
+
+    color: #49416e;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: left;
+}
+
+/* Le emoji seguono lo stile di Dettaglio persona */
+
+.anteprima-propria .anteprima-info-icona {
+    width: 23px;
+    font-size: 18px;
+}
+
+/* Responsive */
+
+@media (max-width: 520px) {
+
+    .anteprima-propria .anteprima-aiuto-testo {
+        width: 220px;
+    }
+
+}
+
+
+
