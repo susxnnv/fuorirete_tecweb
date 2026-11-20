@@ -1111,12 +1111,9 @@ class Command(BaseCommand):
                     f"Costo negativo: {dati['titolo']}"
                 )
 
-            if inizio < timezone.now():
+            if fine <= inizio:
                 raise CommandError(
-                    f"Evento già nel passato: "
-                    f"{dati['titolo']}. "
-                    "Aggiorna le date nel dataset "
-                    "prima di creare nuovi eventi."
+                    f"Date non valide: {dati['titolo']}"
                 )
 
             eventi_preparati.append({
@@ -1309,7 +1306,10 @@ class Command(BaseCommand):
                 )
 
                 try:
-                    nuovo_evento.full_clean()
+                    nuovo_evento.clean_fields()
+                    nuovo_evento.validate_unique()
+                    nuovo_evento.validate_constraints()
+
                 except ValidationError as errore:
                     raise CommandError(
                         f"Evento '{dati['titolo']}' "
