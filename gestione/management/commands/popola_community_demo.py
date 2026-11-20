@@ -1111,11 +1111,6 @@ class Command(BaseCommand):
                     f"Costo negativo: {dati['titolo']}"
                 )
 
-            if fine <= inizio:
-                raise CommandError(
-                    f"Date non valide: {dati['titolo']}"
-                )
-
             eventi_preparati.append({
                 **dati,
                 "inizio_dt": inizio,

@@ -11,6 +11,7 @@ import re
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.management import call_command
 from django.core.management.base import BaseCommand, CommandError
 from django.db import connections, transaction
 from django.db.models import Q
@@ -687,12 +688,23 @@ class Command(BaseCommand):
                         dati["cosa_portare"]
                     )
 
-                    # Gli eventi sono già esistenti.
-                    # Non viene applicata la regola
-                    # di creazione per eventi passati.
-                    obj.full_clean()
+                    # Ripristina anche gli eventi storici del dataset, mantenendo i controlli sui campi e sui vincoli.
+                    obj.clean_fields()
+                    obj.validate_unique()
+                    obj.validate_constraints()
                     obj.save()
 
+                # ---------------------------------
+                # RIPRISTINO RELAZIONI DEMO
+                # ---------------------------------
+
+                call_command(
+                    "popola_relazioni_demo",
+                    stdout=self.stdout,
+                    stderr=self.stderr,
+                )
+
+                
                 # ---------------------------------
                 # 12. VERIFICA FINALE
                 # ---------------------------------
@@ -709,13 +721,42 @@ class Command(BaseCommand):
                         "numero eventi inatteso."
                     )
 
-                for _, modello in interazioni:
+                # Verifica che lo scenario dimostrativo sia stato ricostruito correttamente.
 
-                    if modello.objects.exists():
-                        raise CommandError(
-                            "Controllo fallito: "
-                            "interazioni ancora presenti."
-                        )
+                if Like.objects.count() != 6:
+                    raise CommandError(
+                        "Controllo fallito: numero Like demo inatteso."
+                    )
+
+                if Dislike.objects.count() != 1:
+                    raise CommandError(
+                        "Controllo fallito: numero Dislike demo inatteso."
+                    )
+
+                if MessaggioPrivato.objects.count() != 5:
+                    raise CommandError(
+                        "Controllo fallito: messaggi privati demo mancanti."
+                    )
+
+                if MessaggioCommunity.objects.count() != 4:
+                    raise CommandError(
+                        "Controllo fallito: messaggi Community demo mancanti."
+                    )
+
+                if RichiestaCommunity.objects.count() != 2:
+                    raise CommandError(
+                        "Controllo fallito: richieste Community demo mancanti."
+                    )
+
+                if ValutazioneCommunity.objects.count() != 1:
+                    raise CommandError(
+                        "Controllo fallito: valutazione Community demo mancante."
+                    )
+
+                if Notifica.objects.count() != 8:
+                    raise CommandError(
+                        "Controllo fallito: notifiche demo mancanti."
+                    )
 
                 for dati in PERSONE:
 
@@ -771,7 +812,8 @@ class Command(BaseCommand):
         )
 
         self.stdout.write(
-            "Interazioni di test eliminate."
+            "Interazioni di test eliminate e "
+            "relazoini dimostrative ripristinate"
         )
 
         self.stdout.write(
