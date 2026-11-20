@@ -1,6 +1,9 @@
+# Permette di gestire le notifiche del profilo:
+# se ho notifiche non lette -> la navbar mostra campanella + pallino
+# se non ho notifiche non lette -> la navbar non mostra nulla
+
 
 from .models import Notifica
-
 
 def notifiche_non_lette(request):
 
@@ -16,8 +19,7 @@ def notifiche_non_lette(request):
             'navbar_notifiche_non_lette': 0
         }
 
-    # Contiamo le notifiche non lette
-    # dell'utente autenticato.
+    # Contiamo le notifiche non lette dell'utente autenticato.
     numero = Notifica.objects.filter(
         destinatario=request.user.profilo,
         letta=False

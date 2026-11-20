@@ -8,9 +8,11 @@ from django.conf import settings
 
 from .models import Profilo, Interesse, Community, Evento
 
+# ===================================
 # AUTENTICAZIONE / PROFILO / PERMESSI
+# ===================================
 
-# Form per la registrazione dello User
+# FORM PER LA REGISTRAZIONE DELL'UTENTE
 class RegistrazioneForm(UserCreationForm):
 
     # aggiungiamo il campo email perchè lo avevo previsto 
@@ -36,7 +38,7 @@ class RegistrazioneForm(UserCreationForm):
         return email
 
 # Utile per CreazioneProfiloForm
-# LETTURA DELLE CITTÀ ITALIANE --> validazione delle città tramite JSON
+# FUNZIONE DI SUPPORTO PER LETTURA DELLE CITTÀ ITALIANE --> validazione delle città tramite JSON
 @lru_cache(maxsize=1)
 def carica_citta():
     percorso = Path(settings.BASE_DIR) / 'gestione' / 'data' / 'citta_italiane.json'
@@ -49,7 +51,7 @@ def carica_citta():
     }
 
 
-# Form per la creazione del profilo
+# FORM PER LA CREAZIONE DEL PROFILO
 class CreazioneProfiloForm(forms.ModelForm):
 
     # abbiamo definito a mano 2 campi perchè sono scelti fra diversi valori
@@ -165,7 +167,7 @@ class CreazioneProfiloForm(forms.ModelForm):
         return scelte
 
 
-# Form per la selezione degli interessi
+# FORM PER LA SELEZIONE DEGLI INTERESSI
 class SelezioneInteressiForm(forms.Form):
 
     interessi = forms.ModelMultipleChoiceField(
@@ -211,6 +213,7 @@ class SelezioneInteressiForm(forms.Form):
 # CREAZIONE E MODIFICA COMMUNITY
 # ==========================================
 
+# FORM PER CREAZIONE E MODIFICA DI UNA COMMUNITY
 class CreazioneCommunityForm(forms.ModelForm):
 
     class Meta:
@@ -303,6 +306,7 @@ class CreazioneCommunityForm(forms.ModelForm):
 # FORM CREAZIONE E MODIFICA EVENTO
 # ==========================================
 
+# FORM PER CREAZIONE E MODIFICA DI UN EVENTO
 class EventoForm(forms.ModelForm):
 
     class Meta:

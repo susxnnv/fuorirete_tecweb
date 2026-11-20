@@ -212,7 +212,7 @@ class HomePubblicaView(TemplateView):
         return context
 
 # ==========================================
-# GESTIONE PROFILO
+# AUTENTICAZIONE PROFILO
 # ==========================================
 
 # REGISTRAZIONE UTENTE
@@ -410,11 +410,11 @@ class ProfiloRichiestoMixin(LoginRequiredMixin):
         # Profilo completo: accesso consentito
         return super().dispatch(request, *args, **kwargs)
 
-# ==========================================
+# ==========================================================
 # HOME AUTENTICATA
 # tutte le classi sono protette dal mixin
 # (possono accedere solo utenti che hanno profilo + account)
-# ==========================================
+# ==========================================================
 
 # HOME UTENTE AUTENTICATO
 class HomeView(ProfiloRichiestoMixin, TemplateView):
@@ -443,236 +443,6 @@ class HomeView(ProfiloRichiestoMixin, TemplateView):
         # Numero complessivo degli eventi creati, inclusi quelli già trascorsi
         context['totale_eventi'] = (
             Evento.objects.count()
-        )
-
-        return context
-
-
-# SCOPERTA COMMUNITY
-class CommunityView(ProfiloRichiestoMixin, TemplateView):
-
-    template_name = 'gestione/community.html'
-
-    def get_context_data(self, **kwargs):
-
-        context = super().get_context_data(**kwargs)
-
-        mio_profilo = self.request.user.profilo
-        parametri = self.request.GET
-
-        # 1. RECUPERO E VALIDAZIONE FILTRI
-
-        ricerca = parametri.get('ricerca', '').strip()
-        citta = parametri.get('citta', '').strip()
-
-        if len(ricerca) > 100:
-            ricerca = ricerca[:100]
-
-        if len(citta) > 100:
-            citta = citta[:100]
-
-        partecipazione = parametri.get(
-            'partecipazione',
-            'tutte'
-        )
-
-        if partecipazione not in (
-            'tutte',
-            'partecipate',
-            'non_partecipate'
-        ):
-            partecipazione = 'tutte'
-
-        interessi_ids = []
-
-        for valore in parametri.getlist('interessi'):
-
-            try:
-                identificativo = int(valore)
-
-                if identificativo > 0:
-                    interessi_ids.append(identificativo)
-
-            except (ValueError, TypeError):
-                continue
-
-        interessi_ids = list(
-            dict.fromkeys(interessi_ids)
-        )
-
-        # Catalogo completo per il popup.
-        catalogo = list(
-            Interesse.objects
-            .select_related('padre')
-            .order_by('padre_id', 'nome')
-        )
-
-        interessi_per_id = {
-            interesse.pk: interesse
-            for interesse in catalogo
-        }
-
-        # Accettiamo solo gli ID realmente presenti
-        interessi_ids = [
-            pk for pk in interessi_ids
-            if pk in interessi_per_id
-        ]
-
-        # 2. ESPANSIONE FILTRO INTERESSI
-
-        # Una categoria generale comprende anche le proprie sottocategorie.
-        # Una sottocategoria, invece, richiede una corrispondenza esatta.
-
-        interessi_ammessi = set(interessi_ids)
-
-        if interessi_ids:
-
-            for interesse in catalogo:
-
-                # Includiamo le sottocategorie delle categorie generali selezionate.
-
-                if interesse.padre_id in interessi_ids:
-                    interessi_ammessi.add(interesse.pk)
-
-        # 3. FILTRI RIGIDI SUL DATABASE
- 
-        community = recupera_community_con_valutazioni()
-
-        # Ricerca SOLO nel titolo.
-        if ricerca:
-            community = community.filter(
-                titolo__icontains=ricerca
-            )
-
-        # Città esatta, senza distinguere maiuscole e minuscole.
-        if citta:
-            community = community.filter(
-                citta__iexact=citta
-            )
-
-        # Almeno un interesse corrispondente.
-        if interessi_ids:
-
-            community_corrispondenti = (
-                Community.objects
-                .filter(interessi__pk__in=interessi_ammessi)
-                .values('pk')
-            )
-
-            community = community.filter(
-                pk__in=community_corrispondenti
-            )
-
-        # Community a cui partecipo.
-        community_partecipate_ids = set(
-            mio_profilo.community_partecipate
-            .values_list('pk', flat=True)
-        )
-
-        if partecipazione == 'partecipate':
-
-            community = community.filter(
-                pk__in=community_partecipate_ids
-            )
-
-        elif partecipazione == 'non_partecipate':
-
-            community = community.exclude(
-                pk__in=community_partecipate_ids
-            )
-
-        # 4. RANKING PERSONALIZZATO
-
-        # Prefetch degli interessi del mio profilo.
-        prefetch_related_objects(
-            [mio_profilo],
-            'interessi'
-        )
-
-        mio_profilo_interessi = list(
-            mio_profilo.interessi.all()
-        )
-
-        # Lista utilizzata per evitare query ripetute durante il calcolo.
-        mio_profilo._prefetched_objects_cache = {
-            'interessi': mio_profilo_interessi
-        }
-
-        risultati = list(community)
-
-        for gruppo in risultati:
-
-            # Qualità ponderata: scala 1-5.
-            qualita = calcola_punteggio_pubblico(
-                gruppo
-            )
-
-            # Compatibilità: scala 0-10.
-            compatibilita = (
-                calcola_compatibilita_community(
-                    gruppo,
-                    mio_profilo
-                )
-            )
-
-            # Ranking finale:
-            # 60% compatibilità
-            # 40% qualità ponderata.
-            gruppo.punteggio_finale = (
-                0.6 * compatibilita
-                + 0.4 * (qualita * 2)
-            )
-
-            gruppo.compatibilita = compatibilita
-
-            gruppo.gia_membro = (
-                gruppo.pk in community_partecipate_ids
-            )
-
-            gruppo.organizzata_da_me = (
-                gruppo.organizzatore_id == mio_profilo.pk
-            )
-
-        # Risultati migliori prima.
-        risultati.sort(
-            key=lambda gruppo: (
-                -gruppo.punteggio_finale,
-                gruppo.pk
-            )
-        )
-
-        # 5. CONTEXT TEMPLATE
-
-        context['community'] = risultati
-        context['ricerca'] = ricerca
-        context['filtro_citta'] = citta
-        context['filtro_interessi'] = interessi_ids
-        context['filtro_partecipazione'] = partecipazione
-
-        context['interessi_disponibili'] = catalogo
-
-        context['categorie_filtri'] = (
-            Interesse.objects
-            .filter(padre__isnull=True)
-            .prefetch_related('sottointeressi')
-            .order_by('nome')
-        )
-
-        context['filtri_attivi'] = bool(
-            citta
-            or interessi_ids
-            or partecipazione != 'tutte'
-        )
-
-        context['numero_risultati'] = len(risultati)
-
-        context['community_da_completare'] = (
-            Community.objects
-            .filter(
-                organizzatore=self.request.user.profilo,
-                interessi__isnull=True
-            )
-            .order_by('-data_creazione')
         )
 
         return context
@@ -767,10 +537,10 @@ class NotificheView(ProfiloRichiestoMixin, TemplateView):
         return context
 
 # ==========================================
-# HOME PROFILO PERSONALE
+#  PROFILO PERSONALE
 # ==========================================
 
-# PROFILO
+# HOME PROFILO
 class ProfiloView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/profilo.html'
@@ -817,7 +587,6 @@ class ProfiloView(ProfiloRichiestoMixin, TemplateView):
         context['percentuale_completamento'] = percentuale
 
         return context
-
 
 # ANTEPRIMA PROFILO
 class AnteprimaProfiloView(ProfiloRichiestoMixin, TemplateView):
@@ -919,7 +688,6 @@ class CambiaPasswordView(ProfiloRichiestoMixin, PasswordChangeView):
         )
 
         return risposta
-
 
 # ELIMINAZIONE DEL PROPRIO ACCOUNT
 class EliminaAccountView(ProfiloRichiestoMixin, DeleteView):
@@ -1814,10 +1582,6 @@ class AnnullaMatchView(ProfiloRichiestoMixin, View):
 
         return redirect('match_chat')
 
-# ==========================================
-# PERSONE - GESTIONE DAL PROFILO
-# ==========================================
-
 # VIEW PER MATCH E CHAT FRA 2 UTENTI
 class MatchChatView(ProfiloRichiestoMixin, TemplateView):
 
@@ -1968,7 +1732,6 @@ class LikeRicevutiView(ProfiloRichiestoMixin, TemplateView):
 
         return context
 
-
 # VIEW PER RISPONDERE AD UN LIKE RICEVUTO 
 class RispondiLikeRicevutoView(ProfiloRichiestoMixin, View):
 
@@ -2085,8 +1848,238 @@ class RispondiLikeRicevutoView(ProfiloRichiestoMixin, View):
 # COMMUNITY
 # ==========================================
 
+# SCOPERTA COMMUNITY
+class CommunityView(ProfiloRichiestoMixin, TemplateView):
+
+    template_name = 'gestione/community.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        mio_profilo = self.request.user.profilo
+        parametri = self.request.GET
+
+        # 1. RECUPERO E VALIDAZIONE FILTRI
+
+        ricerca = parametri.get('ricerca', '').strip()
+        citta = parametri.get('citta', '').strip()
+
+        if len(ricerca) > 100:
+            ricerca = ricerca[:100]
+
+        if len(citta) > 100:
+            citta = citta[:100]
+
+        partecipazione = parametri.get(
+            'partecipazione',
+            'tutte'
+        )
+
+        if partecipazione not in (
+            'tutte',
+            'partecipate',
+            'non_partecipate'
+        ):
+            partecipazione = 'tutte'
+
+        interessi_ids = []
+
+        for valore in parametri.getlist('interessi'):
+
+            try:
+                identificativo = int(valore)
+
+                if identificativo > 0:
+                    interessi_ids.append(identificativo)
+
+            except (ValueError, TypeError):
+                continue
+
+        interessi_ids = list(
+            dict.fromkeys(interessi_ids)
+        )
+
+        # Catalogo completo per il popup.
+        catalogo = list(
+            Interesse.objects
+            .select_related('padre')
+            .order_by('padre_id', 'nome')
+        )
+
+        interessi_per_id = {
+            interesse.pk: interesse
+            for interesse in catalogo
+        }
+
+        # Accettiamo solo gli ID realmente presenti
+        interessi_ids = [
+            pk for pk in interessi_ids
+            if pk in interessi_per_id
+        ]
+
+        # 2. ESPANSIONE FILTRO INTERESSI
+
+        # Una categoria generale comprende anche le proprie sottocategorie.
+        # Una sottocategoria, invece, richiede una corrispondenza esatta.
+
+        interessi_ammessi = set(interessi_ids)
+
+        if interessi_ids:
+
+            for interesse in catalogo:
+
+                # Includiamo le sottocategorie delle categorie generali selezionate.
+
+                if interesse.padre_id in interessi_ids:
+                    interessi_ammessi.add(interesse.pk)
+
+        # 3. FILTRI RIGIDI SUL DATABASE
+ 
+        community = recupera_community_con_valutazioni()
+
+        # Ricerca SOLO nel titolo.
+        if ricerca:
+            community = community.filter(
+                titolo__icontains=ricerca
+            )
+
+        # Città esatta, senza distinguere maiuscole e minuscole.
+        if citta:
+            community = community.filter(
+                citta__iexact=citta
+            )
+
+        # Almeno un interesse corrispondente.
+        if interessi_ids:
+
+            community_corrispondenti = (
+                Community.objects
+                .filter(interessi__pk__in=interessi_ammessi)
+                .values('pk')
+            )
+
+            community = community.filter(
+                pk__in=community_corrispondenti
+            )
+
+        # Community a cui partecipo.
+        community_partecipate_ids = set(
+            mio_profilo.community_partecipate
+            .values_list('pk', flat=True)
+        )
+
+        if partecipazione == 'partecipate':
+
+            community = community.filter(
+                pk__in=community_partecipate_ids
+            )
+
+        elif partecipazione == 'non_partecipate':
+
+            community = community.exclude(
+                pk__in=community_partecipate_ids
+            )
+
+        # 4. RANKING PERSONALIZZATO
+
+        # Prefetch degli interessi del mio profilo.
+        prefetch_related_objects(
+            [mio_profilo],
+            'interessi'
+        )
+
+        mio_profilo_interessi = list(
+            mio_profilo.interessi.all()
+        )
+
+        # Lista utilizzata per evitare query ripetute durante il calcolo.
+        mio_profilo._prefetched_objects_cache = {
+            'interessi': mio_profilo_interessi
+        }
+
+        risultati = list(community)
+
+        for gruppo in risultati:
+
+            # Qualità ponderata: scala 1-5.
+            qualita = calcola_punteggio_pubblico(
+                gruppo
+            )
+
+            # Compatibilità: scala 0-10.
+            compatibilita = (
+                calcola_compatibilita_community(
+                    gruppo,
+                    mio_profilo
+                )
+            )
+
+            # Ranking finale:
+            # 60% compatibilità
+            # 40% qualità ponderata.
+            gruppo.punteggio_finale = (
+                0.6 * compatibilita
+                + 0.4 * (qualita * 2)
+            )
+
+            gruppo.compatibilita = compatibilita
+
+            gruppo.gia_membro = (
+                gruppo.pk in community_partecipate_ids
+            )
+
+            gruppo.organizzata_da_me = (
+                gruppo.organizzatore_id == mio_profilo.pk
+            )
+
+        # Risultati migliori prima.
+        risultati.sort(
+            key=lambda gruppo: (
+                -gruppo.punteggio_finale,
+                gruppo.pk
+            )
+        )
+
+        # 5. CONTEXT TEMPLATE
+
+        context['community'] = risultati
+        context['ricerca'] = ricerca
+        context['filtro_citta'] = citta
+        context['filtro_interessi'] = interessi_ids
+        context['filtro_partecipazione'] = partecipazione
+
+        context['interessi_disponibili'] = catalogo
+
+        context['categorie_filtri'] = (
+            Interesse.objects
+            .filter(padre__isnull=True)
+            .prefetch_related('sottointeressi')
+            .order_by('nome')
+        )
+
+        context['filtri_attivi'] = bool(
+            citta
+            or interessi_ids
+            or partecipazione != 'tutte'
+        )
+
+        context['numero_risultati'] = len(risultati)
+
+        context['community_da_completare'] = (
+            Community.objects
+            .filter(
+                organizzatore=self.request.user.profilo,
+                interessi__isnull=True
+            )
+            .order_by('-data_creazione')
+        )
+
+        return context
+
 # DETTAGLIO COMMUNITY
-# gestisce la visione della community (anonimo, autenticato non partecipante, autenticato req. inviatam, autenticato partecipante, autenticato organizzatore)
+# gestisce la visione della community 
+# (anonimo, autenticato non partecipante, autenticato req. inviatam, autenticato partecipante, autenticato organizzatore)
 class DettaglioCommunityView(DetailView):
 
     model = Community
@@ -2300,7 +2293,7 @@ class CreazioneCommunityView(
 
         return redirect(f'{url}?origine={origine}')
 
-# VIEW PER LA SELEZIONE DEGLI INTERESSI DELLA COMMUNITY --> processo di creazione community
+# VIEW PER LA SELEZIONE DEGLI INTERESSI DELLA COMMUNITY (creazione community)
 class SelezioneInteressiCommunityView(
     ProfiloRichiestoMixin,
     FormView
@@ -2401,8 +2394,11 @@ class SelezioneInteressiCommunityView(
 
         return redirect('community')
 
+# ==========================================
+# COMMUNITY
+# ==========================================
 
-# VIEW PER LA GESTIONE DELLE COMMUNITY DAL PROFILO
+# VIEW PER LA GESTIONE DELLE COMMUNITY 
 class CommunityGestiteView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/community_gestite.html'
@@ -2625,6 +2621,10 @@ class EliminaCommunityView(ProfiloRichiestoMixin, DeleteView):
         )
 
         return risposta
+
+# ==========================================
+# RICHIESTE PARTECIPAZIONE COMMUNITY
+# ==========================================
 
 # INVIO DI UNA RICHIESTA DI PARTECIPAZIONE AD UNA COMMUNITY
 class InviaRichiestaCommunityView(ProfiloRichiestoMixin, View):
@@ -2951,6 +2951,9 @@ class EsciCommunityView(ProfiloRichiestoMixin, View):
             f'{destinazione}?origine={origine}'
         )
 
+# ==========================================
+# ALTRE OPERAZIONI COMMUNITY
+# ==========================================
 
 # VIEW PER LA CHAT DI GRUPPO DI UNA COMMUNITY
 class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
@@ -3223,9 +3226,8 @@ class ValutaCommunityView(ProfiloRichiestoMixin, View):
 
         return redirect(destinazione)
 
-
 # ==========================================
-# PERMESSI EVENTI COMMUNITY
+# PERMESSI COMMUNITY ED EVENTI
 # ==========================================
 
 class AccessoEventiCommunityMixin(ProfiloRichiestoMixin):
@@ -3340,7 +3342,6 @@ class EventiCommunityView(
         )
 
         return context
-
 
 # ==========================================
 # GESTIONE DEGLI EVENTI

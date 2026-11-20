@@ -1,3 +1,5 @@
+# Definisce gli indirizzi WebSocket, stabilendo quale Consumer deve gestire una determinata connessioni
+# Associa gli URL delle connessioni WebSocket ai ConsumerDjanoChannels
 
 from django.urls import path
 

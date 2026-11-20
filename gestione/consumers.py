@@ -1,3 +1,4 @@
+# Gestisce la comunicazione all'interno di una chat (privata o di gruppo) attraverso WebSocket
 
 import json
 
@@ -30,14 +31,12 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
 
         utente = self.scope['user']
 
-        # La connessione è consentita soltanto
-        # agli utenti autenticati.
+        # La connessione è consentita soltanto agli utenti autenticati.
         if not utente.is_authenticated:
             await self.close(code=4401)
             return
 
-        # Recuperiamo l'ID dell'altra persona
-        # direttamente dall'URL WebSocket.
+        # Recuperiamo l'ID dell'altra persona direttamente dall'URL WebSocket.
         self.altra_persona_id = (
             self.scope['url_route']['kwargs']['pk']
         )
@@ -55,8 +54,7 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
         self.mio_profilo_id = mio_profilo_id
 
         # Nome univoco della stanza privata.
-        # I due utenti ottengono lo stesso nome
-        # indipendentemente da chi si collega.
+        # I due utenti ottengono lo stesso nome indipendentemente da chi si collega.
         primo, secondo = sorted([
             self.mio_profilo_id,
             self.altra_persona_id
@@ -149,8 +147,7 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
             return
 
         # Controlliamo nuovamente la sessione:
-        # potrebbe essere stata chiusa dopo
-        # l'apertura del WebSocket.
+        # potrebbe essere stata chiusa dopo l'apertura del WebSocket.
         utente = await get_user(self.scope)
 
         if (
@@ -176,8 +173,7 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
             await self.close(code=4403)
             return
 
-        # Inviamo il messaggio a tutti i Consumer
-        # collegati alla stessa stanza.
+        # Inviamo il messaggio a tutti i Consumer collegati alla stessa stanza.
         await self.channel_layer.group_send(
             self.nome_gruppo,
             {
@@ -193,9 +189,7 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
 
     async def chat_messaggio(self, evento):
 
-        # Prima di consegnare il messaggio,
-        # verifichiamo che il Match esista ancora
-        # e che il profilo sia ancora completo.
+        # Prima di consegnare il messaggio, verifichiamo che il Match esista ancora e che il profilo sia ancora completo.
         utente = await get_user(self.scope)
 
         if (
@@ -250,8 +244,7 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
         if mio_profilo is None:
             return None
 
-        # Il profilo deve avere completato
-        # la selezione iniziale degli interessi.
+        # Il profilo deve avere completato la selezione iniziale degli interessi.
         if not mio_profilo.interessi.exists():
             return None
 
@@ -304,8 +297,7 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
 
             with transaction.atomic():
 
-                # Il modello MessaggioPrivato
-                # verifica già i Like reciproci.
+                # Il modello MessaggioPrivato verifica già i Like reciproci.
                 messaggio = MessaggioPrivato(
                     mittente=mio_profilo,
                     destinatario=altra_persona,
@@ -315,8 +307,7 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
                 messaggio.full_clean()
                 messaggio.save()
 
-                # Manteniamo la notifica prevista
-                # dalla precedente view HTTP.
+                # Manteniamo la notifica prevista dalla precedente view HTTP.
                 Notifica.objects.create(
                     destinatario=altra_persona,
                     tipo='MESSAGGIO_PRIVATO',
@@ -327,8 +318,7 @@ class ChatPrivataConsumer(AsyncWebsocketConsumer):
                     profilo_collegato=mio_profilo
                 )
 
-            # Convertiamo la data nel fuso italiano
-            # per mostrarla coerentemente nella chat.
+            # Convertiamo la data nel fuso italiano per mostrarla coerentemente nella chat.
             data_locale = timezone.localtime(
                 messaggio.data_ora
             )
@@ -378,9 +368,7 @@ class ChatGruppoConsumer(AsyncWebsocketConsumer):
             self.scope['url_route']['kwargs']['pk']
         )
 
-        # Verifichiamo che l'utente sia
-        # organizzatore o membro e che
-        # la community sia completa.
+        # Verifichiamo che l'utente sia organizzatore o membro e che la community sia completa.
         self.profilo_id = await self.verifica_accesso(
             self.utente_id,
             self.community_id
@@ -482,8 +470,7 @@ class ChatGruppoConsumer(AsyncWebsocketConsumer):
             await self.close(code=4401)
             return
 
-        # La modalità anteprima è di sola lettura,
-        # come nella ChatGruppoView esistente.
+        # La modalità anteprima è di sola lettura, come nella ChatGruppoView esistente.
         query_string = self.scope.get(
             'query_string', b''
         ).decode('utf-8', errors='replace')
@@ -504,8 +491,7 @@ class ChatGruppoConsumer(AsyncWebsocketConsumer):
             )
             return
 
-        # Verifica permessi e salvataggio
-        # sono effettuati lato server.
+        # Verifica permessi e salvataggio sono effettuati lato server.
         messaggio = await self.salva_messaggio(
             self.profilo_id,
             self.community_id,
@@ -520,8 +506,7 @@ class ChatGruppoConsumer(AsyncWebsocketConsumer):
             await self.close(code=4403)
             return
 
-        # Broadcast a tutti i partecipanti
-        # collegati alla stessa community.
+        # Broadcast a tutti i partecipanti collegati alla stessa community.
         await self.channel_layer.group_send(
             self.nome_gruppo,
             {
@@ -546,8 +531,7 @@ class ChatGruppoConsumer(AsyncWebsocketConsumer):
             await self.close(code=4401)
             return
 
-        # Controlliamo i permessi anche
-        # prima di consegnare i messaggi.
+        # Controlliamo i permessi anche prima di consegnare i messaggi.
         profilo_id = await self.verifica_accesso(
             self.utente_id,
             self.community_id
@@ -620,7 +604,6 @@ class ChatGruppoConsumer(AsyncWebsocketConsumer):
 
         return profilo.pk
 
-
     # ======================================
     # VERIFICA ORGANIZZATORE
     # ======================================
@@ -686,8 +669,7 @@ class ChatGruppoConsumer(AsyncWebsocketConsumer):
                 messaggio.full_clean()
                 messaggio.save()
 
-                # Manteniamo la stessa logica
-                # delle notifiche nella view HTTP.
+                # Manteniamo la stessa logica delle notifiche nella view HTTP.
                 altri_membri = gruppo.membri.exclude(
                     pk=profilo.pk
                 )
