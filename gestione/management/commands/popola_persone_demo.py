@@ -12,6 +12,8 @@ from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
+from fuorirete.initcmds import init_db
+
 from gestione.models import (
     Profilo, Interesse, Community, Like, Dislike,
     MessaggioPrivato, MessaggioCommunity,
@@ -833,9 +835,17 @@ class Command(BaseCommand):
         )
 
         # ------------------------------------------
-        # CONTROLLO INTERESSI
+        # INIZIALIZZAZIONE E CONTROLLO INTERESSI
         # ------------------------------------------
 
+        init_db()
+
+        self.stdout.write(
+            "\nControllo degli interessi..."
+        )
+
+        catalogo = list(Interesse.objects.all())
+        
         self.stdout.write(
             "\nControllo degli interessi..."
         )
