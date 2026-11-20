@@ -75,9 +75,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'fuorirete.wsgi.application'
 ASGI_APPLICATION = 'fuorirete.asgi.application'
 
-# ==========================================
 # DJANGO CHANNELS - CHANNEL LAYER
-# ==========================================
 
 CHANNEL_LAYERS = {
     'default': {

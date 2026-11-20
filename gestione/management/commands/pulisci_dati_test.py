@@ -1,4 +1,8 @@
 
+# utile durante lo sviluppo del sito: ho inserito relazioni di prova random per riuscire a testare il funzionamento del sito
+# periodicamente eliminavo questi dati inseriti manualmente attraverso questo script 
+# scopo: eliminare dati inseriti da browser, mantenere solo i dati dei file popola_persone e popola_community
+
 from datetime import date
 from pathlib import Path
 from decimal import Decimal

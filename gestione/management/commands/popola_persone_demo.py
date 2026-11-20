@@ -1,3 +1,4 @@
+# script che popola il sito di dati demo, per permettere di avere già qualcosa nel db al momento dell'esposizione
 
 from datetime import date
 from pathlib import Path
@@ -22,11 +23,11 @@ from gestione.models import (
 # CONFIGURAZIONE
 # ==================================================
 
+# pww usata da tutti gli utenti
 PASSWORD_DEMO = "FuoriReteDemo2026!"
 
-
-def persona(numero, nome, eta, genere, citta, occupazione,
-            lingue, cerca, interessi, descrizione):
+# definizione di un profilo con i suoi dati
+def persona(numero, nome, eta, genere, citta, occupazione, lingue, cerca, interessi, descrizione):
     return {
         "numero": numero,
         "nome": nome,
@@ -42,7 +43,7 @@ def persona(numero, nome, eta, genere, citta, occupazione,
 
 
 # ==================================================
-# 25 PERSONE
+# PERSONE
 # ==================================================
 
 PERSONE = [
@@ -513,11 +514,8 @@ PERSONE = [
 # ==================================================
 
 def normalizza(testo):
-    """
-    Confronta nomi ignorando maiuscole, accenti
-    e differenze di spaziatura.
-    Non modifica i dati nel database.
-    """
+
+    # confronta nomi ignorando maiuscole, accenti, differenze di spaziatura
     testo = unicodedata.normalize("NFKD", testo)
 
     testo = "".join(
@@ -534,13 +532,9 @@ def normalizza(testo):
 
 
 def trova_interesse(categoria, sottointeresse, catalogo):
-    """
-    Cerca la macro-categoria e il sottointeresse
-    rispettando la gerarchia.
 
-    Se un sottointeresse esiste ma non è collegato
-    alla categoria corretta, genera un errore esplicito.
-    """
+    # cerca la macro - categoria e il sottointeresse rispettando la gerarchia
+    # se un sotto-interesse esiste ma non è collegato alla categoria corretta, genera un errore esplicito
 
     padri = [
         interesse for interesse in catalogo
@@ -575,8 +569,7 @@ def trova_interesse(categoria, sottointeresse, catalogo):
             f"'{sottointeresse}'."
         )
 
-    # Diagnostica: l'interesse potrebbe essere
-    # presente ma collegato a un altro padre.
+    # Diagnostica: l'interesse potrebbe essere presente ma collegato a un altro padre
     altrove = [
         interesse for interesse in catalogo
         if normalizza(interesse.nome)
@@ -635,20 +628,14 @@ def trova_foto(cartella, numero):
 
     return fotografie[0]
 
-
+# genera una data di nascita corrispondente all'età indicata
 def data_nascita_demo(eta):
-    """
-    Genera una data di nascita dimostrativa
-    corrispondente all'età indicata.
-    """
     oggi = date.today()
     return date(oggi.year - eta, oggi.month, oggi.day)
 
 
-
-
 # ==================================================
-# SCENARIO PER LA PRESENTAZIONE ALL'ESAME
+# RELAZIONI E DATI FRA DIVERSI PROFILI -> serve per l'esame, riguarda l'utente demo_04 (sara)
 # ==================================================
 
 def prepara_relazioni_esame(stdout):

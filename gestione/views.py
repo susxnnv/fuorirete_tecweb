@@ -43,17 +43,13 @@ from .forms import (
     EventoForm,
 )
 
-# HOME PUBBLICA
-
 # ==========================================
-# RANKING COMMUNITY
+# FUNZIONI DI SUPPORTO - RANKING COMMUNITY
 # ==========================================
 
 def recupera_community_con_valutazioni():
 
-    # Recuperiamo soltanto le community
-    # che hanno completato la selezione interessi.
-
+    # Recuperiamo soltanto le community che hanno completato la selezione interessi
     community_complete = (
         Community.objects
         .filter(interessi__isnull=False)
@@ -73,15 +69,10 @@ def recupera_community_con_valutazioni():
 
 
 def calcola_punteggio_pubblico(community):
-    """
-    Media ponderata bayesiana semplificata.
 
-    Media iniziale: 3
-    Peso iniziale: 5 valutazioni
-
-    Restituisce un punteggio sulla scala 1-5.
-    """
-
+    # media ponderata bayesiana semplificata
+    # media iniziale: 3, peso iniziale: 5 valutazionie
+    # restituisce un punteggio sulla scala 1-5
     numero = community.numero_valutazioni
     somma = community.somma_valutazioni or 0
 
@@ -96,30 +87,15 @@ def calcola_punteggio_pubblico(community):
     return community.punteggio_pubblico
 
 
-def calcola_compatibilita_community(
-    community,
-    profilo
-):
-    """
-    Compatibilità personale su scala 0-10.
-
-    Stessa città: +4
-
-    Interessi:
-    - identici: +2
-    - macro/sottocategoria: +1
-    - massimo: 6
-
-    Ogni interesse può essere abbinato
-    una sola volta.
-    """
+# compatibilità personale su scala 0 - 10
+# stessa città: + 4
+# interessi: identici (+2), macro / sottocategoria (+1), massimo (6
+# ogni interesse può essere abbinato 1 sola volta
+def calcola_compatibilita_community(community, profilo ):
 
     punteggio = 0
 
-    if (
-        community.citta.strip().casefold()
-        == profilo.citta.strip().casefold()
-    ):
+    if ( community.citta.strip().casefold() == profilo.citta.strip().casefold()):
         punteggio += 4
 
     miei_interessi = list(profilo.interessi.all())
@@ -133,13 +109,12 @@ def calcola_compatibilita_community(
         interesse.pk for interesse in interessi_community
     }
 
-    # Prima contiamo le corrispondenze esatte.
+    # Prima contiamo le corrispondenze esatte
     esatti = miei_ids & community_ids
 
     punti_interessi = len(esatti) * 2
 
-    # Gli interessi esatti non possono essere
-    # utilizzati nuovamente negli abbinamenti parziali.
+    # Gli interessi esatti non possono essere utilizzati nuovamente negli abbinamenti parziali
     miei_rimanenti = [
         interesse for interesse in miei_interessi
         if interesse.pk not in esatti
@@ -152,8 +127,7 @@ def calcola_compatibilita_community(
 
     community_usati = set()
 
-    # Corrispondenze parziali:
-    # macrocategoria e sottocategoria.
+    # Corrispondenze parziali: macrocategoria e sottocategoria
     for mio_interesse in miei_rimanenti:
 
         for interesse_community in community_rimanenti:
@@ -182,12 +156,6 @@ def calcola_compatibilita_community(
 
     return punteggio
 
-# home pubblica 
-
-# ==========================================
-# HOME PUBBLICA
-# ==========================================
-
 # ==========================================
 # HOME PUBBLICA
 # ==========================================
@@ -200,10 +168,7 @@ class HomePubblicaView(TemplateView):
 
         context = super().get_context_data(**kwargs)
 
-        # ======================================
         # COMMUNITY PUBBLICHE
-        # ======================================
-
         community = list(
             recupera_community_con_valutazioni()
         )
@@ -224,17 +189,14 @@ class HomePubblicaView(TemplateView):
 
         context['community'] = community
 
-        # ======================================
         # STATISTICHE GENERALI DI FUORIRETE
-        # ======================================
 
-        # Numero di utenti con un profilo creato.
+        # Numero di utenti con un profilo creato
         context['totale_utenti'] = (
             Profilo.objects.count()
         )
 
-        # Numero di community complete,
-        # con almeno un interesse associato.
+        # Numero di community complete, con almeno un interesse associato
         context['totale_community'] = (
             Community.objects
             .filter(interessi__isnull=False)
@@ -242,18 +204,18 @@ class HomePubblicaView(TemplateView):
             .count()
         )
 
-        # Numero totale di eventi creati,
-        # compresi quelli già trascorsi.
+        # Numero totale di eventi creati, compresi quelli già trascorsi
         context['totale_eventi'] = (
             Evento.objects.count()
         )
 
         return context
 
-
+# ==========================================
 # GESTIONE PROFILO
+# ==========================================
 
-# registrazione 
+# REGISTRAZIONE UTENTE
 class RegistrazioneView(CreateView):
     form_class = RegistrazioneForm
     template_name = 'gestione/registrazione.html'
@@ -285,12 +247,7 @@ class RegistrazioneView(CreateView):
 
         return response
 
-# creazione profilo 
-
-# ==========================================
-# CREAZIONE PROFILO - PASSAGGIO 1 DI 2
-# ==========================================
-
+# CREAZIONE PROFILO 
 class CreazioneProfiloView(LoginRequiredMixin, UpdateView):
 
     model = Profilo
@@ -300,10 +257,7 @@ class CreazioneProfiloView(LoginRequiredMixin, UpdateView):
 
     success_url = reverse_lazy('selezione_interessi')
 
-    # ======================================
     # CONTROLLO DEGLI ACCESSI
-    # ======================================
-
     def dispatch(self, request, *args, **kwargs):
 
         if not request.user.is_authenticated:
@@ -323,10 +277,7 @@ class CreazioneProfiloView(LoginRequiredMixin, UpdateView):
 
         return super().dispatch(request, *args, **kwargs)
 
-    # ======================================
     # RECUPERO DEL PROFILO
-    # ======================================
-
     def get_object(self, queryset=None):
 
         # Recuperiamo esclusivamente il profilo
@@ -339,10 +290,7 @@ class CreazioneProfiloView(LoginRequiredMixin, UpdateView):
             user=self.request.user
         ).first()
 
-    # ======================================
     # SALVATAGGIO DEL PROFILO
-    # ======================================
-
     def form_valid(self, form):
 
         # L'utente associato al profilo
@@ -350,15 +298,13 @@ class CreazioneProfiloView(LoginRequiredMixin, UpdateView):
 
         form.instance.user = self.request.user
 
-        # Se il profilo esiste già, UpdateView
-        # aggiorna la stessa istanza.
-        #
-        # Se non esiste, ne crea una nuova.
+        # Se il profilo esiste già, UpdateView aggiorna la stessa istanza
+        # Se non esiste, ne crea una nuova
 
         with transaction.atomic():
             return super().form_valid(form)
 
-# Selezione degli interessi nella creazione del profilo
+# SELEZIONE DEGLI INTERESSI DURANTE LA CREAZIONE DEL PROFILO
 class SelezioneInteressiView(LoginRequiredMixin, FormView):
     form_class = SelezioneInteressiForm
     template_name = 'gestione/selezione_interessi.html'
@@ -411,7 +357,7 @@ class SelezioneInteressiView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-# login
+# LOGIN
 class AccediView(LoginView):
 
     template_name = 'gestione/login.html'
@@ -433,14 +379,15 @@ class AccediView(LoginView):
         return str(reverse_lazy('creazione_profilo'))
 
 
-# logout
+# LOGOUT
 class EsciView(LogoutView):
     next_page = reverse_lazy('home_pubblica')
 
-# CONTROLLO ACCESSO ALL'AREA AUTENTICATA
+# ==========================================
+# CONTROLLO DEGLI ACCESSI ALL'AREA AUTENTICATA
 # mixin aggiunge un comportamento riutilizzabile ad altra classi attraverso ereditarietà:
 # distingue le 3 tipologie di utente --> anonimo (deve fare login), autenticato senza profilo (deve creare il profilo), autenticato con profilo (accesso alla home)
-
+# ==========================================
 class ProfiloRichiestoMixin(LoginRequiredMixin):
 
     def dispatch(self, request, *args, **kwargs):
@@ -463,16 +410,13 @@ class ProfiloRichiestoMixin(LoginRequiredMixin):
         # Profilo completo: accesso consentito
         return super().dispatch(request, *args, **kwargs)
 
-
-# HOME AUTENTICATA 
-# in questo caso tutte le classi sono protette dal mixin 
-# (possono accedere solo utenti con profilo + account)
-
-
 # ==========================================
 # HOME AUTENTICATA
+# tutte le classi sono protette dal mixin
+# (possono accedere solo utenti che hanno profilo + account)
 # ==========================================
 
+# HOME UTENTE AUTENTICATO
 class HomeView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/home.html'
@@ -481,17 +425,14 @@ class HomeView(ProfiloRichiestoMixin, TemplateView):
 
         context = super().get_context_data(**kwargs)
 
-        # ======================================
         # STATISTICHE GENERALI DI FUORIRETE
-        # ======================================
 
-        # Utenti che hanno creato un profilo.
+        # Utenti che hanno creato un profilo
         context['totale_utenti'] = (
             Profilo.objects.count()
         )
 
-        # Community pubblicate, con interessi
-        # già selezionati e quindi complete.
+        # Community pubblicate, con interessi già selezionati e quindi complete
         context['totale_community'] = (
             Community.objects
             .filter(interessi__isnull=False)
@@ -499,8 +440,7 @@ class HomeView(ProfiloRichiestoMixin, TemplateView):
             .count()
         )
 
-        # Numero complessivo degli eventi creati,
-        # inclusi quelli già trascorsi.
+        # Numero complessivo degli eventi creati, inclusi quelli già trascorsi
         context['totale_eventi'] = (
             Evento.objects.count()
         )
@@ -508,12 +448,7 @@ class HomeView(ProfiloRichiestoMixin, TemplateView):
         return context
 
 
-# COMMUNITY
-
-# ==========================================
-# SCOPERTA COMMUNITY AUTENTICATA
-# ==========================================
-
+# SCOPERTA COMMUNITY
 class CommunityView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/community.html'
@@ -525,9 +460,7 @@ class CommunityView(ProfiloRichiestoMixin, TemplateView):
         mio_profilo = self.request.user.profilo
         parametri = self.request.GET
 
-        # ======================================
         # 1. RECUPERO E VALIDAZIONE FILTRI
-        # ======================================
 
         ricerca = parametri.get('ricerca', '').strip()
         citta = parametri.get('citta', '').strip()
@@ -579,26 +512,16 @@ class CommunityView(ProfiloRichiestoMixin, TemplateView):
             for interesse in catalogo
         }
 
-        # Accettiamo solo gli ID realmente presenti.
+        # Accettiamo solo gli ID realmente presenti
         interessi_ids = [
             pk for pk in interessi_ids
             if pk in interessi_per_id
         ]
 
-        # ======================================
         # 2. ESPANSIONE FILTRO INTERESSI
-        # ======================================
 
-
-        # ======================================
-        # 2. ESPANSIONE FILTRO INTERESSI
-        # ======================================
-
-        # Una categoria generale comprende
-        # anche le proprie sottocategorie.
-        #
-        # Una sottocategoria, invece, richiede
-        # una corrispondenza esatta.
+        # Una categoria generale comprende anche le proprie sottocategorie.
+        # Una sottocategoria, invece, richiede una corrispondenza esatta.
 
         interessi_ammessi = set(interessi_ids)
 
@@ -606,16 +529,13 @@ class CommunityView(ProfiloRichiestoMixin, TemplateView):
 
             for interesse in catalogo:
 
-                # Includiamo le sottocategorie
-                # delle categorie generali selezionate.
+                # Includiamo le sottocategorie delle categorie generali selezionate.
 
                 if interesse.padre_id in interessi_ids:
                     interessi_ammessi.add(interesse.pk)
 
-        # ======================================
         # 3. FILTRI RIGIDI SUL DATABASE
-        # ======================================
-
+ 
         community = recupera_community_con_valutazioni()
 
         # Ricerca SOLO nel titolo.
@@ -624,8 +544,7 @@ class CommunityView(ProfiloRichiestoMixin, TemplateView):
                 titolo__icontains=ricerca
             )
 
-        # Città esatta, senza distinguere
-        # maiuscole e minuscole.
+        # Città esatta, senza distinguere maiuscole e minuscole.
         if citta:
             community = community.filter(
                 citta__iexact=citta
@@ -662,9 +581,7 @@ class CommunityView(ProfiloRichiestoMixin, TemplateView):
                 pk__in=community_partecipate_ids
             )
 
-        # ======================================
         # 4. RANKING PERSONALIZZATO
-        # ======================================
 
         # Prefetch degli interessi del mio profilo.
         prefetch_related_objects(
@@ -676,8 +593,7 @@ class CommunityView(ProfiloRichiestoMixin, TemplateView):
             mio_profilo.interessi.all()
         )
 
-        # Lista utilizzata per evitare query
-        # ripetute durante il calcolo.
+        # Lista utilizzata per evitare query ripetute durante il calcolo.
         mio_profilo._prefetched_objects_cache = {
             'interessi': mio_profilo_interessi
         }
@@ -725,9 +641,7 @@ class CommunityView(ProfiloRichiestoMixin, TemplateView):
             )
         )
 
-        # ======================================
         # 5. CONTEXT TEMPLATE
-        # ======================================
 
         context['community'] = risultati
         context['ricerca'] = ricerca
@@ -763,17 +677,7 @@ class CommunityView(ProfiloRichiestoMixin, TemplateView):
 
         return context
 
-
-# NOTIFICHE
-
-# ==========================================
 # ELENCO NOTIFICHE
-# ==========================================
-
-# ==========================================
-# ELENCO NOTIFICHE
-# ==========================================
-
 class NotificheView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/notifiche.html'
@@ -794,8 +698,7 @@ class NotificheView(ProfiloRichiestoMixin, TemplateView):
             .order_by('-data_ora', '-pk')
         )
 
-        # Recuperiamo le richieste legate alle
-        # notifiche di partecipazione ricevute.
+        # Recuperiamo le richieste legate alle notifiche di partecipazione ricevute.
 
         richieste = RichiestaCommunity.objects.filter(
             community__organizzatore=mio_profilo
@@ -807,8 +710,7 @@ class NotificheView(ProfiloRichiestoMixin, TemplateView):
             for richiesta in richieste
         }
 
-        # Evitiamo che vecchie notifiche riferite
-        # alla stessa richiesta mostrino nuovi pulsanti.
+        # Evitiamo che vecchie notifiche riferite alla stessa richiesta mostrino nuovi pulsanti.
 
         coppie_gia_viste = set()
 
@@ -846,16 +748,14 @@ class NotificheView(ProfiloRichiestoMixin, TemplateView):
             if richiesta.stato == 'PENDING':
                 notifica.richiesta_pendente = richiesta
 
-        # Aprendo la pagina Notifiche, tutte le
-        # notifiche non lette diventano lette.
+        # Aprendo la pagina Notifiche, tutte le notifiche non lette diventano lette.
 
         Notifica.objects.filter(
             destinatario=mio_profilo,
             letta=False
         ).update(letta=True)
 
-        # Aggiorniamo anche gli oggetti già recuperati,
-        # così la pagina mostra lo stato corretto.
+        # Aggiorniamo anche gli oggetti già recuperati, così la pagina mostra lo stato corretto.
 
         for notifica in notifiche:
             notifica.letta = True
@@ -866,15 +766,11 @@ class NotificheView(ProfiloRichiestoMixin, TemplateView):
 
         return context
 
-
-# PROFILO PERSONALE
-
-# Home profilo personale
-
 # ==========================================
 # HOME PROFILO PERSONALE
 # ==========================================
 
+# PROFILO
 class ProfiloView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/profilo.html'
@@ -885,9 +781,7 @@ class ProfiloView(ProfiloRichiestoMixin, TemplateView):
 
         mio_profilo = self.request.user.profilo
 
-        # ======================================
         # CONTEGGIO DEI MATCH
-        # ======================================
 
         like_ricevuti = Like.objects.filter(
             destinatario=mio_profilo
@@ -900,9 +794,8 @@ class ProfiloView(ProfiloRichiestoMixin, TemplateView):
 
         context['numero_match'] = numero_match
 
-        # ======================================
+
         # PERCENTUALE COMPLETAMENTO PROFILO
-        # ======================================
 
         campi_compilati = [
             bool(mio_profilo.nome.strip()),
@@ -926,11 +819,11 @@ class ProfiloView(ProfiloRichiestoMixin, TemplateView):
         return context
 
 
-# Anteprima profilo
+# ANTEPRIMA PROFILO
 class AnteprimaProfiloView(ProfiloRichiestoMixin, TemplateView):
     template_name = 'gestione/anteprima_profilo.html'
 
-# Modifica profilo
+# MODIFICA PROFILO
 class ModificaProfiloView(ProfiloRichiestoMixin, UpdateView):
 
     model = Profilo
@@ -954,7 +847,7 @@ class ModificaProfiloView(ProfiloRichiestoMixin, UpdateView):
 
         return risposta    
 
-# Modifica interessi dal profilo
+# MODIFICA INTERESSI (dal profilo)
 class ModificaInteressiView(ProfiloRichiestoMixin, FormView):
 
     form_class = SelezioneInteressiForm
@@ -987,8 +880,7 @@ class ModificaInteressiView(ProfiloRichiestoMixin, FormView):
             .order_by('nome')
         )
 
-        # Permette al template di distinguere
-        # fra creazione e modifica.
+        # Permette al template di distinguere fra creazione e modifica.
         context['modalita_modifica'] = True
 
         return context
@@ -1011,7 +903,7 @@ class ModificaInteressiView(ProfiloRichiestoMixin, FormView):
         return super().form_valid(form)
 
 
-# cambio password
+# CAMBIO PASSWORD
 class CambiaPasswordView(ProfiloRichiestoMixin, PasswordChangeView):
 
     template_name = 'gestione/cambia_password.html'
@@ -1029,7 +921,7 @@ class CambiaPasswordView(ProfiloRichiestoMixin, PasswordChangeView):
         return risposta
 
 
-# eliminazione del proprio account
+# ELIMINAZIONE DEL PROPRIO ACCOUNT
 class EliminaAccountView(ProfiloRichiestoMixin, DeleteView):
 
     model = User
@@ -1062,7 +954,11 @@ class EliminaAccountView(ProfiloRichiestoMixin, DeleteView):
 
         return risposta
 
-# SCOPERTA DELLE PERSONE 
+# ==========================================
+# SCOPERTA DELLE PERSONE
+# ==========================================
+
+# HOME SCOPERTA PERSONE
 class PersoneView(ProfiloRichiestoMixin, TemplateView):
     template_name = 'gestione/persone.html'
 
@@ -1178,8 +1074,7 @@ class PersoneView(ProfiloRichiestoMixin, TemplateView):
             )
 
         # OR tra gli interessi selezionati.
-        # Consideriamo anche la relazione tra
-        # macrocategorie e sottocategorie.
+        # Consideriamo anche la relazione tra macrocategorie e sottocategorie.
 
         if interessi_ids:
 
@@ -1209,8 +1104,7 @@ class PersoneView(ProfiloRichiestoMixin, TemplateView):
 
             for pk in interessi_ids:
 
-                # Se seleziono Rock, includo anche
-                # chi ha scelto Musica generale.
+                # Se seleziono Rock, includo anche chi ha scelto Musica generale.
                 padre_id = interessi_per_id[pk]['padre_id']
 
                 if padre_id is not None:
@@ -1322,8 +1216,7 @@ class PersoneView(ProfiloRichiestoMixin, TemplateView):
 
             punti_interessi = len(esatti) * 2
 
-            # Escludiamo gli interessi già abbinati
-            # esattamente, evitando il doppio conteggio.
+            # Escludiamo gli interessi già abbinati esattamente, evitando il doppio conteggio.
 
             miei_rimanenti = [
                 interesse
@@ -1339,8 +1232,7 @@ class PersoneView(ProfiloRichiestoMixin, TemplateView):
 
             candidato_usati = set()
 
-            # CORRISPONDENZE PARZIALI:
-            # padre e figlio nella gerarchia.
+            # CORRISPONDENZE PARZIALI: padre e figlio nella gerarchia.
 
             for mio_interesse in miei_rimanenti:
 
@@ -1398,15 +1290,14 @@ class PersoneView(ProfiloRichiestoMixin, TemplateView):
 
             punteggio += min(numero_obiettivi_comuni, 2) * 3
 
-            # Memorizziamo il punteggio soltanto
-            # in memoria, non nel database.
+            # Memorizziamo il punteggio soltanto in memoria, non nel database.
             candidati_ordinabili.append(
                 (punteggio, candidato)
             )
 
-        # ==========================================
+        # ----------------------------
         # ORDINAMENTO PER COMPATIBILITA
-        # ==========================================
+        # ----------------------------
 
         # Primo criterio: punteggio decrescente.
         # Secondo criterio: ID crescente in caso di parita', per un risultato stabile.
@@ -1419,7 +1310,6 @@ class PersoneView(ProfiloRichiestoMixin, TemplateView):
         )
 
         # Proponiamo una sola persona alla volta.
-
         # Per impostazione predefinita mostriamo il candidato con il ranking più alto.
         persona = (
             candidati_ordinabili[0][1]
@@ -1446,9 +1336,9 @@ class PersoneView(ProfiloRichiestoMixin, TemplateView):
                         persona = candidato
                         break
 
-        # ==========================================
+        #------------------------
         # 6. DATI PER IL TEMPLATE
-        # ==========================================
+        # -----------------------
 
         context['persona'] = persona
 
@@ -1497,7 +1387,7 @@ class PersoneView(ProfiloRichiestoMixin, TemplateView):
 
         return context
 
-# dettaglio profilo di un'altra persona
+# DETTAGLIO DEL PROFILO DI UN'ALTRA PERSONA
 class DettaglioPersonaView(ProfiloRichiestoMixin, DetailView):
 
     model = Profilo
@@ -1506,6 +1396,7 @@ class DettaglioPersonaView(ProfiloRichiestoMixin, DetailView):
     pk_url_kwarg = 'pk'
 
     def get_queryset(self):
+
         # Non consentiamo di aprire sé stessi attraverso DettaglioPersona
         return (
             Profilo.objects
@@ -1561,8 +1452,7 @@ class DettaglioPersonaView(ProfiloRichiestoMixin, DetailView):
             and like_in_attesa
         )
 
-        # La provenienza "chat" viene riconosciuta
-        # soltanto se esiste davvero il Match.
+        # La provenienza "chat" viene riconosciuta soltanto se esiste davvero il Match.
         context['origine_chat'] = (
             self.request.GET.get('origine') == 'chat'
             and match_esistente
@@ -1577,7 +1467,7 @@ class DettaglioPersonaView(ProfiloRichiestoMixin, DetailView):
         return context
 
 
-# like e dislike dalla pagina persone
+# VIEW PER METTERE LIKE E DISLIKE ALL'ALTRA PERSONA
 class ValutaPersonaView(ProfiloRichiestoMixin, View):
 
     http_method_names = ['post']
@@ -1633,8 +1523,7 @@ class ValutaPersonaView(ProfiloRichiestoMixin, View):
         try:
             with transaction.atomic():
 
-                # La stessa coppia non può essere valutata
-                # più volte, neppure con azioni differenti.
+                # La stessa coppia non può essere valutata più volte, neppure con azioni differenti.
                 gia_like = Like.objects.filter(
                     mittente=mio_profilo,
                     destinatario=destinatario
@@ -1657,7 +1546,6 @@ class ValutaPersonaView(ProfiloRichiestoMixin, View):
 
                     
                     # Notifica del Like ricevuto.
-
                     Notifica.objects.create(
                         destinatario=destinatario,
                         tipo='LIKE_RICEVUTO',
@@ -1683,12 +1571,10 @@ class ValutaPersonaView(ProfiloRichiestoMixin, View):
                     )
 
         except IntegrityError:
-            # Protezione aggiuntiva in caso di richieste
-            # concorrenti o vincoli di unicità violati.
+            # Protezione aggiuntiva in caso di richieste concorrenti o vincoli di unicità violati.
             return HttpResponseRedirect(url_ritorno)
 
-        # Conserviamo il nuovo Match nella sessione
-        # per comunicarlo alla pagina Persone.
+        # Conserviamo il nuovo Match nella sessione per comunicarlo alla pagina Persone.
         if nuovo_match:
 
             # Notifica del nuovo Match a entrambi.
@@ -1722,7 +1608,7 @@ class ValutaPersonaView(ProfiloRichiestoMixin, View):
         # Persone selezionerà il prossimo tramite il ranking.
         return HttpResponseRedirect(url_ritorno)
 
-# chat privata 
+# VIEW PER LA CHAT PRIVATA FRA 2 UTENTI 
 class ChatPrivataView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/chat_privata.html'
@@ -1762,8 +1648,7 @@ class ChatPrivataView(ProfiloRichiestoMixin, TemplateView):
 
         mio_profilo, altra_persona = self.get_partecipanti()
 
-        # Recuperiamo esclusivamente i messaggi
-        # scambiati fra questi due profili.
+        # Recuperiamo esclusivamente i messaggi scambiati fra questi due profili.
         messaggi = (
             MessaggioPrivato.objects
             .filter(
@@ -1811,8 +1696,7 @@ class ChatPrivataView(ProfiloRichiestoMixin, TemplateView):
             )
 
             try:
-                # Esegue anche la validazione definita
-                # nel modello MessaggioPrivato.
+                # Esegue anche la validazione definita nel modello MessaggioPrivato.
                 messaggio.full_clean()
                 messaggio.save()
 
@@ -1845,9 +1729,7 @@ class ChatPrivataView(ProfiloRichiestoMixin, TemplateView):
                 status=400
             )
 
-        # Manteniamo la provenienza anche dopo
-        # l'invio di un messaggio.
-
+        # Manteniamo la provenienza anche dopo l'invio di un messaggio.
         destinazione = reverse(
             'chat_privata',
             kwargs={'pk': altra_persona.pk}
@@ -1860,9 +1742,7 @@ class ChatPrivataView(ProfiloRichiestoMixin, TemplateView):
 
         return redirect(destinazione)
 
-
-
-# Annulla match
+# VIEW PER ANNULLARE IL MATCH
 class AnnullaMatchView(ProfiloRichiestoMixin, View):
 
     # La modifica dei dati è consentita soltanto via POST.
@@ -1902,15 +1782,13 @@ class AnnullaMatchView(ProfiloRichiestoMixin, View):
             mio_like.delete()
 
             # 2. Registriamo il mio Dislike.
-            # Questo impedirà che la persona venga
-            # nuovamente proposta nella pagina Persone.
+            # Questo impedirà che la persona venga nuovamente proposta nella pagina Persone.
             Dislike.objects.get_or_create(
                 mittente=mio_profilo,
                 destinatario=altra_persona
             )
 
-            # 3. Eliminiamo tutta la cronologia
-            # dei messaggi scambiati nelle due direzioni.
+            # 3. Eliminiamo tutta la cronologia dei messaggi scambiati nelle due direzioni.
             MessaggioPrivato.objects.filter(
                 Q(
                     mittente=mio_profilo,
@@ -1925,22 +1803,22 @@ class AnnullaMatchView(ProfiloRichiestoMixin, View):
 
 
         # Conferma dell'annullamento del Match.
-
         messages.success(
             request,
             'Match annullato correttamente!'
         )
 
         # Manteniamo la pagina di provenienza.
-
         if request.POST.get('origine') == 'notifiche':
             return redirect('notifiche')
 
         return redirect('match_chat')
 
-# PROFILO --> GESTIONE PERSONE
+# ==========================================
+# PERSONE - GESTIONE DAL PROFILO
+# ==========================================
 
-# MatchChat --> Match e conversazioni
+# VIEW PER MATCH E CHAT FRA 2 UTENTI
 class MatchChatView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/match_chat.html'
@@ -1950,8 +1828,7 @@ class MatchChatView(ProfiloRichiestoMixin, TemplateView):
 
         mio_profilo = self.request.user.profilo
 
-        # Profili che hanno messo Like a me,
-        # con la data di ciascun Like.
+        # Profili che hanno messo Like a me, con la data di ciascun Like.
         like_ricevuti = {
             like.mittente_id: like.data_ora
             for like in Like.objects.filter(
@@ -1959,15 +1836,13 @@ class MatchChatView(ProfiloRichiestoMixin, TemplateView):
             )
         }
 
-        # Profili a cui ho messo Like e che
-        # hanno ricambiato: sono i miei Match.
+        # Profili a cui ho messo Like e che hanno ricambiato: sono i miei Match.
         like_reciproci = Like.objects.filter(
             mittente=mio_profilo,
             destinatario_id__in=like_ricevuti.keys()
         )
 
-        # La data di creazione del Match e' quella
-        # del secondo Like, quindi la piu' recente.
+        # La data di creazione del Match e' quella del secondo Like, quindi la piu' recente.
         date_match = {}
 
         for like in like_reciproci:
@@ -1983,15 +1858,13 @@ class MatchChatView(ProfiloRichiestoMixin, TemplateView):
             .prefetch_related('interessi')
         )
 
-        # Le due liste sono separate:
-        # una persona puo' comparire soltanto in una.
+        # Le due liste sono separate: una persona puo' comparire soltanto in una.
         tutti_match = []
         chat_iniziate = []
 
         for persona in profili_match:
 
-            # Ultimo messaggio scambiato
-            # tra me e questa persona.
+            # Ultimo messaggio scambiato tra me e questa persona.
             ultimo_messaggio = (
                 MessaggioPrivato.objects
                 .filter(
@@ -2011,8 +1884,7 @@ class MatchChatView(ProfiloRichiestoMixin, TemplateView):
 
             if ultimo_messaggio:
 
-                # Esiste almeno un messaggio:
-                # la persona compare nelle CHAT.
+                # Esiste almeno un messaggio: la persona compare nelle CHAT.
                 chat_iniziate.append({
                     'persona': persona,
                     'ultimo_messaggio': ultimo_messaggio,
@@ -2024,8 +1896,7 @@ class MatchChatView(ProfiloRichiestoMixin, TemplateView):
 
             else:
 
-                # Non esistono messaggi:
-                # la persona compare nei MATCH.
+                # Non esistono messaggi: la persona compare nei MATCH.
                 tutti_match.append({
                     'persona': persona,
                     'data_match': date_match[persona.pk],
@@ -2057,7 +1928,7 @@ class MatchChatView(ProfiloRichiestoMixin, TemplateView):
 
         return context
 
-# Like ricevuti 
+# VIEW PER I LIKE RICEVUTI
 class LikeRicevutiView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/like_ricevuti.html'
@@ -2077,8 +1948,7 @@ class LikeRicevutiView(ProfiloRichiestoMixin, TemplateView):
             mittente=mio_profilo
         ).values_list('destinatario_id', flat=True)
 
-        # Recuperiamo soltanto i Like ricevuti
-        # ai quali non ho ancora risposto.
+        # Recuperiamo soltanto i Like ricevuti ai quali non ho ancora risposto.
         like_ricevuti = (
             Like.objects
             .filter(destinatario=mio_profilo)
@@ -2099,12 +1969,7 @@ class LikeRicevutiView(ProfiloRichiestoMixin, TemplateView):
         return context
 
 
-# Risposta ad un like ricevuto
-
-# ==========================================
-# RISPOSTA A UN LIKE RICEVUTO
-# ==========================================
-
+# VIEW PER RISPONDERE AD UN LIKE RICEVUTO 
 class RispondiLikeRicevutoView(ProfiloRichiestoMixin, View):
 
     http_method_names = ['post']
@@ -2129,8 +1994,7 @@ class RispondiLikeRicevutoView(ProfiloRichiestoMixin, View):
 
         with transaction.atomic():
 
-            # Deve esistere un Like ricevuto
-            # da questa persona.
+            # Deve esistere un Like ricevuto da questa persona.
             like_ricevuto = Like.objects.filter(
                 mittente=altra_persona,
                 destinatario=mio_profilo
@@ -2207,8 +2071,7 @@ class RispondiLikeRicevutoView(ProfiloRichiestoMixin, View):
                 nuovo_dislike.full_clean()
                 nuovo_dislike.save()
 
-        # In entrambi i casi rimaniamo
-        # nella pagina Like ricevuti.
+        # In entrambi i casi rimaniamo nella pagina Like ricevuti.
 
         if request.POST.get('origine') == 'notifiche':
             return redirect(
@@ -2219,9 +2082,11 @@ class RispondiLikeRicevutoView(ProfiloRichiestoMixin, View):
 
 
 # ==========================================
-# DETTAGLIO COMMUNITY
+# COMMUNITY
 # ==========================================
 
+# DETTAGLIO COMMUNITY
+# gestisce la visione della community (anonimo, autenticato non partecipante, autenticato req. inviatam, autenticato partecipante, autenticato organizzatore)
 class DettaglioCommunityView(DetailView):
 
     model = Community
@@ -2271,9 +2136,7 @@ class DettaglioCommunityView(DetailView):
         gruppo = self.object
         utente = self.request.user
 
-        # ======================================
         # STATISTICHE PUBBLICHE
-        # ======================================
 
         statistiche = gruppo.valutazioni.aggregate(
             numero=Count('pk'),
@@ -2291,9 +2154,8 @@ class DettaglioCommunityView(DetailView):
 
         context['numero_membri'] = gruppo.membri.count()
 
-        # ======================================
+
         # STATO DEL VISITATORE
-        # ======================================
 
         context['profilo_completo'] = False
         context['organizzatore'] = False
@@ -2328,8 +2190,7 @@ class DettaglioCommunityView(DetailView):
                 ).exists()
             )
 
-            # Recuperiamo l'eventuale valutazione
-            # già lasciata dall'utente.
+            # Recuperiamo l'eventuale valutazione già lasciata dall'utente.
 
             context['mia_valutazione'] = (
                 ValutazioneCommunity.objects
@@ -2348,9 +2209,8 @@ class DettaglioCommunityView(DetailView):
             if richiesta:
                 context['stato_richiesta'] = richiesta.stato
 
-        # ======================================
+
         # NAVIGAZIONE
-        # ======================================
 
         origine = self.request.GET.get('origine')
 
@@ -2394,11 +2254,7 @@ class DettaglioCommunityView(DetailView):
 
         return context
 
-
-# ==========================================
-# CREAZIONE COMMUNITY - PASSAGGIO 1
-# ==========================================
-
+# VIEW PER LA CREAZIONE DI UNA COMMUNITY 
 class CreazioneCommunityView(
     ProfiloRichiestoMixin,
     CreateView
@@ -2410,8 +2266,7 @@ class CreazioneCommunityView(
 
     def form_valid(self, form):
 
-        # L'organizzatore è sempre
-        # il profilo dell'utente autenticato.
+        # L'organizzatore è sempre il profilo dell'utente autenticato.
         form.instance.organizzatore = (
             self.request.user.profilo
         )
@@ -2421,8 +2276,7 @@ class CreazioneCommunityView(
             # Salvataggio della nuova community.
             self.object = form.save()
 
-            # L'organizzatore diventa
-            # automaticamente il primo membro.
+            # L'organizzatore diventa automaticamente il primo membro.
             self.object.membri.add(
                 self.request.user.profilo
             )
@@ -2446,12 +2300,7 @@ class CreazioneCommunityView(
 
         return redirect(f'{url}?origine={origine}')
 
-
-
-# ==========================================
-# CREAZIONE COMMUNITY - PASSAGGIO 2
-# ==========================================
-
+# VIEW PER LA SELEZIONE DEGLI INTERESSI DELLA COMMUNITY --> processo di creazione community
 class SelezioneInteressiCommunityView(
     ProfiloRichiestoMixin,
     FormView
@@ -2465,8 +2314,7 @@ class SelezioneInteressiCommunityView(
 
     def dispatch(self, request, *args, **kwargs):
 
-        # Prima applichiamo gli stessi controlli
-        # di accesso dell'area autenticata.
+        # Prima applichiamo gli stessi controlli di accesso dell'area autenticata.
         if not request.user.is_authenticated:
             return super().dispatch(
                 request, *args, **kwargs
@@ -2482,8 +2330,7 @@ class SelezioneInteressiCommunityView(
                 request, *args, **kwargs
             )
 
-        # Soltanto l'organizzatore può
-        # completare questa community.
+        # Soltanto l'organizzatore può completare questa community.
         gruppo = get_object_or_404(
             Community,
             pk=kwargs['pk'],
@@ -2528,8 +2375,7 @@ class SelezioneInteressiCommunityView(
             organizzatore=self.request.user.profilo
         )
 
-        # Controlliamo nuovamente che
-        # la community sia ancora incompleta.
+        # Controlliamo nuovamente che la community sia ancora incompleta.
         if gruppo.interessi.exists():
             return redirect(
                 'dettaglio_community',
@@ -2543,8 +2389,7 @@ class SelezioneInteressiCommunityView(
             )
 
 
-        # Al termine della creazione torniamo
-        # alla pagina dalla quale siamo partiti.
+        # Al termine della creazione torniamo alla pagina dalla quale siamo partiti.
 
         origine = (
             self.request.POST.get('origine')
@@ -2557,11 +2402,7 @@ class SelezioneInteressiCommunityView(
         return redirect('community')
 
 
-
-# ==========================================
-# COMMUNITY GESTITE
-# ==========================================
-
+# VIEW PER LA GESTIONE DELLE COMMUNITY DAL PROFILO
 class CommunityGestiteView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/community_gestite.html'
@@ -2570,8 +2411,7 @@ class CommunityGestiteView(ProfiloRichiestoMixin, TemplateView):
 
         context = super().get_context_data(**kwargs)
 
-        # Mostriamo esclusivamente le community
-        # organizzate dall'utente autenticato.
+        # Mostriamo esclusivamente le community organizzate dall'utente autenticato.
 
         context['community_gestite'] = (
             Community.objects
@@ -2593,10 +2433,7 @@ class CommunityGestiteView(ProfiloRichiestoMixin, TemplateView):
 
         return context
 
-# ==========================================
-# MODIFICA COMMUNITY
-# ==========================================
-
+# GESTIONE COMMUNITY - MODIFICA DELLA COMMUNITY
 class ModificaCommunityView(ProfiloRichiestoMixin, UpdateView):
 
     model = Community
@@ -2606,8 +2443,7 @@ class ModificaCommunityView(ProfiloRichiestoMixin, UpdateView):
 
     def get_queryset(self):
 
-        # Soltanto l'organizzatore può modificare
-        # le proprie community.
+        # Soltanto l'organizzatore può modificare le proprie community.
         return Community.objects.filter(
             organizzatore=self.request.user.profilo
         )
@@ -2651,11 +2487,7 @@ class ModificaCommunityView(ProfiloRichiestoMixin, UpdateView):
         return risposta
 
 
-
-# ==========================================
-# MODIFICA INTERESSI COMMUNITY
-# ==========================================
-
+# GESTIONE DELLE COMMUNITY - MODIFICA INTERESSI 
 class ModificaInteressiCommunityView(
     ProfiloRichiestoMixin,
     FormView
@@ -2675,8 +2507,7 @@ class ModificaInteressiCommunityView(
             organizzatore=self.request.user.profilo
         )
 
-        # La modifica degli interessi è consentita
-        # soltanto per una community già completata.
+        # La modifica degli interessi è consentita soltanto per una community già completata.
         if not gruppo.interessi.exists():
             raise Http404
 
@@ -2753,9 +2584,7 @@ class ModificaInteressiCommunityView(
         )
 
 
-# ==========================================
-# ELIMINAZIONE COMMUNITY
-# ==========================================
+# GESTIONE COMMUNITY - ELIMINAZIONE COMMUNITY
 class EliminaCommunityView(ProfiloRichiestoMixin, DeleteView):
 
     model = Community
@@ -2765,8 +2594,7 @@ class EliminaCommunityView(ProfiloRichiestoMixin, DeleteView):
 
     def get_queryset(self):
 
-        # Soltanto l'organizzatore può eliminare
-        # una community di sua proprietà.
+        # Soltanto l'organizzatore può eliminare una community di sua proprietà.
         return Community.objects.filter(
             organizzatore=self.request.user.profilo
         )
@@ -2784,9 +2612,7 @@ class EliminaCommunityView(ProfiloRichiestoMixin, DeleteView):
         if origine == 'community':
             return reverse('community')
 
-        # Da Community gestite, oppure se manca
-        # una provenienza valida, torniamo
-        # all'elenco delle community gestite.
+        # Da Community gestite, oppure se manca una provenienza valida, torniamo all'elenco delle community gestite.
         return reverse('community_gestite')
 
     def form_valid(self, form):
@@ -2800,10 +2626,7 @@ class EliminaCommunityView(ProfiloRichiestoMixin, DeleteView):
 
         return risposta
 
-# ==========================================
-# INVIO RICHIESTA COMMUNITY
-# ==========================================
-
+# INVIO DI UNA RICHIESTA DI PARTECIPAZIONE AD UNA COMMUNITY
 class InviaRichiestaCommunityView(ProfiloRichiestoMixin, View):
 
     http_method_names = ['post']
@@ -2819,18 +2642,15 @@ class InviaRichiestaCommunityView(ProfiloRichiestoMixin, View):
                 pk=kwargs['pk']
             )
 
-            # Non si possono inviare richieste
-            # per una community incompleta.
+            # Non si possono inviare richieste per una community incompleta.
             if not gruppo.interessi.exists():
                 raise Http404
 
-            # L'organizzatore non può richiedere
-            # di partecipare alla propria community.
+            # L'organizzatore non può richiedere di partecipare alla propria community.
             if gruppo.organizzatore_id == mio_profilo.pk:
                 raise Http404
 
-            # Un membro non può richiedere
-            # di entrare nuovamente.
+            # Un membro non può richiedere di entrare nuovamente.
             if gruppo.membri.filter(
                 pk=mio_profilo.pk
             ).exists():
@@ -2841,15 +2661,13 @@ class InviaRichiestaCommunityView(ProfiloRichiestoMixin, View):
                 community=gruppo
             ).first()
 
-            # Non consentiamo richieste duplicate
-            # quando una richiesta è già in attesa.
+            # Non consentiamo richieste duplicate quando una richiesta è già in attesa.
             if richiesta and richiesta.stato == 'PENDING':
                 raise Http404
 
             if richiesta:
 
-                # Dopo un rifiuto o un'uscita,
-                # riutilizziamo la richiesta esistente.
+                # Dopo un rifiuto o un'uscita, riutilizziamo la richiesta esistente.
                 richiesta.stato = 'PENDING'
                 richiesta.data_richiesta = timezone.now()
 
@@ -2907,10 +2725,7 @@ class InviaRichiestaCommunityView(ProfiloRichiestoMixin, View):
         )
 
 
-# ==========================================
-# ANNULLAMENTO RICHIESTA COMMUNITY
-# ==========================================
-
+# ANNULLAMENTO DELL'INVIO DI UNA RICHIESTA AD UNA COMMUNITY
 class AnnullaRichiestaCommunityView(ProfiloRichiestoMixin, View):
 
     http_method_names = ['post']
@@ -2960,10 +2775,7 @@ class AnnullaRichiestaCommunityView(ProfiloRichiestoMixin, View):
         )
 
 
-# ==========================================
-# GESTIONE RICHIESTE COMMUNITY
-# ==========================================
-
+# GESTIONE COMMUNITY - GESTIONE RICHIESTE DI PARTECIPAZIONE
 class GestioneRichiesteCommunityView(
     ProfiloRichiestoMixin,
     TemplateView
@@ -2975,8 +2787,7 @@ class GestioneRichiesteCommunityView(
 
         context = super().get_context_data(**kwargs)
 
-        # Soltanto l'organizzatore può
-        # visualizzare le richieste ricevute.
+        # Soltanto l'organizzatore può visualizzare le richieste ricevute.
         gruppo = get_object_or_404(
             Community,
             pk=self.kwargs['pk'],
@@ -2999,16 +2810,7 @@ class GestioneRichiesteCommunityView(
 
         return context
 
-
-# ==========================================
-# ACCETTAZIONE / RIFIUTO RICHIESTA
-# ==========================================
-
-
-# ==========================================
-# ACCETTAZIONE / RIFIUTO RICHIESTA
-# ==========================================
-
+# ACCETTAZIONE / RIFIUTO DI UNA RICHIESTA PER UNA COMMUNITY
 class GestisciRichiestaCommunityView(
     ProfiloRichiestoMixin,
     View
@@ -3077,14 +2879,12 @@ class GestisciRichiestaCommunityView(
 
         messages.success(request, messaggio)
 
-        # Se l'azione arriva dalle notifiche,
-        # torniamo alle notifiche.
+        # Se l'azione arriva dalle notifiche, torniamo alle notifiche.
 
         if origine == 'notifiche':
             return redirect('notifiche')
 
-        # Altrimenti manteniamo il comportamento
-        # originale della gestione richieste.
+        # Altrimenti manteniamo il comportamento originale della gestione richieste.
 
         destinazione = reverse(
             'gestione_richieste_community',
@@ -3096,10 +2896,7 @@ class GestisciRichiestaCommunityView(
 
         return redirect(destinazione)
 
-# ==========================================
-# USCITA DALLA COMMUNITY
-# ==========================================
-
+# USCITA DA UNA COMMUNITY
 class EsciCommunityView(ProfiloRichiestoMixin, View):
 
     http_method_names = ['post']
@@ -3128,8 +2925,7 @@ class EsciCommunityView(ProfiloRichiestoMixin, View):
             # Rimuoviamo soltanto la partecipazione.
             gruppo.membri.remove(mio_profilo)
 
-            # Non cancelliamo la richiesta storica,
-            # le valutazioni o gli altri dati collegati.
+            # Non cancelliamo la richiesta storica, le valutazioni o gli altri dati collegati.
 
         messages.success(
             request,
@@ -3156,16 +2952,12 @@ class EsciCommunityView(ProfiloRichiestoMixin, View):
         )
 
 
-# ==========================================
-# CHAT DI GRUPPO COMMUNITY
-# ==========================================
-
+# VIEW PER LA CHAT DI GRUPPO DI UNA COMMUNITY
 class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
 
     template_name = 'gestione/chat_gruppo.html'
 
-    # Recupera la community verificando che
-    # l'utente possa realmente accedere alla chat.
+    # Recupera la community verificando che l'utente possa realmente accedere alla chat.
     def get_community(self):
 
         gruppo = get_object_or_404(
@@ -3175,8 +2967,7 @@ class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
 
         mio_profilo = self.request.user.profilo
 
-        # L'organizzatore può sempre accedere
-        # alla chat della propria community.
+        # L'organizzatore può sempre accedere alla chat della propria community.
         organizzatore = (
             gruppo.organizzatore_id == mio_profilo.pk
         )
@@ -3189,8 +2980,7 @@ class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
         if not (organizzatore or membro):
             raise Http404
 
-        # Le community incomplete non hanno
-        # ancora una chat accessibile.
+        # Le community incomplete non hanno ancora una chat accessibile.
         if not gruppo.interessi.exists():
             raise Http404
 
@@ -3203,8 +2993,7 @@ class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
         gruppo = self.get_community()
         mio_profilo = self.request.user.profilo
 
-        # Recuperiamo i messaggi della community
-        # in ordine cronologico.
+        # Recuperiamo i messaggi della community in ordine cronologico.
         messaggi = (
             MessaggioCommunity.objects
             .filter(community=gruppo)
@@ -3218,8 +3007,7 @@ class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
 
         context['numero_membri'] = gruppo.membri.count()
 
-        # Anteprima della chat riservata
-        # all'organizzatore della community.
+        # Anteprima della chat riservata all'organizzatore della community.
         context['anteprima_membro'] = (
             self.request.GET.get('anteprima') == '1'
             and gruppo.organizzatore_id == mio_profilo.pk
@@ -3241,8 +3029,7 @@ class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
 
-        # Ricontrolliamo i permessi anche
-        # durante l'invio del messaggio.
+        # Ricontrolliamo i permessi anche durante l'invio del messaggio.
         gruppo = self.get_community()
 
         mio_profilo = request.user.profilo
@@ -3278,13 +3065,11 @@ class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
 
             try:
 
-                # Valida anche il vincolo del modello:
-                # soltanto i membri possono scrivere.
+                # Valida anche il vincolo del modello: soltanto i membri possono scrivere.
                 messaggio.full_clean()
                 messaggio.save()
 
-                # Notifichiamo tutti gli altri membri
-                # della community, escluso il mittente.
+                # Notifichiamo tutti gli altri membri della community, escluso il mittente.
 
                 altri_membri = gruppo.membri.exclude(
                     pk=mio_profilo.pk
@@ -3342,10 +3127,7 @@ class ChatGruppoView(ProfiloRichiestoMixin, TemplateView):
         return redirect(destinazione)
 
 
-# ==========================================
-# VALUTAZIONE COMMUNITY
-# ==========================================
-
+# VIEW PER LA VALUTAZIONE DI UNA COMMUNITY
 class ValutaCommunityView(ProfiloRichiestoMixin, View):
 
     http_method_names = ['post']
@@ -3387,8 +3169,7 @@ class ValutaCommunityView(ProfiloRichiestoMixin, View):
 
         with transaction.atomic():
 
-            # Blocchiamo la community durante
-            # la verifica e il salvataggio.
+            # Blocchiamo la community durante la verifica e il salvataggio.
             gruppo = get_object_or_404(
                 Community.objects.select_for_update(),
                 pk=kwargs['pk']
@@ -3401,8 +3182,7 @@ class ValutaCommunityView(ProfiloRichiestoMixin, View):
             if gruppo.organizzatore_id == mio_profilo.pk:
                 raise Http404
 
-            # Soltanto un membro attuale
-            # può creare o modificare il voto.
+            # Soltanto un membro attuale può creare o modificare il voto.
             if not gruppo.membri.filter(
                 pk=mio_profilo.pk
             ).exists():
@@ -3435,8 +3215,7 @@ class ValutaCommunityView(ProfiloRichiestoMixin, View):
 
                 messaggio = 'Valutazione aggiornata!'
 
-            # Eseguiamo anche le validazioni
-            # previste nel modello.
+            # Eseguiamo anche le validazioni previste nel modello.
             valutazione.full_clean()
             valutazione.save()
 
@@ -3494,9 +3273,10 @@ class OrganizzatoreEventiMixin(AccessoEventiCommunityMixin):
 
 
 # ==========================================
-# EVENTI COMMUNITY - CONSULTAZIONE
+# EVENTI COMMUNITY
 # ==========================================
 
+# VIEW PER LA VISUALIZZAZIONE DEGLI EVENTI DI UNA COMMUNITY
 class EventiCommunityView(
     AccessoEventiCommunityMixin,
     TemplateView
@@ -3534,8 +3314,7 @@ class EventiCommunityView(
         context['eventi_futuri'] = eventi_futuri
         context['eventi_passati'] = eventi_passati
 
-        # Riconosciamo l'accesso agli eventi
-        # dalla modalità Anteprima.
+        # Riconosciamo l'accesso agli eventi dalla modalità Anteprima.
         context['anteprima_membro'] = (
             self.request.GET.get('anteprima') == '1'
             and gruppo.organizzatore_id
@@ -3564,9 +3343,10 @@ class EventiCommunityView(
 
 
 # ==========================================
-# PANNELLO GESTISCI EVENTI
+# GESTIONE DEGLI EVENTI
 # ==========================================
 
+# VIEW PER LA GESTIONE DEGLI EVENTI
 class GestioneEventiCommunityView(
     OrganizzatoreEventiMixin,
     TemplateView
@@ -3604,11 +3384,7 @@ class GestioneEventiCommunityView(
 
         return context
 
-
-# ==========================================
-# CREAZIONE EVENTO
-# ==========================================
-
+# GESTIONE EVENTI - CREAZIONE EVENTI
 class CreazioneEventoCommunityView(
     OrganizzatoreEventiMixin,
     CreateView
@@ -3645,8 +3421,7 @@ class CreazioneEventoCommunityView(
 
         risposta = super().form_valid(form)
                 
-        # Notifica ai membri della community,
-        # escluso l'organizzatore che crea l'evento.
+        # Notifica ai membri della community, escluso l'organizzatore che crea l'evento.
 
         partecipanti = gruppo.membri.exclude(
             pk=gruppo.organizzatore_id
@@ -3692,10 +3467,7 @@ class CreazioneEventoCommunityView(
         return f'{destinazione}?origine={origine}'
 
 
-# ==========================================
-# MODIFICA EVENTO
-# ==========================================
-
+# GESTIONE EVENTI - MODIFICA EVENTO
 class ModificaEventoCommunityView(
     OrganizzatoreEventiMixin,
     UpdateView
@@ -3784,10 +3556,7 @@ class ModificaEventoCommunityView(
         return f'{destinazione}?origine={origine}'
 
 
-# ==========================================
-# ELIMINAZIONE EVENTO
-# ==========================================
-
+# GESTIONE EVENTI - ELIMINA EVENTO
 class EliminaEventoCommunityView(
     OrganizzatoreEventiMixin,
     DeleteView
@@ -3837,13 +3606,10 @@ class EliminaEventoCommunityView(
 
 
 # ==========================================
-# APERTURA NOTIFICA
+# NOTIFICHE
 # ==========================================
 
-# ==========================================
-# APERTURA NOTIFICA
-# ==========================================
-
+# VIEW PER L'APERTURA DI UNA NOTIFICA
 class ApriNotificaView(ProfiloRichiestoMixin, View):
 
     http_method_names = ['post']
@@ -3916,7 +3682,9 @@ class ApriNotificaView(ProfiloRichiestoMixin, View):
                         kwargs={'pk': profilo.pk}
                     ) + '?origine=notifiche'
 
+        # --------------------------------
         # NOTIFICHE RELATIVE ALLE COMMUNITY
+        # --------------------------------
 
         # RICHIESTE DI PARTECIPAZIONE
 

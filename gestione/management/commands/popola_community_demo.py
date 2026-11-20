@@ -1,3 +1,4 @@
+# script che popola il sito di dati demo, per permettere di avere già qualcosa nel db al momento dell'esposizione
 
 from datetime import datetime
 from decimal import Decimal
@@ -16,11 +17,11 @@ from gestione.models import Community, Evento, Interesse, Profilo
 
 
 # ============================================================
-# DATI UFFICIALI DELLE 15 COMMUNITY
+# COMMUNITY
 # ============================================================
 
-def community(numero, titolo, descrizione, organizzatore,
-              citta, interessi, membri):
+# definizione di una community con i suoi dati
+def community(numero, titolo, descrizione, organizzatore, citta, interessi, membri):
     return {
         "numero": numero,
         "titolo": titolo,
@@ -31,11 +32,11 @@ def community(numero, titolo, descrizione, organizzatore,
         "membri": membri,
     }
 
-
-# Per gli interessi:
+# Gli interessi posso avere interessi generici o interessi specifici, si differenziano dalla struttura:
 # ("CATEGORIA", None) = intera macrocategoria
 # ("CATEGORIA", "Sottointeresse") = sottointeresse preciso
 
+# dati demo delle community
 COMMUNITY_DEMO = [
 
     community(
@@ -316,11 +317,12 @@ COMMUNITY_DEMO = [
 
 
 # ============================================================
-# DATI UFFICIALI DEI 27 EVENTI
+# EVENTI
 # ============================================================
 
-def evento(comunita, titolo, descrizione, inizio, fine,
-           luogo, costo="0.00", cosa_portare=""):
+# definizione di un evento con i suoi dati
+# le date sono nel formato: AAAA-MM-GG HH:MM
+def evento(comunita, titolo, descrizione, inizio, fine, luogo, costo="0.00", cosa_portare=""):
     return {
         "comunita": comunita,
         "titolo": titolo,
@@ -332,10 +334,7 @@ def evento(comunita, titolo, descrizione, inizio, fine,
         "cosa_portare": cosa_portare,
     }
 
-
-# Le date sono nel formato:
-# AAAA-MM-GG HH:MM
-
+# dati demo degli eventi
 EVENTI_DEMO = [
 
     # COMMUNITY 01 - CLUB DEL LIBRO
@@ -643,7 +642,6 @@ EVENTI_DEMO = [
     ),
 
     # COMMUNITY 13 - GAME NIGHT
-    # Quattro eventi.
 
     evento(
         13,
@@ -709,7 +707,6 @@ EVENTI_DEMO = [
     ),
 
     # COMMUNITY 14 - MUSIC TALKS
-    # Tre eventi.
 
     evento(
         14,
@@ -801,7 +798,6 @@ EVENTI_DEMO = [
 def username_demo(numero):
     return f"demo_{numero:02d}"
 
-
 def trova_fotografia(cartella, numero):
     estensioni = {".jpg", ".jpeg", ".png", ".webp"}
 
@@ -828,10 +824,8 @@ def trova_fotografia(cartella, numero):
 
 
 def trova_interesse(categoria, sottointeresse):
-    """
-    Cerca esclusivamente nella gerarchia ufficiale.
-    Non crea interessi nuovi e non usa nomi simili.
-    """
+
+    # cerca esclusivamente nella gerarchia ufficiale, non crea interessi nuovi e non usa nomi simili
 
     padri = Interesse.objects.filter(
         nome=categoria,
@@ -863,12 +857,9 @@ def trova_interesse(categoria, sottointeresse):
 
     return figli.get()
 
-
+# trasforma la data trastuale in un datetime con il fusorario configurato in django
 def data_ora_locale(testo):
-    """
-    Trasforma la data testuale in un datetime
-    con il fuso orario configurato in Django.
-    """
+
     valore = datetime.strptime(
         testo,
         "%Y-%m-%d %H:%M",
